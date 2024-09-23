@@ -1,0 +1,404 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
+"POT-Creation-Date: 2024-09-12T00:43:28+03:00\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.5\n"
+
+#. Plugin Name of the plugin
+msgid "WC Nova Poshta Shipping"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://kirillbdev.pro/wc-ukr-shipping/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Integration of Nova Poshta delivery service for WooCommerce"
+msgstr "Інтеграція служби доставки Нова Пошта для WooCommerce"
+
+#. Author of the plugin
+msgid "kirillbdev"
+msgstr ""
+
+#: src/Http/Controllers/MigrationController.php:28
+msgid "Migrations were successfully applied"
+msgstr "Міграції були успішно застосовані"
+
+#: src/Http/Controllers/MigrationController.php:35
+msgid "Unable to apply migrations"
+msgstr "Не вдалося застосувати міграції"
+
+#: src/Http/Controllers/OptionsController.php:41
+msgid "Settings saved successfully!"
+msgstr "Налаштування успішно збережені!"
+
+# Options page
+#: src/Modules/Backend/OptionsPage.php:42 views/settings.php:13
+msgid "Settings"
+msgstr "Налаштування"
+
+# Warehouse loader
+#: src/Modules/Backend/OptionsPage.php:56
+msgid "Warehouses data of Nova Poshta"
+msgstr "Дані відділень Нової Пошти"
+
+#: src/Modules/Backend/OptionsPage.php:57
+msgid "Last update date:"
+msgstr "Дата останнього оновлення:"
+
+#: src/Modules/Backend/OptionsPage.php:58
+msgid "Status:"
+msgstr "Статус:"
+
+#: src/Modules/Backend/OptionsPage.php:59
+msgid "Not completed"
+msgstr "Не завершено"
+
+#: src/Modules/Backend/OptionsPage.php:60
+msgid "Completed"
+msgstr "Завершено"
+
+#: src/Modules/Backend/OptionsPage.php:61
+msgid "Unknown"
+msgstr "Невідомий"
+
+#: src/Modules/Backend/OptionsPage.php:62
+msgid "Update warehouses"
+msgstr "Оновити відділення"
+
+#: src/Modules/Backend/OptionsPage.php:63
+msgid "Continue update"
+msgstr "Продовжити оновлення"
+
+#: src/Modules/Backend/OptionsPage.php:64
+msgid "Load areas..."
+msgstr "Завантаження областей..."
+
+#: src/Modules/Backend/OptionsPage.php:65
+msgid "Load cities..."
+msgstr "Завантаження міст..."
+
+#: src/Modules/Backend/OptionsPage.php:66
+msgid "Load warehouses..."
+msgstr "Завантаження відділень..."
+
+#: src/Modules/Backend/OptionsPage.php:67
+msgid "Warehouses db updated successfully"
+msgstr "Дані відділень успішно оновлені"
+
+#: src/Modules/Backend/OptionsPage.php:69
+msgid "Are you sure to restart migrations? This action cannot be canceled."
+msgstr ""
+"Ви впевнені, що хочете перезапустити міграції? Ця дія не може бути скасована."
+
+#: src/Modules/Frontend/AssetsLoader.php:105
+#: src/Services/TranslateService.php:49
+msgid "Select shipping address"
+msgstr "Вкажіть адресу доставки"
+
+#: src/Modules/Frontend/AssetsLoader.php:106
+msgid "to warehouse"
+msgstr "на відділення"
+
+#: src/Modules/Frontend/AssetsLoader.php:107
+msgid "to doors"
+msgstr "до дверей"
+
+#: src/Modules/Frontend/AssetsLoader.php:108
+msgid "to the poshtomat"
+msgstr "на поштомат"
+
+#: src/Modules/Frontend/AssetsLoader.php:110
+#: src/Services/TranslateService.php:51
+msgid "Select city"
+msgstr "Оберіть місто"
+
+#: src/Modules/Frontend/AssetsLoader.php:111
+#: src/Services/TranslateService.php:52
+msgid "Select warehouse"
+msgstr "Оберіть відділення"
+
+#: src/Modules/Frontend/AssetsLoader.php:112
+msgid "Select poshtomat"
+msgstr "Оберіть поштомат"
+
+#: src/Modules/Frontend/AssetsLoader.php:113
+#: src/Services/TranslateService.php:54
+msgid "Enter address"
+msgstr "Введіть адресу"
+
+#: src/Modules/Frontend/AssetsLoader.php:114
+msgid "Enter value for search"
+msgstr "Введіть значення для пошуку"
+
+#: src/Modules/Frontend/AssetsLoader.php:115
+msgid "Loading..."
+msgstr "Завантаження..."
+
+#: src/Modules/Frontend/AssetsLoader.php:116
+msgid "Load more"
+msgstr "Завантажити ще"
+
+#: src/Modules/Frontend/AssetsLoader.php:117
+#: src/Services/TranslateService.php:55
+msgid "Nothing found"
+msgstr "Нічого не знайдено"
+
+#: src/Modules/Frontend/AssetsLoader.php:118
+msgid "Enter more chars"
+msgstr "Введіть більше символів"
+
+#: src/Modules/Frontend/CheckoutValidator.php:112
+msgid "Enter shipping address of Nova Poshta"
+msgstr "Виберіть адресу Нової Пошти"
+
+#: src/Services/TranslateService.php:48
+msgid "Nova Poshta"
+msgstr "Нова Пошта"
+
+#: src/Services/TranslateService.php:50
+msgid "Select area"
+msgstr "Оберіть область"
+
+#: src/Services/TranslateService.php:53
+msgid "Need address delivery"
+msgstr "Потрібна адресна доставка"
+
+# PRO features
+#: views/partial/pro_promotion.php:10
+msgid "Get more features from our PRO version"
+msgstr "Отримайте більше можливостей від нашої PRO версії"
+
+#: views/partial/pro_promotion.php:13
+msgid "Full address shipping integration (using Nova Poshta address API)"
+msgstr ""
+"Повноцінна інтеграція адресної доставки (використання онлайн довідника Нової "
+"Пошти)"
+
+#: views/partial/pro_promotion.php:16
+msgid ""
+"Automatic calculation of shipping costs. Supporting W2W, W2D and COD "
+"delivery calculation"
+msgstr ""
+"Автоматичний розрахунок вартості доставки. Підтримка типів: Відділення-"
+"Відділення, Відділення-Адреса, а також зворотної доставки"
+
+#: views/partial/pro_promotion.php:19
+msgid "Shipping calculation based on order total"
+msgstr "Розрахунок вартості доставки в залежності від суми замовлення"
+
+#: views/partial/pro_promotion.php:22
+msgid "Ability to customize separated shipping costs for address shipping"
+msgstr ""
+"Можливість налаштування окремого розрахунку вартості для адресної доставки"
+
+#: views/partial/pro_promotion.php:25
+msgid "Ability to generate TTN. Support all of types: W2W, W2D, D2W, D2D"
+msgstr ""
+"Генерація ТТН. Підтримка типів: Відділення-Відділення, Відділення-Адреса, "
+"Адреса-Адреса, Адреса-Відділення"
+
+#: views/partial/pro_promotion.php:28
+msgid "Possibility of mass generation of TTN in one click"
+msgstr "Можливість масової генерації ТТН в один клік"
+
+#: views/partial/pro_promotion.php:31
+msgid ""
+"Print TTN of all types: A4 (1 copy), A4 (2 copies), sticker 85x85, sticker "
+"100х100 (zebra)"
+msgstr ""
+"Друк ТТН усіх типів: А4 (1 копія), А4 (2 копії), наклейка 85х85, наклейка "
+"100х100 (зебра)"
+
+#: views/partial/pro_promotion.php:34
+msgid "Automatic email notifications after TTN creation"
+msgstr "Автоматичне email повідомлення після створення ТТН"
+
+#: views/partial/pro_promotion.php:37
+msgid "TTN Tracking"
+msgstr "Трекінг статусів ТТН"
+
+#: views/partial/pro_promotion.php:40
+msgid "Constructor of business rules automation"
+msgstr "Візуальний конструктор автоматизації бізнес-процесів"
+
+#: views/partial/pro_promotion.php:43
+msgid "Premium support"
+msgstr "Premium підтримка"
+
+#: views/partial/pro_promotion.php:51
+msgid "Buy PRO version"
+msgstr "Придбати PRO версію"
+
+#: views/partial/pro_promotion.php:56
+msgid "Request demo"
+msgstr "Запросити демо"
+
+#: views/partial/settings_general.php:3
+msgid "API key for Nova Poshta"
+msgstr "API ключ Нової Пошти"
+
+#: views/partial/settings_general.php:11
+msgid "Display language of cities and departments"
+msgstr "Мова відображення міст та відділень"
+
+#: views/partial/settings_general.php:15
+msgid "Russian"
+msgstr "Російська"
+
+#: views/partial/settings_general.php:16
+msgid "Ukrainian"
+msgstr "Українська"
+
+#: views/partial/settings_general.php:27
+msgid "Use new UI"
+msgstr "Використовувати новий UI"
+
+#: views/partial/settings_general.php:29
+msgid ""
+"We recommend to enable this setting as the old UI will be removed in version "
+"2.0"
+msgstr ""
+"Ми рекомендуємо ввімкнути це налаштування, так як старий UI буде видалений у "
+"версії 2.0"
+
+#: views/partial/settings_general.php:38
+msgid "Show poshtomats"
+msgstr "Показувати поштомати"
+
+#: views/partial/settings_general.php:42
+msgid "Load translates from"
+msgstr "Завантажувати переклади з"
+
+#: views/partial/settings_general.php:46
+msgid "Plugin settings"
+msgstr "Налаштувань плагіну"
+
+#: views/partial/settings_general.php:47
+msgid "Wordpress localization files"
+msgstr "Файли локалізації Wordpress"
+
+#: views/partial/settings_general.php:49
+msgid ""
+"If you are using language plugins such as WPML or Polylang - select "
+"\"Wordpress localization files\" option"
+msgstr ""
+"Якщо ви використовуєте плагіни локалізації, такі як WPML або Polylang, то "
+"виберіть опцію \"Файли локалізації Wordpress\""
+
+#: views/partial/settings_general.php:53
+msgid "Color of spinner in frontend"
+msgstr "Колір спінера у frontend"
+
+# End warehouse loader
+#: views/partial/settings_shipping.php:4
+msgid "Shipping cost"
+msgstr "Вартість доставки"
+
+#: views/partial/settings_shipping.php:14
+msgid "Shipping block position on checkout page"
+msgstr "Позиція блока доставки на сторінці чекаута"
+
+#: views/partial/settings_shipping.php:18
+msgid "Default section"
+msgstr "Основна секція"
+
+#: views/partial/settings_shipping.php:19
+msgid "Additional section"
+msgstr "Додаткова секція"
+
+#: views/partial/settings_shipping.php:29
+msgid "Enable address shipping"
+msgstr "Увімкнути адресну доставку"
+
+#: views/partial/settings_shipping.php:40
+msgid "Save last customer address"
+msgstr "Зберігати останню адресу користувача"
+
+#: views/partial/settings_shipping.php:42
+msgid "This option is not working with old UI"
+msgstr "Ця опція не працює зі старим UI"
+
+#: views/partial/settings_translates.php:3
+msgid "Shipping method name"
+msgstr "Назва способу доставки"
+
+#: views/partial/settings_translates.php:11
+msgid "Shipping block title"
+msgstr "Заголовок блоку доставки"
+
+#: views/partial/settings_translates.php:19
+msgid "Placeholder of select area field"
+msgstr "Placeholder вибору області"
+
+#: views/partial/settings_translates.php:27
+msgid "Placeholder of select city field"
+msgstr "Placeholder вибору міста"
+
+#: views/partial/settings_translates.php:35
+msgid "Placeholder of select warehouse field"
+msgstr "Placeholder вибору відділення"
+
+#: views/partial/settings_translates.php:43
+msgid "Label of address selector"
+msgstr "Checkbox адресної доставки"
+
+#: views/partial/settings_translates.php:51
+msgid "Placeholder of address field"
+msgstr "Placeholder адресної доставки"
+
+#: views/partial/settings_translates.php:59
+msgid "Empty result text"
+msgstr "Текст порожнього результату пошуку"
+
+#: views/settings.php:17
+msgid "Documentation"
+msgstr "Документація"
+
+#: views/settings.php:20
+msgid "Save"
+msgstr "Зберегти"
+
+#: views/settings.php:28
+msgid "General"
+msgstr "Загальні"
+
+#: views/settings.php:29
+msgid "Shipping"
+msgstr "Доставка"
+
+#: views/settings.php:30
+msgid "Translates"
+msgstr "Переклади"
+
+#: views/settings.php:42
+msgid "Danger zone"
+msgstr "Небезпечна зона"
+
+#: views/settings.php:47
+msgid "Re-run migrations"
+msgstr "Перезапустити міграції"
+
+#: views/settings.php:49
+msgid ""
+"Be careful when performing this action. Be sure to refresh the list of "
+"warehouses after this action will be completed."
+msgstr ""
+"Будьте обережні при виконанні цієї дії. Не забудьте оновити базу відділень "
+"після завершення цього процесу."
+
+#~ msgid "Become PRO"
+#~ msgstr "Стати PRO клієнтом"
+
+#~ msgid "After order notes"
+#~ msgstr "После примечания к заказу"

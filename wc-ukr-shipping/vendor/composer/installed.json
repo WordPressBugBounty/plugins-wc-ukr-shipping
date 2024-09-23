@@ -1,0 +1,43 @@
+{
+    "packages": [
+        {
+            "name": "kirillbdev/wcus-core",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "./../../../wcus-core",
+                "reference": "d5b5021a7f256d933b761fe137c2ae10a3b9a5b7"
+            },
+            "type": "package",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "kirillbdev\\WCUSCore\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "kirillbdev\\WCUSCore\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "GPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "kirillbdev",
+                    "email": "kirill.babinec@gmail.com"
+                }
+            ],
+            "description": "Core package of WC Ukr Shipping pluigns",
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            },
+            "install-path": "../kirillbdev/wcus-core"
+        }
+    ],
+    "dev": false,
+    "dev-package-names": []
+}
