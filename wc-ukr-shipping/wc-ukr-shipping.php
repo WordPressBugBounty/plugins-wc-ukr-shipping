@@ -3,12 +3,12 @@
  * Plugin Name: WC Nova Poshta Shipping
  * Plugin URI: https://kirillbdev.pro/wc-ukr-shipping/
  * Description: Integration of Nova Poshta delivery service for WooCommerce
- * Version: 1.12.5
+ * Version: 1.12.6
  * Author: kirillbdev
  * License URI: license.txt
  * Requires PHP: 7.4
  * Tested up to: 6.6
- * WC tested up to: 9.2
+ * WC tested up to: 9.3
 */
 
 if ( ! defined('ABSPATH')) {

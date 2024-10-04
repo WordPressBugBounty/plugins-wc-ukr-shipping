@@ -42,6 +42,10 @@ class OptionsRepository
             update_option('wcus_' . $key, sanitize_text_field($value));
         }
 
+        if ( ! isset($data['wcus']['cost_view_only'])) {
+            update_option('wcus_cost_view_only', 0);
+        }
+
         // Flush WooCommerce Shipping Cache
         delete_option('_transient_shipping-transient-version');
     }

@@ -6,7 +6,6 @@ use kirillbdev\WCUkrShipping\Contracts\AddressInterface;
 use kirillbdev\WCUkrShipping\Contracts\OrderDataInterface;
 use kirillbdev\WCUkrShipping\DB\NovaPoshtaRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\AreaRepositoryInterface;
-use kirillbdev\WCUkrShipping\Services\CalculationService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 
 if ( ! defined('ABSPATH')) {
@@ -65,11 +64,6 @@ class WCUSOrder
         } else {
             $this->saveWarehouseShipping($address);
         }
-
-        $calculationService = new CalculationService();
-        $cost = $calculationService->calculateCost($data);
-        $this->wcOrder->set_shipping_total((string)$cost);
-        $this->wcOrder->set_total((string)($data->getCalculatedTotal() + $cost));
 
         $this->wcOrder->update_meta_data('wcus_data_version', '2');
     }

@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '413344e2b6f943bb16ca7cf9ff7c8127b6995efd',
+        'reference' => 'a18097fb9a24e1863acad266edce7d0bf310d981',
         'name' => 'kirillbdev/wc-ukr-shipping',
         'dev' => false,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '413344e2b6f943bb16ca7cf9ff7c8127b6995efd',
+            'reference' => 'a18097fb9a24e1863acad266edce7d0bf310d981',
             'dev_requirement' => false,
         ),
         'kirillbdev/wcus-core' => array(

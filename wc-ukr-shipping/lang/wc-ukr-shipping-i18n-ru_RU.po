@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2024-09-12T00:43:28+03:00\n"
+"POT-Creation-Date: 2024-10-04T00:34:19+03:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -300,32 +300,36 @@ msgstr ""
 msgid "Color of spinner in frontend"
 msgstr "Цвет спинера во frontend"
 
+#: views/partial/settings_shipping.php:8
+msgid "Calculate shipping cost for view only"
+msgstr "Рассчитывать стоимость доставки только для просмотра"
+
 # End warehouse loader
-#: views/partial/settings_shipping.php:4
+#: views/partial/settings_shipping.php:12
 msgid "Shipping cost"
 msgstr "Стоимость доставки"
 
-#: views/partial/settings_shipping.php:14
+#: views/partial/settings_shipping.php:22
 msgid "Shipping block position on checkout page"
 msgstr "Позиция блока доставки на странице чекаута"
 
-#: views/partial/settings_shipping.php:18
+#: views/partial/settings_shipping.php:26
 msgid "Default section"
 msgstr "Основная секция"
 
-#: views/partial/settings_shipping.php:19
+#: views/partial/settings_shipping.php:27
 msgid "Additional section"
 msgstr "Дополнительная секция"
 
-#: views/partial/settings_shipping.php:29
+#: views/partial/settings_shipping.php:37
 msgid "Enable address shipping"
 msgstr "Включить адресную доставку"
 
-#: views/partial/settings_shipping.php:40
+#: views/partial/settings_shipping.php:48
 msgid "Save last customer address"
 msgstr "Сохранять последний адрес пользователя"
 
-#: views/partial/settings_shipping.php:42
+#: views/partial/settings_shipping.php:50
 msgid "This option is not working with old UI"
 msgstr "Данная опция не работает со старым UI"
 

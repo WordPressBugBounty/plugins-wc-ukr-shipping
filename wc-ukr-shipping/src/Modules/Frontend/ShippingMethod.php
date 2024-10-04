@@ -4,13 +4,8 @@ namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
 use kirillbdev\WCUkrShipping\Foundation\NovaPoshtaShipping;
 use kirillbdev\WCUkrShipping\Model\CheckoutOrderData;
-use kirillbdev\WCUkrShipping\Services\CalculationService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
-
-if ( ! defined('ABSPATH')) {
-    exit;
-}
 
 class ShippingMethod implements ModuleInterface
 {
@@ -19,15 +14,9 @@ class ShippingMethod implements ModuleInterface
      */
     private $translateService;
 
-    /**
-     * @var CalculationService
-     */
-    private $calculationService;
-
-    public function __construct(TranslateService $translateService, CalculationService $calculationService)
+    public function __construct(TranslateService $translateService)
     {
         $this->translateService = $translateService;
-        $this->calculationService = $calculationService;
     }
 
     /**
@@ -39,7 +28,8 @@ class ShippingMethod implements ModuleInterface
     {
         add_filter('woocommerce_shipping_methods', [ $this, 'registerShippingMethod' ]);
         add_filter('woocommerce_shipping_rate_label', [ $this, 'getRateLabel' ], 10, 2);
-        add_filter('woocommerce_shipping_rate_cost', [$this, 'calculateCost'], 10, 2);
+        add_filter('woocommerce_cart_shipping_packages', [$this, 'calculatePackageRateHash']);
+        add_filter('woocommerce_calculated_total', [$this, 'calculateCartTotal'], 10, 2);
     }
 
     public function registerShippingMethod($methods)
@@ -58,21 +48,52 @@ class ShippingMethod implements ModuleInterface
         return $label;
     }
 
-    public function calculateCost($cost, $rate)
+    public function calculatePackageRateHash(array $packages): array
     {
-        if (WC_UKR_SHIPPING_NP_SHIPPING_NAME !== $rate->get_method_id()) {
-            return $cost;
+        // We need to perform calculation only for ajax refresh checkout and place order
+        $orderData = null;
+        if (isset($_GET['wc-ajax'])) {
+            if ($_GET['wc-ajax'] === 'update_order_review' && ! empty($_POST['post_data'])) {
+                parse_str(sanitize_text_field($_POST['post_data']), $post);
+                $orderData = new CheckoutOrderData($post);
+            } elseif ($_GET['wc-ajax'] === 'checkout') {
+                $orderData = new CheckoutOrderData($_POST);
+            }
         }
 
-        if (empty($_GET['wc-ajax']) || 'update_order_review' !== $_GET['wc-ajax'] || empty($_POST['post_data'])) {
-            return 0;
+        $chosenMethods = wc_get_chosen_shipping_method_ids();
+        foreach ($packages as $key => &$package) {
+            if (isset($chosenMethods[$key]) && $chosenMethods[$key] === WC_UKR_SHIPPING_NP_SHIPPING_NAME
+                && $orderData !== null) {
+                $shippingType = $orderData->isAddressShipping() ? 'doors' : 'warehouse';
+                if ($orderData->getShippingType() !== null) {
+                    $shippingType = $orderData->getShippingType();
+                }
+
+                $package['wcus_rates_hash'] = md5(
+                    sprintf(
+                        'wcus_rates:%s|%s|%s',
+                        $orderData->getShippingAddress()->getCityRef(),
+                        $orderData->getPaymentMethod(),
+                        $shippingType
+                    )
+                );
+            }
         }
 
-        parse_str($_POST['post_data'], $post);
+        return $packages;
+    }
 
-        $orderData = new CheckoutOrderData($post);
-        $cost = $this->calculationService->calculateCost($orderData);
+    public function calculateCartTotal(float $total, \WC_Cart $cart): float
+    {
+        if ( ! in_array(WC_UKR_SHIPPING_NP_SHIPPING_NAME, wc_get_chosen_shipping_method_ids(), true)) {
+            return $total;
+        }
 
-        return $cost;
+        if ((int)get_option('wcus_cost_view_only') === 1) {
+            return $total - $cart->get_shipping_total();
+        }
+
+        return $total;
     }
 }

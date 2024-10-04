@@ -5,7 +5,6 @@ namespace kirillbdev\WCUkrShipping\Model;
 use kirillbdev\WCUkrShipping\Contracts\AddressInterface;
 use kirillbdev\WCUkrShipping\Contracts\Customer\CustomerStorageInterface;
 use kirillbdev\WCUkrShipping\Contracts\OrderDataInterface;
-use kirillbdev\WCUkrShipping\Services\CalculationService;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -43,14 +42,9 @@ class OrderShipping
 
         if ($data->isAddressShipping()) {
             $this->saveAddressShipping($address);
-        }
-        else {
+        } else {
             $this->saveWarehouseShipping($address);
         }
-
-        $calculationService = new CalculationService();
-        $cost = $calculationService->calculateCost($data);
-        $this->item->set_total((string)$cost);
     }
 
     /**

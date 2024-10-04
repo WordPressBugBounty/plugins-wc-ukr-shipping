@@ -47,4 +47,6 @@ interface OrderDataInterface
      * @return bool
      */
     public function isShipToDifferentAddress();
+
+    public function getShippingType(): ?string;
 }

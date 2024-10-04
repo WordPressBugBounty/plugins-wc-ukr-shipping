@@ -2,6 +2,8 @@
 
 namespace kirillbdev\WCUkrShipping\Foundation;
 
+use kirillbdev\WCUkrShipping\Model\CheckoutOrderData;
+use kirillbdev\WCUkrShipping\Services\CalculationService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 
 if ( ! defined('ABSPATH')) {
@@ -52,20 +54,31 @@ class NovaPoshtaShipping extends \WC_Shipping_Method
         add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
     }
 
-    /**
-     * calculate_shipping function.
-     *
-     * @access public
-     *
-     * @param array $package
-     */
-    public function calculate_shipping($package = array())
+    public function calculate_shipping($package = []): void
     {
-        $rate = array(
+        if ( ! $this->shouldCalculated()) {
+            $this->add_rate([
+                'label' => $this->title,
+                'cost' => 0,
+                'package' => $package,
+            ]);
+            return;
+        }
+
+        if ($_GET['wc-ajax'] === 'update_order_review') {
+            parse_str(sanitize_text_field($_POST['post_data']), $post);
+            $orderData = new CheckoutOrderData($post);
+        } elseif ($_GET['wc-ajax'] === 'checkout') {
+            $orderData = new CheckoutOrderData($_POST);
+        }
+        $calculationService = new CalculationService();
+        $cost = $calculationService->calculateCost($orderData);
+
+        $rate = [
             'label' => $this->title,
-            'cost' => 0,
+            'cost' => $cost,
             'package' => $package,
-        );
+        ];
         $this->add_rate($rate);
     }
 
@@ -77,5 +90,15 @@ class NovaPoshtaShipping extends \WC_Shipping_Method
     public function is_available($package)
     {
         return $this->is_enabled();
+    }
+
+    private function shouldCalculated(): bool
+    {
+        if ( ! isset($_GET['wc-ajax'])) {
+            return false;
+        }
+
+        return ($_GET['wc-ajax'] === 'update_order_review' && ! empty($_POST['post_data']))
+            || $_GET['wc-ajax'] === 'checkout';
     }
 }

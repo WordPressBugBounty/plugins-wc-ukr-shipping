@@ -120,4 +120,9 @@ class CheckoutOrderData implements OrderDataInterface
     {
         return 'shipping' === $this->type;
     }
+
+    public function getShippingType(): ?string
+    {
+        return $this->data['shipping_type'] ?? null;
+    }
 }

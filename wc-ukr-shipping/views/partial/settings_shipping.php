@@ -1,5 +1,13 @@
 <div id="wcus-pane-shipping" class="wcus-tab-pane">
 
+    <div class="wcus-form-group wcus-form-group--horizontal">
+        <label class="wcus-switcher">
+            <input type="checkbox" name="wcus[cost_view_only]" value="1" <?php echo (int)get_option('wcus_cost_view_only') === 1 ? 'checked' : ''; ?>>
+            <span class="wcus-switcher__control"></span>
+        </label>
+        <div class="wcus-control-label"><?= __('Calculate shipping cost for view only', 'wc-ukr-shipping-i18n'); ?></div>
+    </div>
+
     <div class="wcus-form-group">
         <label for="wc_ukr_shipping_np_price"><?= __('Shipping cost', 'wc-ukr-shipping-i18n'); ?></label>
         <input type="number" id="wc_ukr_shipping_np_price"

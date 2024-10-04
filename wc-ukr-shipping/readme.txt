@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, доставка, shipping, woocommerce
 Requires PHP: 7.4
 Tested up to: 6.6
-Stable tag: 1.12.5
+Stable tag: 1.12.6
 
 Simple and comfortable plugin for connect Nova Poshta delivery service to your WooCommerce store.
 
@@ -25,6 +25,7 @@ https://www.youtube.com/watch?v=IFW0B75s54o
 * Simple and intuitive setup
 * Ability to select Nova Poshta warehouse or poshtomat on checkout page
 * Ability to setup fixed shipping cost
+* Ability to calculate cost without adding it to order total
 * Integration with popular plugins for localization: WPML and Polylang
 * Support latest versions of Wordpress and WooCommerce
 * Support WooCommerce geo zones
@@ -69,7 +70,18 @@ The manual installation method involves downloading this plugin and uploading it
 
 Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
 
+== FAQ ==
+
+= Does plugin supports WooCommerce checkout blocks? =
+
+Unfortunately plugin doesn't support WC checkout blocks yet.
+
 == Changelog ==
+
+= Version 1.12.6 / (04.10.2024) =
+* Checkout process and performance improvements.
+* Added new option "Calculate shipping cost view only". Allows you to calculate shipping rates but without adding it to order total.
+* Checked compatibility with latest Wordpress and WooCommerce versions.
 
 = Version 1.12.5 / (12.09.2024) =
 * [Feature] Migration mechanism V2.
