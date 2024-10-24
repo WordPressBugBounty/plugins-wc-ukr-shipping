@@ -2,7 +2,9 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Core;
 
+use kirillbdev\WCUkrShipping\Http\Controllers\FeedbackController;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
+use kirillbdev\WCUSCore\Http\Routing\Route;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -18,6 +20,13 @@ class PluginInfo implements ModuleInterface
     public function init()
     {
         add_filter('plugin_action_links_' . WC_UKR_SHIPPING_PLUGIN_NAME, [ $this, 'actionLinks' ]);
+    }
+
+    public function routes()
+    {
+        return [
+            new Route('wcus_post_feedback', FeedbackController::class, 'store'),
+        ];
     }
 
     /**

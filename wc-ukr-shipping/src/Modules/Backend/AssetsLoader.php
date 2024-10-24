@@ -55,6 +55,16 @@ class AssetsLoader implements ModuleInterface
             true
         );
 
+        if (get_current_screen() !== null && get_current_screen()->id === 'plugins') {
+            wp_enqueue_script(
+                'wcus_plugin_js',
+                WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/plugin.min.js',
+                ['jquery'],
+                filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/plugin.min.js'),
+                true
+            );
+        }
+
         $this->injectGlobals('wcus_settings_js');
     }
 
