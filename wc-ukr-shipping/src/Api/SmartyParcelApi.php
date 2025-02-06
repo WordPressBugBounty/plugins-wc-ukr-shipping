@@ -15,7 +15,7 @@ final class SmartyParcelApi
         string $email,
         string $password,
         string $firstName,
-        string $lastName,
+        string $lastName
     ): string {
         $response = wp_remote_post(self::API_URL . '/register', [
             'headers' => [

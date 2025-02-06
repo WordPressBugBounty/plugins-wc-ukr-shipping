@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, доставка, shipping, woocommerce
 Requires PHP: 7.4
 Tested up to: 6.7
-Stable tag: 1.13.0
+Stable tag: 1.13.1
 
 Simple and comfortable plugin for connect Nova Poshta delivery service to your WooCommerce store.
 
@@ -78,6 +78,9 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.13.1 / (06.02.2025) =
+* [Hotfix] Fatal error on server with PHP 7.4
 
 = Version 1.13.0 / (06.02.2025) =
 * Now the plugin allows you to create TTN using Smarty Parcel service (our new service). At the moment, limited capabilities from the PRO version are implemented. The functionality will be expanded with every new releases.

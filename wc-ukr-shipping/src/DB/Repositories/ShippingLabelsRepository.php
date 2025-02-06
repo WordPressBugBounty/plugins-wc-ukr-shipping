@@ -38,7 +38,7 @@ class ShippingLabelsRepository
         int $orderId,
         string $labelId,
         string $trackingNumber,
-        string $carrierSlug,
+        string $carrierSlug
     ) {
         $now = date('Y-m-d H:i:s');
         DB::table(DB::prefixedTable('wc_ukr_shipping_labels'))
