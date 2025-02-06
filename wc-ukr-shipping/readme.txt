@@ -4,8 +4,8 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, доставка, shipping, woocommerce
 Requires PHP: 7.4
-Tested up to: 6.6
-Stable tag: 1.12.7
+Tested up to: 6.7
+Stable tag: 1.13.0
 
 Simple and comfortable plugin for connect Nova Poshta delivery service to your WooCommerce store.
 
@@ -26,6 +26,7 @@ https://www.youtube.com/watch?v=IFW0B75s54o
 * Ability to select Nova Poshta warehouse or poshtomat on checkout page
 * Ability to setup fixed shipping cost
 * Ability to calculate cost without adding it to order total
+* Ability to create Nova Poshta TTN (now only warehouse-warehouse).
 * Integration with popular plugins for localization: WPML and Polylang
 * Support latest versions of Wordpress and WooCommerce
 * Support WooCommerce geo zones
@@ -77,6 +78,11 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.13.0 / (06.02.2025) =
+* Now the plugin allows you to create TTN using Smarty Parcel service (our new service). At the moment, limited capabilities from the PRO version are implemented. The functionality will be expanded with every new releases.
+* [Checkout] Improved UX and usability.
+* Checked compatibility with latest Wordpress and WooCommerce versions.
 
 = Version 1.12.7 / (24.10.2024) =
 * Architecture improvements.

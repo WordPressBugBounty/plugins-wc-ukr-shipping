@@ -24,6 +24,25 @@ class WCUSHelper
         return array_shift($shippingMethods);
     }
 
+    public static function preparePhone(string $phone): string
+    {
+        $phone = str_replace(['+', '-', ' ', '(', ')'], '', $phone);
+
+        if (preg_match('/^\d{12,12}$/', $phone)) {
+            return $phone;
+        }
+
+        if (preg_match('/^\d{10,10}$/', $phone)) {
+            return '38' . $phone;
+        }
+
+        if (preg_match('/^\d{11,11}$/', $phone)) {
+            return '3' . $phone;
+        }
+
+        return $phone;
+    }
+
     public static function getDefaultCities()
     {
         return [

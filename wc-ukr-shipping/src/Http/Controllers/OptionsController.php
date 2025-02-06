@@ -37,7 +37,6 @@ class OptionsController extends Controller
         return $this->jsonResponse([
             'success' => true,
             'data' => [
-                'api_key' => get_option('wc_ukr_shipping_np_api_key', ''),
                 'message' => __('Settings saved successfully!', 'wc-ukr-shipping-i18n'),
             ]
         ]);

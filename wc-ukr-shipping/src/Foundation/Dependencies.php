@@ -2,6 +2,7 @@
 
 namespace kirillbdev\WCUkrShipping\Foundation;
 
+use kirillbdev\WCUkrShipping\Address\Provider\AddressProviderInterface;
 use kirillbdev\WCUkrShipping\Api\CloudApi;
 use kirillbdev\WCUkrShipping\Contracts\Customer\CustomerStorageInterface;
 use kirillbdev\WCUkrShipping\Contracts\NovaPoshtaAddressProviderInterface;

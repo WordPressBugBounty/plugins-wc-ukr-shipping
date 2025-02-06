@@ -46,3 +46,19 @@ if ( ! function_exists('wcus_i18n')) {
         return __($text, WCUS_TRANSLATE_DOMAIN);
     }
 }
+
+if (!function_exists('wcus_wc_container_safe_get')) {
+
+    function wcus_wc_container_safe_get(string $alias)
+    {
+        if (!function_exists('wc_get_container')) {
+            return null;
+        }
+
+        try {
+            return wc_get_container()->get($alias);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+}

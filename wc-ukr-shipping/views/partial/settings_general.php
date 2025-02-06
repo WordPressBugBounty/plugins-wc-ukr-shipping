@@ -1,11 +1,4 @@
 <div id="wcus-pane-general" class="wcus-tab-pane active">
-    <div class="wcus-form-group">
-        <label for="wc_ukr_shipping_np_api_key"><?= __('API key for Nova Poshta', 'wc-ukr-shipping-i18n'); ?></label>
-        <input type="text" id="wc_ukr_shipping_np_api_key"
-               name="wc_ukr_shipping[np_api_key]"
-               class="wcus-form-control"
-               value="<?= get_option('wc_ukr_shipping_np_api_key', ''); ?>">
-    </div>
 
     <div class="wcus-form-group">
         <label for="wc_ukr_shipping_np_lang"><?= __('Display language of cities and departments', 'wc-ukr-shipping-i18n'); ?></label>

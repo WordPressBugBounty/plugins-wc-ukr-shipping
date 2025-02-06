@@ -55,12 +55,30 @@ class AssetsLoader implements ModuleInterface
             true
         );
 
+        wp_enqueue_script(
+            'wcus_ttn_widget_js',
+            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/ttn-widget.min.js',
+            ['jquery'],
+            filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/ttn-widget.min.js'),
+            true
+        );
+
         if (get_current_screen() !== null && get_current_screen()->id === 'plugins') {
             wp_enqueue_script(
                 'wcus_plugin_js',
                 WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/plugin.min.js',
                 ['jquery'],
                 filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/plugin.min.js'),
+                true
+            );
+        }
+
+        if (get_current_screen() !== null && get_current_screen()->id === 'wc-ukr-shipping_page_wcus_smarty_parcel') {
+            wp_enqueue_script(
+                'wcus_smarty_parcel_js',
+                WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/smarty-parcel.min.js',
+                ['jquery'],
+                filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/smarty-parcel.min.js'),
                 true
             );
         }
@@ -86,6 +104,9 @@ class AssetsLoader implements ModuleInterface
                 'placeholder_city' => $translates['placeholder_city'],
                 'placeholder_warehouse' => $translates['placeholder_warehouse'],
                 'not_found' => $translates['not_found'],
+            ],
+            'assets' => [
+                'nova_poshta_icon_url' => WC_UKR_SHIPPING_PLUGIN_URL . 'image/nova-poshta-icon.png',
             ],
         ];
 
