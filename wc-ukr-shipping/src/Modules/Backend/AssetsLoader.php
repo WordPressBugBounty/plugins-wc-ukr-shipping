@@ -3,6 +3,7 @@
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use kirillbdev\WCUkrShipping\Foundation\State;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 use kirillbdev\WCUkrShipping\Traits\StateInitiatorTrait;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
@@ -108,10 +109,23 @@ class AssetsLoader implements ModuleInterface
             'assets' => [
                 'nova_poshta_icon_url' => WC_UKR_SHIPPING_PLUGIN_URL . 'image/nova-poshta-icon.png',
             ],
+            'default_cities' => $this->getDefaultCities(),
         ];
 
         $i18n = [];
         $globals['i18n'] = apply_filters('wcus_load_admin_i18n', $i18n);
         wp_localize_script($scriptId, 'wc_ukr_shipping_globals', $globals);
+    }
+
+    private function getDefaultCities(): array
+    {
+        $locale = $this->translateService->getCurrentLanguage();
+
+        return array_map(function($item) use($locale) {
+            return [
+                'name' => $item[$locale === 'ua' ? 'description' : 'description_ru'],
+                'value' => $item['ref']
+            ];
+        }, WCUSHelper::getDefaultCities());
     }
 }

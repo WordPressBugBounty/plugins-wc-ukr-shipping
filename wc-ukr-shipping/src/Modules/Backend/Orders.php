@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
+use kirillbdev\WCUkrShipping\Http\WpHttpClient;
 use kirillbdev\WCUSCore\Foundation\View;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 
@@ -27,6 +28,8 @@ class Orders implements ModuleInterface
         add_filter('manage_woocommerce_page_wc-orders_columns', [$this, 'extendOrderColumns']);
         add_action('manage_woocommerce_page_wc-orders_custom_column', [$this, 'renderTTNButtonHPOS'], 10, 2);
 
+        add_action('init', [$this, 'handlePrintPage']);
+
         add_action('add_meta_boxes', [$this, 'addTTNBlockToOrderEdit']);
     }
 
@@ -45,6 +48,43 @@ class Orders implements ModuleInterface
     public function renderTTNButtonHPOS($column, $order)
     {
         $this->renderTtnInfo($order, $column);
+    }
+
+    public function handlePrintPage(): void
+    {
+        $isPrintLabelPage = isset($_GET['page'])
+            && $_GET['page'] === 'wc_ukr_shipping_print_label'
+            && isset($_GET['label_id'])
+            && isset($_GET['format']);
+
+        if (!is_admin() || !$isPrintLabelPage) {
+            return;
+        }
+
+        if (!get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY)) {
+            return;
+        }
+
+        $shippingLabel = $this->shippingLabelsRepository->findById((int)sanitize_text_field($_GET['label_id']));
+        if ($shippingLabel === null) {
+            return;
+        }
+
+        $format = sanitize_text_field($_GET['format']);
+        if (!in_array($format, ['a4', 'm85', 'm100'], true)) {
+            return;
+        }
+
+        header('Content-Type: application/pdf');
+        $client = new WpHttpClient();
+        echo $client->get(
+            'https://api.smartyparcel.com/beta/labels/' . $shippingLabel['label_id'] . "/pdf?format=$format",
+            null,
+            [
+                'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+            ]
+        );
+        exit;
     }
 
     public function addTTNBlockToOrderEdit()
@@ -91,7 +131,9 @@ class Orders implements ModuleInterface
             ?>
                 <?php if ($ttn !== null) { ?>
                     <div class="wcus-icon-block" style="text-align: center;">
-                        <div style="display: inline-block; padding: 0 8px; border-radius: 2px; background: #ddd;"><?php echo esc_html($ttn['tracking_number']); ?></div>
+                        <div class="wcus-label-widget j-wcus-label-widget">
+                            <?php echo esc_html($ttn['tracking_number']); ?>
+                        </div>
                         <div style="text-align: center;">
                             <a href="#" class="wcus-svg-btn wcus-svg-btn--error j-wcus-label-delete"
                                style="font-size: 13px; color: #f00;"

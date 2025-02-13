@@ -125,7 +125,11 @@ class TranslateService
 
     public function getCurrentLanguage()
     {
-        $lang = get_option('wc_ukr_shipping_np_lang', 'ru');
+        if (is_admin()) {
+            $lang = preg_replace('/_.+$/', '', get_user_locale());
+        } else {
+            $lang = get_option('wc_ukr_shipping_np_lang', 'ru');
+        }
 
         if (function_exists('wpml_get_current_language')) {
             if (in_array(wpml_get_current_language(), ['ru', 'uk'])) {

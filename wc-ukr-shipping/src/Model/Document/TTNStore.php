@@ -5,6 +5,10 @@ namespace kirillbdev\WCUkrShipping\Model\Document;
 use kirillbdev\WCUkrShipping\Address\Provider\AddressProviderInterface;
 use kirillbdev\WCUkrShipping\Factories\ProductFactory;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+use kirillbdev\WCUkrShipping\Includes\Address\RepositoryCityFinder;
+use kirillbdev\WCUkrShipping\Includes\Address\RepositoryWarehouseFinder;
+use kirillbdev\WCUkrShipping\Includes\UI\CityUIValue;
+use kirillbdev\WCUkrShipping\Includes\UI\WarehouseUIValue;
 use kirillbdev\WCUkrShipping\Model\OrderProduct;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 
@@ -118,16 +122,19 @@ class TTNStore
         $this->data['sender']['carrier_accounts'] = $accounts;
         $this->data['sender']['carrier_account_id'] = $accounts[0]['id'] ?? '';
         $this->data['sender']['area_ref'] = '';
-        $this->data['sender']['city_ref'] = '';
-        $this->data['sender']['warehouse_ref'] = '';
-        $this->data['sender']['default_city'] = [
-            'name' => '',
-            'value' => '',
-        ];
-        $this->data['sender']['default_warehouse'] = [
-            'name' => '',
-            'value' => ''
-        ];
+
+        $cityFinder = new RepositoryCityFinder(
+            wc_ukr_shipping_get_option('wc_ukr_shipping_np_sender_city')
+        );
+        $warehouseFinder = new RepositoryWarehouseFinder(
+            wc_ukr_shipping_get_option('wc_ukr_shipping_np_sender_warehouse')
+        );
+
+        $this->data['sender']['default_city'] = CityUIValue::fromFinder($cityFinder);
+        $this->data['sender']['city_ref'] = $this->data['sender']['default_city']['value'];
+
+        $this->data['sender']['default_warehouse'] = WarehouseUIValue::fromFinder($warehouseFinder);
+        $this->data['sender']['warehouse_ref'] = $this->data['sender']['default_warehouse']['value'];
     }
 
     private function collectRecipient(): void

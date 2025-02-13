@@ -28,10 +28,12 @@
                         <li data-pane="wcus-pane-general" class="active"><?= __('General', 'wc-ukr-shipping-i18n'); ?></li>
                         <li data-pane="wcus-pane-shipping"><?= __('Shipping', 'wc-ukr-shipping-i18n'); ?></li>
                         <li data-pane="wcus-pane-translates"><?= __('Translates', 'wc-ukr-shipping-i18n'); ?></li>
+                        <li data-pane="wcus-pane-shipping-label"><?= __('Shipping Label', 'wc-ukr-shipping-i18n'); ?></li>
                     </ul>
                     <?= \kirillbdev\WCUSCore\Foundation\View::render('partial/settings_general'); ?>
                     <?= \kirillbdev\WCUSCore\Foundation\View::render('partial/settings_shipping'); ?>
                     <?= \kirillbdev\WCUSCore\Foundation\View::render('partial/settings_translates'); ?>
+                    <?= \kirillbdev\WCUSCore\Foundation\View::render('partial/settings_shipping_label'); ?>
                 </form>
             </div>
         </div>

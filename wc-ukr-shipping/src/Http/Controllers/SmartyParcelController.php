@@ -207,6 +207,15 @@ class SmartyParcelController extends Controller
                 $response['tracking_number'],
                 $response['carrier_slug'] ?? 'nova_poshta'
             );
+            $shippingLabel = $this->shippingLabelsRepository->findByOrderId((int)$request->get('ttn')['order_id']);
+
+            $downloads = [];
+            foreach (['a4', 'm85', 'm100'] as $format) {
+                $downloads[] = [
+                    'format' => $format,
+                    'url' => admin_url('admin.php?page=wc_ukr_shipping_print_label&label_id=' . $shippingLabel['id'] . '&format=' . $format),
+                ];
+            }
 
             return $this->jsonResponse([
                 'success' => true,
@@ -215,7 +224,8 @@ class SmartyParcelController extends Controller
                     'tracking_number' => $response['tracking_number'],
                     'shipment_cost' => $response['shipment_cost']['amount'],
                     'estimated_delivery_date' => $response['estimated_delivery_date'],
-                    'order_url' => get_admin_url( null, 'post.php?post=' . (int)$request->get('ttn')['order_id'] . '&action=edit')
+                    'order_url' => get_admin_url( null, 'post.php?post=' . (int)$request->get('ttn')['order_id'] . '&action=edit'),
+                    'downloads' => $downloads,
                 ]
             ]);
         } catch (\Throwable $e) {

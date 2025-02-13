@@ -9,6 +9,7 @@ use kirillbdev\WCUkrShipping\Http\Controllers\MigrationController;
 use kirillbdev\WCUkrShipping\Http\Controllers\OptionsController;
 use kirillbdev\WCUkrShipping\Http\Controllers\SmartyParcelController;
 use kirillbdev\WCUkrShipping\Model\Document\TTNStore;
+use kirillbdev\WCUkrShipping\States\OptionsPageState;
 use kirillbdev\WCUkrShipping\States\SmartyParcelState;
 use kirillbdev\WCUkrShipping\States\WarehouseLoaderState;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
@@ -57,6 +58,7 @@ class OptionsPage implements ModuleInterface
     public function registerOptionsPage()
     {
         State::add('warehouse_loader', WarehouseLoaderState::class);
+        State::add('options', OptionsPageState::class);
         State::add('smarty_parcel', SmartyParcelState::class);
 
         add_menu_page(
