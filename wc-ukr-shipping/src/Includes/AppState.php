@@ -23,7 +23,7 @@ abstract class AppState implements \JsonSerializable
         $this->params = $params;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->getState();
     }

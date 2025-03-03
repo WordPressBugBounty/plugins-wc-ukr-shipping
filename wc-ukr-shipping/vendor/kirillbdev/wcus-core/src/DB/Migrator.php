@@ -31,8 +31,6 @@ class Migrator
         global $wpdb;
 
         $this->db = $wpdb;
-        $this->collate = $wpdb->get_charset_collate();
-
         $history = get_option(self::OPTION_HISTORY);
         if ($history) {
             $this->history = json_decode($history, true);
