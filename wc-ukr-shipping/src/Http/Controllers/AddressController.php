@@ -90,6 +90,56 @@ class AddressController extends Controller
         ]);
     }
 
+    public function adminSearchWarehouses(Request $request)
+    {
+        if ( ! $request->get('city_ref') || ! (int)$request->get('page')) {
+            return $this->jsonResponse([
+                'success' => true,
+                'data' => [
+                    'items' => [],
+                    'more' => false
+                ]
+            ]);
+        }
+
+        $types = [
+            WCUS_WAREHOUSE_TYPE_REGULAR,
+            WCUS_WAREHOUSE_TYPE_CARGO,
+            WCUS_WAREHOUSE_TYPE_POSHTOMAT,
+        ];
+        $result = $this->addressProvider->searchWarehousesByQuery(
+            $request->get('city_ref'),
+            $request->get('query', ''),
+            (int)$request->get('page'),
+            $types
+        );
+
+        if (!count($result->getWarehouses())) {
+            return $this->jsonResponse([
+                'success' => true,
+                'data' => [
+                    'items' => [],
+                    'more' => false
+                ]
+            ]);
+        }
+
+        $items = $this->mapWarehouses(
+            $result->getWarehouses(),
+            $request->get('lang', '')
+        );
+
+        $offset = ((int)$request->get('page') - 1) * 20 + count($items);
+
+        return $this->jsonResponse([
+            'success' => true,
+            'data' => [
+                'items' => $items,
+                'more' => $offset < $result->getTotal(),
+            ]
+        ]);
+    }
+
     public function searchPoshtomats(Request $request)
     {
         if ( ! $request->get('city_ref') || ! (int)$request->get('page')) {

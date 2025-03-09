@@ -10,6 +10,7 @@ use kirillbdev\WCUkrShipping\Includes\Address\RepositoryWarehouseFinder;
 use kirillbdev\WCUkrShipping\Includes\UI\CityUIValue;
 use kirillbdev\WCUkrShipping\Includes\UI\WarehouseUIValue;
 use kirillbdev\WCUkrShipping\Model\OrderProduct;
+use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 
 if ( ! defined('ABSPATH')) {
@@ -42,14 +43,11 @@ class TTNStore
     private $orderProducts = [];
 
     /**
-     * @var NovaPoshtaApi
-     */
-    private $api;
-
-    /**
      * @var array
      */
     private $data = [];
+
+    private ProductDimensionService $productDimensionService;
 
     public function __construct(int $orderId)
     {
@@ -62,6 +60,7 @@ class TTNStore
         $this->orderShipping = WCUSHelper::getOrderShippingMethod($this->order);
 
         $factory = new ProductFactory();
+        $this->productDimensionService = wcus_container()->make(ProductDimensionService::class);
 
         foreach ($this->order->get_items() as $item) {
             /** @var \WC_Order_Item_Product $item */
@@ -73,7 +72,10 @@ class TTNStore
     public function collect()
     {
         $this->collectCommonData();
+        $this->collectSeatsData();
         $this->calculateCost();
+        $this->collectBackwardDelivery();
+        $this->collectPaymentControl();
         $this->collectSender();
         $this->collectRecipient();
         $this->collectHelpers();
@@ -83,6 +85,24 @@ class TTNStore
 
     private function collectCommonData()
     {
+        $payerType = apply_filters(
+            'wcus_ttn_form_payer_type',
+            wc_ukr_shipping_get_option('wc_ukr_shipping_np_ttn_payer_default'),
+            $this->order
+        );
+        if (!in_array($payerType, ['Sender', 'Recipient'], true)) {
+            throw new \InvalidArgumentException("Invalid param `payerType`");
+        }
+
+        $paymentMethod = apply_filters(
+            'wcus_ttn_form_payment_method',
+            wc_ukr_shipping_get_option('wcus_np_payment_method_default'),
+            $this->order
+        );
+        if (!in_array($paymentMethod, ['Cash', 'NonCash'], true)) {
+            throw new \InvalidArgumentException("Invalid param 'paymentMethod'");
+        }
+
         $date = apply_filters('wcus_ttn_form_date', new \DateTime(), $this->order);
         if (!($date instanceof \DateTimeInterface)) {
             throw new \InvalidArgumentException("Parameter 'date' must be correct date");
@@ -90,12 +110,34 @@ class TTNStore
 
         $this->data['ttn'] = [
             'order_id' => $this->order->get_id(),
+            'payer_type' => $payerType,
+            'payment_method' => $paymentMethod,
             'global_params' => 1,
             'weight' => $this->calculateWeight(),
             'date' => $date->format('Y-m-d'),
             'description' => apply_filters('wcus_ttn_form_description', 'Order #' . $this->order->get_id(), $this->order),
-            'barcode' => apply_filters('wcus_ttn_form_barcode', '', $this->order),
+            'barcode' => apply_filters('wcus_ttn_form_barcode', $this->order->get_id(), $this->order),
             'additional' => apply_filters('wcus_ttn_form_additional', '', $this->order)
+        ];
+    }
+
+    private function collectSeatsData(): void
+    {
+        $dimensions = apply_filters(
+            'wcus_ttn_form_dimensions',
+            $this->productDimensionService->getTotalDimensions($this->orderProducts),
+            $this->order
+        );
+
+        $this->data['ttn']['seats'] = [
+            [
+                'id' => 0,
+                'width' => $dimensions['width'],
+                'height' => $dimensions['height'],
+                'length' => $dimensions['length'],
+                'weight' => $this->calculateWeight(),
+                'special' => 0
+            ]
         ];
     }
 
@@ -184,6 +226,40 @@ class TTNStore
     private function getShipmentCost(): float
     {
         return $this->order->get_subtotal() + (float)$this->order->get_total_fees() + (float)$this->order->get_total_tax('') - $this->order->get_total_discount();
+    }
+
+    private function collectBackwardDelivery()
+    {
+        $codPaymentId = wc_ukr_shipping_get_option('wcus_cod_payment_id');
+        $this->data['ttn']['backward_delivery'] = $codPaymentId && $codPaymentId === $this->order->get_payment_method()
+            ? 1
+            : 0;
+        $this->data['ttn']['backward_delivery_type'] = 'Money';
+        $this->data['ttn']['backward_delivery_payer'] = 'Recipient'; // todo: add hook to override
+
+        /**
+         * Enable third-party code to control cost of COD feature
+         * @since 1.16.6
+         */
+        $cost = apply_filters('wcus_ttn_form_cod_cost', $this->getShipmentCost(), $this->order);
+        $this->data['ttn']['backward_delivery_cost'] = ceil($cost);
+    }
+
+    private function collectPaymentControl()
+    {
+        if ((int)wc_ukr_shipping_get_option('wcus_ttn_pay_control_default') && (int)$this->data['ttn']['backward_delivery']) {
+            $this->data['ttn']['backward_delivery'] = 0;
+            $this->data['ttn']['payment_control'] = 1;
+        } else {
+            $this->data['ttn']['payment_control'] = 0;
+        }
+
+        /**
+         * Enable third-party code to control cost of Payment Control feature
+         * @since 1.16.6
+         */
+        $cost = apply_filters('wcus_ttn_form_payment_control_cost', $this->getShipmentCost(), $this->order);
+        $this->data['ttn']['payment_control_cost'] = ceil($cost);
     }
 
     private function checkPoshtomatDelivery(string $warehouseRef): void

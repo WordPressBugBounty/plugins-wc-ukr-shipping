@@ -1,0 +1,52 @@
+{
+    "carrier_account_id": "cc73eeff-a938-4fcd-a732-148ffd8eb15b",
+    "billing": {
+        "paid_by": "recipient",
+        "payment_method": "cash"
+    },
+    "shipment": {
+        "ship_date": "2025-03-09",
+        "ship_from": {
+            "carrier_city_id": "db5c88d0-391c-11dd-90d9-001a92567626",
+            "carrier_warehouse_id": "169227dc-e1c2-11e3-8c4a-0050568002cf"
+        },
+        "ship_to": {
+            "name": "\u041a\u0438\u0440\u0438\u043b\u043b \u0411\u0430\u0431\u0438\u043d\u0435\u0446",
+            "phone": "380632381110",
+            "email": "info@kirillbdev.pro",
+            "carrier_city_id": "db5c88e0-391c-11dd-90d9-001a92567626",
+            "carrier_warehouse_id": "7b422fba-e1b8-11e3-8c4a-0050568002cf"
+        },
+        "parcels": [
+            {
+                "insurance_cost": "150",
+                "weight": {
+                    "value": 0.1,
+                    "unit": "kg"
+                },
+                "dimensions": {
+                    "width": 10,
+                    "height": 10,
+                    "length": 10,
+                    "unit": "cm"
+                },
+                "description": "Order #406"
+            },
+            {
+                "insurance_cost": 0,
+                "weight": {
+                    "value": 0,
+                    "unit": "kg"
+                },
+                "dimensions": {
+                    "width": 0,
+                    "height": 0,
+                    "length": 0,
+                    "unit": "cm"
+                },
+                "description": "-"
+            }
+        ],
+        "external_order_id": "406"
+    }
+}

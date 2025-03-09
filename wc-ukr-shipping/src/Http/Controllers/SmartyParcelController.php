@@ -4,6 +4,7 @@ namespace kirillbdev\WCUkrShipping\Http\Controllers;
 
 use kirillbdev\WCUkrShipping\Api\SmartyParcelApi;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
+use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
 use kirillbdev\WCUSCore\Http\Contracts\ResponseInterface;
 use kirillbdev\WCUSCore\Http\Controller;
 use kirillbdev\WCUSCore\Http\Request;
@@ -228,10 +229,14 @@ class SmartyParcelController extends Controller
                     'downloads' => $downloads,
                 ]
             ]);
-        } catch (\Throwable $e) {
+        } catch (SmartyParcelErrorException $e) {
             return $this->jsonResponse([
                 'success' => false,
-                'error'   => $e->getMessage(),
+                'error'   => [
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage(),
+                    'details' => $e->getDetails(),
+                ],
             ]);
         }
     }

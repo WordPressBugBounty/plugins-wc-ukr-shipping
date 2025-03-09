@@ -114,7 +114,20 @@ class OptionsPage implements ModuleInterface
 
     public function html()
     {
-        echo View::render('settings');
+        $data = [];
+        $gateways = wc()->payment_gateways()->payment_gateways();
+        $paymentMethods = [];
+        foreach ($gateways as $id => $gateway) {
+            $paymentMethods[] = [
+                'id' => $id,
+                'name' => $gateway->get_title()
+            ];
+        }
+        $data['payment_methods'] = $paymentMethods;
+        $data['cod_payment_id'] = wc_ukr_shipping_get_option('wcus_cod_payment_id');
+        $data['payment_control_default'] = (int)wc_ukr_shipping_get_option('wcus_ttn_pay_control_default');
+
+        echo View::render('settings', $data);
     }
 
     public function smartyParcelHtml()

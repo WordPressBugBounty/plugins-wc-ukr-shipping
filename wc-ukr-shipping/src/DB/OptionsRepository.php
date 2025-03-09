@@ -26,7 +26,13 @@ class OptionsRepository
             'wc_ukr_shipping_np_block_pos' => 'billing',
             'wc_ukr_shipping_np_save_warehouse' => 0,
             'wc_ukr_shipping_np_translates_type' => WCUS_TRANSLATE_TYPE_PLUGIN,
-            'wc_ukr_shipping_np_new_ui' => 1
+            'wc_ukr_shipping_np_new_ui' => 1,
+            'wc_ukr_shipping_np_ttn_payer_default' => 'Sender',
+            'wcus_np_payment_method_default' => 'Cash',
+            'wcus_cod_payment_id' => 'cod',
+            'wcus_ttn_width_default' => 10,
+            'wcus_ttn_height_default' => 10,
+            'wcus_ttn_length_default' => 10,
         ];
 
         return get_option($key, isset($defaults[$key]) ? $defaults[$key] : null);

@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, доставка, shipping, woocommerce
 Requires PHP: 7.4
 Tested up to: 6.7
-Stable tag: 1.13.4
+Stable tag: 1.13.5
 
 Simple and comfortable plugin for connect Nova Poshta delivery service to your WooCommerce store.
 
@@ -28,6 +28,7 @@ https://www.youtube.com/watch?v=IFW0B75s54o
 * Ability to calculate cost without adding it to order total
 * Ability to create Nova Poshta TTN (warehouse-warehouse, warehouse-poshtomat)
 * Ability to print shipping labels (A4, marking 85x85, marking 100x100 zebra)
+* Support many functions includes COD and Payment control
 * Integration with popular plugins for localization: WPML and Polylang
 * Support latest versions of Wordpress and WooCommerce
 * Support WooCommerce geo zones
@@ -79,6 +80,13 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.13.5 / (09.03.2025) =
+* Added COD feature
+* Added Payment Control feature
+* Added shipping payer features: shipping payer and payment method
+* Added dimensions support and default dimensions option
+* Checked compatibility with latest Wordpress and WooCommerce versions
 
 = Version 1.13.4 / (03.03.2025) =
 * [Fixed] PHP 8.2+ deprecation notices

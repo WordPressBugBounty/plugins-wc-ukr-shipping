@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Api;
 
+use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUSCore\Http\Request;
 
@@ -89,6 +90,85 @@ final class SmartyParcelApi
 
     public function createLabel(Request $request): array
     {
+        $labelRequest = [
+            'carrier_account_id' => $request->get('sender')['carrier_account_id'],
+            'billing' => [
+                'paid_by' => strtolower($request->get('ttn')['payer_type']),
+                'payment_method' => $request->get('ttn')['payment_method'] === 'NonCash'
+                    ? 'card'
+                    : 'cash',
+            ],
+            'shipment' => [
+                'ship_date' => $request->get('ttn')['date'],
+                'ship_from' => [
+                    'carrier_city_id' => $request->get('sender')['city_ref'],
+                    'carrier_warehouse_id' => $request->get('sender')['warehouse_ref'],
+                ],
+                'ship_to' => [
+                    'name' => sprintf(
+                        '%s %s%s',
+                        $request->get('recipient')['firstname'],
+                        $request->get('recipient')['lastname'],
+                        $request->get('recipient')['middlename']
+                            ? ' ' . $request->get('recipient')['middlename']
+                            : '',
+                    ),
+                    'phone' => WCUSHelper::preparePhone($request->get('recipient')['phone']),
+                    'email' => $request->get('recipient')['email'] ?? null,
+                    'carrier_city_id' => $request->get('recipient')['city_ref'],
+                    'carrier_warehouse_id' => $request->get('recipient')['warehouse_ref'],
+                ],
+            ]
+        ];
+
+        // Parcels
+        $parcels = [];
+        foreach ($request->get('ttn')['seats'] as $index => $seat) {
+            $parcels[] = [
+                'insurance_cost' => $index === 0 ? $request->get('ttn')['cost'] : 0,
+                'weight' => [
+                    'value' => (float)$seat['weight'],
+                    'unit' => 'kg',
+                ],
+                'dimensions' => [
+                    'width' => (int)$seat['width'],
+                    'height' => (int)$seat['height'],
+                    'length' => (int)$seat['length'],
+                    'unit' => 'cm',
+                ],
+                'description' => $index === 0 ? $request->get('ttn')['description'] : '-',
+            ];
+        }
+        $labelRequest['shipment']['parcels'] = $parcels;
+
+        if (!empty($request->get('ttn')['barcode'])) {
+            $labelRequest['shipment']['external_order_id'] =  $request->get('ttn')['barcode'];
+        }
+
+        // Payment Control and COD
+        if ($request->get('ttn')['payment_control'] === '1') {
+            $labelRequest['service_options']['cod'] = [
+                'payment_method' => 'cash_equivalent',
+                'value' => [
+                    'amount' => (float)$request->get('ttn')['payment_control_cost'],
+                    'currency' => 'UAH',
+                ],
+            ];
+        } elseif ($request->get('ttn')['backward_delivery'] === '1') {
+            $labelRequest['service_options']['cod'] = [
+                'payment_method' => 'cash',
+                'value' => [
+                    'amount' => (float)$request->get('ttn')['backward_delivery_cost'],
+                    'currency' => 'UAH',
+                ],
+                'options' => [
+                    'nova_poshta_cod_payer' => $request->get('ttn')['backward_delivery_payer'] === 'Sender'
+                        ? 'sender'
+                        : 'recipient',
+                ]
+            ];
+        }
+
         $response = wp_remote_post(self::API_URL . '/beta/labels', [
             'headers' => [
                 'Accept' => 'application/json',
@@ -96,40 +176,7 @@ final class SmartyParcelApi
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
             ],
             'timeout' => 10,
-            'body' => json_encode([
-                'carrier_account_id' => $request->get('sender')['carrier_account_id'],
-                'shipment' => [
-                    'ship_date' => $request->get('ttn')['date'],
-                    'ship_from' => [
-                        'carrier_city_id' => $request->get('sender')['city_ref'],
-                        'carrier_warehouse_id' => $request->get('sender')['warehouse_ref'],
-                    ],
-                    'ship_to' => [
-                        'name' => sprintf(
-                            '%s %s%s',
-                            $request->get('recipient')['firstname'],
-                            $request->get('recipient')['lastname'],
-                            $request->get('recipient')['middlename']
-                                ? ' ' . $request->get('recipient')['middlename']
-                                : '',
-                        ),
-                        'phone' => WCUSHelper::preparePhone($request->get('recipient')['phone']),
-                        'email' => $request->get('recipient')['email'] ?? null,
-                        'carrier_city_id' => $request->get('recipient')['city_ref'],
-                        'carrier_warehouse_id' => $request->get('recipient')['warehouse_ref'],
-                    ],
-                    'parcels' => [
-                        [
-                            'insurance_cost' => $request->get('ttn')['cost'],
-                            'weight' => [
-                                'value' => $request->get('ttn')['weight'],
-                                'unit' => 'kg',
-                            ],
-                            'description' => $request->get('ttn')['description']
-                        ]
-                    ],
-                ]
-            ])
+            'body' => json_encode($labelRequest)
         ]);
 
         return $this->processResponse($response);
@@ -186,12 +233,10 @@ final class SmartyParcelApi
             return $payload;
         }
 
-        throw new \Exception(
-            sprintf(
-                'API Error. status_code - %d, error_message: %s',
-                $code,
-                $payload['error']['message'] ?? ''
-            )
+        throw new SmartyParcelErrorException(
+            $payload['error']['code'] ?? 0,
+            $payload['error']['message'] ?? 'Unknown error',
+            $payload['error']['details'] ?? []
         );
     }
 }
