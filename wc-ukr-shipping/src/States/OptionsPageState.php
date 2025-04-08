@@ -24,6 +24,25 @@ class OptionsPageState extends AppState
                 'senderCity' => CityUIValue::fromFinder($cityFinder),
                 'senderWarehouse' => WarehouseUIValue::fromFinder($warehouseFinder),
             ],
+            'shippingCost' => $this->getShippingCostState(),
         ];
+    }
+
+    private function getShippingCostState(): array
+    {
+        $totalCost = wc_ukr_shipping_get_option('wc_ukr_shipping_np_relative_price');
+
+        $state = [
+            'calc_type' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_price_type'),
+            'fixed_price' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_price'),
+            'cargo_type' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_cargo_type'),
+            'total_cost' => $totalCost
+                ? json_decode($totalCost, true)
+                : [
+                    [ 'total' => 0, 'price' => 50 ]
+                ],
+        ];
+
+        return $state;
     }
 }

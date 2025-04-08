@@ -3,6 +3,7 @@
 namespace kirillbdev\WCUkrShipping\Model\Document;
 
 use kirillbdev\WCUkrShipping\Address\Provider\AddressProviderInterface;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 
 if ( ! defined('ABSPATH')) {
@@ -90,5 +91,26 @@ class ShippingRecipientAddress
         } else {
             $data['recipient']['custom_address'] = '';
         }
+
+        $data['recipient']['settlement'] = [
+            'value' => $this->orderShipping->get_meta('wcus_settlement_ref'),
+            'name' => WCUSHelper::prepareUIString($this->orderShipping->get_meta('wcus_settlement_full')),
+            'meta' => [
+                'name' => WCUSHelper::prepareUIString($this->orderShipping->get_meta('wcus_settlement_name')),
+                'area' => WCUSHelper::prepareUIString($this->orderShipping->get_meta('wcus_settlement_area')),
+                'region' => WCUSHelper::prepareUIString($this->orderShipping->get_meta('wcus_settlement_region'))
+            ]
+        ];
+
+        $data['recipient']['street'] = [
+            'value' => $this->orderShipping->get_meta('wcus_street_ref'),
+            'name' => WCUSHelper::prepareUIString($this->orderShipping->get_meta('wcus_street_full')),
+            'meta' => [
+                'name' => WCUSHelper::prepareUIString($this->orderShipping->get_meta('wcus_street_name'))
+            ]
+        ];
+
+        $data['recipient']['house'] = $this->orderShipping->get_meta('wcus_house');
+        $data['recipient']['flat'] = $this->orderShipping->get_meta('wcus_flat');
     }
 }

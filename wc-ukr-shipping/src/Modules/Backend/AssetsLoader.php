@@ -4,6 +4,7 @@ namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use kirillbdev\WCUkrShipping\Foundation\State;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 use kirillbdev\WCUkrShipping\Traits\StateInitiatorTrait;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
@@ -17,10 +18,14 @@ class AssetsLoader implements ModuleInterface
     use StateInitiatorTrait;
 
     private $translateService;
+    private SmartyParcelService $smartyParcelService;
 
-    public function __construct(TranslateService $translateService)
-    {
+    public function __construct(
+        TranslateService $translateService,
+        SmartyParcelService $smartyParcelService
+    ) {
         $this->translateService = $translateService;
+        $this->smartyParcelService = $smartyParcelService;
     }
 
     public function init()
@@ -110,6 +115,10 @@ class AssetsLoader implements ModuleInterface
                 'nova_poshta_icon_url' => WC_UKR_SHIPPING_PLUGIN_URL . 'image/nova-poshta-icon.png',
             ],
             'default_cities' => $this->getDefaultCities(),
+            'smarty_parcel' => [
+                'account' => $this->smartyParcelService->getAccountInfo(),
+                'autoTracking' => (int)wc_ukr_shipping_get_option('wcus_sp_auto_tracking'),
+            ]
         ];
 
         $i18n = [];

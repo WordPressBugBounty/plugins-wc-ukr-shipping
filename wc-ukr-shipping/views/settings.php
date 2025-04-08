@@ -37,6 +37,7 @@
                         'payment_methods' => $payment_methods,
                         'cod_payment_id' => $cod_payment_id,
                         'payment_control_default' => $payment_control_default,
+                        'carrierAccounts' => $carrierAccounts,
                     ]); ?>
                 </form>
             </div>

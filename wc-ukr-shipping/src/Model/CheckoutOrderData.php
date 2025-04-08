@@ -4,6 +4,7 @@ namespace kirillbdev\WCUkrShipping\Model;
 
 use kirillbdev\WCUkrShipping\Contracts\AddressInterface;
 use kirillbdev\WCUkrShipping\Contracts\OrderDataInterface;
+use kirillbdev\WCUkrShipping\Factories\ProductFactory;
 use kirillbdev\WCUkrShipping\Model\Address\CheckoutAddress;
 
 if ( ! defined('ABSPATH')) {
@@ -124,5 +125,22 @@ class CheckoutOrderData implements OrderDataInterface
     public function getShippingType(): ?string
     {
         return $this->data['shipping_type'] ?? null;
+    }
+
+    public function getProducts()
+    {
+        $products = [];
+        $productFactory = new ProductFactory();
+        $items = wc()->cart->get_cart();
+
+        foreach ($items as $item) {
+            $product = $productFactory->makeCartItemProduct($item);
+
+            if ($product) {
+                $products[] = $product;
+            }
+        }
+
+        return $products;
     }
 }

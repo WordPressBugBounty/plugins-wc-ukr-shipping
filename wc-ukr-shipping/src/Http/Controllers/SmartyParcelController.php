@@ -39,30 +39,8 @@ class SmartyParcelController extends Controller
                 'success' => true,
                 'data' => [
                     'auth_state' => get_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS),
+                    'account' => $data,
                 ]
-            ]);
-        } catch (\Throwable $e) {
-            return $this->jsonResponse([
-                'success' => false,
-                'error'   => $e->getMessage(),
-            ]);
-        }
-    }
-
-    public function register(Request $request): ResponseInterface
-    {
-        try {
-            $apiKey = $this->api->register(
-                $request->get('email'),
-                $request->get('password'),
-                $request->get('first_name'),
-                $request->get('last_name'),
-            );
-            update_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY, $apiKey);
-            update_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS, 'waiting_verification');
-
-            return $this->jsonResponse([
-                'success' => true,
             ]);
         } catch (\Throwable $e) {
             return $this->jsonResponse([
@@ -84,6 +62,7 @@ class SmartyParcelController extends Controller
                 'success' => true,
                 'data' => [
                     'auth_state' => get_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS),
+                    'account' => $data,
                 ]
             ]);
         } catch (\Throwable $e) {
@@ -100,6 +79,8 @@ class SmartyParcelController extends Controller
             delete_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
             delete_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS);
             delete_option(WCUS_OPTION_SMARTY_PARCEL_CARRIERS);
+            delete_option('wcus_nova_poshta_default_carrier');
+            delete_transient('smarty_parcel_account');
 
             return $this->jsonResponse([
                 'success' => true,
@@ -216,6 +197,15 @@ class SmartyParcelController extends Controller
                     'format' => $format,
                     'url' => admin_url('admin.php?page=wc_ukr_shipping_print_label&label_id=' . $shippingLabel['id'] . '&format=' . $format),
                 ];
+            }
+
+            if ((int)$request->get('options')['autoTracking'] === 1) {
+                try {
+                    $this->api->addTracking($response['tracking_number']);
+                    $this->shippingLabelsRepository->addToTracking((int)$shippingLabel['id']);
+                } catch (\Throwable $e) {
+                    // todo: logs ?
+                }
             }
 
             return $this->jsonResponse([

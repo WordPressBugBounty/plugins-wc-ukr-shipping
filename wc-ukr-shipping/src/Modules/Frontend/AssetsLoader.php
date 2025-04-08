@@ -95,7 +95,8 @@ class AssetsLoader implements ModuleInterface
                 ? 1
                 : 0,
             'options' => [
-                'address_shipping_enable' => (int)wc_ukr_shipping_get_option('wc_ukr_shipping_address_shipping')
+                'address_shipping_enable' => (int)wc_ukr_shipping_get_option('wc_ukr_shipping_address_shipping'),
+                'apiAddressEnable' => (int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui'),
             ]
         ];
 
@@ -116,6 +117,11 @@ class AssetsLoader implements ModuleInterface
                     'text_more' => __('Load more', 'wc-ukr-shipping-i18n'),
                     'text_not_found' => __('Nothing found', 'wc-ukr-shipping-i18n'),
                     'text_more_chars' => __('Enter more chars', 'wc-ukr-shipping-i18n'),
+                    'settlement_placeholder' => __('Settlement', 'wc-ukr-shipping-i18n'),
+                    'street_placeholder' => __('Street', 'wc-ukr-shipping-i18n'),
+                    'house_placeholder' => __('House', 'wc-ukr-shipping-i18n'),
+                    'flat_placeholder' => __('Flat', 'wc-ukr-shipping-i18n'),
+                    'text_internal_error' => __('Something went wrong', 'wc-ukr-shipping-i18n'),
                 ]
             ];
 

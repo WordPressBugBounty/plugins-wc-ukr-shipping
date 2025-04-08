@@ -1,22 +1,22 @@
 <div id="wcus-pane-shipping" class="wcus-tab-pane">
 
-    <div class="wcus-form-group wcus-form-group--horizontal">
-        <label class="wcus-switcher">
-            <input type="checkbox" name="wcus[cost_view_only]" value="1" <?php echo (int)get_option('wcus_cost_view_only') === 1 ? 'checked' : ''; ?>>
-            <span class="wcus-switcher__control"></span>
-        </label>
-        <div class="wcus-control-label"><?= __('Calculate shipping cost for view only', 'wc-ukr-shipping-i18n'); ?></div>
-    </div>
+    <?php
+        \kirillbdev\WCUkrShipping\Helpers\HtmlHelper::switcherField(
+            'wcus[cost_view_only]',
+            __('Calculate shipping cost for view only', 'wc-ukr-shipping-i18n'),
+            (int)wc_ukr_shipping_get_option('wcus_cost_view_only')
+        );
+    ?>
 
-    <div class="wcus-form-group">
-        <label for="wc_ukr_shipping_np_price"><?= __('Shipping cost', 'wc-ukr-shipping-i18n'); ?></label>
-        <input type="number" id="wc_ukr_shipping_np_price"
-               name="wc_ukr_shipping[np_price]"
-               class="wcus-form-control"
-               min="0"
-               step="0.000001"
-               value="<?= get_option('wc_ukr_shipping_np_price', 0); ?>">
-    </div>
+    <?php
+        \kirillbdev\WCUkrShipping\Helpers\HtmlHelper::switcherField(
+            'wcus[cod_payment_active]',
+            __('Take COD into account when calculating shipping cost', 'wc-ukr-shipping-i18n'),
+            (int)wc_ukr_shipping_get_option('wcus_cod_payment_active')
+        );
+    ?>
+
+    <div id="wcus-settings-shipping-cost"></div>
 
     <div class="wcus-form-group">
         <label for="wc_ukr_shipping_np_block_pos"><?= __('Shipping block position on checkout page', 'wc-ukr-shipping-i18n'); ?></label>
@@ -49,5 +49,13 @@
       </div>
       <div class="wcus-form-group__tooltip"><?= __('This option is not working with old UI', 'wc-ukr-shipping-i18n'); ?></div>
     </div>
+
+    <?php
+        \kirillbdev\WCUkrShipping\Helpers\HtmlHelper::switcherField(
+                'wc_ukr_shipping[np_address_api_ui]',
+            __('Use Nova Poshta API for address shipping', 'wc-ukr-shipping-i18n'),
+            (int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui')
+        );
+    ?>
 
 </div>

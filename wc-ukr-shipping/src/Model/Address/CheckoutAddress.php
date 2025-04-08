@@ -51,6 +51,12 @@ class CheckoutAddress implements AddressInterface
             return $this->data['wcus_city_ref'];
         }
 
+        if ($this->isAddressShipping()
+            && (int)wc_ukr_shipping_get_option('wcus_checkout_new_ui') === 1
+            && (int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui') === 1) {
+            return $this->data['wcus_np_' . $this->type . '_settlement_ref'];
+        }
+
         return $this->data['wcus_np_' . $this->type . '_city'];
     }
 
@@ -96,5 +102,41 @@ class CheckoutAddress implements AddressInterface
         }
 
         return false;
+    }
+
+    public function getSettlementInfo(string $key): string
+    {
+        $key = 'wcus_np_' . $this->type . '_settlement_' . $key;
+
+        return empty($this->data[$key])
+            ? ''
+            : $this->data[$key];
+    }
+
+    public function getStreetInfo(string $key): string
+    {
+        $key = 'wcus_np_' . $this->type . '_street_' . $key;
+
+        return empty($this->data[$key])
+            ? ''
+            : $this->data[$key];
+    }
+
+    public function getHouse(): string
+    {
+        $key = 'wcus_np_' . $this->type . '_house';
+
+        return empty($this->data[$key])
+            ? ''
+            : $this->data[$key];
+    }
+
+    public function getFlat(): string
+    {
+        $key = 'wcus_np_' . $this->type . '_flat';
+
+        return empty($this->data[$key])
+            ? ''
+            : $this->data[$key];
     }
 }

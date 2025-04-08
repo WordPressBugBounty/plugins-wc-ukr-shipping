@@ -44,6 +44,7 @@ final class WCUkrShipping extends Kernel
             \kirillbdev\WCUkrShipping\Modules\Backend\AssetsLoader::class,
             \kirillbdev\WCUkrShipping\Modules\Backend\ShippingItemDrawer::class,
             \kirillbdev\WCUkrShipping\Modules\Backend\Orders::class,
+            \kirillbdev\WCUkrShipping\Modules\Backend\Jobs::class,
             // Frontned
             \kirillbdev\WCUkrShipping\Modules\Frontend\AssetsLoader::class,
             \kirillbdev\WCUkrShipping\Modules\Frontend\Address::class,

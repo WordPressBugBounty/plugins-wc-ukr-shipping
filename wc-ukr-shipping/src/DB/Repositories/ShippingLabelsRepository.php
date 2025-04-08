@@ -47,8 +47,25 @@ class ShippingLabelsRepository
                 'carrier_slug' => $carrierSlug,
                 'order_id' => $orderId,
                 'tracking_number' => $trackingNumber,
+                'tracking_active' => 0,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
+    }
+
+    public function addToTracking(int $id): void
+    {
+        global $wpdb;
+        $wpdb->update(
+            DB::prefixedTable('wc_ukr_shipping_labels'),
+            [
+                'tracking_active' => 1,
+                'tracking_status' => 'PENDING',
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [ 'id' => $id ],
+            [ '%d', '%s', '%s' ],
+            [ '%d' ]
+        );
     }
 }

@@ -9,6 +9,7 @@ use kirillbdev\WCUkrShipping\Http\Controllers\MigrationController;
 use kirillbdev\WCUkrShipping\Http\Controllers\OptionsController;
 use kirillbdev\WCUkrShipping\Http\Controllers\SmartyParcelController;
 use kirillbdev\WCUkrShipping\Model\Document\TTNStore;
+use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUkrShipping\States\OptionsPageState;
 use kirillbdev\WCUkrShipping\States\SmartyParcelState;
 use kirillbdev\WCUkrShipping\States\WarehouseLoaderState;
@@ -22,10 +23,14 @@ if ( ! defined('ABSPATH')) {
 
 class OptionsPage implements ModuleInterface
 {
+    private SmartyParcelService $smartyParcelService;
     private ShippingLabelsRepository $shippingLabelsRepository;
 
-    public function __construct(ShippingLabelsRepository $shippingLabelsRepository)
-    {
+    public function __construct(
+        SmartyParcelService $smartyParcelService,
+        ShippingLabelsRepository $shippingLabelsRepository
+    ) {
+        $this->smartyParcelService = $smartyParcelService;
         $this->shippingLabelsRepository = $shippingLabelsRepository;
     }
 
@@ -43,7 +48,6 @@ class OptionsPage implements ModuleInterface
             new Route('wcus_load_cities', AddressBookController::class, 'loadCities'),
             new Route('wcus_load_warehouses', AddressBookController::class, 'loadWarehouses'),
             new Route('wcus_re_run_migrations', MigrationController::class, 'reRunMigrations'),
-            new Route('wcus_smarty_parcel_register', SmartyParcelController::class, 'register'),
             new Route('wcus_smarty_parcel_check_verification', SmartyParcelController::class, 'checkVerification'),
             new Route('wcus_smarty_parcel_connect', SmartyParcelController::class, 'connect'),
             new Route('wcus_smarty_parcel_disconnect', SmartyParcelController::class, 'disconnect'),
@@ -126,6 +130,7 @@ class OptionsPage implements ModuleInterface
         $data['payment_methods'] = $paymentMethods;
         $data['cod_payment_id'] = wc_ukr_shipping_get_option('wcus_cod_payment_id');
         $data['payment_control_default'] = (int)wc_ukr_shipping_get_option('wcus_ttn_pay_control_default');
+        $data['carrierAccounts'] = $this->smartyParcelService->getCarrierAccounts();
 
         echo View::render('settings', $data);
     }

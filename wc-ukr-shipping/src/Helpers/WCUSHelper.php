@@ -43,6 +43,11 @@ class WCUSHelper
         return $phone;
     }
 
+    public static function prepareUIString($str)
+    {
+        return wp_unslash(wp_specialchars_decode($str, ENT_QUOTES));
+    }
+
     public static function getDefaultCities()
     {
         return [

@@ -116,14 +116,21 @@ class WCUSOrder
         }
     }
 
-    /**
-     * @param AddressInterface $address
-     */
-    private function saveAddressShipping($address)
+    private function saveAddressShipping(AddressInterface $address)
     {
-        $this->saveArea($address);
-        $this->saveCity($address);
-        $this->setAddress(sanitize_text_field($address->getCustomAddress()));
+        if (1 === (int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui') || is_admin()) {
+            $this->setCity($address->getSettlementInfo('full'));
+            $this->setAddress(sprintf(
+                '%s, %s%s',
+                $address->getStreetInfo('full'),
+                $address->getHouse(),
+                $address->getFlat() ? (' кв. ' . $address->getFlat()) : ''
+            ));
+        } else {
+            $this->saveArea($address);
+            $this->saveCity($address);
+            $this->setAddress(sanitize_text_field($address->getCustomAddress()));
+        }
     }
 
     /**

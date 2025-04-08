@@ -2,6 +2,8 @@
 
 namespace kirillbdev\WCUkrShipping\Contracts;
 
+use kirillbdev\WCUkrShipping\Model\OrderProduct;
+
 if ( ! defined('ABSPATH')) {
     exit;
 }
@@ -49,4 +51,9 @@ interface OrderDataInterface
     public function isShipToDifferentAddress();
 
     public function getShippingType(): ?string;
+
+    /**
+     * @return OrderProduct[]
+     */
+    public function getProducts();
 }

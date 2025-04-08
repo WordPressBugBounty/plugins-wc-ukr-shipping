@@ -2,7 +2,17 @@
     <?php if ($shipping_label !== null) { ?>
         <div style="text-align: center;">
             <div class="wcus-label-widget wcus-label-widget--lg wcus-mb-1"><?php echo esc_html($shipping_label['tracking_number']); ?></div>
-            <div class="wcus-mb-2">
+            <?php if (!empty($shipping_label['carrier_status_code']) || !empty($shipping_label['carrier_status'])) { ?>
+                <div class="wcus-text-center wcus-mb-1" style="color: #666;">
+                    <?php echo esc_html($shipping_label['carrier_status']); ?>
+                    [<?php echo esc_html($shipping_label['carrier_status_code']); ?>]
+                </div>
+            <?php } elseif (!empty($shipping_label['tracking_status'])) { ?>
+                <div class="wcus-text-center wcus-mb-1" style="color: #666;">
+                    Tracking API: <?php echo esc_html($shipping_label['tracking_status']); ?>
+                </div>
+            <?php } ?>
+            <div class="wcus-mb-1">
                 <a href="#" class="wcus-svg-btn wcus-svg-btn--error j-wcus-label-delete"
                    style="font-size: 13px; color: #f00;"
                    data-label-id="<?php echo esc_attr($shipping_label['id']); ?>">

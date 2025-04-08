@@ -90,6 +90,45 @@ final class SmartyParcelApi
 
     public function createLabel(Request $request): array
     {
+        $shipTo = [
+            'name' => sprintf(
+                '%s %s%s',
+                $request->get('recipient')['firstname'],
+                $request->get('recipient')['lastname'],
+                $request->get('recipient')['middlename']
+                    ? ' ' . $request->get('recipient')['middlename']
+                    : '',
+            ),
+            'phone' => WCUSHelper::preparePhone($request->get('recipient')['phone']),
+            'email' => $request->get('recipient')['email'] ?? null,
+        ];
+        if ($request->get('recipient')['service_type'] === 'Warehouse') {
+            $shipTo['carrier_city_id'] = $request->get('recipient')['city_ref'];
+            $shipTo['carrier_warehouse_id'] = $request->get('recipient')['warehouse_ref'];
+        } else {
+            $shipTo['country_code'] = 'UA';
+            $shipTo['city'] = $request->get('recipient')['settlement_name'];
+            $shipTo['state'] = $request->get('recipient')['settlement_area'];
+            $shipTo['district'] = $request->get('recipient')['settlement_region'];
+            $shipTo['address_1'] = $request->get('recipient')['street_name'];
+            $shipTo['address_2'] = $request->get('recipient')['house'];
+            $shipTo['address_3'] = $request->get('recipient')['flat'];
+        }
+
+        $shipFrom = [];
+        if ($request->get('sender')['service_type'] === 'Warehouse') {
+            $shipFrom['carrier_city_id'] = $request->get('sender')['city_ref'];
+            $shipFrom['carrier_warehouse_id'] = $request->get('sender')['warehouse_ref'];
+        } else {
+            $shipFrom['country_code'] = 'UA';
+            $shipFrom['city'] = $request->get('sender')['settlement_name'];
+            $shipFrom['state'] = $request->get('sender')['settlement_area'];
+            $shipFrom['district'] = $request->get('sender')['settlement_region'];
+            $shipFrom['address_1'] = $request->get('sender')['street_name'];
+            $shipFrom['address_2'] = $request->get('sender')['house'];
+            $shipFrom['address_3'] = $request->get('sender')['flat'];
+        }
+
         $labelRequest = [
             'carrier_account_id' => $request->get('sender')['carrier_account_id'],
             'billing' => [
@@ -100,24 +139,8 @@ final class SmartyParcelApi
             ],
             'shipment' => [
                 'ship_date' => $request->get('ttn')['date'],
-                'ship_from' => [
-                    'carrier_city_id' => $request->get('sender')['city_ref'],
-                    'carrier_warehouse_id' => $request->get('sender')['warehouse_ref'],
-                ],
-                'ship_to' => [
-                    'name' => sprintf(
-                        '%s %s%s',
-                        $request->get('recipient')['firstname'],
-                        $request->get('recipient')['lastname'],
-                        $request->get('recipient')['middlename']
-                            ? ' ' . $request->get('recipient')['middlename']
-                            : '',
-                    ),
-                    'phone' => WCUSHelper::preparePhone($request->get('recipient')['phone']),
-                    'email' => $request->get('recipient')['email'] ?? null,
-                    'carrier_city_id' => $request->get('recipient')['city_ref'],
-                    'carrier_warehouse_id' => $request->get('recipient')['warehouse_ref'],
-                ],
+                'ship_from' => $shipFrom,
+                'ship_to' => $shipTo,
             ]
         ];
 
@@ -207,6 +230,82 @@ final class SmartyParcelApi
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
             ],
             'timeout' => 5,
+        ]);
+
+        return $this->processResponse($response);
+    }
+
+    public function estimateRates(
+        string $carrierAccountId,
+        string $shipFrom,
+        string $shipTo,
+        string $deliveryType,
+        float $declaredValue,
+        float $weight
+    ): array {
+        $response = wp_remote_post(self::API_URL . "/beta/rates/estimate", [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+            ],
+            'timeout' => 5,
+            'body' => json_encode([
+                'carrier_account_id' => $carrierAccountId,
+                'delivery_type' => $deliveryType,
+                'ship_from' => [
+                    'country_code' => 'UA',
+                    'carrier_city_id' => $shipFrom,
+                ],
+                'ship_to' => [
+                    'country_code' => 'UA',
+                    'carrier_city_id' => $shipTo,
+                ],
+                'declared_value' => [
+                    'amount' => $declaredValue,
+                    'currency' => 'UAH',
+                ],
+                'weight' => [
+                    'value' => $weight,
+                    'unit' => 'kg',
+                ]
+            ])
+        ]);
+
+        return $this->processResponse($response);
+    }
+
+    public function addTracking(string $trackingNumber): array
+    {
+        $response = wp_remote_post(self::API_URL . "/beta/trackings", [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+            ],
+            'timeout' => 5,
+            'body' => json_encode([
+                'tracking_number' => $trackingNumber,
+                'carrier_slug' => 'nova_poshta',
+            ]),
+        ]);
+
+        return $this->processResponse($response);
+    }
+
+    public function getTrackings(array $trackingNumbers): array
+    {
+        $response = wp_remote_post(self::API_URL . "/beta/trackings/search", [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+            ],
+            'timeout' => 5,
+            'body' => json_encode([
+                'tracking_numbers' => $trackingNumbers,
+                'limit' => 100, // todo: hardcoded
+            ]),
         ]);
 
         return $this->processResponse($response);

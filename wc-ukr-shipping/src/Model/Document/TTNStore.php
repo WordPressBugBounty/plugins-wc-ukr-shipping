@@ -177,6 +177,29 @@ class TTNStore
 
         $this->data['sender']['default_warehouse'] = WarehouseUIValue::fromFinder($warehouseFinder);
         $this->data['sender']['warehouse_ref'] = $this->data['sender']['default_warehouse']['value'];
+        $this->data['sender']['service_type'] = 'Warehouse'; // todo: hardcoded
+
+        // Doors shipping
+        $this->data['sender']['settlement'] = [
+            'value' => '',
+            'name' => '',
+            'meta' => [
+                'name' => '',
+                'area' => '',
+                'region' => '',
+            ]
+        ];
+
+        $this->data['sender']['street'] = [
+            'value' => '',
+            'name' => '',
+            'meta' => [
+                'name' => '',
+            ]
+        ];
+
+        $this->data['sender']['house'] = '';
+        $this->data['sender']['flat'] = '';
     }
 
     private function collectRecipient(): void

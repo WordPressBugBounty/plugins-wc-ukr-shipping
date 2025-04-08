@@ -51,4 +51,20 @@ class HtmlHelper
 
 		echo $html;
 	}
+
+    public static function switcherField(string $name, string $label, bool $checked): void
+    {
+    ?>
+        <div class="wcus-form-group wcus-form-group--horizontal">
+            <label class="wcus-switcher">
+                <input type="hidden" name="<?php echo esc_attr($name); ?>" value="0">
+                <input type="checkbox"
+                       name="<?php echo esc_attr($name); ?>"
+                       value="1" <?php echo $checked ? 'checked' : ''; ?>>
+                <span class="wcus-switcher__control"></span>
+            </label>
+            <div class="wcus-control-label"><?php echo esc_html($label); ?></div>
+        </div>
+    <?php
+    }
 }

@@ -33,6 +33,8 @@ class OptionsRepository
             'wcus_ttn_width_default' => 10,
             'wcus_ttn_height_default' => 10,
             'wcus_ttn_length_default' => 10,
+            'wc_ukr_shipping_np_address_api_ui' => 0,
+            'wcus_sp_auto_tracking' => 0,
         ];
 
         return get_option($key, isset($defaults[$key]) ? $defaults[$key] : null);
@@ -41,11 +43,19 @@ class OptionsRepository
     public function save($data)
     {
         foreach ($data['wc_ukr_shipping'] as $key => $value) {
-            update_option('wc_ukr_shipping_' . $key, sanitize_text_field($value));
+            if (is_array($value)) {
+                update_option('wc_ukr_shipping_' . $key, json_encode($value));
+            } else {
+                update_option('wc_ukr_shipping_' . $key, sanitize_text_field($value));
+            }
         }
 
         foreach ($data['wcus'] as $key => $value) {
-            update_option('wcus_' . $key, sanitize_text_field($value));
+            if (is_array($value)) {
+                update_option('wcus_' . $key, json_encode($value));
+            } else {
+                update_option('wcus_' . $key, sanitize_text_field($value));
+            }
         }
 
         if ( ! isset($data['wcus']['cost_view_only'])) {

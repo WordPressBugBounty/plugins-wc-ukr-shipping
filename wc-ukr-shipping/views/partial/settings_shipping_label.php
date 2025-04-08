@@ -5,6 +5,17 @@
         </div>
     </div>
 
+    <div class="wcus-form-group">
+        <label for="wcus_nova_poshta_default_carrier"><?php esc_html_e('Default carrier account', 'wc-ukr-shipping-i18n'); ?></label>
+        <select id="wcus_nova_poshta_default_carrier" name="wcus[nova_poshta_default_carrier]" class="wcus-form-control">
+            <?php foreach ($carrierAccounts as $account) { ?>
+                <option value="<?php echo esc_attr($account['id']); ?>" <?php echo get_option('wcus_nova_poshta_default_carrier') === $account['id'] ? 'selected' : ''; ?>>
+                    <?php echo esc_html($account['name']); ?>
+                </option>
+            <?php } ?>
+        </select>
+    </div>
+
     <div id="wcus-settings-ttn-sender"></div>
 
     <?php
@@ -87,11 +98,27 @@
 
     <div class="wcus-form-group wcus-form-group--horizontal">
         <label class="wcus-switcher">
-            <input type="hidden" name="wcus[ttn_pay_control_default]" value="0">
+            <input type="hidden" name="" value="0">
             <input type="checkbox" name="wcus[ttn_pay_control_default]" value="1" <?php echo $payment_control_default === 1 ? 'checked' : ''; ?>>
             <span class="wcus-switcher__control"></span>
         </label>
         <div class="wcus-control-label"><?php esc_html_e('Payment control', 'wc-ukr-shipping-i18n'); ?></div>
     </div>
+
+    <?php
+        \kirillbdev\WCUkrShipping\Helpers\HtmlHelper::switcherField(
+            'wcus[ttn_pay_control_default]',
+            __('Payment control', 'wc-ukr-shipping-i18n'),
+            $payment_control_default === 1
+        );
+    ?>
+
+    <?php
+        \kirillbdev\WCUkrShipping\Helpers\HtmlHelper::switcherField(
+            'wcus[sp_auto_tracking]',
+            __('Automatically add shipments to tracking', 'wc-ukr-shipping-i18n'),
+            (int)wc_ukr_shipping_get_option('wcus_sp_auto_tracking') === 1
+        );
+    ?>
 
 </div>

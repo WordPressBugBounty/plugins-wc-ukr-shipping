@@ -3,6 +3,7 @@
 namespace kirillbdev\WCUkrShipping\States;
 
 use kirillbdev\WCUkrShipping\Includes\AppState;
+use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -10,10 +11,22 @@ if ( ! defined('ABSPATH')) {
 
 class SmartyParcelState extends AppState
 {
+    private SmartyParcelService $smartyParcelService;
+
+    public function __construct(SmartyParcelService $smartyParcelService)
+    {
+        $this->smartyParcelService = $smartyParcelService;
+    }
+
     protected function getState(): array
     {
+        $authStatus = $this->getAuthState();
+
         return [
-            'auth_state' => $this->getAuthState(),
+            'auth_state' => $authStatus,
+            'account' => $authStatus === 'connected'
+                ? $this->smartyParcelService->getAccountInfo()
+                : [],
         ];
     }
 

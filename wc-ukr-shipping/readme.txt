@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, доставка, shipping, woocommerce
 Requires PHP: 7.4
 Tested up to: 6.7
-Stable tag: 1.13.5
+Stable tag: 1.14.0
 
 Simple and comfortable plugin for connect Nova Poshta delivery service to your WooCommerce store.
 
@@ -23,7 +23,7 @@ https://www.youtube.com/watch?v=IFW0B75s54o
 == Features ==
 
 * Simple and intuitive setup
-* Ability to select Nova Poshta warehouse or poshtomat on checkout page
+* Ability to select Nova Poshta warehouse, doors or poshtomat on checkout page
 * Ability to setup fixed shipping cost
 * Ability to calculate cost without adding it to order total
 * Ability to create Nova Poshta TTN (warehouse-warehouse, warehouse-poshtomat)
@@ -33,24 +33,21 @@ https://www.youtube.com/watch?v=IFW0B75s54o
 * Support latest versions of Wordpress and WooCommerce
 * Support WooCommerce geo zones
 
-== PRO version ==
+== PRO version (SmartyParcel Advanced Plan) ==
 
-WC Ukraine Shipping PRO has additional premium features that helps you to optimize work with your clients
+WC Ukraine Shipping has additional premium features that helps you to optimize work with your clients
 
-* Full address shipping integration (using Nova Poshta address API)
-* Automatic calculation of shipping costs (via Nova Poshta API)
+* Automatic calculation of shipping costs (via SmartyParcel Rates API)
 * Shipping costs calculation based on order total
 * Ability to separate cost calculation for address shipping
-* Ability to generate TTN for all types: W2W, W2D, D2W, D2D
-* Ability to mass generation of TTN in one click
-* Print TTN of all types: A4, 85x85, 100x100 (zebra)
+* Ability to mass generation of shipping labels in one click
+* Parcel tracking
 * Automatic email notifications after generating TTN
-* Automatic sms notifications after generating TTN (need extra addon)
-* Cloud features (Tracking, Performance address API)
+* Automatic sms notifications after generating TTN
 * [Automation] No-code business-processes constructor
 * Premium support
 
-[Buy PRO version](https://kirillbdev.pro/wc-ukr-shipping-pro/)
+[Switch to SmartyParcel Advanced](https://kirillbdev.pro/wc-ukr-shipping-pro/)
 
 == Installation ==
 
@@ -80,6 +77,13 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.14.0 / (08.04.2025) =
+* Added ship to doors feature
+* Implement SmartyParcel Rates API (Advanced plan only)
+* Implement SmartyParcel Tracking API (Advanced plan only)
+* Removed jQuery deprecated methods from checkout.js
+* Checked compatibility with latest Wordpress and WooCommerce versions
 
 = Version 1.13.5 / (09.03.2025) =
 * Added COD feature

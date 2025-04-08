@@ -36,4 +36,12 @@ interface AddressInterface
      * @return bool
      */
     public function isAddressShipping();
+
+    public function getSettlementInfo(string $key): string;
+
+    public function getStreetInfo(string $key): string;
+
+    public function getHouse(): string;
+
+    public function getFlat(): string;
 }

@@ -82,15 +82,26 @@ class CheckoutValidator implements ModuleInterface
             && 1 === (int)$_POST['wcus_np_' . $type . '_custom_address_active'];
     }
 
-    /**
-     * @param string $type
-     */
-    private function validateAddressShipping($type)
+    private function validateAddressShipping(string $type): void
     {
-        if (empty($_POST['wcus_np_' . $type . '_city'])
-            || empty($_POST['wcus_np_' . $type . '_custom_address'])
-        ) {
-            $this->addErrorNotice();
+        if ((int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui') === 1) {
+            if (empty($_POST['wcus_np_' . $type . '_settlement_name'])) {
+                $this->addErrorNotice();
+            }
+
+            if (empty($_POST['wcus_np_' . $type . '_street_name'])) {
+                $this->addErrorNotice();
+            }
+
+            if (empty($_POST['wcus_np_' . $type . '_house'])) {
+                $this->addErrorNotice();
+            }
+        } else {
+            if (empty($_POST['wcus_np_' . $type . '_city'])
+                || empty($_POST['wcus_np_' . $type . '_custom_address'])
+            ) {
+                $this->addErrorNotice();
+            }
         }
     }
 
