@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
+use kirillbdev\WCUkrShipping\Http\Controllers\OrdersController;
 use kirillbdev\WCUkrShipping\Http\WpHttpClient;
 use kirillbdev\WCUSCore\Foundation\View;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;use kirillbdev\WCUSCore\Contracts\ModuleInterface;
+use kirillbdev\WCUSCore\Http\Routing\Route;
 
 class Orders implements ModuleInterface
 {
@@ -31,6 +33,14 @@ class Orders implements ModuleInterface
         add_action('init', [$this, 'handlePrintPage']);
 
         add_action('add_meta_boxes', [$this, 'addTTNBlockToOrderEdit']);
+    }
+
+    public function routes()
+    {
+        return [
+            new Route('wcus_orders_list', OrdersController::class, 'getOrders'),
+            new Route('wcus_generate_ttn', OrdersController::class, 'generateTTN')
+        ];
     }
 
     public function extendOrderColumns($columns)

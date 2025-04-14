@@ -1,5 +1,7 @@
 <?php
 
+use kirillbdev\WCUkrShipping\Model\WCUSOrder;
+
 if ( ! defined('ABSPATH')) {
     exit;
 }
@@ -60,5 +62,13 @@ if (!function_exists('wcus_wc_container_safe_get')) {
         } catch (\Exception $e) {
             return null;
         }
+    }
+}
+
+if (!function_exists('wcus_wrap_order')) {
+
+    function wcus_wrap_order(\WC_Order $wcOrder): WCUSOrder
+    {
+        return new WCUSOrder($wcOrder);
     }
 }

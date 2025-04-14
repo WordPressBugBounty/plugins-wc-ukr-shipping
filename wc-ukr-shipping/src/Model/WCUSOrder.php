@@ -45,6 +45,11 @@ class WCUSOrder
         $this->areaRepository = wcus_container()->make(AreaRepositoryInterface::class);
     }
 
+    public function getOrigin(): \WC_Order
+    {
+        return $this->wcOrder;
+    }
+
     /**
      * @param OrderDataInterface $data
      *
@@ -114,6 +119,20 @@ class WCUSOrder
         else {
             $this->wcOrder->set_shipping_address_1($address);
         }
+    }
+
+    public function getCity(): string
+    {
+        return get_option('woocommerce_ship_to_destination') === 'billing_only'
+            ? $this->wcOrder->get_billing_city()
+            : $this->wcOrder->get_shipping_city();
+    }
+
+    public function getAddress1(): string
+    {
+        return get_option('woocommerce_ship_to_destination') === 'billing_only'
+            ? $this->wcOrder->get_billing_address_1()
+            : $this->wcOrder->get_shipping_address_1();
     }
 
     private function saveAddressShipping(AddressInterface $address)

@@ -2,15 +2,19 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
+use kirillbdev\WCUkrShipping\Component\ListTable\AutomationListTable;
+use kirillbdev\WCUkrShipping\DB\Repositories\AutomationRulesRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUkrShipping\Foundation\State;
 use kirillbdev\WCUkrShipping\Http\Controllers\AddressBookController;
+use kirillbdev\WCUkrShipping\Http\Controllers\AutomationController;
 use kirillbdev\WCUkrShipping\Http\Controllers\MigrationController;
 use kirillbdev\WCUkrShipping\Http\Controllers\OptionsController;
 use kirillbdev\WCUkrShipping\Http\Controllers\SmartyParcelController;
 use kirillbdev\WCUkrShipping\Model\Document\TTNStore;
 use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUkrShipping\States\OptionsPageState;
+use kirillbdev\WCUkrShipping\States\OrdersState;
 use kirillbdev\WCUkrShipping\States\SmartyParcelState;
 use kirillbdev\WCUkrShipping\States\WarehouseLoaderState;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
@@ -25,13 +29,17 @@ class OptionsPage implements ModuleInterface
 {
     private SmartyParcelService $smartyParcelService;
     private ShippingLabelsRepository $shippingLabelsRepository;
+    private AutomationRulesRepository $automationRulesRepository;
+    private AutomationListTable $table;
 
     public function __construct(
         SmartyParcelService $smartyParcelService,
-        ShippingLabelsRepository $shippingLabelsRepository
+        ShippingLabelsRepository $shippingLabelsRepository,
+        AutomationRulesRepository $automationRulesRepository
     ) {
         $this->smartyParcelService = $smartyParcelService;
         $this->shippingLabelsRepository = $shippingLabelsRepository;
+        $this->automationRulesRepository = $automationRulesRepository;
     }
 
     public function init()
@@ -55,7 +63,9 @@ class OptionsPage implements ModuleInterface
             new Route('wcus_smarty_parcel_connect_carrier', SmartyParcelController::class, 'connectCarrier'),
             new Route('wcus_smarty_parcel_delete_carrier', SmartyParcelController::class, 'deleteCarrierAccount'),
             new Route('wcus_smarty_parcel_create_label', SmartyParcelController::class, 'createShippingLabel'),
+            new Route('wcus_smarty_parcel_create_label_batch', SmartyParcelController::class, 'createLabelBatch'),
             new Route('wcus_smarty_parcel_void_label', SmartyParcelController::class, 'voidLabel'),
+            new Route('wcus_automation_save_rule', AutomationController::class, 'saveRule'),
         ];
     }
 
@@ -64,6 +74,7 @@ class OptionsPage implements ModuleInterface
         State::add('warehouse_loader', WarehouseLoaderState::class);
         State::add('options', OptionsPageState::class);
         State::add('smarty_parcel', SmartyParcelState::class);
+        State::add('orders', OrdersState::class);
 
         add_menu_page(
             __('Settings', 'wc-ukr-shipping-i18n'),
@@ -88,9 +99,48 @@ class OptionsPage implements ModuleInterface
             null,
             __('Create TTN', 'wc-ukr-shipping-i18n'),
             __('Create TTN', 'wc-ukr-shipping-i18n'),
-            'manage_options',
+            'manage_woocommerce',
             'wc_ukr_shipping_ttn',
             [$this, 'ttnHtml']
+        );
+
+        add_submenu_page(
+            'wc_ukr_shipping_options',
+            __('Orders', 'wc-ukr-shipping-i18n'),
+            __('Orders', 'wc-ukr-shipping-i18n'),
+            'manage_woocommerce',
+            'wc_ukr_shipping_ttn_list',
+            [$this, 'orderListHtml']
+        );
+
+        $automationPage = add_submenu_page(
+            'wc_ukr_shipping_options',
+            __('Automation', 'wc-ukr-shipping-i18n'),
+            __('Automation', 'wc-ukr-shipping-i18n'),
+            'manage_woocommerce',
+            'wcus_automation',
+            [$this, 'automationHtml']
+        );
+        add_action("load-$automationPage", function () {
+            $this->table = new AutomationListTable($this->automationRulesRepository);
+        });
+
+        add_submenu_page(
+            '',
+            __('Create', 'wc-ukr-shipping-i18n'),
+            __('Create', 'wc-ukr-shipping-i18n'),
+            'manage_woocommerce',
+            'wcus_automation_rule_create',
+            [$this, 'automationRuleFormHtml']
+        );
+
+        add_submenu_page(
+            '',
+            __('Edit', 'wc-ukr-shipping-i18n'),
+            __('Edit', 'wc-ukr-shipping-i18n'),
+            'manage_woocommerce',
+            'wcus_automation_rule_edit',
+            [$this, 'automationRuleFormHtml']
         );
     }
 
@@ -163,5 +213,55 @@ class OptionsPage implements ModuleInterface
         $store = new TTNStore((int)$_GET['order_id']);
         wp_localize_script('wcus_ttn_form_js', 'wcus_ttn_form_state', $store->collect());
         echo View::render('ttn');
+    }
+
+    public function orderListHtml(): void
+    {
+        echo View::render('orders');
+    }
+
+    public function automationHtml()
+    {
+        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+            if (wp_verify_nonce($_GET['_wpnonce'] ?? '', 'wcus_automation_delete')) {
+                $this->automationRulesRepository->delete((int)$_GET['id']);
+            }
+        }
+
+        $this->table->prepare_items();
+        ?>
+        <div class="wrap">
+            <h1 class="wp-heading-inline"><?php echo esc_html(get_admin_page_title()); ?></h1>
+            <a href="<?php echo esc_attr(admin_url('admin.php?page=wcus_automation_rule_create')); ?>"
+               class="page-title-action"><?php esc_html_e('Add rule', 'wc-ukr-shipping-i18n'); ?></a>
+            <hr class="wp-header-end">
+            <form action="" method="POST">
+                <?php $this->table->display(); ?>
+            </form>
+        </div>
+        <?php
+    }
+
+    public function automationRuleFormHtml(): void
+    {
+        $id = (int)($_GET['id'] ?? 0);
+        $model = null;
+        if ($id > 0) {
+            $model = $this->automationRulesRepository->findById($id);
+            if ($model === null) {
+                echo sprintf(
+                    '<div class="notice notice-error">%s</div>',
+                    __('Rule not found', 'wc-ukr-shipping-pro')
+                );
+                return;
+            }
+        }
+
+        echo View::render('automation', [
+            'model' => $model,
+            'successMsg' => isset($_GET['success']) && $_GET['success'] === '1'
+                ? __('Rule saved successfully', 'wc-ukr-shipping-pro')
+                : null,
+        ]);
     }
 }

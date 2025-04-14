@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Api;
 
+use kirillbdev\WCUkrShipping\Component\SmartyParcel\LabelRequestBuilderInterface;
 use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUSCore\Http\Request;
@@ -44,7 +45,7 @@ final class SmartyParcelApi
                 'Content-Type' => 'application/json',
                 'SP-API-Key' => $apiKey,
             ],
-            'timeout' => 5,
+            'timeout' => 3,
         ]);
 
         return $this->processResponse($response);
@@ -88,110 +89,8 @@ final class SmartyParcelApi
         return $this->processResponse($response);
     }
 
-    public function createLabel(Request $request): array
+    public function createLabel(LabelRequestBuilderInterface $builder): array
     {
-        $shipTo = [
-            'name' => sprintf(
-                '%s %s%s',
-                $request->get('recipient')['firstname'],
-                $request->get('recipient')['lastname'],
-                $request->get('recipient')['middlename']
-                    ? ' ' . $request->get('recipient')['middlename']
-                    : '',
-            ),
-            'phone' => WCUSHelper::preparePhone($request->get('recipient')['phone']),
-            'email' => $request->get('recipient')['email'] ?? null,
-        ];
-        if ($request->get('recipient')['service_type'] === 'Warehouse') {
-            $shipTo['carrier_city_id'] = $request->get('recipient')['city_ref'];
-            $shipTo['carrier_warehouse_id'] = $request->get('recipient')['warehouse_ref'];
-        } else {
-            $shipTo['country_code'] = 'UA';
-            $shipTo['city'] = $request->get('recipient')['settlement_name'];
-            $shipTo['state'] = $request->get('recipient')['settlement_area'];
-            $shipTo['district'] = $request->get('recipient')['settlement_region'];
-            $shipTo['address_1'] = $request->get('recipient')['street_name'];
-            $shipTo['address_2'] = $request->get('recipient')['house'];
-            $shipTo['address_3'] = $request->get('recipient')['flat'];
-        }
-
-        $shipFrom = [];
-        if ($request->get('sender')['service_type'] === 'Warehouse') {
-            $shipFrom['carrier_city_id'] = $request->get('sender')['city_ref'];
-            $shipFrom['carrier_warehouse_id'] = $request->get('sender')['warehouse_ref'];
-        } else {
-            $shipFrom['country_code'] = 'UA';
-            $shipFrom['city'] = $request->get('sender')['settlement_name'];
-            $shipFrom['state'] = $request->get('sender')['settlement_area'];
-            $shipFrom['district'] = $request->get('sender')['settlement_region'];
-            $shipFrom['address_1'] = $request->get('sender')['street_name'];
-            $shipFrom['address_2'] = $request->get('sender')['house'];
-            $shipFrom['address_3'] = $request->get('sender')['flat'];
-        }
-
-        $labelRequest = [
-            'carrier_account_id' => $request->get('sender')['carrier_account_id'],
-            'billing' => [
-                'paid_by' => strtolower($request->get('ttn')['payer_type']),
-                'payment_method' => $request->get('ttn')['payment_method'] === 'NonCash'
-                    ? 'card'
-                    : 'cash',
-            ],
-            'shipment' => [
-                'ship_date' => $request->get('ttn')['date'],
-                'ship_from' => $shipFrom,
-                'ship_to' => $shipTo,
-            ]
-        ];
-
-        // Parcels
-        $parcels = [];
-        foreach ($request->get('ttn')['seats'] as $index => $seat) {
-            $parcels[] = [
-                'insurance_cost' => $index === 0 ? $request->get('ttn')['cost'] : 0,
-                'weight' => [
-                    'value' => (float)$seat['weight'],
-                    'unit' => 'kg',
-                ],
-                'dimensions' => [
-                    'width' => (int)$seat['width'],
-                    'height' => (int)$seat['height'],
-                    'length' => (int)$seat['length'],
-                    'unit' => 'cm',
-                ],
-                'description' => $index === 0 ? $request->get('ttn')['description'] : '-',
-            ];
-        }
-        $labelRequest['shipment']['parcels'] = $parcels;
-
-        if (!empty($request->get('ttn')['barcode'])) {
-            $labelRequest['shipment']['external_order_id'] =  $request->get('ttn')['barcode'];
-        }
-
-        // Payment Control and COD
-        if ($request->get('ttn')['payment_control'] === '1') {
-            $labelRequest['service_options']['cod'] = [
-                'payment_method' => 'cash_equivalent',
-                'value' => [
-                    'amount' => (float)$request->get('ttn')['payment_control_cost'],
-                    'currency' => 'UAH',
-                ],
-            ];
-        } elseif ($request->get('ttn')['backward_delivery'] === '1') {
-            $labelRequest['service_options']['cod'] = [
-                'payment_method' => 'cash',
-                'value' => [
-                    'amount' => (float)$request->get('ttn')['backward_delivery_cost'],
-                    'currency' => 'UAH',
-                ],
-                'options' => [
-                    'nova_poshta_cod_payer' => $request->get('ttn')['backward_delivery_payer'] === 'Sender'
-                        ? 'sender'
-                        : 'recipient',
-                ]
-            ];
-        }
-
         $response = wp_remote_post(self::API_URL . '/beta/labels', [
             'headers' => [
                 'Accept' => 'application/json',
@@ -199,7 +98,7 @@ final class SmartyParcelApi
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
             ],
             'timeout' => 10,
-            'body' => json_encode($labelRequest)
+            'body' => json_encode($builder->build())
         ]);
 
         return $this->processResponse($response);

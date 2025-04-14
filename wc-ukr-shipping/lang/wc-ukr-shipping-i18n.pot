@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WC Nova Poshta Shipping plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WC Nova Poshta Shipping 1.14.0\n"
+"Project-Id-Version: WC Nova Poshta Shipping 1.14.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-08T13:37:25+00:00\n"
+"POT-Creation-Date: 2025-04-14T08:38:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-ukr-shipping-i18n\n"
@@ -46,93 +46,115 @@ msgstr ""
 msgid "Every minute"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:69
+#: src/Modules/Backend/OptionsPage.php:80
+#: views/orders.php:3
 #: views/settings.php:13
 msgid "Settings"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:80
-#: src/Modules/Backend/OptionsPage.php:81
+#: src/Modules/Backend/OptionsPage.php:91
+#: src/Modules/Backend/OptionsPage.php:92
 #: views/smarty_parcel.php:12
 msgid "Smarty Parcel"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:89
-#: src/Modules/Backend/OptionsPage.php:90
+#: src/Modules/Backend/OptionsPage.php:100
+#: src/Modules/Backend/OptionsPage.php:101
 msgid "Create TTN"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:101
+#: src/Modules/Backend/OptionsPage.php:109
+#: src/Modules/Backend/OptionsPage.php:110
+msgid "Orders"
+msgstr ""
+
+#: src/Modules/Backend/OptionsPage.php:118
+#: src/Modules/Backend/OptionsPage.php:119
+msgid "Automation"
+msgstr ""
+
+#: src/Modules/Backend/OptionsPage.php:130
+#: src/Modules/Backend/OptionsPage.php:131
+#: src/Modules/Backend/Orders.php:159
+msgid "Create"
+msgstr ""
+
+#: src/Modules/Backend/OptionsPage.php:139
+#: src/Modules/Backend/OptionsPage.php:140
+msgid "Edit"
+msgstr ""
+
+#: src/Modules/Backend/OptionsPage.php:151
 msgid "Warehouses data of Nova Poshta"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:102
+#: src/Modules/Backend/OptionsPage.php:152
 msgid "Last update date:"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:103
+#: src/Modules/Backend/OptionsPage.php:153
 msgid "Status:"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:104
+#: src/Modules/Backend/OptionsPage.php:154
 msgid "Not completed"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:105
+#: src/Modules/Backend/OptionsPage.php:155
 msgid "Completed"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:106
+#: src/Modules/Backend/OptionsPage.php:156
 msgid "Unknown"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:107
+#: src/Modules/Backend/OptionsPage.php:157
 msgid "Update warehouses"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:108
+#: src/Modules/Backend/OptionsPage.php:158
 msgid "Continue update"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:109
+#: src/Modules/Backend/OptionsPage.php:159
 msgid "Load areas..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:110
+#: src/Modules/Backend/OptionsPage.php:160
 msgid "Load cities..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:111
+#: src/Modules/Backend/OptionsPage.php:161
 msgid "Load warehouses..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:112
+#: src/Modules/Backend/OptionsPage.php:162
 msgid "Warehouses db updated successfully"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:115
+#: src/Modules/Backend/OptionsPage.php:165
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 
-#: src/Modules/Backend/Orders.php:38
+#: src/Modules/Backend/OptionsPage.php:236
+msgid "Add rule"
+msgstr ""
+
+#: src/Modules/Backend/Orders.php:48
 msgid "Shipping label"
 msgstr ""
 
-#: src/Modules/Backend/Orders.php:100
+#: src/Modules/Backend/Orders.php:110
 msgid "WC Ukraine Shipping"
 msgstr ""
 
-#: src/Modules/Backend/Orders.php:112
+#: src/Modules/Backend/Orders.php:122
 msgid "Invoice creation is unavailable for this order"
 msgstr ""
 
-#: src/Modules/Backend/Orders.php:141
+#: src/Modules/Backend/Orders.php:151
 #: views/order/edit_order_metabox.php:19
 msgid "Delete"
-msgstr ""
-
-#: src/Modules/Backend/Orders.php:149
-msgid "Create"
 msgstr ""
 
 #: src/Modules/Frontend/AssetsLoader.php:106
@@ -226,6 +248,32 @@ msgstr ""
 
 #: src/Services/TranslateService.php:53
 msgid "Need address delivery"
+msgstr ""
+
+#: views/automation.php:14
+msgid "Rule constructor"
+msgstr ""
+
+#: views/automation.php:18
+#: views/orders.php:7
+#: views/settings.php:17
+#: views/smarty_parcel.php:16
+#: views/ttn_forbidden.php:16
+msgid "Documentation"
+msgstr ""
+
+#: views/automation.php:21
+#: views/orders.php:10
+#: views/settings.php:20
+msgid "Save"
+msgstr ""
+
+#: views/automation.php:30
+msgid "Name"
+msgstr ""
+
+#: views/automation.php:36
+msgid "Active"
 msgstr ""
 
 #: views/partial/pro_promotion.php:10
@@ -444,16 +492,6 @@ msgstr ""
 
 #: views/partial/settings_translates.php:59
 msgid "Empty result text"
-msgstr ""
-
-#: views/settings.php:17
-#: views/smarty_parcel.php:16
-#: views/ttn_forbidden.php:16
-msgid "Documentation"
-msgstr ""
-
-#: views/settings.php:20
-msgid "Save"
 msgstr ""
 
 #: views/settings.php:28

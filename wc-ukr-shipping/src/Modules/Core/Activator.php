@@ -2,6 +2,8 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Core;
 
+use kirillbdev\WCUkrShipping\DB\Migrations\CreateAutomationActionsTable_20240923215754;
+use kirillbdev\WCUkrShipping\DB\Migrations\CreateAutomationRulesTable_20240923215722;
 use kirillbdev\WCUkrShipping\DB\Migrations\CreateShippingLabelsTable_20250203230634;
 use kirillbdev\WCUkrShipping\DB\Migrations\UpdateShippingLabelsTable_20250408020301;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
@@ -29,6 +31,8 @@ class Activator implements ModuleInterface
             // All base tables (both in lite and pro versions) are added in core package
             $this->migrator->addMigration(new CreateShippingLabelsTable_20250203230634());
             $this->migrator->addMigration(new UpdateShippingLabelsTable_20250408020301());
+            $this->migrator->addMigration(new CreateAutomationActionsTable_20240923215754());
+            $this->migrator->addMigration(new CreateAutomationRulesTable_20240923215722());
             $this->migrator->run();
         } catch (MigrateException $e) {
             // do nothing yet

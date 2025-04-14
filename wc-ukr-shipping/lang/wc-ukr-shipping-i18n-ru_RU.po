@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2025-04-08T13:37:25+00:00\n"
+"POT-Creation-Date: 2025-04-14T08:38:15+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -47,94 +47,115 @@ msgid "Every minute"
 msgstr ""
 
 # Options page
-#: src/Modules/Backend/OptionsPage.php:69 views/settings.php:13
+#: src/Modules/Backend/OptionsPage.php:80 views/orders.php:3
+#: views/settings.php:13
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/Modules/Backend/OptionsPage.php:80
-#: src/Modules/Backend/OptionsPage.php:81 views/smarty_parcel.php:12
+#: src/Modules/Backend/OptionsPage.php:91
+#: src/Modules/Backend/OptionsPage.php:92 views/smarty_parcel.php:12
 msgid "Smarty Parcel"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:89
-#: src/Modules/Backend/OptionsPage.php:90
+#: src/Modules/Backend/OptionsPage.php:100
+#: src/Modules/Backend/OptionsPage.php:101
 msgid "Create TTN"
 msgstr "Создать ТТН"
 
+#: src/Modules/Backend/OptionsPage.php:109
+#: src/Modules/Backend/OptionsPage.php:110
+msgid "Orders"
+msgstr "Заказы"
+
+#: src/Modules/Backend/OptionsPage.php:118
+#: src/Modules/Backend/OptionsPage.php:119
+msgid "Automation"
+msgstr "Автоматизация"
+
+#: src/Modules/Backend/OptionsPage.php:130
+#: src/Modules/Backend/OptionsPage.php:131 src/Modules/Backend/Orders.php:159
+msgid "Create"
+msgstr "Создать"
+
+#: src/Modules/Backend/OptionsPage.php:139
+#: src/Modules/Backend/OptionsPage.php:140
+msgid "Edit"
+msgstr "Редактировать"
+
 # Warehouse loader
-#: src/Modules/Backend/OptionsPage.php:101
+#: src/Modules/Backend/OptionsPage.php:151
 msgid "Warehouses data of Nova Poshta"
 msgstr "Данные отделений Новой Почты"
 
-#: src/Modules/Backend/OptionsPage.php:102
+#: src/Modules/Backend/OptionsPage.php:152
 msgid "Last update date:"
 msgstr "Дата последнего обновления:"
 
-#: src/Modules/Backend/OptionsPage.php:103
+#: src/Modules/Backend/OptionsPage.php:153
 msgid "Status:"
 msgstr "Статус:"
 
-#: src/Modules/Backend/OptionsPage.php:104
+#: src/Modules/Backend/OptionsPage.php:154
 msgid "Not completed"
 msgstr "Не завершено"
 
-#: src/Modules/Backend/OptionsPage.php:105
+#: src/Modules/Backend/OptionsPage.php:155
 msgid "Completed"
 msgstr "Завершено"
 
-#: src/Modules/Backend/OptionsPage.php:106
+#: src/Modules/Backend/OptionsPage.php:156
 msgid "Unknown"
 msgstr "Неизвестный"
 
-#: src/Modules/Backend/OptionsPage.php:107
+#: src/Modules/Backend/OptionsPage.php:157
 msgid "Update warehouses"
 msgstr "Обновить отделения"
 
-#: src/Modules/Backend/OptionsPage.php:108
+#: src/Modules/Backend/OptionsPage.php:158
 msgid "Continue update"
 msgstr "Продолжить обновление"
 
-#: src/Modules/Backend/OptionsPage.php:109
+#: src/Modules/Backend/OptionsPage.php:159
 msgid "Load areas..."
 msgstr "Загрузка областей..."
 
-#: src/Modules/Backend/OptionsPage.php:110
+#: src/Modules/Backend/OptionsPage.php:160
 msgid "Load cities..."
 msgstr "Загрузка городов..."
 
-#: src/Modules/Backend/OptionsPage.php:111
+#: src/Modules/Backend/OptionsPage.php:161
 msgid "Load warehouses..."
 msgstr "Загрузка отделений..."
 
-#: src/Modules/Backend/OptionsPage.php:112
+#: src/Modules/Backend/OptionsPage.php:162
 msgid "Warehouses db updated successfully"
 msgstr "Данные отделений успешно обновлены"
 
-#: src/Modules/Backend/OptionsPage.php:115
+#: src/Modules/Backend/OptionsPage.php:165
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 "Вы уверены, что хотите перезапустить миграции? Это действие не может быть "
 "отменено."
 
-#: src/Modules/Backend/Orders.php:38
+#: src/Modules/Backend/OptionsPage.php:236
+msgid "Add rule"
+msgstr "Добавить правило"
+
+#: src/Modules/Backend/Orders.php:48
 msgid "Shipping label"
 msgstr "Накладная"
 
-#: src/Modules/Backend/Orders.php:100
+#: src/Modules/Backend/Orders.php:110
 msgid "WC Ukraine Shipping"
 msgstr ""
 
-#: src/Modules/Backend/Orders.php:112
+#: src/Modules/Backend/Orders.php:122
 msgid "Invoice creation is unavailable for this order"
 msgstr "Создание накладной недоступно для этого заказа"
 
-#: src/Modules/Backend/Orders.php:141 views/order/edit_order_metabox.php:19
+#: src/Modules/Backend/Orders.php:151 views/order/edit_order_metabox.php:19
 msgid "Delete"
 msgstr "Удалить"
-
-#: src/Modules/Backend/Orders.php:149
-msgid "Create"
-msgstr "Создать"
 
 #: src/Modules/Frontend/AssetsLoader.php:106
 #: src/Services/TranslateService.php:49
@@ -228,6 +249,27 @@ msgstr "Выберите область"
 #: src/Services/TranslateService.php:53
 msgid "Need address delivery"
 msgstr "Нужна адресная доставка"
+
+#: views/automation.php:14
+msgid "Rule constructor"
+msgstr "Конструктор правил"
+
+#: views/automation.php:18 views/orders.php:7 views/settings.php:17
+#: views/smarty_parcel.php:16 views/ttn_forbidden.php:16
+msgid "Documentation"
+msgstr "Документация"
+
+#: views/automation.php:21 views/orders.php:10 views/settings.php:20
+msgid "Save"
+msgstr "Сохранить"
+
+#: views/automation.php:30
+msgid "Name"
+msgstr "Название"
+
+#: views/automation.php:36
+msgid "Active"
+msgstr "Активный"
 
 # PRO features
 #: views/partial/pro_promotion.php:10
@@ -458,14 +500,6 @@ msgstr "Placeholder адресной доставки"
 #: views/partial/settings_translates.php:59
 msgid "Empty result text"
 msgstr "Текст пустого результата поиска"
-
-#: views/settings.php:17 views/smarty_parcel.php:16 views/ttn_forbidden.php:16
-msgid "Documentation"
-msgstr "Документация"
-
-#: views/settings.php:20
-msgid "Save"
-msgstr "Сохранить"
 
 #: views/settings.php:28
 msgid "General"

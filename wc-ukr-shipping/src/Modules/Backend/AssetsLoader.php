@@ -89,6 +89,26 @@ class AssetsLoader implements ModuleInterface
             );
         }
 
+        if (get_current_screen() !== null && get_current_screen()->id === 'wc-ukr-shipping_page_wc_ukr_shipping_ttn_list') {
+            wp_enqueue_script(
+                'wcus_orders_js',
+                WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/orders.min.js',
+                ['jquery'],
+                filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/orders.min.js'),
+                true
+            );
+        }
+
+        if (get_current_screen() !== null && in_array(get_current_screen()->id, ['admin_page_wcus_automation_rule_create', 'admin_page_wcus_automation_rule_edit'], true)) {
+            wp_enqueue_script(
+                'wcus_automation_form_js',
+                WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/automation.min.js',
+                ['jquery'],
+                filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/automation.min.js'),
+                true
+            );
+        }
+
         $this->injectGlobals('wcus_settings_js');
     }
 
@@ -100,6 +120,7 @@ class AssetsLoader implements ModuleInterface
         $globals = [
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'homeUrl' => home_url(),
+            'adminUrl' => admin_url(),
             'lang' => $translator->getCurrentLanguage(),
             'nonce' => wp_create_nonce('wc-ukr-shipping'),
             'disableDefaultBillingFields' => apply_filters('wc_ukr_shipping_prevent_disable_default_fields', false) === false ?
@@ -111,6 +132,7 @@ class AssetsLoader implements ModuleInterface
                 'placeholder_warehouse' => $translates['placeholder_warehouse'],
                 'not_found' => $translates['not_found'],
             ],
+            'orderStatuses' => wc_get_order_statuses(),
             'assets' => [
                 'nova_poshta_icon_url' => WC_UKR_SHIPPING_PLUGIN_URL . 'image/nova-poshta-icon.png',
             ],

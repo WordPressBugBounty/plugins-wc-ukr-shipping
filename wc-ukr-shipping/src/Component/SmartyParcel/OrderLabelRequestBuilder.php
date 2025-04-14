@@ -1,0 +1,163 @@
+<?php
+
+declare(strict_types=1);
+
+namespace kirillbdev\WCUkrShipping\Component\SmartyParcel;
+
+use kirillbdev\WCUkrShipping\Factories\ProductFactory;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+
+class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
+{
+    private \WC_Order $order;
+
+    public function __construct(\WC_Order $order)
+    {
+        $this->order = $order;
+    }
+
+    public function build(): array
+    {
+        $carrierAccount = get_option('wcus_nova_poshta_default_carrier');
+        if (empty($carrierAccount)) {
+            throw new \LogicException('Internal Error. Default carrier account not set');
+        }
+
+        $order = $this->order;
+        $shipTo = [
+            'name' => trim(sprintf(
+                '%s %s',
+                $order->get_billing_first_name(),
+                $order->get_billing_last_name(),
+            )),
+            'phone' => WCUSHelper::preparePhone($order->get_billing_phone()),
+            'email' => $order->get_billing_email(),
+        ];
+        $orderShipping = WCUSHelper::getOrderShippingMethod($order);
+        if ($orderShipping === null) {
+            throw new \LogicException('Internal Error. Order shipping method not set');
+        } elseif (!empty($orderShipping->get_meta('wcus_address'))) {
+            throw new \LogicException('Internal Error. Unable to parse shipping address');
+        }
+
+        if (empty($orderShipping->get_meta('wcus_settlement_ref'))) {
+            // Service point shipping
+            $shipTo['country_code'] = 'UA';
+            $shipTo['carrier_city_id'] = $orderShipping->get_meta('wcus_city_ref');
+            $shipTo['carrier_warehouse_id'] = $orderShipping->get_meta('wcus_warehouse_ref');
+        } else {
+            // Doors shipping
+            $shipTo['country_code'] = 'UA';
+            $shipTo['city'] = $orderShipping->get_meta('wcus_settlement_name');
+            $shipTo['state'] = $orderShipping->get_meta('wcus_settlement_area');
+            $shipTo['district'] = $orderShipping->get_meta('wcus_settlement_region');
+            $shipTo['address_1'] = $orderShipping->get_meta('wcus_street_name');
+            $shipTo['address_2'] = $orderShipping->get_meta('wcus_house');
+            $shipTo['address_3'] = $orderShipping->get_meta('wcus_flat');
+        }
+
+        $shipFrom['carrier_city_id'] = wc_ukr_shipping_get_option('wc_ukr_shipping_np_sender_city');
+        $shipFrom['carrier_warehouse_id'] = wc_ukr_shipping_get_option('wc_ukr_shipping_np_sender_warehouse');
+
+        $payerType = apply_filters(
+            'wcus_ttn_form_payer_type',
+            wc_ukr_shipping_get_option('wc_ukr_shipping_np_ttn_payer_default'),
+            $this->order
+        );
+        if (!in_array($payerType, ['Sender', 'Recipient'], true)) {
+            throw new \InvalidArgumentException("Invalid param `payerType`");
+        }
+
+        $paymentMethod = apply_filters(
+            'wcus_ttn_form_payment_method',
+            wc_ukr_shipping_get_option('wcus_np_payment_method_default'),
+            $this->order
+        );
+        if (!in_array($paymentMethod, ['Cash', 'NonCash'], true)) {
+            throw new \InvalidArgumentException("Invalid param 'paymentMethod'");
+        }
+
+        $date = apply_filters('wcus_ttn_form_date', new \DateTime(), $this->order);
+        if (!($date instanceof \DateTimeInterface)) {
+            throw new \InvalidArgumentException("Parameter 'date' must be correct date");
+        }
+
+        $labelRequest = [
+            'carrier_account_id' => $carrierAccount,
+            'billing' => [
+                'paid_by' => strtolower($payerType),
+                'payment_method' => $paymentMethod === 'NonCash'
+                    ? 'card'
+                    : 'cash',
+            ],
+            'shipment' => [
+                'ship_date' => $date->format('Y-m-d'),
+                'ship_from' => $shipFrom,
+                'ship_to' => $shipTo,
+            ]
+        ];
+
+        $factory = new ProductFactory();
+        $orderProducts = [];
+        foreach ($this->order->get_items() as $item) {
+            /** @var \WC_Order_Item_Product $item */
+            $product = $factory->makeOrderItemProduct($item);
+            $orderProducts[] = $product;
+        }
+
+        $weight = 0;
+        foreach ($orderProducts as $product) {
+            $weight += $product->getWeight() * $product->getQuantity();
+        }
+        $weight = max($weight, 0.1);
+
+        // Parcels
+        $labelRequest['shipment']['parcels'] = [
+            [
+                'insurance_cost' => $order->get_subtotal(),
+                'weight' => [
+                    'value' => $weight,
+                    'unit' => 'kg',
+                ],
+                'description' => apply_filters(
+                    'wcus_ttn_form_description',
+                    'Order #' . $this->order->get_id(),
+                    $this->order
+                ),
+            ]
+        ];
+        $labelRequest['shipment']['external_order_id'] =  $order->get_order_number();
+
+        $needPaymentControl = (int)wc_ukr_shipping_get_option('wcus_ttn_pay_control_default') === 1;
+        $codPaymentId = wc_ukr_shipping_get_option('wcus_cod_payment_id');
+        if ($codPaymentId && $codPaymentId === $this->order->get_payment_method()) {
+            if ($needPaymentControl) {
+                $labelRequest['service_options']['cod'] = [
+                    'payment_method' => 'cash_equivalent',
+                    'value' => [
+                        'amount' => $this->getOrderCost($order),
+                        'currency' => 'UAH',
+                    ],
+                ];
+            } else {
+                $labelRequest['service_options']['cod'] = [
+                    'payment_method' => 'cash',
+                    'value' => [
+                        'amount' => $this->getOrderCost($order),
+                        'currency' => 'UAH',
+                    ],
+                    'options' => [
+                        'nova_poshta_cod_payer' => 'recipient',
+                    ]
+                ];
+            }
+        }
+
+        return $labelRequest;
+    }
+
+    private function getOrderCost(\WC_Order $order): float
+    {
+        return $order->get_subtotal() + (float)$order->get_total_fees() + (float)$order->get_total_tax('') - $order->get_total_discount();
+    }
+}

@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, доставка, shipping, woocommerce
 Requires PHP: 7.4
 Tested up to: 6.7
-Stable tag: 1.14.0
+Stable tag: 1.14.1
 
 Simple and comfortable plugin for connect Nova Poshta delivery service to your WooCommerce store.
 
@@ -14,7 +14,7 @@ Simple and comfortable plugin for connect Nova Poshta delivery service to your W
 **Simple and comfortable plugin for connect Nova Poshta delivery service to your WooCommerce store.**
 
 [Documentation](https://kirillbdev.pro/docs/wcus-base-setup/)
-[PRO version](https://kirillbdev.pro/wc-ukr-shipping-pro/)
+[PRO features](https://kirillbdev.pro/wc-ukr-shipping-pro/)
 
 == Installation and setup tutorial ==
 
@@ -78,12 +78,18 @@ Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
 
+= Version 1.14.1 / (14.04.2025) =
+* [SmartyParcel] Added batch label generation feature.
+* Added automation feature (no-code business rule constructor).
+* [Checkout] Added placeholders to house and flat fields.
+* Checked compatibility with latest Wordpress and WooCommerce versions.
+
 = Version 1.14.0 / (08.04.2025) =
 * Added ship to doors feature
 * Implement SmartyParcel Rates API (Advanced plan only)
 * Implement SmartyParcel Tracking API (Advanced plan only)
 * Removed jQuery deprecated methods from checkout.js
-* Checked compatibility with latest Wordpress and WooCommerce versions
+* Checked compatibility with latest Wordpress and WooCommerce versions.
 
 = Version 1.13.5 / (09.03.2025) =
 * Added COD feature
