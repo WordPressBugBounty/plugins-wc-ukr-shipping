@@ -4,8 +4,8 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, доставка, shipping, woocommerce
 Requires PHP: 7.4
-Tested up to: 6.7
-Stable tag: 1.14.1
+Tested up to: 6.8
+Stable tag: 1.14.2
 
 Simple and comfortable plugin for connect Nova Poshta delivery service to your WooCommerce store.
 
@@ -18,7 +18,7 @@ Simple and comfortable plugin for connect Nova Poshta delivery service to your W
 
 == Installation and setup tutorial ==
 
-https://www.youtube.com/watch?v=IFW0B75s54o
+https://www.youtube.com/watch?v=K_NFNQ1qkko
 
 == Features ==
 
@@ -77,6 +77,11 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.14.2 / (17.04.2025) =
+* Removed duplicated payment control option.
+* Improved cron workers.
+* Checked compatibility with latest Wordpress and WooCommerce versions.
 
 = Version 1.14.1 / (14.04.2025) =
 * [SmartyParcel] Added batch label generation feature.

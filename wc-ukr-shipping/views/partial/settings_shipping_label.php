@@ -96,15 +96,6 @@
         </div>
     </div>
 
-    <div class="wcus-form-group wcus-form-group--horizontal">
-        <label class="wcus-switcher">
-            <input type="hidden" name="" value="0">
-            <input type="checkbox" name="wcus[ttn_pay_control_default]" value="1" <?php echo $payment_control_default === 1 ? 'checked' : ''; ?>>
-            <span class="wcus-switcher__control"></span>
-        </label>
-        <div class="wcus-control-label"><?php esc_html_e('Payment control', 'wc-ukr-shipping-i18n'); ?></div>
-    </div>
-
     <?php
         \kirillbdev\WCUkrShipping\Helpers\HtmlHelper::switcherField(
             'wcus[ttn_pay_control_default]',

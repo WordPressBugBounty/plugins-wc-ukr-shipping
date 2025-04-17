@@ -23,6 +23,7 @@ class Activator implements ModuleInterface
     {
         add_action('plugins_loaded', [$this, 'activate']);
         register_activation_hook(WC_UKR_SHIPPING_PLUGIN_ENTRY, [$this, 'activate']);
+        register_deactivation_hook(WC_UKR_SHIPPING_PLUGIN_ENTRY, [$this, 'deactivate']);
     }
 
     public function activate(): void
@@ -37,5 +38,12 @@ class Activator implements ModuleInterface
         } catch (MigrateException $e) {
             // do nothing yet
         }
+    }
+
+    public function deactivate(): void
+    {
+        // Clear jobs
+        wp_unschedule_hook('wcus_tracking_worker_tick');
+        delete_option('wc_ukr_shipping_workers_version');
     }
 }

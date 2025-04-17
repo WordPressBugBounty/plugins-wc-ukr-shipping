@@ -18,7 +18,7 @@ class Jobs implements ModuleInterface
     private TaskService $taskService;
 
     private array $workers = [
-        '1.0.0' => 'workersV100'
+        '1.0.1' => 'workersV100'
     ];
 
     public function __construct(TaskService $taskService)
@@ -31,7 +31,7 @@ class Jobs implements ModuleInterface
         $this->taskService->registerHandler('wcus_tracking_worker_tick', TrackingHandler::class);
 
         add_filter('cron_schedules', [$this, 'registerCustomIntervals']);
-        add_action('admin_init', [$this, 'initWorkers']);
+        add_action('plugins_loaded', [$this, 'initWorkers']);
     }
 
     public function registerCustomIntervals(array $schedules): array
