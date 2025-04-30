@@ -21,6 +21,7 @@ class OrderListMapper
                 'id' => (int)$item['id'],
                 'selected' => false,
                 'label_id' => $item['label_id'],
+                'label_carrier_slug' => $item['carrier_slug'],
                 'label_db_id' => (int)$item['label_db_id'],
                 'tracking_number' => $item['tracking_number'],
                 'tracking_status' => $item['tracking_status'],

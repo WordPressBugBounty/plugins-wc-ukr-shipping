@@ -6,10 +6,9 @@ class WhereClause extends BaseWhereClause
 {
     public function __construct($column, $operator, $value, $prefix)
     {
-        if ( ! $value) {
+        if ($value === null) {
             parent::__construct($column, $operator, '=', $prefix);
-        }
-        else {
+        } else {
             parent::__construct($column, $value, $operator, $prefix);
         }
 

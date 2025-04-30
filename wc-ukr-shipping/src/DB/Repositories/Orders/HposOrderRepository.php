@@ -19,6 +19,7 @@ class HposOrderRepository implements OrderRepositoryInterface
                 'o.date_created_gmt as created_at',
                 'o.status',
                 'l.label_id',
+                'l.carrier_slug',
                 'l.id as label_db_id',
                 'l.tracking_number',
                 'l.tracking_status',

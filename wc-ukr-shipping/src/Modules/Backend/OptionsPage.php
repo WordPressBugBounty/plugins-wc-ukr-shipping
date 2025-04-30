@@ -4,6 +4,7 @@ namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use kirillbdev\WCUkrShipping\Component\ListTable\AutomationListTable;
 use kirillbdev\WCUkrShipping\DB\Repositories\AutomationRulesRepository;
+use kirillbdev\WCUkrShipping\DB\Repositories\LegacyTtnRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUkrShipping\Foundation\State;
 use kirillbdev\WCUkrShipping\Http\Controllers\AddressBookController;
@@ -11,6 +12,7 @@ use kirillbdev\WCUkrShipping\Http\Controllers\AutomationController;
 use kirillbdev\WCUkrShipping\Http\Controllers\MigrationController;
 use kirillbdev\WCUkrShipping\Http\Controllers\OptionsController;
 use kirillbdev\WCUkrShipping\Http\Controllers\SmartyParcelController;
+use kirillbdev\WCUkrShipping\Http\Controllers\ToolsController;
 use kirillbdev\WCUkrShipping\Model\Document\TTNStore;
 use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUkrShipping\States\OptionsPageState;
@@ -30,22 +32,26 @@ class OptionsPage implements ModuleInterface
     private SmartyParcelService $smartyParcelService;
     private ShippingLabelsRepository $shippingLabelsRepository;
     private AutomationRulesRepository $automationRulesRepository;
+    private LegacyTtnRepository $legacyTtnRepository;
     private AutomationListTable $table;
 
     public function __construct(
         SmartyParcelService $smartyParcelService,
         ShippingLabelsRepository $shippingLabelsRepository,
-        AutomationRulesRepository $automationRulesRepository
+        AutomationRulesRepository $automationRulesRepository,
+        LegacyTtnRepository $legacyTtnRepository
     ) {
         $this->smartyParcelService = $smartyParcelService;
         $this->shippingLabelsRepository = $shippingLabelsRepository;
         $this->automationRulesRepository = $automationRulesRepository;
+        $this->legacyTtnRepository = $legacyTtnRepository;
     }
 
     public function init()
     {
         add_action('admin_menu', [$this, 'registerOptionsPage'], 99);
         add_filter('wcus_load_admin_i18n', [$this, 'registerTranslates']);
+        add_action('admin_init', [$this, 'registerSettings']);
     }
 
     public function routes()
@@ -55,17 +61,23 @@ class OptionsPage implements ModuleInterface
             new Route('wcus_load_areas', AddressBookController::class, 'loadAreas'),
             new Route('wcus_load_cities', AddressBookController::class, 'loadCities'),
             new Route('wcus_load_warehouses', AddressBookController::class, 'loadWarehouses'),
-            new Route('wcus_re_run_migrations', MigrationController::class, 'reRunMigrations'),
+            //new Route('wcus_re_run_migrations', MigrationController::class, 'reRunMigrations'),
+
             new Route('wcus_smarty_parcel_check_verification', SmartyParcelController::class, 'checkVerification'),
+            new Route('wcus_smarty_parcel_refresh_account', SmartyParcelController::class, 'refreshAccountInfo'),
             new Route('wcus_smarty_parcel_connect', SmartyParcelController::class, 'connect'),
             new Route('wcus_smarty_parcel_disconnect', SmartyParcelController::class, 'disconnect'),
             new Route('wcus_smarty_parcel_carrier_accounts', SmartyParcelController::class, 'getCarrierAccounts'),
             new Route('wcus_smarty_parcel_connect_carrier', SmartyParcelController::class, 'connectCarrier'),
+            new Route('wcus_smarty_parcel_update_carrier', SmartyParcelController::class, 'updateCarrier'),
             new Route('wcus_smarty_parcel_delete_carrier', SmartyParcelController::class, 'deleteCarrierAccount'),
             new Route('wcus_smarty_parcel_create_label', SmartyParcelController::class, 'createShippingLabel'),
             new Route('wcus_smarty_parcel_create_label_batch', SmartyParcelController::class, 'createLabelBatch'),
             new Route('wcus_smarty_parcel_void_label', SmartyParcelController::class, 'voidLabel'),
             new Route('wcus_automation_save_rule', AutomationController::class, 'saveRule'),
+
+            // Tools
+            new Route('wcus_tools_sync_legacy_ttn', ToolsController::class, 'syncLegacyTtn'),
         ];
     }
 
@@ -142,6 +154,20 @@ class OptionsPage implements ModuleInterface
             'wcus_automation_rule_edit',
             [$this, 'automationRuleFormHtml']
         );
+
+        add_submenu_page(
+            'wc_ukr_shipping_options',
+            __('Tools', 'wc-ukr-shipping-i18n'),
+            __('Tools', 'wc-ukr-shipping-i18n'),
+            'manage_options',
+            'wc_ukr_shipping_tools',
+            [$this, 'toolsHtml']
+        );
+    }
+
+    public function registerSettings(): void
+    {
+        register_setting('wcus_settings_tools', 'wcus_legacy_pro_tracking', 'intval');
     }
 
     public function registerTranslates($i18n): array
@@ -262,6 +288,13 @@ class OptionsPage implements ModuleInterface
             'successMsg' => isset($_GET['success']) && $_GET['success'] === '1'
                 ? __('Rule saved successfully', 'wc-ukr-shipping-pro')
                 : null,
+        ]);
+    }
+
+    public function toolsHtml(): void
+    {
+        echo View::render('tools', [
+            'legacyTtnCount' => $this->legacyTtnRepository->getCountTtn(),
         ]);
     }
 }

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2025-04-14T08:38:15+00:00\n"
+"POT-Creation-Date: 2025-04-30T15:39:47+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -15,7 +15,8 @@ msgstr ""
 "X-Generator: Poedit 3.6\n"
 
 #. Plugin Name of the plugin
-msgid "WC Nova Poshta Shipping"
+#: src/Modules/Backend/Orders.php:110
+msgid "WC Ukraine Shipping"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -38,7 +39,7 @@ msgstr "Миграции были успешно применены"
 msgid "Unable to apply migrations"
 msgstr "Не удалось применить миграции"
 
-#: src/Http/Controllers/OptionsController.php:40
+#: src/Http/Controllers/OptionsController.php:40 views/tools.php:25
 msgid "Settings saved successfully!"
 msgstr "Настройки успешно сохранены!"
 
@@ -47,97 +48,101 @@ msgid "Every minute"
 msgstr ""
 
 # Options page
-#: src/Modules/Backend/OptionsPage.php:80 views/orders.php:3
-#: views/settings.php:13
+#: src/Modules/Backend/OptionsPage.php:92 views/settings.php:13
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/Modules/Backend/OptionsPage.php:91
-#: src/Modules/Backend/OptionsPage.php:92 views/smarty_parcel.php:12
+#: src/Modules/Backend/OptionsPage.php:103
+#: src/Modules/Backend/OptionsPage.php:104 views/smarty_parcel.php:12
 msgid "Smarty Parcel"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:100
-#: src/Modules/Backend/OptionsPage.php:101
+#: src/Modules/Backend/OptionsPage.php:112
+#: src/Modules/Backend/OptionsPage.php:113
 msgid "Create TTN"
 msgstr "Создать ТТН"
 
-#: src/Modules/Backend/OptionsPage.php:109
-#: src/Modules/Backend/OptionsPage.php:110
+#: src/Modules/Backend/OptionsPage.php:121
+#: src/Modules/Backend/OptionsPage.php:122 views/orders.php:4
 msgid "Orders"
 msgstr "Заказы"
 
-#: src/Modules/Backend/OptionsPage.php:118
-#: src/Modules/Backend/OptionsPage.php:119
+#: src/Modules/Backend/OptionsPage.php:130
+#: src/Modules/Backend/OptionsPage.php:131
 msgid "Automation"
 msgstr "Автоматизация"
 
-#: src/Modules/Backend/OptionsPage.php:130
-#: src/Modules/Backend/OptionsPage.php:131 src/Modules/Backend/Orders.php:159
+#: src/Modules/Backend/OptionsPage.php:142
+#: src/Modules/Backend/OptionsPage.php:143 src/Modules/Backend/Orders.php:162
 msgid "Create"
 msgstr "Создать"
 
-#: src/Modules/Backend/OptionsPage.php:139
-#: src/Modules/Backend/OptionsPage.php:140
+#: src/Modules/Backend/OptionsPage.php:151
+#: src/Modules/Backend/OptionsPage.php:152
 msgid "Edit"
 msgstr "Редактировать"
 
+#: src/Modules/Backend/OptionsPage.php:160
+#: src/Modules/Backend/OptionsPage.php:161 views/tools.php:13
+msgid "Tools"
+msgstr "Инструменты"
+
 # Warehouse loader
-#: src/Modules/Backend/OptionsPage.php:151
+#: src/Modules/Backend/OptionsPage.php:177
 msgid "Warehouses data of Nova Poshta"
 msgstr "Данные отделений Новой Почты"
 
-#: src/Modules/Backend/OptionsPage.php:152
+#: src/Modules/Backend/OptionsPage.php:178
 msgid "Last update date:"
 msgstr "Дата последнего обновления:"
 
-#: src/Modules/Backend/OptionsPage.php:153
+#: src/Modules/Backend/OptionsPage.php:179
 msgid "Status:"
 msgstr "Статус:"
 
-#: src/Modules/Backend/OptionsPage.php:154
+#: src/Modules/Backend/OptionsPage.php:180
 msgid "Not completed"
 msgstr "Не завершено"
 
-#: src/Modules/Backend/OptionsPage.php:155
+#: src/Modules/Backend/OptionsPage.php:181
 msgid "Completed"
 msgstr "Завершено"
 
-#: src/Modules/Backend/OptionsPage.php:156
+#: src/Modules/Backend/OptionsPage.php:182
 msgid "Unknown"
 msgstr "Неизвестный"
 
-#: src/Modules/Backend/OptionsPage.php:157
+#: src/Modules/Backend/OptionsPage.php:183
 msgid "Update warehouses"
 msgstr "Обновить отделения"
 
-#: src/Modules/Backend/OptionsPage.php:158
+#: src/Modules/Backend/OptionsPage.php:184
 msgid "Continue update"
 msgstr "Продолжить обновление"
 
-#: src/Modules/Backend/OptionsPage.php:159
+#: src/Modules/Backend/OptionsPage.php:185
 msgid "Load areas..."
 msgstr "Загрузка областей..."
 
-#: src/Modules/Backend/OptionsPage.php:160
+#: src/Modules/Backend/OptionsPage.php:186
 msgid "Load cities..."
 msgstr "Загрузка городов..."
 
-#: src/Modules/Backend/OptionsPage.php:161
+#: src/Modules/Backend/OptionsPage.php:187
 msgid "Load warehouses..."
 msgstr "Загрузка отделений..."
 
-#: src/Modules/Backend/OptionsPage.php:162
+#: src/Modules/Backend/OptionsPage.php:188
 msgid "Warehouses db updated successfully"
 msgstr "Данные отделений успешно обновлены"
 
-#: src/Modules/Backend/OptionsPage.php:165
+#: src/Modules/Backend/OptionsPage.php:191
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 "Вы уверены, что хотите перезапустить миграции? Это действие не может быть "
 "отменено."
 
-#: src/Modules/Backend/OptionsPage.php:236
+#: src/Modules/Backend/OptionsPage.php:262
 msgid "Add rule"
 msgstr "Добавить правило"
 
@@ -145,15 +150,11 @@ msgstr "Добавить правило"
 msgid "Shipping label"
 msgstr "Накладная"
 
-#: src/Modules/Backend/Orders.php:110
-msgid "WC Ukraine Shipping"
-msgstr ""
-
 #: src/Modules/Backend/Orders.php:122
 msgid "Invoice creation is unavailable for this order"
 msgstr "Создание накладной недоступно для этого заказа"
 
-#: src/Modules/Backend/Orders.php:151 views/order/edit_order_metabox.php:19
+#: src/Modules/Backend/Orders.php:154 views/order/edit_order_metabox.php:24
 msgid "Delete"
 msgstr "Удалить"
 
@@ -254,12 +255,13 @@ msgstr "Нужна адресная доставка"
 msgid "Rule constructor"
 msgstr "Конструктор правил"
 
-#: views/automation.php:18 views/orders.php:7 views/settings.php:17
+#: views/automation.php:18 views/orders.php:8 views/settings.php:17
 #: views/smarty_parcel.php:16 views/ttn_forbidden.php:16
 msgid "Documentation"
 msgstr "Документация"
 
-#: views/automation.php:21 views/orders.php:10 views/settings.php:20
+#: views/automation.php:21 views/orders.php:11 views/settings.php:20
+#: views/tools.php:16
 msgid "Save"
 msgstr "Сохранить"
 
@@ -460,12 +462,11 @@ msgstr "Наложенный платеж"
 msgid "COD method"
 msgstr "Метод наложенного платежа"
 
-#: views/partial/settings_shipping_label.php:105
-#: views/partial/settings_shipping_label.php:111
+#: views/partial/settings_shipping_label.php:102
 msgid "Payment control"
 msgstr "Контроль оплаты"
 
-#: views/partial/settings_shipping_label.php:119
+#: views/partial/settings_shipping_label.php:110
 msgid "Automatically add shipments to tracking"
 msgstr "Автоматически добавлять посылки в трекинг"
 
@@ -517,21 +518,33 @@ msgstr "Переводы"
 msgid "Shipping Label"
 msgstr "Накладная"
 
-#: views/settings.php:49
-msgid "Danger zone"
-msgstr "Опасная зона"
+#: views/tools.php:29
+msgid "Migrate from WC Ukraine Shipping PRO"
+msgstr "Миграция с WC Ukraine Shipping PRO"
 
-#: views/settings.php:54
-msgid "Re-run migrations"
-msgstr "Перезапустить миграции"
+#: views/tools.php:32
+msgid "Sync old TTNs"
+msgstr "Синхронизация старых ТТН"
 
-#: views/settings.php:56
+#: views/tools.php:35
+msgid "Available <strong>%d TTNs</strong> to sync"
+msgstr "Доступно <strong>%d ТТН</strong> для синхронизации"
+
+#: views/tools.php:39
+msgid "Start sync"
+msgstr "Запустить синхронизацию"
+
+#: views/tools.php:49
+msgid "Enable legacy tracking compatibility"
+msgstr "Включить совместимость с устаревшей функцией трекинга"
+
+#: views/tools.php:53
 msgid ""
-"Be careful when performing this action. Be sure to refresh the list of "
-"warehouses after this action will be completed."
+"If you have previously used our tracking service, enable this option to "
+"receive statuses for already added invoices."
 msgstr ""
-"Будьте осторожны при выполнении данного действия. Не забудьте обновить базу "
-"отделений после выполнения этой операции."
+"Если вы ранее пользовались нашей услугой отслеживания, включите эту опцию, "
+"чтобы получать статусы для ранее созданных накладных."
 
 #: views/ttn_forbidden.php:12
 msgid "New TTN"
@@ -540,6 +553,19 @@ msgstr "Новая накладная"
 #: views/ttn_forbidden.php:26
 msgid "Read more"
 msgstr "Подробнее"
+
+#~ msgid "Danger zone"
+#~ msgstr "Опасная зона"
+
+#~ msgid "Re-run migrations"
+#~ msgstr "Перезапустить миграции"
+
+#~ msgid ""
+#~ "Be careful when performing this action. Be sure to refresh the list of "
+#~ "warehouses after this action will be completed."
+#~ msgstr ""
+#~ "Будьте осторожны при выполнении данного действия. Не забудьте обновить "
+#~ "базу отделений после выполнения этой операции."
 
 #~ msgid "Full address shipping integration (using Nova Poshta address API)"
 #~ msgstr ""

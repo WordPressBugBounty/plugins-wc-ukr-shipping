@@ -143,6 +143,9 @@ class Orders implements ModuleInterface
                     <div class="wcus-icon-block" style="text-align: center;">
                         <div class="wcus-label-widget j-wcus-label-widget">
                             <?php echo esc_html($ttn['tracking_number']); ?>
+                            <?php if ($ttn['carrier_slug'] === 'wcus_pro') { ?>
+                                <span style="color: #ff4500; font-size: 12px; margin-left: 4px;" title="WC Ukraine Shipping PRO">*</span>
+                            <?php } ?>
                         </div>
                         <div style="text-align: center;">
                             <a href="#" class="wcus-svg-btn wcus-svg-btn--error j-wcus-label-delete"

@@ -2,20 +2,20 @@
     "packages": [
         {
             "name": "kirillbdev/wcus-core",
-            "version": "v1.0.10",
-            "version_normalized": "1.0.10.0",
+            "version": "v1.0.11",
+            "version_normalized": "1.0.11.0",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.com:wordpress-products/wcus-core.git",
-                "reference": "d16096730187092b2afbfe407e3e16b4685f4287"
+                "reference": "bab9acc1409cf5f3c6aabeac3101afbc36dafdea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/wordpress-products%2Fwcus-core/repository/archive.zip?sha=d16096730187092b2afbfe407e3e16b4685f4287",
-                "reference": "d16096730187092b2afbfe407e3e16b4685f4287",
+                "url": "https://gitlab.com/api/v4/projects/wordpress-products%2Fwcus-core/repository/archive.zip?sha=bab9acc1409cf5f3c6aabeac3101afbc36dafdea",
+                "reference": "bab9acc1409cf5f3c6aabeac3101afbc36dafdea",
                 "shasum": ""
             },
-            "time": "2025-03-02T22:48:35+00:00",
+            "time": "2025-04-29T17:31:16+00:00",
             "type": "package",
             "installation-source": "source",
             "autoload": {

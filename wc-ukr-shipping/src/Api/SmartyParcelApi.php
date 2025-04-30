@@ -89,6 +89,32 @@ final class SmartyParcelApi
         return $this->processResponse($response);
     }
 
+    public function updateCarrier(
+        string $id,
+        string $accountApiKey,
+        string $name,
+        string $senderRef,
+        string $senderContactRef
+    ): array {
+        $response = wp_remote_request(self::API_URL . '/beta/carriers/nova_poshta/' . $id, [
+            'method' => 'PUT',
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+            ],
+            'timeout' => 5,
+            'body' => json_encode([
+                'name' => $name,
+                'api_key' => $accountApiKey,
+                'sender_ref' => $senderRef,
+                'sender_contact_ref' => $senderContactRef,
+            ])
+        ]);
+
+        return $this->processResponse($response);
+    }
+
     public function createLabel(LabelRequestBuilderInterface $builder): array
     {
         $response = wp_remote_post(self::API_URL . '/beta/labels', [

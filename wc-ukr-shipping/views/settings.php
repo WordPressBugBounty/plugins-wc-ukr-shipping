@@ -43,22 +43,6 @@
             </div>
         </div>
 
-        <div id="wcus-danger-zone" class="wcus-settings">
-            <div class="wcus-settings__header">
-                <h1 class="wcus-settings__title">
-                    <?php esc_html_e('Danger zone', 'wc-ukr-shipping-i18n'); ?>
-                </h1>
-            </div>
-            <div class="wcus-settings__content">
-                <div class="wcus-form-group" style="margin-bottom: 0;">
-                    <button id="rerun_migrations" class="wcus-btn wcus-btn--docs wcus-btn--sm"><?php esc_html_e('Re-run migrations', 'wc-ukr-shipping-i18n'); ?></button>
-                    <div class="wcus-form-group__tooltip">
-                        <?php esc_html_e('Be careful when performing this action. Be sure to refresh the list of warehouses after this action will be completed.', 'wc-ukr-shipping-i18n'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
     <?= \kirillbdev\WCUSCore\Foundation\View::render('partial/pro_promotion'); ?>

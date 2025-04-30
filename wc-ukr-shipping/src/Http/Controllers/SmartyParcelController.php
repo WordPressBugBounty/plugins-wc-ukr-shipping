@@ -84,6 +84,24 @@ class SmartyParcelController extends Controller
         }
     }
 
+    public function refreshAccountInfo(Request $request): ResponseInterface
+    {
+        try {
+            $account = $this->api->getUserStatus(get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY));
+            set_transient('smarty_parcel_account', $account, 3600);
+
+            return $this->jsonResponse([
+                'success' => true,
+                'data' => $account,
+            ]);
+        } catch (\Throwable $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error'   => $e->getMessage(),
+            ]);
+        }
+    }
+
     public function disconnect(Request $request): ResponseInterface
     {
         try {
@@ -157,10 +175,65 @@ class SmartyParcelController extends Controller
                 'success' => true,
                 'data' => $carrier,
             ]);
+        } catch (SmartyParcelErrorException $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error' => [
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage(),
+                    'details' => $e->getDetails(),
+                ],
+            ]);
         } catch (\Throwable $e) {
             return $this->jsonResponse([
                 'success' => false,
-                'error'   => $e->getMessage(),
+                'error' => [
+                    'code' => 0,
+                    'message' => $e->getMessage(),
+                ],
+            ]);
+        }
+    }
+
+    public function updateCarrier(Request $request): ResponseInterface
+    {
+        try {
+            $response = $this->api->updateCarrier(
+                $request->get('carrier_account_id'),
+                $request->get('api_key'),
+                $request->get('name'),
+                $request->get('sender_ref'),
+                $request->get('sender_contact_ref')
+            );
+
+            $carrierAccounts = $this->getCarrierAccountCached();
+            foreach ($carrierAccounts as &$acc) {
+                if ($acc['id'] === $request->get('carrier_account_id')) {
+                    $acc['name'] = $response['name'];
+                }
+            }
+            update_option(WCUS_OPTION_SMARTY_PARCEL_CARRIERS, json_encode($carrierAccounts));
+
+            return $this->jsonResponse([
+                'success' => true,
+                'data' => $carrierAccounts,
+            ]);
+        } catch (SmartyParcelErrorException $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error' => [
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage(),
+                    'details' => $e->getDetails(),
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error' => [
+                    'code' => 0,
+                    'message' => $e->getMessage(),
+                ],
             ]);
         }
     }
@@ -181,10 +254,15 @@ class SmartyParcelController extends Controller
             return $this->jsonResponse([
                 'success' => true,
             ]);
+        } catch (SmartyParcelErrorException $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error' => '[' . $e->getCode() . '] ' . $e->getMessage(),
+            ]);
         } catch (\Throwable $e) {
             return $this->jsonResponse([
                 'success' => false,
-                'error'   => $e->getMessage(),
+                'error' => $e->getMessage(),
             ]);
         }
     }
@@ -289,7 +367,11 @@ class SmartyParcelController extends Controller
             if ($label === null) {
                 throw new \Exception('Label by id ' . $request->get('label_id') . ' not found');
             }
-            $response = $this->api->voidLabel($label['label_id']);
+
+            // We can't void legacy WCUS Pro labels yet
+            if ($label['carrier_slug'] !== 'wcus_pro') {
+                $this->api->voidLabel($label['label_id']);
+            }
             $this->shippingLabelsRepository->deleteById((int)$label['id']);
 
             $this->automationService->executeEvent(

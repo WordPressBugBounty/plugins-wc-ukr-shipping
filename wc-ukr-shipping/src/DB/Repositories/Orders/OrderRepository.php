@@ -20,6 +20,7 @@ class OrderRepository implements OrderRepositoryInterface
                 'p.post_date as created_at',
                 'p.post_status as status',
                 'l.label_id',
+                'l.carrier_slug',
                 'l.id as label_db_id',
                 'l.tracking_number',
                 'l.tracking_status',
