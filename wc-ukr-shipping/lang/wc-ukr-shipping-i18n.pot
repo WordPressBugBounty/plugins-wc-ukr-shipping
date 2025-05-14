@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WC Ukraine Shipping plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WC Ukraine Shipping 1.14.2\n"
+"Project-Id-Version: WC Ukraine Shipping 1.14.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-04-30T15:39:47+00:00\n"
+"POT-Creation-Date: 2025-05-14T19:41:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-ukr-shipping-i18n\n"
@@ -40,7 +40,7 @@ msgid "Unable to apply migrations"
 msgstr ""
 
 #: src/Http/Controllers/OptionsController.php:40
-#: views/tools.php:25
+#: views/tools.php:26
 msgid "Settings saved successfully!"
 msgstr ""
 
@@ -49,13 +49,13 @@ msgid "Every minute"
 msgstr ""
 
 #: src/Modules/Backend/OptionsPage.php:92
-#: views/settings.php:13
+#: views/settings.php:15
 msgid "Settings"
 msgstr ""
 
 #: src/Modules/Backend/OptionsPage.php:103
 #: src/Modules/Backend/OptionsPage.php:104
-#: views/smarty_parcel.php:12
+#: views/smarty_parcel.php:13
 msgid "Smarty Parcel"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 
 #: src/Modules/Backend/OptionsPage.php:160
 #: src/Modules/Backend/OptionsPage.php:161
-#: views/tools.php:13
+#: views/tools.php:14
 msgid "Tools"
 msgstr ""
 
@@ -260,16 +260,15 @@ msgstr ""
 
 #: views/automation.php:18
 #: views/orders.php:8
-#: views/settings.php:17
-#: views/smarty_parcel.php:16
+#: views/partial/pro_promotion.php:20
 #: views/ttn_forbidden.php:16
 msgid "Documentation"
 msgstr ""
 
 #: views/automation.php:21
 #: views/orders.php:11
-#: views/settings.php:20
-#: views/tools.php:16
+#: views/settings.php:19
+#: views/tools.php:17
 msgid "Save"
 msgstr ""
 
@@ -281,43 +280,47 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: views/partial/pro_promotion.php:10
+#: views/partial/pro_promotion.php:12
+msgid "Need help?"
+msgstr ""
+
+#: views/partial/pro_promotion.php:27
+msgid "Open support chat"
+msgstr ""
+
+#: views/partial/pro_promotion.php:38
 msgid "Get more features from SmartyParcel Advanced"
 msgstr ""
 
-#: views/partial/pro_promotion.php:13
+#: views/partial/pro_promotion.php:42
 msgid "Higher shipments limit"
 msgstr ""
 
-#: views/partial/pro_promotion.php:16
+#: views/partial/pro_promotion.php:45
 msgid "Automatic calculation of shipping costs."
 msgstr ""
 
-#: views/partial/pro_promotion.php:19
+#: views/partial/pro_promotion.php:48
 msgid "Shipping calculation based on order total"
 msgstr ""
 
-#: views/partial/pro_promotion.php:22
-msgid "Ability to customize separated shipping costs for address shipping"
-msgstr ""
-
-#: views/partial/pro_promotion.php:25
+#: views/partial/pro_promotion.php:51
 msgid "Possibility of mass generation of TTN in one click"
 msgstr ""
 
-#: views/partial/pro_promotion.php:28
-msgid "TTN Tracking"
+#: views/partial/pro_promotion.php:54
+msgid "SMS notifications"
 msgstr ""
 
-#: views/partial/pro_promotion.php:31
-msgid "Constructor of business rules automation"
+#: views/partial/pro_promotion.php:57
+msgid "Extended parcels analytics"
 msgstr ""
 
-#: views/partial/pro_promotion.php:34
+#: views/partial/pro_promotion.php:60
 msgid "Premium support"
 msgstr ""
 
-#: views/partial/pro_promotion.php:42
+#: views/partial/pro_promotion.php:68
 msgid "Switch to Advanced plan"
 msgstr ""
 
@@ -498,43 +501,43 @@ msgstr ""
 msgid "Empty result text"
 msgstr ""
 
-#: views/settings.php:28
+#: views/settings.php:27
 msgid "General"
 msgstr ""
 
-#: views/settings.php:29
+#: views/settings.php:28
 msgid "Shipping"
 msgstr ""
 
-#: views/settings.php:30
+#: views/settings.php:29
 msgid "Translates"
 msgstr ""
 
-#: views/settings.php:31
+#: views/settings.php:30
 msgid "Shipping Label"
 msgstr ""
 
-#: views/tools.php:29
+#: views/tools.php:30
 msgid "Migrate from WC Ukraine Shipping PRO"
 msgstr ""
 
-#: views/tools.php:32
+#: views/tools.php:33
 msgid "Sync old TTNs"
 msgstr ""
 
-#: views/tools.php:35
+#: views/tools.php:36
 msgid "Available <strong>%d TTNs</strong> to sync"
 msgstr ""
 
-#: views/tools.php:39
+#: views/tools.php:40
 msgid "Start sync"
 msgstr ""
 
-#: views/tools.php:49
+#: views/tools.php:50
 msgid "Enable legacy tracking compatibility"
 msgstr ""
 
-#: views/tools.php:53
+#: views/tools.php:54
 msgid "If you have previously used our tracking service, enable this option to receive statuses for already added invoices."
 msgstr ""
 

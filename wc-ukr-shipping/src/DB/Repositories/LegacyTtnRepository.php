@@ -10,6 +10,13 @@ class LegacyTtnRepository
 {
     public function getCountTtn(): int
     {
+        global $wpdb;
+
+        $tables = $wpdb->get_results("SHOW TABLES LIKE '{$wpdb->prefix}wc_ukr_shipping_np_ttn'", ARRAY_A);
+        if (!is_array($tables) || count($tables) === 0) {
+            return 0;
+        }
+
         return DB::table(DB::prefixedTable('wc_ukr_shipping_np_ttn'))->count();
     }
 

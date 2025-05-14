@@ -72,3 +72,12 @@ if (!function_exists('wcus_wrap_order')) {
         return new WCUSOrder($wcOrder);
     }
 }
+
+if (!function_exists('wcus_is_woocommerce_active')) {
+
+    function wcus_is_woocommerce_active(): bool
+    {
+        return function_exists('WC');
+    }
+
+}

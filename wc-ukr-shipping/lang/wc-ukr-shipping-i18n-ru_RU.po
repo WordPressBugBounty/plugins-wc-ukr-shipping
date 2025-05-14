@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2025-04-30T15:39:47+00:00\n"
+"POT-Creation-Date: 2025-05-14T19:41:54+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -39,7 +39,7 @@ msgstr "Миграции были успешно применены"
 msgid "Unable to apply migrations"
 msgstr "Не удалось применить миграции"
 
-#: src/Http/Controllers/OptionsController.php:40 views/tools.php:25
+#: src/Http/Controllers/OptionsController.php:40 views/tools.php:26
 msgid "Settings saved successfully!"
 msgstr "Настройки успешно сохранены!"
 
@@ -48,12 +48,12 @@ msgid "Every minute"
 msgstr ""
 
 # Options page
-#: src/Modules/Backend/OptionsPage.php:92 views/settings.php:13
+#: src/Modules/Backend/OptionsPage.php:92 views/settings.php:15
 msgid "Settings"
 msgstr "Настройки"
 
 #: src/Modules/Backend/OptionsPage.php:103
-#: src/Modules/Backend/OptionsPage.php:104 views/smarty_parcel.php:12
+#: src/Modules/Backend/OptionsPage.php:104 views/smarty_parcel.php:13
 msgid "Smarty Parcel"
 msgstr ""
 
@@ -83,7 +83,7 @@ msgid "Edit"
 msgstr "Редактировать"
 
 #: src/Modules/Backend/OptionsPage.php:160
-#: src/Modules/Backend/OptionsPage.php:161 views/tools.php:13
+#: src/Modules/Backend/OptionsPage.php:161 views/tools.php:14
 msgid "Tools"
 msgstr "Инструменты"
 
@@ -255,13 +255,13 @@ msgstr "Нужна адресная доставка"
 msgid "Rule constructor"
 msgstr "Конструктор правил"
 
-#: views/automation.php:18 views/orders.php:8 views/settings.php:17
-#: views/smarty_parcel.php:16 views/ttn_forbidden.php:16
+#: views/automation.php:18 views/orders.php:8
+#: views/partial/pro_promotion.php:20 views/ttn_forbidden.php:16
 msgid "Documentation"
 msgstr "Документация"
 
-#: views/automation.php:21 views/orders.php:11 views/settings.php:20
-#: views/tools.php:16
+#: views/automation.php:21 views/orders.php:11 views/settings.php:19
+#: views/tools.php:17
 msgid "Save"
 msgstr "Сохранить"
 
@@ -273,44 +273,48 @@ msgstr "Название"
 msgid "Active"
 msgstr "Активный"
 
+#: views/partial/pro_promotion.php:12
+msgid "Need help?"
+msgstr "Нужна помощь?"
+
+#: views/partial/pro_promotion.php:27
+msgid "Open support chat"
+msgstr "Открыть чат поддержки"
+
 # PRO features
-#: views/partial/pro_promotion.php:10
+#: views/partial/pro_promotion.php:38
 msgid "Get more features from SmartyParcel Advanced"
 msgstr "Получите больше возможностей от SmartyParcel Advanced"
 
-#: views/partial/pro_promotion.php:13
+#: views/partial/pro_promotion.php:42
 msgid "Higher shipments limit"
-msgstr "Более высокий лимит отгрузок"
+msgstr "Выше лимит создания накладных"
 
-#: views/partial/pro_promotion.php:16
+#: views/partial/pro_promotion.php:45
 msgid "Automatic calculation of shipping costs."
 msgstr "Автоматический расчет стоимости доставки."
 
-#: views/partial/pro_promotion.php:19
+#: views/partial/pro_promotion.php:48
 msgid "Shipping calculation based on order total"
 msgstr "Расчет стоимости доставки в зависимости от суммы заказа"
 
-#: views/partial/pro_promotion.php:22
-msgid "Ability to customize separated shipping costs for address shipping"
-msgstr "Возможность настроить отдельный расчет стоимости для адресной доставки"
-
-#: views/partial/pro_promotion.php:25
+#: views/partial/pro_promotion.php:51
 msgid "Possibility of mass generation of TTN in one click"
 msgstr "Возможность массового создания ТТН в один клик"
 
-#: views/partial/pro_promotion.php:28
-msgid "TTN Tracking"
-msgstr "Отслеживание статусов ТТН"
+#: views/partial/pro_promotion.php:54
+msgid "SMS notifications"
+msgstr "СМС оповещения"
 
-#: views/partial/pro_promotion.php:31
-msgid "Constructor of business rules automation"
-msgstr "Визуальный конструктор автоматизации бизнес-процессов"
+#: views/partial/pro_promotion.php:57
+msgid "Extended parcels analytics"
+msgstr "Расширенная аналитика посылок"
 
-#: views/partial/pro_promotion.php:34
+#: views/partial/pro_promotion.php:60
 msgid "Premium support"
 msgstr "Premium поддержка"
 
-#: views/partial/pro_promotion.php:42
+#: views/partial/pro_promotion.php:68
 msgid "Switch to Advanced plan"
 msgstr "Перейти на Advanced план"
 
@@ -502,43 +506,43 @@ msgstr "Placeholder адресной доставки"
 msgid "Empty result text"
 msgstr "Текст пустого результата поиска"
 
-#: views/settings.php:28
+#: views/settings.php:27
 msgid "General"
 msgstr "Общие"
 
-#: views/settings.php:29
+#: views/settings.php:28
 msgid "Shipping"
 msgstr "Доставка"
 
-#: views/settings.php:30
+#: views/settings.php:29
 msgid "Translates"
 msgstr "Переводы"
 
-#: views/settings.php:31
+#: views/settings.php:30
 msgid "Shipping Label"
 msgstr "Накладная"
 
-#: views/tools.php:29
+#: views/tools.php:30
 msgid "Migrate from WC Ukraine Shipping PRO"
 msgstr "Миграция с WC Ukraine Shipping PRO"
 
-#: views/tools.php:32
+#: views/tools.php:33
 msgid "Sync old TTNs"
 msgstr "Синхронизация старых ТТН"
 
-#: views/tools.php:35
+#: views/tools.php:36
 msgid "Available <strong>%d TTNs</strong> to sync"
 msgstr "Доступно <strong>%d ТТН</strong> для синхронизации"
 
-#: views/tools.php:39
+#: views/tools.php:40
 msgid "Start sync"
 msgstr "Запустить синхронизацию"
 
-#: views/tools.php:49
+#: views/tools.php:50
 msgid "Enable legacy tracking compatibility"
 msgstr "Включить совместимость с устаревшей функцией трекинга"
 
-#: views/tools.php:53
+#: views/tools.php:54
 msgid ""
 "If you have previously used our tracking service, enable this option to "
 "receive statuses for already added invoices."
@@ -553,6 +557,16 @@ msgstr "Новая накладная"
 #: views/ttn_forbidden.php:26
 msgid "Read more"
 msgstr "Подробнее"
+
+#~ msgid "Ability to customize separated shipping costs for address shipping"
+#~ msgstr ""
+#~ "Возможность настроить отдельный расчет стоимости для адресной доставки"
+
+#~ msgid "TTN Tracking"
+#~ msgstr "Отслеживание статусов ТТН"
+
+#~ msgid "Constructor of business rules automation"
+#~ msgstr "Визуальный конструктор автоматизации бизнес-процессов"
 
 #~ msgid "Danger zone"
 #~ msgstr "Опасная зона"

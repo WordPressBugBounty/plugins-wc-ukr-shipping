@@ -142,7 +142,7 @@ class AssetsLoader implements ModuleInterface
                 'placeholder_warehouse' => $translates['placeholder_warehouse'],
                 'not_found' => $translates['not_found'],
             ],
-            'orderStatuses' => wc_get_order_statuses(),
+            'orderStatuses' => wcus_is_woocommerce_active() ? wc_get_order_statuses() : [],
             'assets' => [
                 'nova_poshta_icon_url' => WC_UKR_SHIPPING_PLUGIN_URL . 'image/nova-poshta-icon.png',
             ],

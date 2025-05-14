@@ -5,9 +5,38 @@ if ( ! defined('ABSPATH')) {
 ?>
 
 <div class="wcus-pro-features">
+    <div class="wcus-card wcus-mb-2">
+        <div class="wcus-card__header">
+            <div class="wcus-card-icon"><?php echo wc_ukr_shipping_import_svg('help.svg') ?></div>
+            <div class="wcus-card__title wcus-pro-features__title">
+                <?= __('Need help?', 'wc-ukr-shipping-i18n'); ?>
+            </div>
+        </div>
+        <div class="wcus-card__content">
+            <a target="_blank"
+               href="https://kirillbdev.pro/docs/wcus-base-setup/"
+               class="wcus-btn wcus-btn--docs wcus-btn--md wcus-btn--block wcus-mb-1">
+                <?php echo wc_ukr_shipping_import_svg('docs.svg'); ?>
+                <?php esc_html_e('Documentation', 'wc-ukr-shipping-i18n'); ?>
+            </a>
+
+            <a target="_blank"
+               href="https://t.me/smarty_parcel_support_bot"
+               class="wcus-btn wcus-btn--telegram wcus-btn--md wcus-btn--block">
+                <?php echo wc_ukr_shipping_import_svg('support.svg'); ?>
+                <?php esc_html_e('Open support chat', 'wc-ukr-shipping-i18n'); ?>
+            </a>
+        </div>
+    </div>
+
     <div class="wcus-card">
         <div class="wcus-card__content">
-            <div class="wcus-card__title wcus-pro-features__title"><?= __('Get more features from SmartyParcel Advanced', 'wc-ukr-shipping-i18n'); ?></div>
+            <div class="wcus-pro-features__header">
+                <div class="wcus-pro-features__logo">
+                    <img src="<?php echo esc_attr(WC_UKR_SHIPPING_PLUGIN_URL . '/image/smarty-parcel.jpg'); ?>" />
+                </div>
+                <div class="wcus-card__title wcus-pro-features__title"><?= __('Get more features from SmartyParcel Advanced', 'wc-ukr-shipping-i18n'); ?></div>
+            </div>
             <div class="wcus-pro-features__list">
                 <div class="wcus-pro-features__feature">
                     <?= __('Higher shipments limit', 'wc-ukr-shipping-i18n'); ?>
@@ -19,16 +48,13 @@ if ( ! defined('ABSPATH')) {
                     <?= __('Shipping calculation based on order total', 'wc-ukr-shipping-i18n'); ?>
                 </div>
                 <div class="wcus-pro-features__feature">
-                    <?= __('Ability to customize separated shipping costs for address shipping', 'wc-ukr-shipping-i18n'); ?>
-                </div>
-                <div class="wcus-pro-features__feature">
                     <?= __('Possibility of mass generation of TTN in one click', 'wc-ukr-shipping-i18n'); ?>
                 </div>
                 <div class="wcus-pro-features__feature">
-                    <?= __('TTN Tracking', 'wc-ukr-shipping-i18n'); ?>
+                    <?= __('SMS notifications', 'wc-ukr-shipping-i18n'); ?>
                 </div>
                 <div class="wcus-pro-features__feature">
-                    <?= __('Constructor of business rules automation', 'wc-ukr-shipping-i18n'); ?>
+                    <?= __('Extended parcels analytics', 'wc-ukr-shipping-i18n'); ?>
                 </div>
                 <div class="wcus-pro-features__feature">
                     <?= __('Premium support', 'wc-ukr-shipping-i18n'); ?>
@@ -37,7 +63,7 @@ if ( ! defined('ABSPATH')) {
 
             <a target="_blank"
                href="https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=plugin"
-               class="wcus-btn wcus-btn--primary wcus-btn--md wcus-btn--block wcus-pro-features__btn">
+               class="wcus-btn wcus-btn--md wcus-btn--block wcus-pro-features__btn">
                 <?= wc_ukr_shipping_import_svg('star.svg'); ?>
                 <?= __('Switch to Advanced plan', 'wc-ukr-shipping-i18n'); ?>
             </a>

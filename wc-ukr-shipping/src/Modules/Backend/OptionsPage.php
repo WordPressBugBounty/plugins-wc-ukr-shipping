@@ -108,7 +108,7 @@ class OptionsPage implements ModuleInterface
         );
 
         add_submenu_page(
-            null,
+            '',
             __('Create TTN', 'wc-ukr-shipping-i18n'),
             __('Create TTN', 'wc-ukr-shipping-i18n'),
             'manage_woocommerce',
@@ -195,7 +195,7 @@ class OptionsPage implements ModuleInterface
     public function html()
     {
         $data = [];
-        $gateways = wc()->payment_gateways()->payment_gateways();
+        $gateways = wcus_is_woocommerce_active() ? wc()->payment_gateways()->payment_gateways() : [];
         $paymentMethods = [];
         foreach ($gateways as $id => $gateway) {
             $paymentMethods[] = [
