@@ -116,7 +116,7 @@ class OrderShipping
 
     private function isNewUiEnabled(): bool
     {
-        return (int)get_option('wcus_checkout_new_ui') === 1;
+        return (int)wc_ukr_shipping_get_option('wcus_checkout_new_ui') === 1;
     }
 
     private function sanitizeValue(string $value): string

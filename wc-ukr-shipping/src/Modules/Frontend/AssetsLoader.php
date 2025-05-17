@@ -40,7 +40,7 @@ class AssetsLoader implements ModuleInterface
             WC_UKR_SHIPPING_PLUGIN_URL . 'assets/css/style.min.css'
         );
 
-        if ((int)get_option('wcus_checkout_new_ui')) {
+        if ((int)wc_ukr_shipping_get_option('wcus_checkout_new_ui')) {
             wp_enqueue_script(
                 'wcus_checkout_js',
                 WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/checkout2.min.js',
@@ -100,7 +100,7 @@ class AssetsLoader implements ModuleInterface
             ]
         ];
 
-        if ((int)get_option('wcus_checkout_new_ui')) {
+        if ((int)wc_ukr_shipping_get_option('wcus_checkout_new_ui')) {
             $globals['default_cities'] = $this->getDefaultCities();
             $globals['i18n'] = [
                 'fields_title' => __('Select shipping address', 'wc-ukr-shipping-i18n'),

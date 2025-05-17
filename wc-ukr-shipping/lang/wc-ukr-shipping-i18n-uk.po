@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2025-05-14T19:41:54+00:00\n"
+"POT-Creation-Date: 2025-05-17T21:35:43+00:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -48,100 +48,105 @@ msgid "Every minute"
 msgstr ""
 
 # Options page
-#: src/Modules/Backend/OptionsPage.php:92 views/settings.php:15
+#: src/Modules/Backend/OptionsPage.php:93 views/settings.php:15
 msgid "Settings"
 msgstr "Налаштування"
 
-#: src/Modules/Backend/OptionsPage.php:103
-#: src/Modules/Backend/OptionsPage.php:104 views/smarty_parcel.php:13
+#: src/Modules/Backend/OptionsPage.php:104
+#: src/Modules/Backend/OptionsPage.php:105 views/smarty_parcel.php:13
 msgid "Smarty Parcel"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:112
 #: src/Modules/Backend/OptionsPage.php:113
+#: src/Modules/Backend/OptionsPage.php:114
 msgid "Create TTN"
 msgstr "Створити ТТН"
 
-#: src/Modules/Backend/OptionsPage.php:121
-#: src/Modules/Backend/OptionsPage.php:122 views/orders.php:4
+#: src/Modules/Backend/OptionsPage.php:122
+#: src/Modules/Backend/OptionsPage.php:123 views/orders.php:4
 msgid "Orders"
 msgstr "Замовлення"
 
-#: src/Modules/Backend/OptionsPage.php:130
 #: src/Modules/Backend/OptionsPage.php:131
+#: src/Modules/Backend/OptionsPage.php:132
 msgid "Automation"
 msgstr "Автоматизація"
 
-#: src/Modules/Backend/OptionsPage.php:142
-#: src/Modules/Backend/OptionsPage.php:143 src/Modules/Backend/Orders.php:162
+#: src/Modules/Backend/OptionsPage.php:143
+#: src/Modules/Backend/OptionsPage.php:144 src/Modules/Backend/Orders.php:162
 msgid "Create"
 msgstr "Створити"
 
-#: src/Modules/Backend/OptionsPage.php:151
 #: src/Modules/Backend/OptionsPage.php:152
+#: src/Modules/Backend/OptionsPage.php:153
 msgid "Edit"
 msgstr "Редагувати"
 
-#: src/Modules/Backend/OptionsPage.php:160
-#: src/Modules/Backend/OptionsPage.php:161 views/tools.php:14
+#: src/Modules/Backend/OptionsPage.php:161
+#: src/Modules/Backend/OptionsPage.php:162 views/tools.php:14
 msgid "Tools"
 msgstr "Інструменти"
 
+#: src/Modules/Backend/OptionsPage.php:170
+#: src/Modules/Backend/OptionsPage.php:171
+msgid "Upgrade pricing plan"
+msgstr "Змінити тарифний план"
+
 # Warehouse loader
-#: src/Modules/Backend/OptionsPage.php:177
+#: src/Modules/Backend/OptionsPage.php:187
 msgid "Warehouses data of Nova Poshta"
 msgstr "Дані відділень Нової Пошти"
 
-#: src/Modules/Backend/OptionsPage.php:178
+#: src/Modules/Backend/OptionsPage.php:188
 msgid "Last update date:"
 msgstr "Дата останнього оновлення:"
 
-#: src/Modules/Backend/OptionsPage.php:179
+#: src/Modules/Backend/OptionsPage.php:189
 msgid "Status:"
 msgstr "Статус:"
 
-#: src/Modules/Backend/OptionsPage.php:180
+#: src/Modules/Backend/OptionsPage.php:190
 msgid "Not completed"
 msgstr "Не завершено"
 
-#: src/Modules/Backend/OptionsPage.php:181
+#: src/Modules/Backend/OptionsPage.php:191
 msgid "Completed"
 msgstr "Завершено"
 
-#: src/Modules/Backend/OptionsPage.php:182
+#: src/Modules/Backend/OptionsPage.php:192
 msgid "Unknown"
 msgstr "Невідомий"
 
-#: src/Modules/Backend/OptionsPage.php:183
+#: src/Modules/Backend/OptionsPage.php:193
 msgid "Update warehouses"
 msgstr "Оновити відділення"
 
-#: src/Modules/Backend/OptionsPage.php:184
+#: src/Modules/Backend/OptionsPage.php:194
 msgid "Continue update"
 msgstr "Продовжити оновлення"
 
-#: src/Modules/Backend/OptionsPage.php:185
+#: src/Modules/Backend/OptionsPage.php:195
 msgid "Load areas..."
 msgstr "Завантаження областей..."
 
-#: src/Modules/Backend/OptionsPage.php:186
+#: src/Modules/Backend/OptionsPage.php:196
 msgid "Load cities..."
 msgstr "Завантаження міст..."
 
-#: src/Modules/Backend/OptionsPage.php:187
+#: src/Modules/Backend/OptionsPage.php:197
 msgid "Load warehouses..."
 msgstr "Завантаження відділень..."
 
-#: src/Modules/Backend/OptionsPage.php:188
+#: src/Modules/Backend/OptionsPage.php:198
 msgid "Warehouses db updated successfully"
 msgstr "Дані відділень успішно оновлені"
 
-#: src/Modules/Backend/OptionsPage.php:191
+#: src/Modules/Backend/OptionsPage.php:201
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 "Ви впевнені, що хочете перезапустити міграції? Ця дія не може бути скасована."
 
-#: src/Modules/Backend/OptionsPage.php:262
+#: src/Modules/Backend/OptionsPage.php:272
 msgid "Add rule"
 msgstr "Додати правило"
 
@@ -254,13 +259,12 @@ msgstr "Потрібна адресна доставка"
 msgid "Rule constructor"
 msgstr "Конструктор правил"
 
-#: views/automation.php:18 views/orders.php:8
-#: views/partial/pro_promotion.php:20 views/ttn_forbidden.php:16
+#: views/automation.php:18 views/partial/pro_promotion.php:20
+#: views/ttn_forbidden.php:16
 msgid "Documentation"
 msgstr "Документація"
 
-#: views/automation.php:21 views/orders.php:11 views/settings.php:19
-#: views/tools.php:17
+#: views/automation.php:21 views/settings.php:19 views/tools.php:17
 msgid "Save"
 msgstr "Зберегти"
 
@@ -281,39 +285,39 @@ msgid "Open support chat"
 msgstr "Відкрити чат підтримки"
 
 # PRO features
-#: views/partial/pro_promotion.php:38
+#: views/partial/pro_promotion.php:39
 msgid "Get more features from SmartyParcel Advanced"
 msgstr "Отримайте більше можливостей з SmartyParcel Advanced"
 
-#: views/partial/pro_promotion.php:42
+#: views/partial/pro_promotion.php:43
 msgid "Higher shipments limit"
 msgstr "Вище ліміт створення накладних"
 
-#: views/partial/pro_promotion.php:45
+#: views/partial/pro_promotion.php:46
 msgid "Automatic calculation of shipping costs."
 msgstr "Автоматичний розрахунок вартості доставки."
 
-#: views/partial/pro_promotion.php:48
+#: views/partial/pro_promotion.php:49
 msgid "Shipping calculation based on order total"
 msgstr "Розрахунок вартості доставки в залежності від суми замовлення"
 
-#: views/partial/pro_promotion.php:51
+#: views/partial/pro_promotion.php:52
 msgid "Possibility of mass generation of TTN in one click"
 msgstr "Можливість масової генерації ТТН в один клік"
 
-#: views/partial/pro_promotion.php:54
+#: views/partial/pro_promotion.php:55
 msgid "SMS notifications"
 msgstr "СМС сповіщення"
 
-#: views/partial/pro_promotion.php:57
+#: views/partial/pro_promotion.php:58
 msgid "Extended parcels analytics"
 msgstr "Розширена аналітика посилок"
 
-#: views/partial/pro_promotion.php:60
+#: views/partial/pro_promotion.php:61
 msgid "Premium support"
 msgstr "Premium підтримка"
 
-#: views/partial/pro_promotion.php:68
+#: views/partial/pro_promotion.php:69 views/upgrade_plan.php:106
 msgid "Switch to Advanced plan"
 msgstr "Перейти на Advanced план"
 
@@ -556,6 +560,89 @@ msgstr "Нова накладна"
 #: views/ttn_forbidden.php:26
 msgid "Read more"
 msgstr "Подробиці"
+
+#: views/upgrade_plan.php:15
+msgid ""
+"Unfortunately, you have exhausted your trial quota on the Free plan. To "
+"continue creating invoices, please upgrade to the Advanced plan."
+msgstr ""
+"На жаль, ви вичерпали свою пробну квоту для безкоштовного плану. Щоб "
+"продовжити створювати накладні, будь ласка, перейдіть на Advanced план."
+
+#: views/upgrade_plan.php:23
+msgid "Unlock powerful logistics automation tools"
+msgstr "Розблокуйте потужні інструменти автоматизації логістики"
+
+#: views/upgrade_plan.php:31
+msgid "Free"
+msgstr "Безкоштовно"
+
+#: views/upgrade_plan.php:35
+msgid "Basic set of functions for logistics automation."
+msgstr "Базовий набір функцій для автоматизації доставки"
+
+#: views/upgrade_plan.php:39
+msgid "Selecting a delivery department"
+msgstr "Вибір відділення доставки"
+
+#: views/upgrade_plan.php:40
+msgid "Address delivery"
+msgstr "Адресна доставка"
+
+#: views/upgrade_plan.php:41
+msgid "Fixed cost calculation"
+msgstr "Фіксований рохрахунок вартості"
+
+#: views/upgrade_plan.php:42
+msgid "25 invoices at a time (creation / tracking)"
+msgstr "25 накладних одноразово (створення / трекінг)"
+
+#: views/upgrade_plan.php:65
+msgid "month"
+msgstr "місяць"
+
+#: views/upgrade_plan.php:68
+msgid "Select monthly turnover"
+msgstr "Оберіть місячний обіг посилок"
+
+#: views/upgrade_plan.php:70 views/upgrade_plan.php:71
+#: views/upgrade_plan.php:72 views/upgrade_plan.php:73
+#: views/upgrade_plan.php:74 views/upgrade_plan.php:75
+#: views/upgrade_plan.php:76
+msgid "parcels / month"
+msgstr "посилок / місяць"
+
+#: views/upgrade_plan.php:78
+msgid "per extra parcel"
+msgstr "за посилку понад ліміту"
+
+#: views/upgrade_plan.php:82
+msgid "Unlimited domains"
+msgstr "Необмежена кількість доменів"
+
+#: views/upgrade_plan.php:83
+msgid "Calculation of delivery via courier"
+msgstr "Розрахунок вартості через кур'єра"
+
+#: views/upgrade_plan.php:84
+msgid "Calculation of delivery depending on the order amount"
+msgstr "Розрахунок вартості в залежності від суми замовлення"
+
+#: views/upgrade_plan.php:85
+msgid "Creating invoices"
+msgstr "Створення ТТН"
+
+#: views/upgrade_plan.php:86
+msgid "Printing invoices"
+msgstr "Друк ТТН"
+
+#: views/upgrade_plan.php:87
+msgid "Tracking invoices"
+msgstr "Трекінг ТТН"
+
+#: views/upgrade_plan.php:88
+msgid "Bulk generation of invoices in one click"
+msgstr "Масова генерація ТТН в один клік"
 
 #~ msgid "Ability to customize separated shipping costs for address shipping"
 #~ msgstr ""

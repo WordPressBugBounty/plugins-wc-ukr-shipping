@@ -236,6 +236,23 @@ final class SmartyParcelApi
         return $this->processResponse($response);
     }
 
+    public function createSubscriptionChangeAction(string $subscription): array
+    {
+        $response = wp_remote_post(self::API_URL . "/beta/marketing/subscriptions/change", [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+            ],
+            'timeout' => 5,
+            'body' => json_encode([
+                'subscription_slug' => $subscription,
+            ]),
+        ]);
+
+        return $this->processResponse($response);
+    }
+
     private function processResponse($response): array
     {
         if (is_wp_error($response)) {

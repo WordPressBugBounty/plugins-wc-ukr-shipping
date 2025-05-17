@@ -62,7 +62,7 @@ class SmartyParcelService
 
             try {
                 $accountCache = $this->api->getUserStatus($apiKey);
-                set_transient('smarty_parcel_account', $accountCache, 3600);
+                set_transient('smarty_parcel_account', $accountCache, 900);
                 $this->lockProvider->releaseLock('smarty_parcel_account');
             } catch (\Throwable $e) {
                 $accountCache = null;
@@ -158,5 +158,11 @@ class SmartyParcelService
             new \DateTimeImmutable($response['estimated_delivery_date']),
             $addTracking ? 'PENDING' : ''
         );
+    }
+
+    public function createOneTimeUpgradeAction(string $subscription): string
+    {
+        $response = $this->api->createSubscriptionChangeAction($subscription);
+        return $response['one_time_token'];
     }
 }

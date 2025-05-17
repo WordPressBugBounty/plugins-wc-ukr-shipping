@@ -119,6 +119,16 @@ class AssetsLoader implements ModuleInterface
             );
         }
 
+        if (get_current_screen() !== null && get_current_screen()->id === 'admin_page_wcus_smarty_parcel_upgrade_plan') {
+            wp_enqueue_script(
+                'wcus_marketing_js',
+                WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/marketing.min.js',
+                ['jquery'],
+                filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/marketing.min.js'),
+                true
+            );
+        }
+
         $this->injectGlobals('wcus_settings_js');
     }
 
@@ -150,6 +160,7 @@ class AssetsLoader implements ModuleInterface
             'smarty_parcel' => [
                 'account' => $this->smartyParcelService->getAccountInfo(),
                 'autoTracking' => (int)wc_ukr_shipping_get_option('wcus_sp_auto_tracking'),
+                'upgradePlanUrl' => admin_url('admin.php?page=wcus_smarty_parcel_upgrade_plan'),
             ]
         ];
 

@@ -26,7 +26,7 @@ class CheckoutFinder implements CityFinderInterface, WarehouseFinderInterface
 
     public function __construct()
     {
-        $this->saveEnable = (int)get_option(WCUS_OPTION_SAVE_CUSTOMER_ADDRESS);
+        $this->saveEnable = (int)wc_ukr_shipping_get_option(WCUS_OPTION_SAVE_CUSTOMER_ADDRESS);
         $this->customerStorage = wcus_container()->make(CustomerStorageInterface::class);
     }
 

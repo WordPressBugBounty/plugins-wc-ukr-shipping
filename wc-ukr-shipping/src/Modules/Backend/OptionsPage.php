@@ -74,6 +74,7 @@ class OptionsPage implements ModuleInterface
             new Route('wcus_smarty_parcel_create_label', SmartyParcelController::class, 'createShippingLabel'),
             new Route('wcus_smarty_parcel_create_label_batch', SmartyParcelController::class, 'createLabelBatch'),
             new Route('wcus_smarty_parcel_void_label', SmartyParcelController::class, 'voidLabel'),
+            new Route('wcus_smarty_parcel_upgrade', SmartyParcelController::class, 'upgradePlan'),
             new Route('wcus_automation_save_rule', AutomationController::class, 'saveRule'),
 
             // Tools
@@ -162,6 +163,15 @@ class OptionsPage implements ModuleInterface
             'manage_options',
             'wc_ukr_shipping_tools',
             [$this, 'toolsHtml']
+        );
+
+        add_submenu_page(
+            '',
+            __('Upgrade pricing plan', 'wc-ukr-shipping-i18n'),
+            __('Upgrade pricing plan', 'wc-ukr-shipping-i18n'),
+            'manage_woocommerce',
+            'wcus_smarty_parcel_upgrade_plan',
+            [$this, 'upgradePlanHtml']
         );
     }
 
@@ -295,6 +305,13 @@ class OptionsPage implements ModuleInterface
     {
         echo View::render('tools', [
             'legacyTtnCount' => $this->legacyTtnRepository->getCountTtn(),
+        ]);
+    }
+
+    public function upgradePlanHtml(): void
+    {
+        echo View::render('upgrade_plan', [
+            'quotaReached' => isset($_GET['source']) && $_GET['source'] === 'free_quota_reached',
         ]);
     }
 }

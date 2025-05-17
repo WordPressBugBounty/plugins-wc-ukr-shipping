@@ -22,6 +22,7 @@ class FeedbackController extends Controller
                 'product' => 'wc-ukr-shipping',
                 'reason' => $request->get('reason'),
                 'message' => $request->get('message'),
+                'site_url' => home_url(),
             ]),
         ]);
 

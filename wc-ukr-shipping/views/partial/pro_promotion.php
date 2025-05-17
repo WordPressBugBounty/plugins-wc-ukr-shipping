@@ -29,45 +29,47 @@ if ( ! defined('ABSPATH')) {
         </div>
     </div>
 
-    <div class="wcus-card">
-        <div class="wcus-card__content">
-            <div class="wcus-pro-features__header">
-                <div class="wcus-pro-features__logo">
-                    <img src="<?php echo esc_attr(WC_UKR_SHIPPING_PLUGIN_URL . '/image/smarty-parcel.jpg'); ?>" />
+    <?php if (!isset($hidePromo)) { ?>
+        <div class="wcus-card">
+            <div class="wcus-card__content">
+                <div class="wcus-pro-features__header">
+                    <div class="wcus-pro-features__logo">
+                        <img src="<?php echo esc_attr(WC_UKR_SHIPPING_PLUGIN_URL . '/image/smarty-parcel.jpg'); ?>" />
+                    </div>
+                    <div class="wcus-card__title wcus-pro-features__title"><?= __('Get more features from SmartyParcel Advanced', 'wc-ukr-shipping-i18n'); ?></div>
                 </div>
-                <div class="wcus-card__title wcus-pro-features__title"><?= __('Get more features from SmartyParcel Advanced', 'wc-ukr-shipping-i18n'); ?></div>
-            </div>
-            <div class="wcus-pro-features__list">
-                <div class="wcus-pro-features__feature">
-                    <?= __('Higher shipments limit', 'wc-ukr-shipping-i18n'); ?>
+                <div class="wcus-pro-features__list">
+                    <div class="wcus-pro-features__feature">
+                        <?= __('Higher shipments limit', 'wc-ukr-shipping-i18n'); ?>
+                    </div>
+                    <div class="wcus-pro-features__feature">
+                        <?= __('Automatic calculation of shipping costs.', 'wc-ukr-shipping-i18n'); ?>
+                    </div>
+                    <div class="wcus-pro-features__feature">
+                        <?= __('Shipping calculation based on order total', 'wc-ukr-shipping-i18n'); ?>
+                    </div>
+                    <div class="wcus-pro-features__feature">
+                        <?= __('Possibility of mass generation of TTN in one click', 'wc-ukr-shipping-i18n'); ?>
+                    </div>
+                    <div class="wcus-pro-features__feature">
+                        <?= __('SMS notifications', 'wc-ukr-shipping-i18n'); ?>
+                    </div>
+                    <div class="wcus-pro-features__feature">
+                        <?= __('Extended parcels analytics', 'wc-ukr-shipping-i18n'); ?>
+                    </div>
+                    <div class="wcus-pro-features__feature">
+                        <?= __('Premium support', 'wc-ukr-shipping-i18n'); ?>
+                    </div>
                 </div>
-                <div class="wcus-pro-features__feature">
-                    <?= __('Automatic calculation of shipping costs.', 'wc-ukr-shipping-i18n'); ?>
-                </div>
-                <div class="wcus-pro-features__feature">
-                    <?= __('Shipping calculation based on order total', 'wc-ukr-shipping-i18n'); ?>
-                </div>
-                <div class="wcus-pro-features__feature">
-                    <?= __('Possibility of mass generation of TTN in one click', 'wc-ukr-shipping-i18n'); ?>
-                </div>
-                <div class="wcus-pro-features__feature">
-                    <?= __('SMS notifications', 'wc-ukr-shipping-i18n'); ?>
-                </div>
-                <div class="wcus-pro-features__feature">
-                    <?= __('Extended parcels analytics', 'wc-ukr-shipping-i18n'); ?>
-                </div>
-                <div class="wcus-pro-features__feature">
-                    <?= __('Premium support', 'wc-ukr-shipping-i18n'); ?>
-                </div>
-            </div>
 
-            <a target="_blank"
-               href="https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=plugin"
-               class="wcus-btn wcus-btn--md wcus-btn--block wcus-pro-features__btn">
-                <?= wc_ukr_shipping_import_svg('star.svg'); ?>
-                <?= __('Switch to Advanced plan', 'wc-ukr-shipping-i18n'); ?>
-            </a>
+                <a target="_blank"
+                   href="https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=plugin"
+                   class="wcus-btn wcus-btn--md wcus-btn--block wcus-pro-features__btn">
+                    <?= wc_ukr_shipping_import_svg('star.svg'); ?>
+                    <?= __('Switch to Advanced plan', 'wc-ukr-shipping-i18n'); ?>
+                </a>
 
+            </div>
         </div>
-    </div>
+    <?php } ?>
 </div>

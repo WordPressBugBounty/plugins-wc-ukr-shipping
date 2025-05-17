@@ -88,7 +88,7 @@ class SmartyParcelController extends Controller
     {
         try {
             $account = $this->api->getUserStatus(get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY));
-            set_transient('smarty_parcel_account', $account, 3600);
+            set_transient('smarty_parcel_account', $account, 900);
 
             return $this->jsonResponse([
                 'success' => true,
@@ -390,6 +390,23 @@ class SmartyParcelController extends Controller
                 'success' => true,
             ]);
         } catch (\Throwable $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error'   => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function upgradePlan(Request $request): ResponseInterface
+    {
+        try {
+            $token = $this->smartyParcelService->createOneTimeUpgradeAction($request->get('subscription'));
+
+            return $this->jsonResponse([
+                'success' => true,
+                'redirect' => 'https://app.smartyparcel.com/login/one-time/' . $token
+            ]);
+        } catch (\Exception $e) {
             return $this->jsonResponse([
                 'success' => false,
                 'error'   => $e->getMessage(),

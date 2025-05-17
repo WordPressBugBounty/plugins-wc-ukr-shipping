@@ -21,7 +21,7 @@ class Checkout implements ModuleInterface
 
     public function __construct()
     {
-        $this->checkoutService = (int)get_option('wcus_checkout_new_ui')
+        $this->checkoutService = (int)wc_ukr_shipping_get_option('wcus_checkout_new_ui')
             ? new CheckoutService()
             : new LegacyCheckoutService();
     }

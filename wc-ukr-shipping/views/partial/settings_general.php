@@ -14,7 +14,7 @@
         <div class="wcus-form-group--horizontal">
             <label class="wcus-switcher">
               <input type="hidden" name="wcus[checkout_new_ui]" value="0">
-              <input type="checkbox" name="wcus[checkout_new_ui]" value="1" <?= (int)get_option('wcus_checkout_new_ui', 1) === 1 ? 'checked' : ''; ?>>
+              <input type="checkbox" name="wcus[checkout_new_ui]" value="1" <?= (int)wc_ukr_shipping_get_option('wcus_checkout_new_ui') === 1 ? 'checked' : ''; ?>>
               <span class="wcus-switcher__control"></span>
             </label>
             <div class="wcus-control-label"><?= __('Use new UI', 'wc-ukr-shipping-i18n'); ?></div>
