@@ -306,8 +306,12 @@ class WCUSHelper
         ];
     }
 
-    public static function getLabelDownloadFormats(string $carrierSlug): array
+    public static function getLabelDownloadFormats(?string $carrierSlug): array
     {
+        if ($carrierSlug === null) {
+            return [];
+        }
+
         $validFormats = [
             'nova_poshta' => [
                 'a4' => 'A4',
