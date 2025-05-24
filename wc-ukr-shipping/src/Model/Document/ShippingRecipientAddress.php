@@ -38,7 +38,9 @@ class ShippingRecipientAddress
         $data['recipient']['service_type'] = $this->orderShipping->get_meta('wcus_warehouse_ref') ? 'Warehouse' : 'Doors';
         $data['recipient']['area_ref'] = $this->orderShipping->get_meta('wcus_area_ref');
         $data['recipient']['city_ref'] = $this->orderShipping->get_meta('wcus_city_ref');
+        $data['recipient']['city_name'] = $this->orderShipping->get_meta('wcus_city_name');
         $data['recipient']['warehouse_ref'] = $this->orderShipping->get_meta('wcus_warehouse_ref');
+        $data['recipient']['warehouse_name'] = $this->orderShipping->get_meta('wcus_warehouse_name');
         $data['recipient']['default_city'] = [
             'name' => '',
             'value' => ''
@@ -54,28 +56,42 @@ class ShippingRecipientAddress
         $translateService = wcus_container()->make(TranslateService::class);
 
         if ($data['recipient']['city_ref']) {
-            $city = $addressProvider->searchCityByRef($data['recipient']['city_ref']);
-
-            if ($city !== null) {
+            if ($this->order->get_meta('wcus_data_version') === '3') {
                 $data['recipient']['default_city'] = [
-                    'name' => $translateService->getCurrentLanguage() === 'ru'
-                        ? $city->getNameRu()
-                        : $city->getNameUa(),
-                    'value' => $city->getRef(),
+                    'name' => $data['recipient']['city_name'],
+                    'value' =>  $data['recipient']['city_ref'],
                 ];
+            } else {
+                $city = $addressProvider->searchCityByRef($data['recipient']['city_ref']);
+
+                if ($city !== null) {
+                    $data['recipient']['default_city'] = [
+                        'name' => $translateService->getCurrentLanguage() === 'ru'
+                            ? $city->getNameRu()
+                            : $city->getNameUa(),
+                        'value' => $city->getRef(),
+                    ];
+                }
             }
         }
 
         if ($data['recipient']['warehouse_ref']) {
-            $warehouse = $addressProvider->searchWarehouseByRef($data['recipient']['warehouse_ref']);
-
-            if ($warehouse !== null) {
+            if ($this->order->get_meta('wcus_data_version') === '3') {
                 $data['recipient']['default_warehouse'] = [
-                    'name' => $translateService->getCurrentLanguage() === 'ru'
-                        ? $warehouse->getNameRu()
-                        : $warehouse->getNameUa(),
-                    'value' => $warehouse->getRef(),
+                    'name' => $data['recipient']['warehouse_name'],
+                    'value' => $data['recipient']['warehouse_ref'],
                 ];
+            } else {
+                $warehouse = $addressProvider->searchWarehouseByRef($data['recipient']['warehouse_ref']);
+
+                if ($warehouse !== null) {
+                    $data['recipient']['default_warehouse'] = [
+                        'name' => $translateService->getCurrentLanguage() === 'ru'
+                            ? $warehouse->getNameRu()
+                            : $warehouse->getNameUa(),
+                        'value' => $warehouse->getRef(),
+                    ];
+                }
             }
         }
 

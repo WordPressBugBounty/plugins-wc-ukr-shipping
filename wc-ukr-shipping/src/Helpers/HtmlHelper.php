@@ -33,7 +33,7 @@ class HtmlHelper
 	 * @param string $id
 	 * @param array $options
 	 */
-	public static function selectField($id, $options = [])
+	public static function selectFieldLegacy($id, $options = [])
 	{
         $class = '';
 
@@ -72,6 +72,32 @@ class HtmlHelper
 
         echo $html;
 	}
+
+    public static function selectField(
+        string $name,
+        string $label,
+        array $options,
+        ?string $value = null,
+        ?string $tooltip = null
+    ): void {
+        $id = self::getIdFromName($name);
+
+        ?>
+        <div class="wcus-form-group">
+            <label for="<?php echo esc_attr($id); ?>"><?php echo esc_html($label); ?></label>
+            <select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($id); ?>" class="wcus-form-control">
+                <?php foreach ($options as $optionValue => $optionName) { ?>
+                    <option value="<?php echo esc_attr($optionValue); ?>" <?php echo $optionValue === $value ? 'selected' : ''; ?>>
+                        <?php echo esc_html($optionName); ?>
+                    </option>
+                <?php } ?>
+            </select>
+            <?php if ($tooltip !== null) { ?>
+                <div class="wcus-form-group__tooltip"><?php echo esc_html($tooltip); ?></div>
+            <?php } ?>
+        </div>
+        <?php
+    }
 
     public static function switcherField(string $name, string $label, bool $checked): void
     {

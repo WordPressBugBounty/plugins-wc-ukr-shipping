@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Http\Controllers\OrdersController;
 use kirillbdev\WCUkrShipping\Http\WpHttpClient;
 use kirillbdev\WCUSCore\Foundation\View;
@@ -80,8 +81,9 @@ class Orders implements ModuleInterface
             return;
         }
 
+        $validFormats = array_keys(WCUSHelper::getLabelDownloadFormats($shippingLabel['carrier_slug']));
         $format = sanitize_text_field($_GET['format']);
-        if (!in_array($format, ['a4', 'm85', 'm100'], true)) {
+        if (count($validFormats) === 0 || !in_array($format, $validFormats, true)) {
             return;
         }
 
@@ -89,9 +91,9 @@ class Orders implements ModuleInterface
         $client = new WpHttpClient();
         echo $client->get(
             'https://api.smartyparcel.com/beta/labels/' . $shippingLabel['label_id'] . "/pdf?format=$format",
-            null,
             [
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+                'SP-Site-Url' => site_url(),
             ]
         );
         exit;
@@ -117,32 +119,48 @@ class Orders implements ModuleInterface
     public function editOrderTTNMetaboxHtml($editedOrder)
     {
         $order = ($editedOrder instanceof \WP_Post) ? wc_get_order($editedOrder->ID) : $editedOrder;
-
-        if (!$order || !$order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
-            echo __('Invoice creation is unavailable for this order', 'wc-ukr-shipping-i18n');
-
+        if (!$order) {
             return;
         }
 
         $data['shipping_label'] = $this->shippingLabelsRepository->findByOrderId((int)$order->get_id());
         $data['order_id'] = $order->get_id();
 
+        $carrier = null;
+        if ($order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
+            $carrier = 'nova_poshta';
+        } elseif ($order->has_shipping_method('wcus_ukrposhta_shipping')) {
+            $carrier = 'ukrposhta';
+        }
+
+        $data['carrier'] = $carrier;
+        $data['download_formats'] = WCUSHelper::getLabelDownloadFormats($carrier);
+
         echo View::render('order/edit_order_metabox', $data);
     }
 
+    /**
+     * @param \WC_Order $order
+     * @param string $column
+     * @return void
+     */
     private function renderTtnInfo($order, string $column): void
     {
-        if (!$order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
-            return;
-        }
-
         if ($column === 'wcus_ttn_actions') {
             $ttn = $this->shippingLabelsRepository->findByOrderId((int)$order->get_id());
+            $carrier = null;
+            if ($order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
+                $carrier = 'nova_poshta';
+            } elseif ($order->has_shipping_method('wcus_ukrposhta_shipping')) {
+                $carrier = 'ukrposhta';
+            }
             ?>
                 <?php if ($ttn !== null) { ?>
                     <div class="wcus-icon-block" style="text-align: center;">
                         <div class="wcus-label-widget j-wcus-label-widget">
-                            <?php echo esc_html($ttn['tracking_number']); ?>
+                            <span class="wcus-label-widget__label <?php echo $carrier !== null ? 'wcus-label-widget__label--' . $carrier : ''; ?>">
+                                <?php echo esc_html($ttn['tracking_number']); ?>
+                            </span>
                             <?php if ($ttn['carrier_slug'] === 'wcus_pro') { ?>
                                 <span style="color: #ff4500; font-size: 12px; margin-left: 4px;" title="WC Ukraine Shipping PRO">*</span>
                             <?php } ?>

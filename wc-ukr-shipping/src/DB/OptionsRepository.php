@@ -29,15 +29,24 @@ class OptionsRepository
             'wc_ukr_shipping_np_new_ui' => 1,
             'wcus_checkout_new_ui' => 1,
             'wc_ukr_shipping_np_ttn_payer_default' => 'Sender',
-            'wc_ukr_shipping_np_price_type' => 'fixed',
-            'wc_ukr_shipping_np_price' => 0,
             'wcus_np_payment_method_default' => 'Cash',
             'wcus_cod_payment_id' => 'cod',
             'wcus_ttn_width_default' => 10,
             'wcus_ttn_height_default' => 10,
             'wcus_ttn_length_default' => 10,
+            'wc_ukr_shipping_np_price_type' => 'fixed',
+            'wc_ukr_shipping_np_price' => 50,
+            'wc_ukr_shipping_np_cargo_type' => 'Cargo',
+
+            // Ukrposhta
+            'wcus_ukrposhta_service_type' => 'ukrposhta_standard',
+            'wcus_ukrposhta_cost_view_only' => 0,
+            'wcus_ukrposhta_cod_payment_active' => 0,
+            'wcus_ukrposhta_price_type' => 'fixed',
+            'wcus_ukrposhta_price' => 30,
+            'wcus_ukrposhta_dd_provider' => 'none',
             'wc_ukr_shipping_np_address_api_ui' => 1,
-            'wcus_sp_auto_tracking' => 0,
+            'wcus_sp_auto_tracking' => 1,
         ];
 
         return get_option($key, isset($defaults[$key]) ? $defaults[$key] : null);

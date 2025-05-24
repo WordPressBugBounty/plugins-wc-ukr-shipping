@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Http\Controllers;
 
-use kirillbdev\WCUkrShipping\Address\Model\City;
-use kirillbdev\WCUkrShipping\Address\Model\Warehouse;
 use kirillbdev\WCUkrShipping\Address\Provider\AddressProviderInterface;
+use kirillbdev\WCUkrShipping\Component\Shipping\NovaPoshtaPUDOProvider;
+use kirillbdev\WCUkrShipping\Component\Shipping\UkrposhtaPUDOProvider;
+use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
+use kirillbdev\WCUkrShipping\Dto\Shipping\City;
+use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
 use kirillbdev\WCUSCore\Http\Controller;
 use kirillbdev\WCUSCore\Http\Request;
 
@@ -31,11 +34,12 @@ class AddressController extends Controller
                 'data' => []
             ]);
         }
+        $provider = $this->getPUDOProvider($request->get('carrier'));
 
         return $this->jsonResponse([
             'success' => true,
             'data' => $this->mapCities(
-                $this->addressProvider->searchCitiesByQuery($request->get('query')),
+                $provider->searchCitiesByQuery($request->get('query')),
                 $request->get('lang', '')
             )
         ]);
@@ -53,18 +57,21 @@ class AddressController extends Controller
             ]);
         }
 
-        $types = [
-            WCUS_WAREHOUSE_TYPE_REGULAR,
-            WCUS_WAREHOUSE_TYPE_CARGO,
-        ];
-        $result = $this->addressProvider->searchWarehousesByQuery(
-            $request->get('city_ref'),
-            $request->get('query', ''),
-            (int)$request->get('page'),
-            $types
-        );
+        $provider = $this->getPUDOProvider($request->get('carrier'));
+        try {
+            $result = $provider->searchPUDOByQuery(
+                $request->get('city_ref'),
+                $request->get('query', ''),
+                (int)$request->get('page'),
+                $request->get('types', [
+                    PUDO::PUDO_TYPE_WAREHOUSE,
+                    PUDO::PUDO_TYPE_LOCKER,
+                ])
+            );
+        } catch (\Throwable $e) {
+        }
 
-        if (!count($result->getWarehouses())) {
+        if (count($result['data']) === 0) {
             return $this->jsonResponse([
                 'success' => true,
                 'data' => [
@@ -74,18 +81,14 @@ class AddressController extends Controller
             ]);
         }
 
-        $items = $this->mapWarehouses(
-            $result->getWarehouses(),
-            $request->get('lang', '')
-        );
-
+        $items = $this->mapWarehouses($result['data'], $request->get('lang', ''));
         $offset = ((int)$request->get('page') - 1) * 20 + count($items);
 
         return $this->jsonResponse([
             'success' => true,
             'data' => [
                 'items' => $items,
-                'more' => $offset < $result->getTotal(),
+                'more' => $offset < $result['total'],
             ]
         ]);
     }
@@ -152,16 +155,17 @@ class AddressController extends Controller
             ]);
         }
 
-        $result = $this->addressProvider->searchWarehousesByQuery(
+        $provider = $this->getPUDOProvider($request->get('carrier'));
+        $result = $provider->searchPUDOByQuery(
             $request->get('city_ref'),
             $request->get('query', ''),
             (int)$request->get('page'),
             [
-                WCUS_WAREHOUSE_TYPE_POSHTOMAT,
+                PUDO::PUDO_TYPE_LOCKER,
             ]
         );
 
-        if (!count($result->getWarehouses())) {
+        if (count($result['data']) === 0) {
             return $this->jsonResponse([
                 'success' => true,
                 'data' => [
@@ -171,49 +175,57 @@ class AddressController extends Controller
             ]);
         }
 
-        $items = $this->mapWarehouses(
-            $result->getWarehouses(),
-            $request->get('lang', '')
-        );
-
+        $items = $this->mapWarehouses($result['data'], $request->get('lang', ''));
         $offset = ((int)$request->get('page') - 1) * 20 + count($items);
 
         return $this->jsonResponse([
             'success' => true,
             'data' => [
                 'items' => $items,
-                'more' => $offset < $result->getTotal(),
+                'more' => $offset < $result['total'],
             ]
         ]);
     }
 
     /**
      * @param City[] $cities
-     * @param $locale
-     * @return array[]
+     * @param string $locale
+     * @return array
      */
     private function mapCities(array $cities, string $locale): array
     {
         return array_map(function (City $item) use ($locale) {
             return [
-                'value' => $item->getRef(),
-                'name' => $locale === 'ru' ? $item->getNameRu() : $item->getNameUa(),
+                'value' => $item->id,
+                'name' => $locale === 'ru' ? $item->nameRu : $item->nameUa,
             ];
         }, $cities);
     }
 
     /**
-     * @param Warehouse $warehouses
+     * @param PUDO[] $warehouses
      * @param string $locale
      * @return array
      */
     private function mapWarehouses(array $warehouses, string $locale): array
     {
-        return array_map(function (Warehouse $item) use ($locale) {
+        return array_map(function (PUDO $item) use ($locale) {
             return [
-                'value' => $item->getRef(),
-                'name' => $locale === 'ru' ? $item->getNameRu() : $item->getNameUa(),
+                'value' => $item->id,
+                'name' => $locale === 'ru' ? $item->nameRu : $item->nameUa,
             ];
         }, $warehouses);
+    }
+
+    private function getPUDOProvider(string $carrier): PUDOProviderInterface
+    {
+        switch ($carrier) {
+            case 'nova_poshta':
+                return wcus_container()->make(NovaPoshtaPUDOProvider::class);
+            case 'ukrposhta':
+                return wcus_container()->make(UkrposhtaPUDOProvider::class);
+        }
+
+        throw new \Exception('Wrong');
     }
 }

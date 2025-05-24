@@ -71,6 +71,7 @@ class TTNStore
 
     public function collect()
     {
+        $this->data['carrier'] = 'nova_poshta';
         $this->collectCommonData();
         $this->collectSeatsData();
         $this->calculateCost();
@@ -108,6 +109,8 @@ class TTNStore
             throw new \InvalidArgumentException("Parameter 'date' must be correct date");
         }
 
+        $description = wc_ukr_shipping_get_option('wcus_ttn_description') ?: 'Order #' . $this->order->get_id();
+
         $this->data['ttn'] = [
             'order_id' => $this->order->get_id(),
             'payer_type' => $payerType,
@@ -115,7 +118,7 @@ class TTNStore
             'global_params' => 1,
             'weight' => $this->calculateWeight(),
             'date' => $date->format('Y-m-d'),
-            'description' => apply_filters('wcus_ttn_form_description', 'Order #' . $this->order->get_id(), $this->order),
+            'description' => apply_filters('wcus_ttn_form_description', $description, $this->order),
             'barcode' => apply_filters('wcus_ttn_form_barcode', $this->order->get_id(), $this->order),
             'additional' => apply_filters('wcus_ttn_form_additional', '', $this->order)
         ];
@@ -143,13 +146,14 @@ class TTNStore
 
     private function calculateWeight(): float
     {
+        $defaultWeight = wc_ukr_shipping_get_option('wcus_ttn_weight_default') ?: 0.1;
         $weight = 0;
 
         foreach ($this->orderProducts as $product) {
             $weight += $product->getWeight() * $product->getQuantity();
         }
 
-        return max($weight, 0.1);
+        return max($weight, (float)$defaultWeight);
     }
 
     private function calculateCost(): void
@@ -159,10 +163,19 @@ class TTNStore
 
     private function collectSender(): void
     {
-        $accounts = $this->getCarrierAccountCached();
+        $accounts = array_values(
+            array_filter($this->getCarrierAccountCached(), function (array $account) {
+                return ($account['carrier_slug'] ?? '') === 'nova_poshta';
+            })
+        );
+
+        $defaultAcc = wc_ukr_shipping_get_option('wcus_nova_poshta_default_carrier');
+        if (empty($defaultAcc)) {
+            $defaultAcc = $accounts[0]['id'] ?? '';
+        }
 
         $this->data['sender']['carrier_accounts'] = $accounts;
-        $this->data['sender']['carrier_account_id'] = $accounts[0]['id'] ?? '';
+        $this->data['sender']['carrier_account_id'] = $defaultAcc;
         $this->data['sender']['area_ref'] = '';
 
         $cityFinder = new RepositoryCityFinder(

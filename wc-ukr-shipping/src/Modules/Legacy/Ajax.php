@@ -4,8 +4,6 @@ namespace kirillbdev\WCUkrShipping\Modules\Legacy;
 
 use kirillbdev\WCUkrShipping\DB\NovaPoshtaRepository;
 use kirillbdev\WCUkrShipping\Http\ResponseLegacy;
-use kirillbdev\WCUkrShipping\Model\CheckoutOrderData;
-use kirillbdev\WCUkrShipping\Services\CalculationService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 
@@ -43,9 +41,6 @@ class Ajax implements ModuleInterface
 
         add_action('wp_ajax_wcus_api_v2_get_warehouses', [ $this, 'apiV2GetWarehouses' ]);
         add_action('wp_ajax_nopriv_wcus_api_v2_get_warehouses', [ $this, 'apiV2GetWarehouses' ]);
-
-        add_action('wp_ajax_wcus_calculate_cost', [ $this, 'apiV2CalculateCost' ]);
-        add_action('wp_ajax_nopriv_wcus_calculate_cost', [ $this, 'apiV2CalculateCost' ]);
     }
 
     public function apiV2GetCities()
@@ -97,35 +92,6 @@ class Ajax implements ModuleInterface
 
         ResponseLegacy::makeAjax('success', [
             'items' => $result
-        ]);
-    }
-
-    public function apiV2CalculateCost()
-    {
-        $this->apiV2ValidateRequest();
-
-        foreach ([ 'wcus_ajax', 'wcus_city_ref', 'wcus_address_shipping', 'method_name' ] as $key) {
-            if ( ! isset($_POST[ $key ])) {
-                ResponseLegacy::makeAjax('error');
-            }
-        }
-
-        $orderData = new CheckoutOrderData($_POST);
-        $calculationService = new CalculationService();
-        $cost = (int)$calculationService->calculateCost($orderData);
-
-        wc()->cart->set_total((string)($orderData->getCalculatedTotal() + $cost));
-        $shippingName = wp_unslash(esc_html($_POST['method_name']));
-
-        $label = $cost ? $shippingName . ': ' . wc_price($cost) : $shippingName;
-        $dynamicLabel = apply_filters('wcus_dynamic_shipping_label', $label, $cost, $orderData);
-
-        wp_send_json([
-            'success' => true,
-            'data' => [
-                'shipping' => $dynamicLabel,
-                'total' => wc()->cart->get_total()
-            ]
         ]);
     }
 

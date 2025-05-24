@@ -44,8 +44,41 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' => $apiKey,
+                'SP-Site-Url' => get_site_url(),
             ],
             'timeout' => 3,
+        ]);
+
+        return $this->processResponse($response);
+    }
+
+    public function connectApplication(string $apiKey): array
+    {
+        $response = wp_remote_post(self::API_URL . '/beta/applications/connect', [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+            'timeout' => 5,
+            'body' => json_encode([
+                'api_key' => $apiKey,
+                'site_url' => get_site_url(),
+            ])
+        ]);
+
+        return $this->processResponse($response);
+    }
+
+    public function disconnectApplication(string $apiKey): array
+    {
+        $response = wp_remote_post(self::API_URL . '/beta/applications/disconnect', [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'SP-API-Key' => $apiKey,
+                'SP-Site-Url' => get_site_url(),
+            ],
+            'timeout' => 5,
         ]);
 
         return $this->processResponse($response);
@@ -58,6 +91,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' => $apiKey,
+                'SP-Site-Url' => get_site_url(),
             ],
             'timeout' => 5,
         ]);
@@ -66,24 +100,26 @@ final class SmartyParcelApi
     }
 
     public function connectCarrier(
-        string $accountApiKey,
-        string $name,
-        string $senderRef,
-        string $senderContactRef
+        string $carrierSlug,
+        array $data
     ): array {
-        $response = wp_remote_post(self::API_URL . '/beta/carriers/nova_poshta', [
+        if ($carrierSlug === 'nova_poshta') {
+            $uri = '/beta/carriers/nova_poshta';
+        } elseif ($carrierSlug === 'ukrposhta') {
+            $uri = '/beta/carriers/ukrposhta';
+        } else {
+            throw new \InvalidArgumentException('Unknown carrier ' . sanitize_text_field($carrierSlug));
+        }
+
+        $response = wp_remote_post(self::API_URL . $uri, [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+                'SP-Site-Url' => get_site_url(),
             ],
             'timeout' => 5,
-            'body' => json_encode([
-                'api_key' => $accountApiKey,
-                'sender_ref' => $senderRef,
-                'sender_contact_ref' => $senderContactRef,
-                'name' => $name,
-            ])
+            'body' => json_encode($data),
         ]);
 
         return $this->processResponse($response);
@@ -102,6 +138,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+                'SP-Site-Url' => get_site_url(),
             ],
             'timeout' => 5,
             'body' => json_encode([
@@ -122,8 +159,9 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+                'SP-Site-Url' => get_site_url(),
             ],
-            'timeout' => 10,
+            'timeout' => 15,
             'body' => json_encode($builder->build())
         ]);
 
@@ -138,6 +176,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+                'SP-Site-Url' => get_site_url(),
             ],
             'timeout' => 5,
         ]);
@@ -153,6 +192,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+                'SP-Site-Url' => get_site_url(),
             ],
             'timeout' => 5,
         ]);
@@ -166,35 +206,42 @@ final class SmartyParcelApi
         string $shipTo,
         string $deliveryType,
         float $declaredValue,
-        float $weight
+        float $weight,
+        ?string $serviceType = null
     ): array {
+        $payload = [
+            'carrier_account_id' => $carrierAccountId,
+            'delivery_type' => $deliveryType,
+            'ship_from' => [
+                'country_code' => 'UA',
+                'carrier_city_id' => $shipFrom,
+            ],
+            'ship_to' => [
+                'country_code' => 'UA',
+                'carrier_city_id' => $shipTo,
+            ],
+            'declared_value' => [
+                'amount' => $declaredValue,
+                'currency' => 'UAH',
+            ],
+            'weight' => [
+                'value' => $weight,
+                'unit' => 'kg',
+            ]
+        ];
+        if ($serviceType !== null) {
+            $payload['service_type'] = $serviceType;
+        }
+
         $response = wp_remote_post(self::API_URL . "/beta/rates/estimate", [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-                'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+                'SP-API-Key' => get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+                'SP-Site-Url' => get_site_url(),
             ],
             'timeout' => 5,
-            'body' => json_encode([
-                'carrier_account_id' => $carrierAccountId,
-                'delivery_type' => $deliveryType,
-                'ship_from' => [
-                    'country_code' => 'UA',
-                    'carrier_city_id' => $shipFrom,
-                ],
-                'ship_to' => [
-                    'country_code' => 'UA',
-                    'carrier_city_id' => $shipTo,
-                ],
-                'declared_value' => [
-                    'amount' => $declaredValue,
-                    'currency' => 'UAH',
-                ],
-                'weight' => [
-                    'value' => $weight,
-                    'unit' => 'kg',
-                ]
-            ])
+            'body' => json_encode($payload),
         ]);
 
         return $this->processResponse($response);
@@ -207,6 +254,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+                'SP-Site-Url' => get_site_url(),
             ],
             'timeout' => 5,
             'body' => json_encode([
@@ -225,6 +273,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+                'SP-Site-Url' => get_site_url(),
             ],
             'timeout' => 5,
             'body' => json_encode([
@@ -243,6 +292,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
+                'SP-Site-Url' => get_site_url(),
             ],
             'timeout' => 5,
             'body' => json_encode([

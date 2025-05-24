@@ -24,6 +24,31 @@ class WCUSHelper
         return array_shift($shippingMethods);
     }
 
+    public static function hasChosenShippingMethodInstance(\WC_Shipping_Method $instance): bool
+    {
+        try {
+            $methods = WC()->session->get( 'chosen_shipping_methods', []);
+
+            return in_array($instance->id . ':' . $instance->instance_id, $methods, true);
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+
+    public static function hasChosenShippingMethod(string $method): bool
+    {
+        return in_array($method, wc_get_chosen_shipping_method_ids(), true);
+    }
+
+    public static function getChosenShippingMethods(): array
+    {
+        if ( ! is_callable([WC()->session, 'get' ])) {
+            return [];
+        }
+
+        return WC()->session->get('chosen_shipping_methods', []);
+    }
+
     public static function preparePhone(string $phone): string
     {
         $phone = str_replace(['+', '-', ' ', '(', ')'], '', $phone);
@@ -177,5 +202,125 @@ class WCUSHelper
                 'description_ru' => 'Каменец-Подольский',
             ],
         ];
+    }
+
+    public static function getUkrposhtaDefaultCities(): array
+    {
+        return [
+            [
+                'value' => '29713',
+                'name' => 'м. Київ, Київ р-н, Київ обл.',
+            ],
+            [
+                'value' => '24550',
+                'name' => 'м. Харків, Харківський р-н, Харківська обл.',
+            ],
+            [
+                'value' => '3641',
+                'name' => 'м. Дніпро, Дніпровський р-н, Дніпропетровська обл.'
+            ],
+            [
+                'value' => '8968',
+                'name' => 'м. Запоріжжя, Запорізький р-н, Запорізька обл.'
+            ],
+            [
+                'value' => "17069",
+                'name' => 'м. Одеса, Одеський р-н, Одеська обл.',
+            ],
+            [
+                'value' => '14288',
+                'name' => 'м. Львів, Львівський р-н, Львівська обл.'
+            ],
+            [
+                'value' => '4292',
+                'name' => 'м. Кривий Ріг, Криворізький р-н, Дніпропетровська обл.'
+            ],
+            [
+                'value' => '16169',
+                'name' => 'м. Миколаїв, Миколаївський р-н, Миколаївська обл.'
+            ],
+            [
+                'value' => '29712',
+                'name' => 'м. Чернігів, Чернігівський р-н, Чернігівська обл.'
+            ],
+            [
+                'value' => '21680',
+                'name' => 'м. Суми, Сумський р-н, Сумська обл.'
+            ],
+            [
+                'value' => '1057',
+                'name' => 'м. Вінниця, Вінницький р-н, Вінницька обл.'
+            ],
+            [
+                'value' => '27760',
+                'name' => 'м. Черкаси, Черкаський р-н, Черкаська обл.'
+            ],
+            [
+                'value' => '25448',
+                'name' => 'м. Херсон, Херсонський р-н, Херсонська обл.'
+            ],
+            [
+                'value' => '19234',
+                'name' => 'м. Полтава, Полтавський р-н, Полтавська обл.'
+            ],
+            [
+                'value' => '6708',
+                'name' => 'м. Житомир, Житомирський р-н, Житомирська обл.'
+            ],
+            [
+                'value' => '5925',
+                'name' => 'м. Краматорськ, Краматорський р-н, Донецька обл.'
+            ],
+            [
+                'value' => '20296',
+                'name' => 'м. Рівне, Рівненський р-н, Рівненська обл.'
+            ],
+            [
+                'value' => '9826',
+                'name' => 'м. Івано-Франківськ, Івано-Франківський р-н, Івано-Франківська обл.'
+            ],
+            [
+                'value' => '17802',
+                'name' => 'м. Кременчук, Кременчуцький р-н, Полтавська обл.'
+            ],
+            [
+                'value' => '22662',
+                'name' => 'м. Тернопіль, Тернопільський р-н, Тернопільська обл.'
+            ],
+            [
+                'value' => '3477',
+                'name' => 'м. Луцьк, Луцький р-н, Волинська обл.'
+            ],
+            [
+                'value' => '10472',
+                'name' => 'м. Біла Церква, Білоцерківський р-н, Київська обл.'
+            ],
+            [
+                'value' => '28188',
+                'name' => 'м. Чернівці, Чернівецький р-н, Чернівецька обл.'
+            ],
+            [
+                'value' => '26481',
+                'name' => 'м. Хмельницький, Хмельницький р-н, Хмельницька обл.'
+            ],
+        ];
+    }
+
+    public static function getLabelDownloadFormats(string $carrierSlug): array
+    {
+        $validFormats = [
+            'nova_poshta' => [
+                'a4' => 'A4',
+                'm85' => '85x85',
+                'm100' => '100x100 (zebra)',
+            ],
+            'ukrposhta' => [
+                's100' => '100x100',
+                's100a4' => '100x100 (A4)',
+                's100a5' => '100x100 (A5)',
+            ],
+        ];
+
+        return $validFormats[$carrierSlug] ?? [];
     }
 }

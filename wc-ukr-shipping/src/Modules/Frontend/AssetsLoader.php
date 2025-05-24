@@ -40,23 +40,13 @@ class AssetsLoader implements ModuleInterface
             WC_UKR_SHIPPING_PLUGIN_URL . 'assets/css/style.min.css'
         );
 
-        if ((int)wc_ukr_shipping_get_option('wcus_checkout_new_ui')) {
-            wp_enqueue_script(
-                'wcus_checkout_js',
-                WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/checkout2.min.js',
-                [ 'jquery' ],
-                filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/checkout2.min.js'),
-                true
-            );
-        } else {
-            wp_enqueue_script(
-                'wcus_checkout_js',
-                WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/checkout.min.js',
-                ['jquery'],
-                filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/checkout.min.js'),
-                true
-            );
-        }
+        wp_enqueue_script(
+            'wcus_checkout_js',
+            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/checkout2.min.js',
+            [ 'jquery' ],
+            filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/checkout2.min.js'),
+            true
+        );
 
         $this->injectGlobals();
     }
@@ -97,46 +87,39 @@ class AssetsLoader implements ModuleInterface
             'options' => [
                 'address_shipping_enable' => (int)wc_ukr_shipping_get_option('wc_ukr_shipping_address_shipping'),
                 'apiAddressEnable' => (int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui'),
+                'ukrposhtaDDProvider' => wc_ukr_shipping_get_option('wcus_ukrposhta_dd_provider'),
             ]
         ];
 
-        if ((int)wc_ukr_shipping_get_option('wcus_checkout_new_ui')) {
-            $globals['default_cities'] = $this->getDefaultCities();
-            $globals['i18n'] = [
-                'fields_title' => __('Select shipping address', 'wc-ukr-shipping-i18n'),
-                'shipping_type_warehouse' => __('to warehouse', 'wc-ukr-shipping-i18n'),
-                'shipping_type_doors' => __('to doors', 'wc-ukr-shipping-i18n'),
-                'shipping_type_poshtomat' => __('to the poshtomat', 'wc-ukr-shipping-i18n'),
-                'ui' => [
-                    'city_placeholder' => __('Select city', 'wc-ukr-shipping-i18n'),
-                    'warehouse_placeholder' => __('Select warehouse', 'wc-ukr-shipping-i18n'),
-                    'poshtomat_placeholder' => __('Select poshtomat', 'wc-ukr-shipping-i18n'),
-                    'custom_address_placeholder' => __('Enter address', 'wc-ukr-shipping-i18n'),
-                    'text_search' => __('Enter value for search', 'wc-ukr-shipping-i18n'),
-                    'text_loading' => __('Loading...', 'wc-ukr-shipping-i18n'),
-                    'text_more' => __('Load more', 'wc-ukr-shipping-i18n'),
-                    'text_not_found' => __('Nothing found', 'wc-ukr-shipping-i18n'),
-                    'text_more_chars' => __('Enter more chars', 'wc-ukr-shipping-i18n'),
-                    'settlement_placeholder' => __('Settlement', 'wc-ukr-shipping-i18n'),
-                    'street_placeholder' => __('Street', 'wc-ukr-shipping-i18n'),
-                    'house_placeholder' => __('House', 'wc-ukr-shipping-i18n'),
-                    'flat_placeholder' => __('Flat', 'wc-ukr-shipping-i18n'),
-                    'text_internal_error' => __('Something went wrong', 'wc-ukr-shipping-i18n'),
-                ]
-            ];
+        $globals['default_cities'] = $this->getDefaultCities();
+        $globals['ukrposhta']['defaultCities'] = WCUSHelper::getUkrposhtaDefaultCities();
+        $globals['i18n'] = [
+            'fields_title' => __('Select shipping address', 'wc-ukr-shipping-i18n'),
+            'shipping_type_warehouse' => __('to warehouse', 'wc-ukr-shipping-i18n'),
+            'shipping_type_doors' => __('to doors', 'wc-ukr-shipping-i18n'),
+            'shipping_type_poshtomat' => __('to the poshtomat', 'wc-ukr-shipping-i18n'),
+            'ui' => [
+                'city_placeholder' => __('Select city', 'wc-ukr-shipping-i18n'),
+                'warehouse_placeholder' => __('Select warehouse', 'wc-ukr-shipping-i18n'),
+                'poshtomat_placeholder' => __('Select poshtomat', 'wc-ukr-shipping-i18n'),
+                'custom_address_placeholder' => __('Enter address', 'wc-ukr-shipping-i18n'),
+                'text_search' => __('Enter value for search', 'wc-ukr-shipping-i18n'),
+                'text_loading' => __('Loading...', 'wc-ukr-shipping-i18n'),
+                'text_more' => __('Load more', 'wc-ukr-shipping-i18n'),
+                'text_not_found' => __('Nothing found', 'wc-ukr-shipping-i18n'),
+                'text_more_chars' => __('Enter more chars', 'wc-ukr-shipping-i18n'),
+                'settlement_placeholder' => __('Settlement', 'wc-ukr-shipping-i18n'),
+                'street_placeholder' => __('Street', 'wc-ukr-shipping-i18n'),
+                'house_placeholder' => __('House', 'wc-ukr-shipping-i18n'),
+                'flat_placeholder' => __('Flat', 'wc-ukr-shipping-i18n'),
+                'text_internal_error' => __('Something went wrong', 'wc-ukr-shipping-i18n'),
+            ]
+        ];
 
-            $globals['i18n'] = array_replace_recursive(
-                $globals['i18n'],
-                apply_filters('wcus_checkout_i18n', $globals['i18n'], $translator->getCurrentLanguage())
-            );
-        } else {
-            $globals['i10n'] = [
-                'placeholder_area' => $translates['placeholder_area'],
-                'placeholder_city' => $translates['placeholder_city'],
-                'placeholder_warehouse' => $translates['placeholder_warehouse'],
-                'not_found' => $translates['not_found']
-            ];
-        }
+        $globals['i18n'] = array_replace_recursive(
+            $globals['i18n'],
+            apply_filters('wcus_checkout_i18n', $globals['i18n'], $translator->getCurrentLanguage())
+        );
 
         wp_localize_script('wcus_checkout_js', 'wc_ukr_shipping_globals', $globals);
     }

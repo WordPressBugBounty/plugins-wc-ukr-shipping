@@ -105,11 +105,12 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
             $orderProducts[] = $product;
         }
 
+        $defaultWeight = wc_ukr_shipping_get_option('wcus_ttn_weight_default') ?: 0.1;
         $weight = 0;
         foreach ($orderProducts as $product) {
             $weight += $product->getWeight() * $product->getQuantity();
         }
-        $weight = max($weight, 0.1);
+        $weight = max($weight, (float)$defaultWeight);
 
         // Parcels
         $labelRequest['shipment']['parcels'] = [

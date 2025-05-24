@@ -37,6 +37,7 @@ class ShippingLabelsRepository
     public function create(
         int $orderId,
         string $labelId,
+        string $carrierLabelId,
         string $trackingNumber,
         string $carrierSlug
     ) {
@@ -44,6 +45,7 @@ class ShippingLabelsRepository
         DB::table(DB::prefixedTable('wc_ukr_shipping_labels'))
             ->insert([
                 'label_id' => $labelId,
+                'carrier_label_id' => $carrierLabelId,
                 'carrier_slug' => $carrierSlug,
                 'order_id' => $orderId,
                 'tracking_number' => $trackingNumber,

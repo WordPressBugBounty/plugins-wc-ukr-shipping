@@ -1,17 +1,17 @@
-=== WC Nova Poshta Shipping - Integration of Nova Poshta delivery service for WooCommerce ===
+=== WC Ukraine Shipping - Integration of Nova Poshta and Ukrposhta for WooCommerce ===
 Contributors: kirillbdev
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
-Tags: nova poshta, нова пошта, доставка, shipping, woocommerce
+Tags: nova poshta, нова пошта, укрпошта, shipping, woocommerce
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 1.14.5
+Stable tag: 1.15.0
 
-Simple and comfortable plugin for connect Nova Poshta delivery service to your WooCommerce store.
+Connect Nova Poshta and Ukrposhta delivery services to your WooCommerce store. Create TTN, track orders and calculate rates in one place.
 
 == Description ==
 
-**Simple and comfortable plugin for connect Nova Poshta delivery service to your WooCommerce store.**
+**Connect Nova Poshta and Ukrposhta delivery services to your WooCommerce store. Create TTN, track orders and calculate rates in one place.**
 
 [Documentation](https://kirillbdev.pro/docs/wcus-base-setup/)
 [PRO features](https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=wporg)
@@ -24,27 +24,29 @@ https://www.youtube.com/watch?v=K_NFNQ1qkko
 
 * Simple and intuitive setup
 * Ability to select Nova Poshta warehouse, doors or poshtomat on checkout page
-* Ability to setup fixed shipping cost
+* Ability to select Ukrposhta warehouse on checkout page
+* Ability to set up fixed shipping cost
 * Ability to calculate cost without adding it to order total
-* Ability to create Nova Poshta TTN (warehouse-warehouse, warehouse-poshtomat)
-* Ability to print shipping labels (A4, marking 85x85, marking 100x100 zebra)
+* Ability to create Nova Poshta TTN (warehouse-warehouse, warehouse-doors, warehouse-poshtomat)
+* Ability to print Nova Poshta labels (A4, marking 85x85, marking 100x100 zebra)
+* Ability to create Ukrposhta TTN (warehouse-warehouse)
+* Ability to print Ukrposhta labels (100x100, 100x100 (A4), 100x100 (A5))
 * Support many functions includes COD and Payment control
 * Integration with popular plugins for localization: WPML and Polylang
-* Support latest versions of Wordpress and WooCommerce
+* Support latest versions of WordPress and WooCommerce
 * Support WooCommerce geo zones
 
-== PRO version (SmartyParcel Advanced Plan) ==
+== PRO version ==
 
-WC Ukraine Shipping has additional premium features that helps you to optimize work with your clients
+WC Ukraine Shipping has additional premium features that help you to optimize your daily shipping routine.
 
-* Automatic calculation of shipping costs (via SmartyParcel Rates API)
+* Automatic calculation of shipping costs via carrier
 * Shipping costs calculation based on order total
 * Ability to separate cost calculation for address shipping
-* Ability to mass generation of shipping labels in one click
-* Parcel tracking
+* Ability to bulk generation of shipping labels in one click
+* Tracking shipment statuses
 * Automatic email notifications after generating TTN
 * Automatic sms notifications after generating TTN
-* [Automation] No-code business-processes constructor
 * Premium support
 
 [Switch to SmartyParcel Advanced](https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=wporg)
@@ -77,6 +79,12 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.15.0 / (24.05.2025) =
+* Added Ukrposhta integration (select warehouse, create TTN, calculate rates).
+* Legacy checkout UI was fully removed.
+* Improved Nova Poshta cities search.
+* Architecture improvements.
 
 = Version 1.14.5 / (18.05.2025) =
 * Change default values for some options.
@@ -302,27 +310,3 @@ Unfortunately plugin doesn't support WC checkout blocks yet.
 * Исправлена ошибка парсинга js скриптов в браузере Internet Explorer.
 * Пункт настроек в меню админ-панели теперь имеет стандартные стили Wordpress.
 * Информация про адрес доставки теперь также записывается в данные о плательщике (billing_state, billing_city, billing_address_1).
-
-= Version 1.4.4 / (16.10.2019) =
-* Исправлена ошибка локализации отделений.
-
-= Version 1.4.3 / (10.10.2019) =
-* Временный отказ от REST Api в пользу обычного ajax.
-* Переделана страница настроек плагина.
-* Польностью переделана локализация. Более подробнее вы можете прочитать в документации.
-* Страница настроек теперь вынесена из меню WooCommerce и расположена в главном меню Wordpress (как раньше).
-* Исправлены мелкие некритичные ошибки.
-
-= Version 1.4.2 / (27.08.2019) =
-* Фикс. проверки на несуществующий параметр в REST ответе.
-* Функционал корректного удаления плагина.
-
-= Version 1.4.1 / (25.08.2019) =
-* Перенос функционала сокрытия стандартных полей (город, область, почтовый индекс и адрес) на front-end.
-
-= Version 1.4.0 / (24.08.2019) =
-* Исправлен редкий баг, когда инициализация UI для полей Новой Почты (select 2) происходила раньше, чем будут загружены области доставки.
-* Теперь плагин будет работать даже с выключенным REST Api (тип работы, rest или wp-ajax, определяется автоматически при анализе возможностей сайта).
-* Теперь плагин по-умолчанию скрывает стандартные billing поля (город, область, почтовый индекс и адрес). Для того, чтобы отменить данную функцию, Вам необходимо передать значение false в фильтр wc_ukr_shipping_prevent_disable_default_fields.
-* Добавлена ссылка на страницу настроек в разделе плагинов.
-* Удалены донаты в связи со скорым выпуском PRO версии.

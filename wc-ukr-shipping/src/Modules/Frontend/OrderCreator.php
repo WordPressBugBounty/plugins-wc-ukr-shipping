@@ -2,10 +2,13 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
-use kirillbdev\WCUkrShipping\Model\CheckoutOrderData;
-use kirillbdev\WCUkrShipping\Model\OrderShipping;
-use kirillbdev\WCUkrShipping\Model\WCUSOrder;
+use kirillbdev\WCUkrShipping\Contracts\Order\OrderHandlerInterface;
+use kirillbdev\WCUkrShipping\Contracts\Order\OrderShippingHandlerInterface;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
+use kirillbdev\WCUkrShipping\Component\Carriers\NovaPoshta\Order\CheckoutOrderHandler as NovaPoshtaCheckoutOrderHandler;
+use kirillbdev\WCUkrShipping\Component\Carriers\NovaPoshta\Order\CheckoutOrderShippingHandler as NovaPoshtaCheckoutOrderShippingHandler;
+use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Order\CheckoutOrderHandler as UkrposhtaCheckoutOrderHandler;
+use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Order\CheckoutOrderShippingHandler as UkrposhtaCheckoutOrderShippingHandler;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -13,12 +16,7 @@ if ( ! defined('ABSPATH')) {
 
 class OrderCreator implements ModuleInterface
 {
-    /**
-     * Boot function
-     *
-     * @return void
-     */
-    public function init()
+    public function init(): void
     {
         if (is_admin()) {
             return;
@@ -28,18 +26,12 @@ class OrderCreator implements ModuleInterface
         add_action('woocommerce_checkout_create_order_shipping_item', [ $this, 'saveOrderShipping' ]);
     }
 
-    /**
-     * @param \WC_Order $order
-     */
-    public function createOrder($order)
+    public function createOrder(\WC_Order $order): void
     {
-        if ( ! $this->isNovaPoshtaShipping($order)) {
-            return;
+        $handler = $this->createOrderHandler($order);
+        if ($handler !== null) {
+            $handler->saveShippingData($order, $_POST);
         }
-
-        $wcusOrder = new WCUSOrder($order);
-        $orderData = new CheckoutOrderData($_POST);
-        $wcusOrder->save($orderData);
     }
 
     /**
@@ -47,20 +39,38 @@ class OrderCreator implements ModuleInterface
      */
     public function saveOrderShipping($item)
     {
-        if ( ! empty($_POST) && WC_UKR_SHIPPING_NP_SHIPPING_NAME === $item->get_method_id()) {
-            $orderData = new CheckoutOrderData($_POST);
-            $shipping = new OrderShipping($item);
-            $shipping->save($orderData);
+        $handler = $this->createOrderShippingHandler($item->get_method_id());
+        if ($handler !== null) {
+            $handler->saveShippingData($item, $_POST);
         }
     }
 
-    /**
-     * @param \WC_Order $order
-     *
-     * @return bool
-     */
-    private function isNovaPoshtaShipping($order)
+    private function createOrderHandler(\WC_Order $order): ?OrderHandlerInterface
     {
-        return $order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME);
+        if ($order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
+            return new NovaPoshtaCheckoutOrderHandler();
+        } elseif ($order->has_shipping_method('wcus_ukrposhta_shipping')) {
+            return new UkrposhtaCheckoutOrderHandler();
+        }
+
+        return null;
+    }
+
+    private function createOrderShippingHandler(string $shippingMethod): ?OrderShippingHandlerInterface
+    {
+        $fieldGroup = $this->isShipToDifferentAddress() ? 'shipping' : 'billing';
+        if ($shippingMethod === WC_UKR_SHIPPING_NP_SHIPPING_NAME) {
+            return new NovaPoshtaCheckoutOrderShippingHandler($fieldGroup);
+        } elseif ($shippingMethod === 'wcus_ukrposhta_shipping') {
+            return new UkrposhtaCheckoutOrderShippingHandler($fieldGroup);
+        }
+
+        return null;
+    }
+
+    private function isShipToDifferentAddress(): bool
+    {
+        return isset($_POST['ship_to_different_address'])
+            && (int)$_POST['ship_to_different_address'] === 1;
     }
 }

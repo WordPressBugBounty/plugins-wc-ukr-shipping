@@ -3,16 +3,16 @@
 namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
 use kirillbdev\WCUkrShipping\Foundation\NovaPoshtaShipping;
-use kirillbdev\WCUkrShipping\Model\CheckoutOrderData;
+use kirillbdev\WCUkrShipping\Foundation\UkrPoshtaShipping;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 
 class ShippingMethod implements ModuleInterface
 {
-    /**
-     * @var TranslateService
-     */
-    private $translateService;
+    private static ?string $cachedRateHash = null;
+
+    private TranslateService $translateService;
 
     public function __construct(TranslateService $translateService)
     {
@@ -35,6 +35,7 @@ class ShippingMethod implements ModuleInterface
     public function registerShippingMethod($methods)
     {
         $methods[WC_UKR_SHIPPING_NP_SHIPPING_NAME] = NovaPoshtaShipping::class;
+        $methods['wcus_ukrposhta_shipping'] = UkrPoshtaShipping::class;
 
         return $methods;
     }
@@ -51,33 +52,22 @@ class ShippingMethod implements ModuleInterface
     public function calculatePackageRateHash(array $packages): array
     {
         // We need to perform calculation only for ajax refresh checkout and place order
-        $orderData = null;
-        if (isset($_GET['wc-ajax'])) {
-            if ($_GET['wc-ajax'] === 'update_order_review' && ! empty($_POST['post_data'])) {
-                parse_str(sanitize_text_field($_POST['post_data']), $post);
-                $orderData = new CheckoutOrderData($post);
-            } elseif ($_GET['wc-ajax'] === 'checkout') {
-                $orderData = new CheckoutOrderData($_POST);
-            }
+        if (!isset($_GET['wc-ajax'])
+            || !in_array($_GET['wc-ajax'], ['update_order_review', 'checkout'], true)) {
+            return $packages;
         }
 
         $chosenMethods = wc_get_chosen_shipping_method_ids();
         foreach ($packages as $key => &$package) {
-            if (isset($chosenMethods[$key]) && $chosenMethods[$key] === WC_UKR_SHIPPING_NP_SHIPPING_NAME
-                && $orderData !== null) {
-                $shippingType = $orderData->isAddressShipping() ? 'doors' : 'warehouse';
-                if ($orderData->getShippingType() !== null) {
-                    $shippingType = $orderData->getShippingType();
+            if (isset($chosenMethods[$key])
+                && in_array($chosenMethods[$key], [WC_UKR_SHIPPING_NP_SHIPPING_NAME, 'wcus_ukrposhta_shipping'], true)) {
+                // todo: bad solution! provide array cache implementation instead
+                if (self::$cachedRateHash === null) {
+                    self::$cachedRateHash = md5(
+                        sprintf('%s_%f', $chosenMethods[$key], microtime(true))
+                    );
                 }
-
-                $package['wcus_rates_hash'] = md5(
-                    sprintf(
-                        'wcus_rates:%s|%s|%s',
-                        $orderData->getShippingAddress()->getCityRef(),
-                        $orderData->getPaymentMethod(),
-                        $shippingType
-                    )
-                );
+                $package['wcus_rates_hash'] = self::$cachedRateHash;
             }
         }
 
@@ -86,14 +76,15 @@ class ShippingMethod implements ModuleInterface
 
     public function calculateCartTotal(float $total, \WC_Cart $cart): float
     {
-        if ( ! in_array(WC_UKR_SHIPPING_NP_SHIPPING_NAME, wc_get_chosen_shipping_method_ids(), true)) {
-            return $total;
+        $costViewOnly = false;
+        if (WCUSHelper::hasChosenShippingMethod(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
+            $costViewOnly = (int)get_option('wcus_cost_view_only') === 1;
+        } elseif (WCUSHelper::hasChosenShippingMethod('wcus_ukrposhta_shipping')) {
+            $costViewOnly = (int)get_option('wcus_ukrposhta_cost_view_only') === 1;
         }
 
-        if ((int)get_option('wcus_cost_view_only') === 1) {
-            return $total - $cart->get_shipping_total();
-        }
-
-        return $total;
+        return $costViewOnly
+            ? $total - $cart->get_shipping_total()
+            : $total;
     }
 }

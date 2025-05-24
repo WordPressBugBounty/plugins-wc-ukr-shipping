@@ -4,7 +4,6 @@ namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
 use kirillbdev\WCUkrShipping\Foundation\State;
 use kirillbdev\WCUkrShipping\Services\Checkout\CheckoutService;
-use kirillbdev\WCUkrShipping\Services\Checkout\LegacyCheckoutService;
 use kirillbdev\WCUkrShipping\States\CheckoutState;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 
@@ -14,16 +13,11 @@ if ( ! defined('ABSPATH')) {
 
 class Checkout implements ModuleInterface
 {
-    /**
-     * @var LegacyCheckoutService|CheckoutService
-     */
-    private $checkoutService;
+    private CheckoutService $checkoutService;
 
     public function __construct()
     {
-        $this->checkoutService = (int)wc_ukr_shipping_get_option('wcus_checkout_new_ui')
-            ? new CheckoutService()
-            : new LegacyCheckoutService();
+        $this->checkoutService = new CheckoutService();
     }
 
     /**

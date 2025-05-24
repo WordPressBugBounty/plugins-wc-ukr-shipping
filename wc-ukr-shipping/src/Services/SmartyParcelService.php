@@ -61,6 +61,7 @@ class SmartyParcelService
             }
 
             try {
+                $this->tryConnectApplication();
                 $accountCache = $this->api->getUserStatus($apiKey);
                 set_transient('smarty_parcel_account', $accountCache, 900);
                 $this->lockProvider->releaseLock('smarty_parcel_account');
@@ -84,28 +85,31 @@ class SmartyParcelService
     }
 
     public function getRates(
+        string $carrierAccountId,
+        string $shipFrom,
         string $shipTo,
         string $deliveryType,
         float $declaredValue,
-        float $weight
+        float $weight,
+        ?string $serviceType = null
     ): ?array {
         $apiKey = get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
         if (empty($apiKey)) {
             return null;
         }
 
-        $carrierAccount = get_option('wcus_nova_poshta_default_carrier');
-        if (empty($carrierAccount)) {
+        if (empty($carrierAccountId)) {
             return null;
         }
 
         return $this->api->estimateRates(
-            $carrierAccount,
-            wc_ukr_shipping_get_option('wc_ukr_shipping_np_sender_city'),
+            $carrierAccountId,
+            $shipFrom,
             $shipTo,
             $deliveryType,
             $declaredValue,
-            $weight
+            $weight,
+            $serviceType
         );
     }
 
@@ -123,6 +127,7 @@ class SmartyParcelService
         $this->labelsRepository->create(
             $orderId,
             $response['id'],
+            $response['carrier_label_id'],
             $response['tracking_number'],
             $response['carrier_slug'] ?? 'nova_poshta'
         );
@@ -164,5 +169,29 @@ class SmartyParcelService
     {
         $response = $this->api->createSubscriptionChangeAction($subscription);
         return $response['one_time_token'];
+    }
+
+    public function tryConnectApplication(): void
+    {
+        if (get_option(WCUS_OPTION_SMARTY_PARCEL_APP_STATUS) === 'connected') {
+            return;
+        }
+
+        try {
+            $apiKey = get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
+            $this->api->connectApplication($apiKey);
+            update_option(WCUS_OPTION_SMARTY_PARCEL_APP_STATUS, 'connected');
+        } catch (\Throwable $e) {
+        }
+    }
+
+    public function tryDisconnectApplication(): void
+    {
+        try {
+            $apiKey = get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
+            $this->api->disconnectApplication($apiKey);
+            delete_option(WCUS_OPTION_SMARTY_PARCEL_APP_STATUS);
+        } catch (\Throwable $e) {
+        }
     }
 }

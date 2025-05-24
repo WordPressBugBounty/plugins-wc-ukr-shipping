@@ -156,7 +156,7 @@ class LegacyCheckoutService
         <p class="form-row" id="wcus_np_<?= $type; ?>_area_field">
         <span class="woocommerce-input-wrapper">
           <?php
-          HtmlHelper::selectField('wcus_np_' . $type . '_area', [
+          HtmlHelper::selectFieldLegacy('wcus_np_' . $type . '_area', [
               'options' => $this->areaAttributes['options'],
               'class' => [
                   'select',
@@ -180,7 +180,7 @@ class LegacyCheckoutService
         <p class="form-row" id="wcus_np_<?= $type; ?>_city_field">
         <span class="woocommerce-input-wrapper">
           <?php
-          HtmlHelper::selectField('wcus_np_' . $type . '_city', [
+          HtmlHelper::selectFieldLegacy('wcus_np_' . $type . '_city', [
               'options' => $this->cityAttributes['options'],
               'class' => [
                   'select',
@@ -204,7 +204,7 @@ class LegacyCheckoutService
         <p class="form-row" id="wcus_np_<?= $type; ?>_warehouse_field">
         <span class="woocommerce-input-wrapper">
           <?php
-          HtmlHelper::selectField('wcus_np_' . $type . '_warehouse', [
+          HtmlHelper::selectFieldLegacy('wcus_np_' . $type . '_warehouse', [
               'options' => $this->warehouseAttributes['options'],
               'class' => [
                   'select',

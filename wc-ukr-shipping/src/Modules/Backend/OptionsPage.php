@@ -2,6 +2,7 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
+use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\SingleLabelDataCollector;
 use kirillbdev\WCUkrShipping\Component\ListTable\AutomationListTable;
 use kirillbdev\WCUkrShipping\DB\Repositories\AutomationRulesRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\LegacyTtnRepository;
@@ -208,17 +209,23 @@ class OptionsPage implements ModuleInterface
         $gateways = wcus_is_woocommerce_active() ? wc()->payment_gateways()->payment_gateways() : [];
         $paymentMethods = [];
         foreach ($gateways as $id => $gateway) {
-            $paymentMethods[] = [
-                'id' => $id,
-                'name' => $gateway->get_title()
-            ];
+            $paymentMethods[$id] = $gateway->get_title();
         }
         $data['payment_methods'] = $paymentMethods;
         $data['cod_payment_id'] = wc_ukr_shipping_get_option('wcus_cod_payment_id');
         $data['payment_control_default'] = (int)wc_ukr_shipping_get_option('wcus_ttn_pay_control_default');
         $data['carrierAccounts'] = $this->smartyParcelService->getCarrierAccounts();
 
-        echo View::render('settings', $data);
+        $section = $_GET['section'] ?? null;
+        if ($section === 'nova_poshta') {
+            $view = 'settings_nova_poshta';
+        } elseif ($section === 'ukrposhta') {
+            $view = 'settings_ukrposhta';
+        } else {
+            $view = 'settings_general';
+        }
+
+        echo View::render($view, $data);
     }
 
     public function smartyParcelHtml()
@@ -246,7 +253,17 @@ class OptionsPage implements ModuleInterface
             true
         );
 
-        $store = new TTNStore((int)$_GET['order_id']);
+        $order = wc_get_order((int)$_GET['order_id']);
+        if ( ! $order) {
+            throw new \InvalidArgumentException('Order #' . (int)$_GET['order_id'] . ' not found.');
+        }
+
+        if ($order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
+            $store = new TTNStore((int)$_GET['order_id']);
+        } elseif ($order->has_shipping_method('wcus_ukrposhta_shipping')) {
+            $store = new SingleLabelDataCollector($order);
+        }
+
         wp_localize_script('wcus_ttn_form_js', 'wcus_ttn_form_state', $store->collect());
         echo View::render('ttn');
     }

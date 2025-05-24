@@ -22,15 +22,6 @@ class OptionsController extends Controller
     {
         parse_str($request->get('data'), $data);
 
-        $result = $this->validate($data);
-
-        if (true !== $result) {
-            return $this->jsonResponse([
-                'success' => false,
-                'errors' => $result
-            ]);
-        }
-
         $optionsRepository = new OptionsRepository();
         $optionsRepository->save($data);
 
@@ -40,25 +31,5 @@ class OptionsController extends Controller
                 'message' => __('Settings saved successfully!', 'wc-ukr-shipping-i18n'),
             ]
         ]);
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return array|bool
-     */
-    private function validate($data)
-    {
-        $errors = [];
-
-        if ( ! isset($data['wc_ukr_shipping']['np_method_title']) || strlen($data['wc_ukr_shipping']['np_method_title']) === 0) {
-            $errors['wc_ukr_shipping_np_method_title'] = __('validation_required', WCUS_TRANSLATE_DOMAIN);
-        }
-
-        if ( ! isset($data['wc_ukr_shipping']['np_address_title']) || strlen($data['wc_ukr_shipping']['np_address_title']) === 0) {
-            $errors['wc_ukr_shipping_np_address_title'] = __('validation_required', WCUS_TRANSLATE_DOMAIN);
-        }
-
-        return $errors ? $errors : true;
     }
 }

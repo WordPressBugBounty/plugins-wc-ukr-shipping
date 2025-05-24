@@ -12,12 +12,11 @@ interface HttpClient
 {
     /**
      * @param string $url
-     * @param mixed $body
      * @param array $headers
      *
      * @return mixed
      */
-    public function get($url, $body = null, $headers = []);
+    public function get(string $url, array $headers = []);
 
     /**
      * @param string $url

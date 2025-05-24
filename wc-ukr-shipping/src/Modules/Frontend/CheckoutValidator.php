@@ -2,6 +2,10 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
+use kirillbdev\WCUkrShipping\Component\Validation\CheckoutValidatorInterface;
+use kirillbdev\WCUkrShipping\Component\Validation\NovaPoshtaCheckoutValidator;
+use kirillbdev\WCUkrShipping\Component\Validation\UkrposhtaCheckoutValidator;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 
 if ( ! defined('ABSPATH')) {
@@ -10,28 +14,19 @@ if ( ! defined('ABSPATH')) {
 
 class CheckoutValidator implements ModuleInterface
 {
-    /**
-     * Boot function
-     *
-     * @return void
-     */
-    public function init()
+    public function init(): void
     {
         add_action('woocommerce_checkout_process', [$this, 'validateFields']);
         add_filter('woocommerce_checkout_fields', [$this, 'removeDefaultFieldsFromValidation'], 99);
     }
 
-    /**
-     * @param array $fields
-     * @return array
-     */
-    public function removeDefaultFieldsFromValidation($fields)
+    public function removeDefaultFieldsFromValidation(array $fields): array
     {
         if ( ! wp_doing_ajax() || empty($_POST)) {
             return $fields;
         }
 
-        if ($this->isNovaPoshtaSelected()) {
+        if ($this->isPluginShippingMethodSelected()) {
             if ($this->maybeDisableDefaultFields()) {
                 foreach (['billing', 'shipping'] as $type) {
                     unset($fields[$type][$type . '_address_1']);
@@ -46,18 +41,13 @@ class CheckoutValidator implements ModuleInterface
         return $fields;
     }
 
-    public function validateFields()
+    public function validateFields(): void
     {
-        if ($this->isNovaPoshtaSelected() && $this->checkoutValidationActive()) {
-            $type = $this->getTypeToValidate();
-
-            if ($this->maybeAddressShippingSelected($type)) {
-                $this->validateAddressShipping($type);
-
-                return;
-            }
-
-            $this->validateWarehouseShipping($type);
+        if ($this->isPluginShippingMethodSelected() && $this->checkoutValidationActive()) {
+           $validator = $this->getCheckoutValidator();
+           if ($validator !== null) {
+               $validator->validate($_POST);
+           }
         }
     }
 
@@ -66,84 +56,20 @@ class CheckoutValidator implements ModuleInterface
      */
     private function maybeDisableDefaultFields()
     {
-        return isset($_POST['shipping_method']) &&
-            preg_match('/^' . WC_UKR_SHIPPING_NP_SHIPPING_NAME . '.*/i', $_POST['shipping_method'][0]) &&
-            apply_filters('wc_ukr_shipping_prevent_disable_default_fields', false) === false;
+        return apply_filters('wc_ukr_shipping_prevent_disable_default_fields', false) === false;
     }
 
-    /**
-     * @param string $type
-     *
-     * @return bool
-     */
-    private function maybeAddressShippingSelected($type)
+    private function isPluginShippingMethodSelected(): bool
     {
-        return isset($_POST['wcus_np_' . $type . '_custom_address_active'])
-            && 1 === (int)$_POST['wcus_np_' . $type . '_custom_address_active'];
-    }
+        $pluginShippingMethods = [
+            WC_UKR_SHIPPING_NP_SHIPPING_NAME,
+            'wcus_ukrposhta_shipping',
+        ];
 
-    private function validateAddressShipping(string $type): void
-    {
-        if ((int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui') === 1) {
-            if (empty($_POST['wcus_np_' . $type . '_settlement_name'])) {
-                $this->addErrorNotice();
+        foreach ($pluginShippingMethods as $method) {
+            if (WCUSHelper::hasChosenShippingMethod($method)) {
+                return true;
             }
-
-            if (empty($_POST['wcus_np_' . $type . '_street_name'])) {
-                $this->addErrorNotice();
-            }
-
-            if (empty($_POST['wcus_np_' . $type . '_house'])) {
-                $this->addErrorNotice();
-            }
-        } else {
-            if (empty($_POST['wcus_np_' . $type . '_city'])
-                || empty($_POST['wcus_np_' . $type . '_custom_address'])
-            ) {
-                $this->addErrorNotice();
-            }
-        }
-    }
-
-    /**
-     * @param string $type
-     */
-    private function validateWarehouseShipping($type)
-    {
-        if (empty($_POST['wcus_np_' . $type . '_city'])
-            || empty($_POST['wcus_np_' . $type . '_warehouse'])
-        ) {
-            $this->addErrorNotice();
-        }
-    }
-
-    private function addErrorNotice()
-    {
-        wc_add_notice(
-            __('Enter shipping address of Nova Poshta', 'wc-ukr-shipping-i18n'),
-            'error'
-        );
-    }
-
-    /**
-     * @return string
-     */
-    private function getTypeToValidate()
-    {
-        if (isset($_POST['ship_to_different_address']) && 1 === (int)$_POST['ship_to_different_address']) {
-            return 'shipping';
-        }
-
-        return 'billing';
-    }
-
-    /**
-     * @return bool
-     */
-    private function isNovaPoshtaSelected()
-    {
-        if (isset($_POST['shipping_method']) && preg_match('/^' . WC_UKR_SHIPPING_NP_SHIPPING_NAME . '.*/i', $_POST['shipping_method'][0])) {
-            return true;
         }
 
         return false;
@@ -155,5 +81,16 @@ class CheckoutValidator implements ModuleInterface
     private function checkoutValidationActive()
     {
         return true === apply_filters('wcus_checkout_validation_active', true);
+    }
+
+    private function getCheckoutValidator(): ?CheckoutValidatorInterface
+    {
+        if (WCUSHelper::hasChosenShippingMethod(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
+            return new NovaPoshtaCheckoutValidator();
+        } elseif (WCUSHelper::hasChosenShippingMethod('wcus_ukrposhta_shipping')) {
+            return new UkrposhtaCheckoutValidator();
+        }
+
+        return null;
     }
 }

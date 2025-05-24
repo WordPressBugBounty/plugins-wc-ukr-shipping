@@ -4,10 +4,12 @@ namespace kirillbdev\WCUkrShipping\Http\Controllers;
 
 use kirillbdev\WCUkrShipping\Api\SmartyParcelApi;
 use kirillbdev\WCUkrShipping\Component\Automation\Context;
+use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\UkrposhtaFormLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\FormLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\OrderLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\AutomationService;
 use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUSCore\Http\Contracts\ResponseInterface;
@@ -37,9 +39,10 @@ class SmartyParcelController extends Controller
     {
         try {
             $apiKey = $request->get('api_key');
-            $data = $this->api->getUserStatus($apiKey);
+            $data = $this->api->connectApplication($apiKey);
 
             update_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY, $apiKey);
+            update_option(WCUS_OPTION_SMARTY_PARCEL_APP_STATUS, 'connected');
             if ($data['verified']) {
                 update_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS, 'connected');
             } else {
@@ -87,6 +90,7 @@ class SmartyParcelController extends Controller
     public function refreshAccountInfo(Request $request): ResponseInterface
     {
         try {
+            $this->smartyParcelService->tryConnectApplication();
             $account = $this->api->getUserStatus(get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY));
             set_transient('smarty_parcel_account', $account, 900);
 
@@ -105,10 +109,13 @@ class SmartyParcelController extends Controller
     public function disconnect(Request $request): ResponseInterface
     {
         try {
+            $this->smartyParcelService->tryDisconnectApplication();
+
             delete_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
             delete_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS);
             delete_option(WCUS_OPTION_SMARTY_PARCEL_CARRIERS);
             delete_option('wcus_nova_poshta_default_carrier');
+            delete_option(WCUS_OPTION_SMARTY_PARCEL_APP_STATUS);
             delete_transient('smarty_parcel_account');
 
             return $this->jsonResponse([
@@ -155,12 +162,7 @@ class SmartyParcelController extends Controller
     public function connectCarrier(Request $request): ResponseInterface
     {
         try {
-            $response = $this->api->connectCarrier(
-                $request->get('api_key'),
-                $request->get('name'),
-                $request->get('sender_ref'),
-                $request->get('sender_contact_ref')
-            );
+            $response = $this->api->connectCarrier($request->get('carrier_slug'), $request->get('account_data'));
             $carrier = [
                 'id' => $response['id'],
                 'name' => $response['name'],
@@ -270,14 +272,22 @@ class SmartyParcelController extends Controller
     public function createShippingLabel(Request $request): ResponseInterface
     {
         try {
+            $builder = null;
+            if ($request->get('carrier') === 'nova_poshta') {
+                $builder = new FormLabelRequestBuilder($request);
+            } elseif ($request->get('carrier') === 'ukrposhta') {
+                $builder = new UkrposhtaFormLabelRequestBuilder($request);
+            }
+
             $response = $this->smartyParcelService->createLabel(
                 (int)$request->get('ttn')['order_id'],
-                new FormLabelRequestBuilder($request),
+                $builder,
                 (int)$request->get('options')['autoTracking'] === 1
             );
 
+            $formats = array_keys(WCUSHelper::getLabelDownloadFormats($request->get('carrier')));
             $downloads = [];
-            foreach (['a4', 'm85', 'm100'] as $format) {
+            foreach ($formats as $format) {
                 $downloads[] = [
                     'format' => $format,
                     'url' => admin_url('admin.php?page=wc_ukr_shipping_print_label&label_id=' . $response->id . '&format=' . $format),

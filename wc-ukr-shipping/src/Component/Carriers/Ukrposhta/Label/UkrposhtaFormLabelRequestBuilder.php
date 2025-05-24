@@ -1,0 +1,90 @@
+<?php
+
+declare(strict_types=1);
+
+namespace kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label;
+
+use kirillbdev\WCUkrShipping\Component\SmartyParcel\LabelRequestBuilderInterface;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+use kirillbdev\WCUSCore\Http\Request;
+
+class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
+{
+    private Request $request;
+
+    public function __construct(Request $request)
+    {
+        $this->request = $request;
+    }
+
+    public function build(): array
+    {
+        $request = $this->request;
+        $recipient = $request->get('recipient');
+        $sender = $request->get('sender');
+        $shipTo = [
+            'name' => sprintf(
+                '%s %s%s',
+                $recipient['first_name'],
+                $recipient['last_name'],
+                $recipient['middle_name']
+                    ? ' ' . $recipient['middle_name']
+                    : '',
+            ),
+            'phone' => WCUSHelper::preparePhone($recipient['phone']),
+            'pudo_point_id' => $recipient['warehouse']['value'],
+        ];
+
+        $shipFrom = [
+            'name' => sprintf(
+                '%s %s%s',
+                $sender['first_name'],
+                $sender['last_name'],
+                $sender['middle_name']
+                    ? ' ' . $sender['middle_name']
+                    : '',
+            ),
+            'phone' => WCUSHelper::preparePhone($sender['phone']),
+            'pudo_point_id' => $sender['warehouse']['value'],
+        ];
+
+        $labelRequest = [
+            'carrier_account_id' => $request->get('sender')['carrier_account_id'],
+            'billing' => [
+                'paid_by' => $request->get('common')['paid_by'],
+                'payment_method' => 'cash',
+            ],
+            'shipment' => [
+                'ship_date' => date('Y-m-d'),
+                'ship_from' => $shipFrom,
+                'ship_to' => $shipTo,
+            ]
+        ];
+
+        // Parcels
+        $parcels = [];
+        foreach ($request->get('common')['parcels'] as $index => $item) {
+            $parcels[] = [
+                'declared_value' => [
+                    'amount' => (float)$request->get('common')['declared_price'],
+                    'currency' => 'UAH',
+                ],
+                'weight' => [
+                    'value' => (float)$item['weight'],
+                    'unit' => 'kg',
+                ],
+                'dimensions' => [
+                    'width' => (int)$item['width'],
+                    'height' => (int)$item['height'],
+                    'length' => (int)$item['length'],
+                    'unit' => 'cm',
+                ],
+                'description' => $request->get('common')['description'],
+            ];
+        }
+        $labelRequest['shipment']['parcels'] = $parcels;
+        $labelRequest['shipment']['external_order_id'] =  $request->get('common')['external_order_id'];
+
+        return $labelRequest;
+    }
+}

@@ -24,25 +24,55 @@ class OptionsPageState extends AppState
                 'senderCity' => CityUIValue::fromFinder($cityFinder),
                 'senderWarehouse' => WarehouseUIValue::fromFinder($warehouseFinder),
             ],
-            'shippingCost' => $this->getShippingCostState(),
+            'novaPoshtaShippingCost' => $this->getNovaPoshtaShippingCostState(),
+            'ukrposhtaShippingCost' => $this->getUkrposhtaShippingCostState(),
+            'ukrposhtaDeliveryData' => $this->getUkrposhtaDeliveryDataState(),
         ];
     }
 
-    private function getShippingCostState(): array
+    private function getNovaPoshtaShippingCostState(): array
     {
-        $totalCost = wc_ukr_shipping_get_option('wc_ukr_shipping_np_relative_price');
-
+        $relativeCost = wc_ukr_shipping_get_option('wc_ukr_shipping_np_relative_price');
         $state = [
             'calc_type' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_price_type'),
             'fixed_price' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_price'),
             'cargo_type' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_cargo_type'),
-            'total_cost' => $totalCost
-                ? json_decode($totalCost, true)
+            'total_cost' => $relativeCost
+                ? json_decode($relativeCost, true)
                 : [
                     [ 'total' => 0, 'price' => 50 ]
                 ],
         ];
 
         return $state;
+    }
+
+    private function getUkrposhtaShippingCostState(): array
+    {
+        $relativeCost = wc_ukr_shipping_get_option('wcus_ukrposhta_relative_price');
+        $ratesCity = json_decode(wc_ukr_shipping_get_option('wcus_ukrposhta_rates_city'), true);
+        $state = [
+            'calc_type' => wc_ukr_shipping_get_option('wcus_ukrposhta_price_type'),
+            'fixed_price' => wc_ukr_shipping_get_option('wcus_ukrposhta_price'),
+            'total_cost' => $relativeCost
+                ? json_decode($relativeCost, true)
+                : [
+                    [ 'total' => 0, 'price' => 50 ]
+                ],
+            'rates_city' => is_array($ratesCity) ? $ratesCity : [
+                'value' => '',
+                'name' => '',
+            ],
+        ];
+
+        return $state;
+    }
+
+    private function getUkrposhtaDeliveryDataState(): array
+    {
+        return [
+            'provider' => wc_ukr_shipping_get_option('wcus_ukrposhta_dd_provider'),
+            'bearerEcom' => wc_ukr_shipping_get_option('wcus_ukrposhta_bearer_ecom', ''),
+        ];
     }
 }

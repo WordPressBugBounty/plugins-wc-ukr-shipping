@@ -2,7 +2,6 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
-use kirillbdev\WCUkrShipping\Foundation\State;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
@@ -53,13 +52,15 @@ class AssetsLoader implements ModuleInterface
             filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/tabs.js')
         );
 
-        wp_enqueue_script(
-            'wcus_settings_js',
-            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/settings.min.js',
-            [],
-            filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/settings.min.js'),
-            true
-        );
+        if (get_current_screen() !== null && get_current_screen()->id === 'toplevel_page_wc_ukr_shipping_options') {
+            wp_enqueue_script(
+                'wcus_settings_js',
+                WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/settings.min.js',
+                [],
+                filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/settings.min.js'),
+                true
+            );
+        }
 
         wp_enqueue_script(
             'wcus_ttn_widget_js',
@@ -129,7 +130,7 @@ class AssetsLoader implements ModuleInterface
             );
         }
 
-        $this->injectGlobals('wcus_settings_js');
+        $this->injectGlobals('jquery');
     }
 
     private function injectGlobals($scriptId)
@@ -157,6 +158,9 @@ class AssetsLoader implements ModuleInterface
                 'nova_poshta_icon_url' => WC_UKR_SHIPPING_PLUGIN_URL . 'image/nova-poshta-icon.png',
             ],
             'default_cities' => $this->getDefaultCities(),
+            'ukrposhta' => [
+                'defaultCities' => WCUSHelper::getUkrposhtaDefaultCities(),
+            ],
             'smarty_parcel' => [
                 'account' => $this->smartyParcelService->getAccountInfo(),
                 'autoTracking' => (int)wc_ukr_shipping_get_option('wcus_sp_auto_tracking'),

@@ -23,7 +23,7 @@ class ToolsController extends Controller
     public function syncLegacyTtn(Request $request): ResponseInterface
     {
         try {
-            $result = $this->legacyTtnRepository->syncTtn(self::SYNC_LIMIT, (int)$request->get('cursor'));;
+            $result = $this->legacyTtnRepository->syncTtn(self::SYNC_LIMIT, (int)$request->get('cursor'));
 
             return $this->jsonResponse([
                 'success' => true,

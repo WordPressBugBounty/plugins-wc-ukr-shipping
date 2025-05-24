@@ -67,6 +67,9 @@ class TranslateService
             ];
         }
 
+        // Ukrposhta
+        $translates['ukrposhta_method_title'] = __('Ukrposhta', 'wc-ukr-shipping-i18n');
+
         return apply_filters('wc_ukr_shipping_get_nova_poshta_translates', $translates);
     }
 

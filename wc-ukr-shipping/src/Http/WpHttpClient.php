@@ -11,12 +11,11 @@ use kirillbdev\WCUkrShipping\Exceptions\ApiServiceException;
 
 class WpHttpClient implements HttpClient
 {
-    public function get($url, $body = null, $headers = [])
+    public function get(string $url, array $headers = [])
     {
         $response = wp_remote_get($url, [
             'headers' => $headers,
-            'timeout' => 30,
-            'body' => $body
+            'timeout' => apply_filters('wcus_http_get_timeout', 15),
         ]);
 
         if (200 === wp_remote_retrieve_response_code($response)) {

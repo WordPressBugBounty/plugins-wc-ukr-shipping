@@ -2,7 +2,8 @@
 
 namespace kirillbdev\WCUkrShipping\Foundation;
 
-use kirillbdev\WCUkrShipping\Model\CheckoutOrderData;
+use kirillbdev\WCUkrShipping\Factories\Rates\NovaPoshta\NovaPoshtaCheckoutOrderFactory;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\CalculationService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 
@@ -18,7 +19,7 @@ class NovaPoshtaShipping extends \WC_Shipping_Method
 
         $this->id = WC_UKR_SHIPPING_NP_SHIPPING_NAME;
         $this->method_title = WC_UKR_SHIPPING_NP_SHIPPING_TITLE;
-        $this->method_description = '';
+        $this->method_description = 'Nova Poshta by WC Ukraine Shipping';
 
         $this->supports = array(
             'shipping-zones',
@@ -54,6 +55,29 @@ class NovaPoshtaShipping extends \WC_Shipping_Method
         add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
     }
 
+    public function init_form_fields(): void
+    {
+        $this->instance_form_fields = [
+            'options_message' => [
+                'type' => 'wcus_message',
+                'text' => __('You can manage shipping method options at', 'wc-ukr-shipping-i18n'),
+                'link' => home_url('wp-admin/admin.php?page=wc_ukr_shipping_options'),
+            ],
+        ];
+    }
+
+    public function generate_wcus_message_html(string $key, array $data): string
+    {
+        $html = sprintf(
+            '<div>%s <a href="%s" target="_blank">%s</a></div>',
+            esc_html($data['text']),
+            esc_attr($data['link']),
+            __('plugin settings page', 'wc-ukr-shipping-i18n')
+        );
+
+        return $html;
+    }
+
     public function calculate_shipping($package = []): void
     {
         if ( ! $this->shouldCalculated()) {
@@ -65,18 +89,12 @@ class NovaPoshtaShipping extends \WC_Shipping_Method
             return;
         }
 
-        if ($_GET['wc-ajax'] === 'update_order_review') {
-            parse_str(sanitize_text_field($_POST['post_data']), $post);
-            $orderData = new CheckoutOrderData($post);
-        } elseif ($_GET['wc-ajax'] === 'checkout') {
-            $orderData = new CheckoutOrderData($_POST);
-        }
-        $calculationService = new CalculationService();
-        $cost = $calculationService->calculateCost($orderData);
+        $service = new CalculationService();
+        $factory = new NovaPoshtaCheckoutOrderFactory();
 
         $rate = [
             'label' => $this->title,
-            'cost' => $cost,
+            'cost' => $service->calculateRates($factory->createOrderInfo()),
             'package' => $package,
         ];
         $this->add_rate($rate);
@@ -95,6 +113,10 @@ class NovaPoshtaShipping extends \WC_Shipping_Method
     private function shouldCalculated(): bool
     {
         if ( ! isset($_GET['wc-ajax'])) {
+            return false;
+        }
+
+        if (!WCUSHelper::hasChosenShippingMethod(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
             return false;
         }
 
