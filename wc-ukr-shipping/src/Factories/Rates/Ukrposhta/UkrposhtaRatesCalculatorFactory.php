@@ -24,7 +24,7 @@ class UkrposhtaRatesCalculatorFactory implements RatesCalculatorFactoryInterface
     public function getRatesCalculator(OrderInfoDto $orderInfo): RatesCalculatorInterface
     {
         $calcType = wc_ukr_shipping_get_option('wcus_ukrposhta_price_type');
-        $ratesCity = json_decode(wc_ukr_shipping_get_option('wcus_ukrposhta_rates_city'), true);
+        $ratesCity = json_decode(wc_ukr_shipping_get_option('wcus_ukrposhta_rates_city') ?? '', true);
         $apiCalculator = new ApiRatesCalculator(
             $this->smartyParcelService,
             is_array($ratesCity) ? $ratesCity['value'] : '',

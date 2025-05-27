@@ -50,7 +50,7 @@ class OptionsPageState extends AppState
     private function getUkrposhtaShippingCostState(): array
     {
         $relativeCost = wc_ukr_shipping_get_option('wcus_ukrposhta_relative_price');
-        $ratesCity = json_decode(wc_ukr_shipping_get_option('wcus_ukrposhta_rates_city'), true);
+        $ratesCity = json_decode(wc_ukr_shipping_get_option('wcus_ukrposhta_rates_city') ?? '', true);
         $state = [
             'calc_type' => wc_ukr_shipping_get_option('wcus_ukrposhta_price_type'),
             'fixed_price' => wc_ukr_shipping_get_option('wcus_ukrposhta_price'),
