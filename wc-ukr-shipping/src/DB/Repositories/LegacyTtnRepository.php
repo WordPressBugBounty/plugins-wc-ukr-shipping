@@ -59,7 +59,7 @@ class LegacyTtnRepository
                     'updated_at' => $now,
                 ]);
 
-            if ($wpdb->last_error) {
+            if ($wpdb->last_error && stripos($wpdb->last_error, 'duplicate entry') === false) {
                 throw new \Exception('QueryException: ' . $wpdb->last_error);
             }
         }

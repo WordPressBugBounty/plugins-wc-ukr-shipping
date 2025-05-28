@@ -111,7 +111,7 @@ class CheckoutOrderHandler implements OrderHandlerInterface
                 )
             );
         } else {
-            $this->saveArea($order, $data);
+            $this->saveArea($order, $data);;
             $this->saveCity($order, $data);
             $this->setAddress($order, $data['wcus_np_' . $this->fieldGroup . '_custom_address'] ?? '');
         }

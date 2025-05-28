@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, укрпошта, shipping, woocommerce
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 1.15.2
+Stable tag: 1.15.3
 
 Connect Nova Poshta and Ukrposhta delivery services to your WooCommerce store. Create TTN, track orders and calculate rates in one place.
 
@@ -79,6 +79,11 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.15.3 / (28.05.2025) =
+* Restored previous city format (Sales Drive compatibility).
+* [Tracking] Status notifications now work via webhooks.
+* [Tools] Added skipping duplicated ttn on sync with WC Ukraine Shipping PRO (legacy plugin).
 
 = Version 1.15.2 / (27.05.2025) =
 * [Hotfix] Internal server error on checkout when Ukrposhta sender city not selected.
