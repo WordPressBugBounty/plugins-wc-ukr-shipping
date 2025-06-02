@@ -26,12 +26,6 @@ class Address implements ModuleInterface
             new Route('wcus_search_warehouses', AddressController::class,'searchWarehouses', [
                 'public' => true
             ]),
-            new Route('wcus_admin_search_warehouses', AddressController::class,'adminSearchWarehouses', [
-                'public' => true
-            ]),
-            new Route('wcus_search_poshtomats', AddressController::class,'searchPoshtomats', [
-                'public' => true
-            ]),
         ];
     }
 }

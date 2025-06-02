@@ -280,6 +280,7 @@ class SmartyParcelController extends Controller
             }
 
             $response = $this->smartyParcelService->createLabel(
+                $request->get('carrier'),
                 (int)$request->get('ttn')['order_id'],
                 $builder,
                 (int)$request->get('options')['autoTracking'] === 1
@@ -334,6 +335,7 @@ class SmartyParcelController extends Controller
 
         try {
             $response = $this->smartyParcelService->createLabel(
+                'nova_poshta', // todo: refactor
                 $order->get_id(),
                 new OrderLabelRequestBuilder($order),
                 (int)$request->get('options')['autoTracking'] === 1

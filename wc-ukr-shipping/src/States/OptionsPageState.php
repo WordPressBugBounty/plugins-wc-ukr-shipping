@@ -2,6 +2,7 @@
 
 namespace kirillbdev\WCUkrShipping\States;
 
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Includes\Address\RepositoryCityFinder;
 use kirillbdev\WCUkrShipping\Includes\Address\RepositoryWarehouseFinder;
 use kirillbdev\WCUkrShipping\Includes\AppState;
@@ -27,6 +28,7 @@ class OptionsPageState extends AppState
             'novaPoshtaShippingCost' => $this->getNovaPoshtaShippingCostState(),
             'ukrposhtaShippingCost' => $this->getUkrposhtaShippingCostState(),
             'ukrposhtaDeliveryData' => $this->getUkrposhtaDeliveryDataState(),
+            'ukrposhtaSender' => $this->getUrkposhtaSenderState(),
         ];
     }
 
@@ -50,7 +52,6 @@ class OptionsPageState extends AppState
     private function getUkrposhtaShippingCostState(): array
     {
         $relativeCost = wc_ukr_shipping_get_option('wcus_ukrposhta_relative_price');
-        $ratesCity = json_decode(wc_ukr_shipping_get_option('wcus_ukrposhta_rates_city') ?? '', true);
         $state = [
             'calc_type' => wc_ukr_shipping_get_option('wcus_ukrposhta_price_type'),
             'fixed_price' => wc_ukr_shipping_get_option('wcus_ukrposhta_price'),
@@ -59,10 +60,7 @@ class OptionsPageState extends AppState
                 : [
                     [ 'total' => 0, 'price' => 50 ]
                 ],
-            'rates_city' => is_array($ratesCity) ? $ratesCity : [
-                'value' => '',
-                'name' => '',
-            ],
+            'rates_city' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_rates_city'),
         ];
 
         return $state;
@@ -73,6 +71,27 @@ class OptionsPageState extends AppState
         return [
             'provider' => wc_ukr_shipping_get_option('wcus_ukrposhta_dd_provider'),
             'bearerEcom' => wc_ukr_shipping_get_option('wcus_ukrposhta_bearer_ecom', ''),
+        ];
+    }
+
+    private function getUrkposhtaSenderState(): array
+    {
+        $sender = WCUSHelper::safeGetJsonOption('wcus_ukrposhta_ttn_sender', [
+            'type' => 'individual',
+            'first_name' => '',
+            'last_name' => '',
+            'middle_name' => '',
+            'company_name' => '',
+            'phone' => '',
+            'email' => '',
+            'tin' => '',
+            'iban' => '',
+        ]);
+
+        return [
+            'sender' => $sender,
+            'city' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_city'),
+            'warehouse' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_warehouse'),
         ];
     }
 }

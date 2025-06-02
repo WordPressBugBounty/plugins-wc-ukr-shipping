@@ -114,6 +114,7 @@ class SmartyParcelService
     }
 
     public function createLabel(
+        string $carrierSlug,
         int $orderId,
         LabelRequestBuilderInterface $builder,
         bool $addTracking
@@ -135,12 +136,14 @@ class SmartyParcelService
 
         if ($addTracking) {
             try {
-                $this->api->addTracking($response['tracking_number']);
+                $this->api->addTracking($response['tracking_number'], $carrierSlug);
                 $this->labelsRepository->addToTracking((int)$shippingLabel['id']);
             } catch (\Throwable $e) {
                 // todo: logs ?
             }
         }
+
+        do_action('wcus_shipping_label_created', $shippingLabel, $order);
 
         $this->automationService->executeEvent(
             AutomationService::EVENT_LABEL_CREATED,

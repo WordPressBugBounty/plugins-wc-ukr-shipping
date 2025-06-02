@@ -111,6 +111,7 @@ class WcusLegacyCompatibility implements ModuleInterface
                         AutomationService::EVENT_SP_CARRIER_STATUS_CHANGED,
                         wc_get_order((int)$label['order_id']),
                         [
+                            'carrier_slug' => 'nova_poshta',
                             'tracking_number' => $label['tracking_number'],
                             'carrier_status_code' => $data['carrier_status'],
                             'carrier_status' => $data['carrier_status_additional'],
@@ -197,7 +198,7 @@ class WcusLegacyCompatibility implements ModuleInterface
                         AutomationService::EVENT_SP_CARRIER_STATUS_CHANGED,
                         wc_get_order((int)$label['order_id']),
                         [
-                            'carrier_slog' => $label['carrier_slug'] ?? '',
+                            'carrier_slug' => $label['carrier_slug'] ?? '',
                             'tracking_number' => $label['tracking_number'],
                             'carrier_status_code' => $json['carrier_status'],
                             'carrier_status' => $json['carrier_status_description'],

@@ -38,7 +38,6 @@ final class WCUkrShipping extends Kernel
             \kirillbdev\WCUkrShipping\Modules\Core\Localization::class,
             \kirillbdev\WCUkrShipping\Modules\Core\PluginInfo::class,
             // Legacy
-            \kirillbdev\WCUkrShipping\Modules\Legacy\Ajax::class,
             \kirillbdev\WCUkrShipping\Modules\WcusLegacyCompatibility::class,
             // Backend
             \kirillbdev\WCUkrShipping\Modules\Backend\OptionsPage::class,

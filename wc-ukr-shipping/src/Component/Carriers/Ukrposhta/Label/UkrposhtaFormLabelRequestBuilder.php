@@ -35,18 +35,32 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
             'pudo_point_id' => $recipient['warehouse']['value'],
         ];
 
+        // Sender
         $shipFrom = [
-            'name' => sprintf(
+            'phone' => WCUSHelper::preparePhone($sender['phone']),
+            'email' => $sender['email'],
+            'pudo_point_id' => $sender['warehouse']['value'],
+        ];
+
+        if ($sender['type'] === 'individual') {
+            $shipFrom['name'] = sprintf(
                 '%s %s%s',
                 $sender['first_name'],
                 $sender['last_name'],
                 $sender['middle_name']
                     ? ' ' . $sender['middle_name']
                     : '',
-            ),
-            'phone' => WCUSHelper::preparePhone($sender['phone']),
-            'pudo_point_id' => $sender['warehouse']['value'],
-        ];
+            );
+        } else {
+            $shipFrom['name'] = $sender['company_name'];
+            $shipFrom['tax_ids'] = [
+                [
+                    'type' => 'tin',
+                    'number' => $sender['tin'],
+                    'country' => 'UA',
+                ]
+            ];
+        }
 
         $labelRequest = [
             'carrier_account_id' => $request->get('sender')['carrier_account_id'],
@@ -84,6 +98,28 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
         }
         $labelRequest['shipment']['parcels'] = $parcels;
         $labelRequest['shipment']['external_order_id'] =  $request->get('common')['external_order_id'];
+
+        // Service options
+        $labelRequest['service_options'] = [
+            'ukrposhta_on_fail_receive' => $request->get('additional_services')['on_fail_receive'],
+            'ukrposhta_check_on_delivery' => $request->get('additional_services')['check_on_delivery'] === "true",
+            'ukrposhta_sms_notification' => $request->get('additional_services')['sms_notification'] === "true",
+        ];
+
+        // COD
+        if ($request->get('cod')['active'] !== 'false') {
+            $labelRequest['service_options']['cod'] = [
+                'payment_method' => 'cash',
+                'value' => [
+                    'amount' => (float)$request->get('cod')['amount'],
+                    'currency' => 'UAH',
+                ]
+            ];
+            if ($sender['type'] === 'private_entrepreneur') {
+                $labelRequest['service_options']['cod']['payment_method'] = 'cash_equivalent';
+                $labelRequest['service_options']['cod']['recipient_iban'] = $sender['iban'];
+            }
+        }
 
         return $labelRequest;
     }

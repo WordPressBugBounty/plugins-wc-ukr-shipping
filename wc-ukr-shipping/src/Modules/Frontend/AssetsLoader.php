@@ -121,6 +121,11 @@ class AssetsLoader implements ModuleInterface
             apply_filters('wcus_checkout_i18n', $globals['i18n'], $translator->getCurrentLanguage())
         );
 
+        add_filter('wcus_checkout_i18n', function ($i18n, $lang) {
+            // Ваша логіка
+            return $i18n;
+        }, 10, 2);
+
         wp_localize_script('wcus_checkout_js', 'wc_ukr_shipping_globals', $globals);
     }
 

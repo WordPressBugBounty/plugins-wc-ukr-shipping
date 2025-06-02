@@ -41,6 +41,8 @@ class SingleLabelDataCollector
         $this->collectSender();
         $this->collectParcelsData();
         $this->collectRecipient();
+        $this->collectAdditionalServices();
+        $this->collectCOD();
 
         return $this->data;
     }
@@ -53,7 +55,8 @@ class SingleLabelDataCollector
         $this->data['common']['service_type'] = 'ukrposhta_' . strtolower($shippingMethod->get_option('service_type'));
 
         $this->data['common']['paid_by'] = 'recipient'; // hardcoded yet
-        $this->data['common']['description'] = apply_filters('wcus_ttn_form_description', 'Order #' . $this->order->get_id(), $this->order);
+        $description = wc_ukr_shipping_get_option('wcus_ttn_description') ?: 'Order #' . $this->order->get_id();
+        $this->data['common']['description'] = apply_filters('wcus_ttn_form_description', $description, $this->order);
         $this->data['common']['external_order_id'] = $this->order->get_id();
         $this->data['common']['declared_price'] = $this->getDeclaredPrice();
     }
@@ -86,21 +89,23 @@ class SingleLabelDataCollector
         }
 
         $this->data['carrier_accounts'] = $accounts;
-        $this->data['sender']['carrier_account_id'] = $defaultAcc;
+        $sender = WCUSHelper::safeGetJsonOption('wcus_ukrposhta_ttn_sender', [
+            'type' => 'individual',
+            'first_name' => '',
+            'last_name' => '',
+            'middle_name' => '',
+            'company_name' => '',
+            'phone' => '',
+            'email' => '',
+            'tin' => '',
+            'iban' => '',
+        ]);
 
-        $sender = json_decode(wc_ukr_shipping_get_option('wcus_ukrposhta_ttn_sender'), true);
-
-        $this->data['sender']['first_name'] = $sender['first_name'] ?? '';
-        $this->data['sender']['last_name'] = $sender['last_name'] ?? '';
-        $this->data['sender']['middle_name'] = $sender['middle_name'] ?? '';
-        $this->data['sender']['phone'] = $sender['phone'] ?? '';
-        $this->data['sender']['city'] = [
-            'value' => '',
-            'name' => '',
-        ];
-        $this->data['sender']['warehouse'] = [
-            'value' => '',
-            'name' => '',
+        $this->data['sender'] = [
+            ...$sender,
+            'carrier_account_id' => $defaultAcc,
+            'city' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_city'),
+            'warehouse' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_warehouse'),
         ];
     }
 
@@ -128,6 +133,15 @@ class SingleLabelDataCollector
                 'value' => $shippingMethod->get_meta('wcus_ukrposhta_warehouse_id'),
                 'name' => $shippingMethod->get_meta('wcus_ukrposhta_warehouse_name') ?: '-',
             ],
+        ];
+    }
+
+    private function collectAdditionalServices(): void
+    {
+        $this->data['additional_services'] = [
+            'on_fail_receive' => 'return',
+            'sms_notification' => false,
+            'check_on_delivery' => true,
         ];
     }
 
@@ -159,5 +173,15 @@ class SingleLabelDataCollector
     private function getDeclaredPrice(): float
     {
         return $this->order->get_subtotal() + (float)$this->order->get_total_fees() + (float)$this->order->get_total_tax('') - $this->order->get_total_discount();
+    }
+
+    private function collectCOD(): void
+    {
+        $codPaymentId = wc_ukr_shipping_get_option('wcus_cod_payment_id');
+        $this->data['cod'] = [
+            'active' => $codPaymentId && $codPaymentId === $this->order->get_payment_method(),
+            'paid_by' => 'recipient',
+            'amount' => $this->getDeclaredPrice(),
+        ];
     }
 }

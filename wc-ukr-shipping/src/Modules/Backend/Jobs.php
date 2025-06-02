@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use kirillbdev\WCUkrShipping\Component\Task\Task;
-use kirillbdev\WCUkrShipping\Component\Task\TrackingHandler;
 use kirillbdev\WCUkrShipping\Services\TaskService;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 
@@ -28,8 +27,6 @@ class Jobs implements ModuleInterface
 
     public function init(): void
     {
-        $this->taskService->registerHandler('wcus_tracking_worker_tick', TrackingHandler::class);
-
         add_filter('cron_schedules', [$this, 'registerCustomIntervals']);
         add_action('plugins_loaded', [$this, 'initWorkers']);
     }

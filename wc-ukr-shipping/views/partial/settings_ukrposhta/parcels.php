@@ -28,37 +28,8 @@
             $ukrPoshtaAccounts,
             wc_ukr_shipping_get_option('wcus_ukrposhta_default_carrier')
         );
-
-        $sender = json_decode(wc_ukr_shipping_get_option('wcus_ukrposhta_ttn_sender'), true);
-        if (!$sender) {
-            $sender = [];
-        }
-
-        HtmlHelper::textField(
-            'wcus[ukrposhta_ttn_sender][first_name]',
-            __('Sender first name', 'wc-ukr-shipping-i18n'),
-            $sender['first_name'] ?? ''
-        );
-
-        HtmlHelper::textField(
-            'wcus[ukrposhta_ttn_sender][last_name]',
-            __('Sender last name', 'wc-ukr-shipping-i18n'),
-            $sender['last_name'] ?? ''
-        );
-
-        HtmlHelper::textField(
-            'wcus[ukrposhta_ttn_sender][middle_name]',
-            __('Sender middle name', 'wc-ukr-shipping-i18n'),
-            $sender['middle_name'] ?? ''
-        );
-
-        HtmlHelper::textField(
-            'wcus[ukrposhta_ttn_sender][phone]',
-            __('Sender phone', 'wc-ukr-shipping-i18n'),
-            $sender['phone'] ?? ''
-        );
     ?>
 
-    <input type="hidden" name="wcus[ukrposhta_ttn_sender][type]" value="<?php echo esc_attr($sender['type'] ?? 'individual'); ?>">
+    <div id="wcus-ukrposhta-sender"></div>
 
 </div>

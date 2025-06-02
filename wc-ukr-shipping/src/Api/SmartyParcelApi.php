@@ -247,7 +247,7 @@ final class SmartyParcelApi
         return $this->processResponse($response);
     }
 
-    public function addTracking(string $trackingNumber): array
+    public function addTracking(string $trackingNumber, string $carrierSlug): array
     {
         $response = wp_remote_post(self::API_URL . "/beta/trackings", [
             'headers' => [
@@ -259,7 +259,7 @@ final class SmartyParcelApi
             'timeout' => 5,
             'body' => json_encode([
                 'tracking_number' => $trackingNumber,
-                'carrier_slug' => 'nova_poshta',
+                'carrier_slug' => $carrierSlug,
             ]),
         ]);
 

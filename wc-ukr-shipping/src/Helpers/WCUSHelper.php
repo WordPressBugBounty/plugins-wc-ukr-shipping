@@ -73,6 +73,23 @@ class WCUSHelper
         return wp_unslash(wp_specialchars_decode($str, ENT_QUOTES));
     }
 
+    public static function getSelectNextOption(string $key): array
+    {
+        $option = json_decode(wc_ukr_shipping_get_option($key) ?? '', true);
+
+        return empty($option) ? [
+            'value' => '',
+            'name' => '',
+        ] : $option;
+    }
+
+    public static function safeGetJsonOption(string $key, $default = []): array
+    {
+        $option = json_decode(wc_ukr_shipping_get_option($key) ?? '', true);
+
+        return array_replace_recursive($default, empty($option) ? [] : $option);
+    }
+
     public static function getDefaultCities()
     {
         return [
