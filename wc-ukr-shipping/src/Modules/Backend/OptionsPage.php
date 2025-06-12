@@ -8,6 +8,7 @@ use kirillbdev\WCUkrShipping\DB\Repositories\AutomationRulesRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\LegacyTtnRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUkrShipping\Foundation\State;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Http\Controllers\AddressBookController;
 use kirillbdev\WCUkrShipping\Http\Controllers\AutomationController;
 use kirillbdev\WCUkrShipping\Http\Controllers\MigrationController;
@@ -236,7 +237,7 @@ class OptionsPage implements ModuleInterface
     public function ttnHtml(): void
     {
         if (get_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS) !== 'connected') {
-            echo View::render('ttn_forbidden');
+            echo View::render('ttn/ttn_forbidden');
             return;
         }
 
@@ -258,14 +259,40 @@ class OptionsPage implements ModuleInterface
             throw new \InvalidArgumentException('Order #' . (int)$_GET['order_id'] . ' not found.');
         }
 
-        if ($order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
-            $store = new TTNStore((int)$_GET['order_id']);
+        $carrier = null;
+        if (isset($_GET['carrier'])) {
+            $carrier = $_GET['carrier'];
+        } elseif ($order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
+            $carrier = 'nova_poshta';
         } elseif ($order->has_shipping_method('wcus_ukrposhta_shipping')) {
-            $store = new SingleLabelDataCollector($order);
+            $carrier = 'ukrposhta';
         }
 
-        wp_localize_script('wcus_ttn_form_js', 'wcus_ttn_form_state', $store->collect());
-        echo View::render('ttn');
+        $store = null;
+        switch ($carrier) {
+            case 'nova_poshta':
+                $store = new TTNStore((int)$_GET['order_id']);
+                break;
+            case 'ukrposhta':
+                $store = new SingleLabelDataCollector($order);
+                break;
+        }
+
+        if ($store === null) {
+            $shippingMethod = WCUSHelper::getOrderShippingMethod($order);
+            echo View::render('ttn/ttn_custom', [
+                'shippingMethod' => $shippingMethod !== null ? $shippingMethod->get_name() : null,
+                'novaPoshtaFormUrl' => admin_url(
+                    'admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order->get_id() . '&carrier=nova_poshta'
+                ),
+                'ukrposhtaFormUrl' => admin_url(
+                    'admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order->get_id() . '&carrier=ukrposhta'
+                ),
+            ]);
+        } else {
+            wp_localize_script('wcus_ttn_form_js', 'wcus_ttn_form_state', $store->collect());
+            echo View::render('ttn/ttn');
+        }
     }
 
     public function orderListHtml(): void

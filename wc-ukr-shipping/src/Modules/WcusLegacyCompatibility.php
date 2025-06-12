@@ -143,7 +143,7 @@ class WcusLegacyCompatibility implements ModuleInterface
             return new WP_REST_Response([
                 'success' => false,
                 'error' => 'Bad request format',
-            ]);
+            ], 400);
         }
 
         $json = json_decode($request->get_body() ?? '', true);
@@ -151,16 +151,16 @@ class WcusLegacyCompatibility implements ModuleInterface
             return new WP_REST_Response([
                 'success' => false,
                 'error' => 'Bad request format',
-            ]);
+            ], 400);
         }
 
         // Compare signatures
-        $signature = hash('sha256', $secret . base64_encode(json_encode($json, JSON_UNESCAPED_UNICODE)));
+        $signature = hash('sha256', $secret . base64_encode(json_encode($json, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)));
         if ($signature !== $requestSignature) {
             return new WP_REST_Response([
                 'success' => false,
                 'error' => 'Request not valid',
-            ]);
+            ], 403);
         }
 
         $label = DB::table(DB::prefixedTable('wc_ukr_shipping_labels'))
@@ -210,7 +210,7 @@ class WcusLegacyCompatibility implements ModuleInterface
             return new WP_REST_Response([
                 'success' => false,
                 'error' => 'Internal server error',
-            ]);
+            ], 500);
         }
 
         return new WP_REST_Response([

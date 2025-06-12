@@ -115,8 +115,9 @@ class TTNStore
             'order_id' => $this->order->get_id(),
             'payer_type' => $payerType,
             'payment_method' => $paymentMethod,
-            'global_params' => 1,
+            'global_params' => apply_filters('wcus_ttn_form_global_params', false, $this->order),
             'weight' => $this->calculateWeight(),
+            'volumetric_weight' => apply_filters('wcus_ttn_form_volumetric_weight', '', $this->order),
             'date' => $date->format('Y-m-d'),
             'description' => apply_filters('wcus_ttn_form_description', $description, $this->order),
             'barcode' => apply_filters('wcus_ttn_form_barcode', $this->order->get_id(), $this->order),
@@ -278,7 +279,7 @@ class TTNStore
          * @since 1.16.6
          */
         $cost = apply_filters('wcus_ttn_form_cod_cost', $this->getShipmentCost(), $this->order);
-        $this->data['ttn']['backward_delivery_cost'] = ceil($cost);
+        $this->data['ttn']['backward_delivery_cost'] = $cost;
     }
 
     private function collectPaymentControl()
@@ -295,7 +296,7 @@ class TTNStore
          * @since 1.16.6
          */
         $cost = apply_filters('wcus_ttn_form_payment_control_cost', $this->getShipmentCost(), $this->order);
-        $this->data['ttn']['payment_control_cost'] = ceil($cost);
+        $this->data['ttn']['payment_control_cost'] = $cost;
     }
 
     private function checkPoshtomatDelivery(string $warehouseRef): void

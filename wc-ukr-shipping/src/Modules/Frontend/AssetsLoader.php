@@ -126,6 +126,18 @@ class AssetsLoader implements ModuleInterface
             return $i18n;
         }, 10, 2);
 
+        // Get active shipping methods
+        $zones = \WC_Shipping_Zones::get_zones();
+        $activeShippingMethods = [];
+        foreach ($zones as $zone) {
+            foreach ($zone['shipping_methods'] ?? [] as $method) {
+                if ($method->is_enabled()) {
+                    $activeShippingMethods[] = $method->id;
+                }
+            }
+        }
+        $globals['shippingMethods'] = array_unique($activeShippingMethods);
+
         wp_localize_script('wcus_checkout_js', 'wc_ukr_shipping_globals', $globals);
     }
 

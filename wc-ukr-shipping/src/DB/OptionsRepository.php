@@ -47,6 +47,7 @@ class OptionsRepository
             'wcus_ukrposhta_dd_provider' => 'none',
             'wc_ukr_shipping_np_address_api_ui' => 1,
             'wcus_sp_auto_tracking' => 1,
+            'wcus_ukrposhta_ttn_default_payer' => 'recipient',
         ];
 
         return get_option($key, isset($defaults[$key]) ? $defaults[$key] : null);

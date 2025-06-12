@@ -32,9 +32,8 @@ final class Dependencies
         return [
             // Contracts
             CustomerStorageInterface::class => function ($container) {
-                $customerId = wc()->customer->get_id();
-
-                return $container->make($customerId ? LoggedCustomerStorage::class : SessionCustomerStorage::class);
+                $customer = wc()->customer;
+                return $container->make($customer ? LoggedCustomerStorage::class : SessionCustomerStorage::class);
             },
             NovaPoshtaAddressProviderInterface::class => function ($container) {
                 return $container->make(CloudApi::class);

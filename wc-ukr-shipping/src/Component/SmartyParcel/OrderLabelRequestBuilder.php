@@ -4,16 +4,24 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Component\SmartyParcel;
 
+use kirillbdev\WCUkrShipping\Component\Shipping\NovaPoshtaPUDOProvider;
+use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
+use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
 use kirillbdev\WCUkrShipping\Factories\ProductFactory;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
 
 class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
 {
     private \WC_Order $order;
+    private PUDOProviderInterface $pudoProvider;
+    private ProductDimensionService $productDimensionService;
 
     public function __construct(\WC_Order $order)
     {
         $this->order = $order;
+        $this->pudoProvider = wcus_container()->make(NovaPoshtaPUDOProvider::class);
+        $this->productDimensionService = wcus_container()->make(ProductDimensionService::class);
     }
 
     public function build(): array
@@ -111,23 +119,37 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
             $weight += $product->getWeight() * $product->getQuantity();
         }
         $weight = max($weight, (float)$defaultWeight);
+        $description = wc_ukr_shipping_get_option('wcus_ttn_description') ?: 'Order #' . $order->get_id();
 
         // Parcels
         $labelRequest['shipment']['parcels'] = [
             [
-                'insurance_cost' => $order->get_subtotal(),
+                'insurance_cost' => apply_filters('wcus_ttn_form_cost', $this->getOrderCost($order), $order),
                 'weight' => [
                     'value' => $weight,
                     'unit' => 'kg',
                 ],
-                'description' => apply_filters(
-                    'wcus_ttn_form_description',
-                    'Order #' . $this->order->get_id(),
-                    $this->order
-                ),
+                'description' => apply_filters('wcus_ttn_form_description', $description, $order),
             ]
         ];
-        $labelRequest['shipment']['external_order_id'] =  $order->get_order_number();
+
+        $warehouse = $this->pudoProvider->searchPUDOById($orderShipping->get_meta('wcus_warehouse_ref'));
+        if ($warehouse !== null && $warehouse->type === PUDO::PUDO_TYPE_LOCKER) {
+            $dimensions = apply_filters(
+                'wcus_ttn_form_dimensions',
+                $this->productDimensionService->getTotalDimensions($orderProducts),
+                $this->order
+            );
+
+            $labelRequest['shipment']['parcels'][0]['dimensions'] = [
+                'width' => $dimensions['width'],
+                'height' => $dimensions['height'],
+                'length' => $dimensions['length'],
+                'unit' => 'cm',
+            ];
+        }
+
+        $labelRequest['shipment']['external_order_id'] = apply_filters('wcus_ttn_form_barcode', (string)$order->get_id(), $order);
 
         $needPaymentControl = (int)wc_ukr_shipping_get_option('wcus_ttn_pay_control_default') === 1;
         $codPaymentId = wc_ukr_shipping_get_option('wcus_cod_payment_id');
@@ -136,7 +158,7 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
                 $labelRequest['service_options']['cod'] = [
                     'payment_method' => 'cash_equivalent',
                     'value' => [
-                        'amount' => $this->getOrderCost($order),
+                        'amount' => apply_filters('wcus_ttn_form_cod_cost', $this->getOrderCost($order), $order),
                         'currency' => 'UAH',
                     ],
                 ];
@@ -144,7 +166,7 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
                 $labelRequest['service_options']['cod'] = [
                     'payment_method' => 'cash',
                     'value' => [
-                        'amount' => $this->getOrderCost($order),
+                        'amount' => apply_filters('wcus_ttn_form_payment_control_cost', $this->getOrderCost($order), $order),
                         'currency' => 'UAH',
                     ],
                     'options' => [

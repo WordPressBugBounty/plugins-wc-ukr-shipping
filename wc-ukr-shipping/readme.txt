@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, укрпошта, shipping, woocommerce
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 1.15.4
+Stable tag: 1.15.5
 
 Connect Nova Poshta and Ukrposhta delivery services to your WooCommerce store. Create TTN, track orders and calculate rates in one place.
 
@@ -79,6 +79,17 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.15.5 / (12.06.2025) =
+* [Nova Poshta] Added ability to create label with global params.
+* [Nova Poshta] Added usage of default description option on bulk label creation.
+* [Nova Poshta] Fixed label creation for poshtomats on bulk label creation.
+* [Ukrposhta] Fixed spread operator backward compatibility with PHP 7.4.
+* [Ukrposhta] Added new option - default payer.
+* Added ability to create labels for any orders.
+* Fixed critical error in some cases on Order list and Edit checkout pages.
+* [Tracking] Improved signature comparing.
+* Checkout improvements.
 
 = Version 1.15.4 / (02.06.2025) =
 * [Ukrposhta] Ability to create labels from private entrepreneur.

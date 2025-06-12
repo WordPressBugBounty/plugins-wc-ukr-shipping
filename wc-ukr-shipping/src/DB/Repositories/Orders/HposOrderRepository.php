@@ -11,6 +11,7 @@ class HposOrderRepository implements OrderRepositoryInterface
         return DB::table(DB::prefixedTable('wc_orders') . ' as o')
             ->leftJoin(DB::prefixedTable('wc_ukr_shipping_labels') . ' as l', 'o.id = l.order_id')
             ->where('o.status', '!=', 'trash')
+            ->where('o.type', '=', 'shop_order')
             ->orderBy('o.id', 'desc')
             ->skip($offset)
             ->limit($limit)
@@ -66,6 +67,7 @@ class HposOrderRepository implements OrderRepositoryInterface
     {
         $pageCount = DB::table(DB::prefixedTable('wc_orders'))
             ->where('status', '!=', 'trash')
+            ->where('o.type', '=', 'shop_order')
             ->count();
 
         return ceil($pageCount / $limit);

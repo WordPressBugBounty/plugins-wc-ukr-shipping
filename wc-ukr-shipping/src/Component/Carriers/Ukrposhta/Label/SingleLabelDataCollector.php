@@ -54,7 +54,7 @@ class SingleLabelDataCollector
         $shippingMethod = new UkrPoshtaShipping((int)$this->orderShipping->get_instance_id());
         $this->data['common']['service_type'] = 'ukrposhta_' . strtolower($shippingMethod->get_option('service_type'));
 
-        $this->data['common']['paid_by'] = 'recipient'; // hardcoded yet
+        $this->data['common']['paid_by'] = wc_ukr_shipping_get_option('wcus_ukrposhta_ttn_default_payer');
         $description = wc_ukr_shipping_get_option('wcus_ttn_description') ?: 'Order #' . $this->order->get_id();
         $this->data['common']['description'] = apply_filters('wcus_ttn_form_description', $description, $this->order);
         $this->data['common']['external_order_id'] = $this->order->get_id();
@@ -101,12 +101,14 @@ class SingleLabelDataCollector
             'iban' => '',
         ]);
 
-        $this->data['sender'] = [
-            ...$sender,
-            'carrier_account_id' => $defaultAcc,
-            'city' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_city'),
-            'warehouse' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_warehouse'),
-        ];
+        $this->data['sender'] = array_merge(
+            $sender,
+            [
+                'carrier_account_id' => $defaultAcc,
+                'city' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_city'),
+                'warehouse' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_warehouse'),
+            ]
+        );
     }
 
     private function collectRecipient(): void
@@ -127,12 +129,20 @@ class SingleLabelDataCollector
                 : $this->order->get_billing_phone(),
             'city' => [
                 'value' => $shippingMethod->get_meta('wcus_ukrposhta_city_id'),
-                'name' => $shippingMethod->get_meta('wcus_ukrposhta_city_name') ?: '-',
+                'name' => $shippingMethod->get_meta('wcus_ukrposhta_city_name') ?: '',
             ],
             'warehouse' => [
                 'value' => $shippingMethod->get_meta('wcus_ukrposhta_warehouse_id'),
-                'name' => $shippingMethod->get_meta('wcus_ukrposhta_warehouse_name') ?: '-',
+                'name' => $shippingMethod->get_meta('wcus_ukrposhta_warehouse_name') ?: '',
             ],
+            'custom_address' => !in_array($shippingMethod->get_method_id(), [WC_UKR_SHIPPING_NP_SHIPPING_NAME, 'wcus_ukrposhta_shipping'])
+                ? sprintf(
+                    '%s<br/>%s<br/>%s',
+                    $this->order->get_billing_state(),
+                    $this->order->get_billing_city(),
+                    $this->order->get_billing_address_1()
+                )
+                : '',
         ];
     }
 

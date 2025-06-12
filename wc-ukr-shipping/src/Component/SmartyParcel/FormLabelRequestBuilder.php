@@ -75,21 +75,36 @@ class FormLabelRequestBuilder implements LabelRequestBuilderInterface
 
         // Parcels
         $parcels = [];
-        foreach ($request->get('ttn')['seats'] as $index => $seat) {
-            $parcels[] = [
-                'insurance_cost' => $index === 0 ? $request->get('ttn')['cost'] : 0,
+        if ($request->get('ttn')['global_params'] === 'true') {
+            $parcel = [
+                'insurance_cost' => $request->get('ttn')['cost'],
                 'weight' => [
-                    'value' => (float)$seat['weight'],
+                    'value' => (float)$request->get('ttn')['weight'],
                     'unit' => 'kg',
                 ],
-                'dimensions' => [
-                    'width' => (int)$seat['width'],
-                    'height' => (int)$seat['height'],
-                    'length' => (int)$seat['length'],
-                    'unit' => 'cm',
-                ],
-                'description' => $index === 0 ? $request->get('ttn')['description'] : '-',
+                'description' => $request->get('ttn')['description'],
             ];
+            if ((float)$request->get('ttn')['volumetric_weight'] > 0) {
+                $parcel['volumetric_weight'] = (float)$request->get('ttn')['volumetric_weight'];
+            }
+            $parcels[] = $parcel;
+        } else {
+            foreach ($request->get('ttn')['seats'] as $index => $seat) {
+                $parcels[] = [
+                    'insurance_cost' => $index === 0 ? $request->get('ttn')['cost'] : 0,
+                    'weight' => [
+                        'value' => (float)$seat['weight'],
+                        'unit' => 'kg',
+                    ],
+                    'dimensions' => [
+                        'width' => (int)$seat['width'],
+                        'height' => (int)$seat['height'],
+                        'length' => (int)$seat['length'],
+                        'unit' => 'cm',
+                    ],
+                    'description' => $index === 0 ? $request->get('ttn')['description'] : '-',
+                ];
+            }
         }
         $labelRequest['shipment']['parcels'] = $parcels;
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2025-05-24T11:19:08+00:00\n"
+"POT-Creation-Date: 2025-06-12T22:28:36+03:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,8 +24,9 @@ msgid "https://kirillbdev.pro/wc-ukr-shipping-pro/"
 msgstr ""
 
 #. Description of the plugin
-msgid "Integration of Nova Poshta delivery service for WooCommerce"
-msgstr "Интеграция службы доставки Новая Почта для WooCommerce"
+msgid ""
+"Integration of Nova Poshta and Ukrposhta delivery services for WooCommerce"
+msgstr "Интеграция службы доставки Новая Почта и Укрпочта для WooCommerce"
 
 #. Author of the plugin
 msgid "kirillbdev"
@@ -80,112 +81,112 @@ msgstr "Не удалось применить миграции"
 msgid "Settings saved successfully!"
 msgstr "Настройки успешно сохранены!"
 
-#: src/Modules/Backend/Jobs.php:41
+#: src/Modules/Backend/Jobs.php:38
 msgid "Every minute"
 msgstr ""
 
 # Options page
-#: src/Modules/Backend/OptionsPage.php:94 views/settings_general.php:19
+#: src/Modules/Backend/OptionsPage.php:95 views/settings_general.php:19
 #: views/settings_nova_poshta.php:19 views/settings_ukrposhta.php:19
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/Modules/Backend/OptionsPage.php:105
-#: src/Modules/Backend/OptionsPage.php:106 views/smarty_parcel.php:13
+#: src/Modules/Backend/OptionsPage.php:106
+#: src/Modules/Backend/OptionsPage.php:107 views/smarty_parcel.php:13
 msgid "Smarty Parcel"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:114
 #: src/Modules/Backend/OptionsPage.php:115
+#: src/Modules/Backend/OptionsPage.php:116
 msgid "Create TTN"
 msgstr "Создать ТТН"
 
-#: src/Modules/Backend/OptionsPage.php:123
-#: src/Modules/Backend/OptionsPage.php:124 views/orders.php:4
+#: src/Modules/Backend/OptionsPage.php:124
+#: src/Modules/Backend/OptionsPage.php:125 views/orders.php:4
 msgid "Orders"
 msgstr "Заказы"
 
-#: src/Modules/Backend/OptionsPage.php:132
 #: src/Modules/Backend/OptionsPage.php:133
+#: src/Modules/Backend/OptionsPage.php:134
 msgid "Automation"
 msgstr "Автоматизация"
 
-#: src/Modules/Backend/OptionsPage.php:144
-#: src/Modules/Backend/OptionsPage.php:145 src/Modules/Backend/Orders.php:180
+#: src/Modules/Backend/OptionsPage.php:145
+#: src/Modules/Backend/OptionsPage.php:146 src/Modules/Backend/Orders.php:180
 msgid "Create"
 msgstr "Создать"
 
-#: src/Modules/Backend/OptionsPage.php:153
 #: src/Modules/Backend/OptionsPage.php:154
+#: src/Modules/Backend/OptionsPage.php:155
 msgid "Edit"
 msgstr "Редактировать"
 
-#: src/Modules/Backend/OptionsPage.php:162
-#: src/Modules/Backend/OptionsPage.php:163 views/tools.php:14
+#: src/Modules/Backend/OptionsPage.php:163
+#: src/Modules/Backend/OptionsPage.php:164 views/tools.php:14
 msgid "Tools"
 msgstr "Инструменты"
 
-#: src/Modules/Backend/OptionsPage.php:171
 #: src/Modules/Backend/OptionsPage.php:172
+#: src/Modules/Backend/OptionsPage.php:173
 msgid "Upgrade pricing plan"
 msgstr "Сменить тарифный план"
 
 # Warehouse loader
-#: src/Modules/Backend/OptionsPage.php:188
+#: src/Modules/Backend/OptionsPage.php:189
 msgid "Warehouses data of Nova Poshta"
 msgstr "Данные отделений Новой Почты"
 
-#: src/Modules/Backend/OptionsPage.php:189
+#: src/Modules/Backend/OptionsPage.php:190
 msgid "Last update date:"
 msgstr "Дата последнего обновления:"
 
-#: src/Modules/Backend/OptionsPage.php:190
+#: src/Modules/Backend/OptionsPage.php:191
 msgid "Status:"
 msgstr "Статус:"
 
-#: src/Modules/Backend/OptionsPage.php:191
+#: src/Modules/Backend/OptionsPage.php:192
 msgid "Not completed"
 msgstr "Не завершено"
 
-#: src/Modules/Backend/OptionsPage.php:192
+#: src/Modules/Backend/OptionsPage.php:193
 msgid "Completed"
 msgstr "Завершено"
 
-#: src/Modules/Backend/OptionsPage.php:193
+#: src/Modules/Backend/OptionsPage.php:194
 msgid "Unknown"
 msgstr "Неизвестный"
 
-#: src/Modules/Backend/OptionsPage.php:194
+#: src/Modules/Backend/OptionsPage.php:195
 msgid "Update warehouses"
 msgstr "Обновить отделения"
 
-#: src/Modules/Backend/OptionsPage.php:195
+#: src/Modules/Backend/OptionsPage.php:196
 msgid "Continue update"
 msgstr "Продолжить обновление"
 
-#: src/Modules/Backend/OptionsPage.php:196
+#: src/Modules/Backend/OptionsPage.php:197
 msgid "Load areas..."
 msgstr "Загрузка областей..."
 
-#: src/Modules/Backend/OptionsPage.php:197
+#: src/Modules/Backend/OptionsPage.php:198
 msgid "Load cities..."
 msgstr "Загрузка городов..."
 
-#: src/Modules/Backend/OptionsPage.php:198
+#: src/Modules/Backend/OptionsPage.php:199
 msgid "Load warehouses..."
 msgstr "Загрузка отделений..."
 
-#: src/Modules/Backend/OptionsPage.php:199
+#: src/Modules/Backend/OptionsPage.php:200
 msgid "Warehouses db updated successfully"
 msgstr "Данные отделений успешно обновлены"
 
-#: src/Modules/Backend/OptionsPage.php:202
+#: src/Modules/Backend/OptionsPage.php:203
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 "Вы уверены, что хотите перезапустить миграции? Это действие не может быть "
 "отменено."
 
-#: src/Modules/Backend/OptionsPage.php:289
+#: src/Modules/Backend/OptionsPage.php:316
 msgid "Add rule"
 msgstr "Добавить правило"
 
@@ -291,28 +292,27 @@ msgstr "Нужна адресная доставка"
 msgid "Rule constructor"
 msgstr "Конструктор правил"
 
-#: views/automation.php:18 views/partial/pro_promotion.php:20
-#: views/ttn_forbidden.php:16
-msgid "Documentation"
-msgstr "Документация"
-
-#: views/automation.php:21 views/settings_general.php:23
+#: views/automation.php:17 views/settings_general.php:23
 #: views/settings_nova_poshta.php:23 views/settings_ukrposhta.php:23
 #: views/tools.php:17
 msgid "Save"
 msgstr "Сохранить"
 
-#: views/automation.php:30
+#: views/automation.php:26
 msgid "Name"
 msgstr "Название"
 
-#: views/automation.php:36
+#: views/automation.php:32
 msgid "Active"
 msgstr "Активный"
 
 #: views/partial/pro_promotion.php:12
 msgid "Need help?"
 msgstr "Нужна помощь?"
+
+#: views/partial/pro_promotion.php:20
+msgid "Documentation"
+msgstr "Документация"
 
 #: views/partial/pro_promotion.php:27
 msgid "Open support chat"
@@ -397,7 +397,8 @@ msgstr "Сохранять последний адрес пользовател�
 
 #: views/partial/settings_general/parcels.php:13
 #: views/partial/settings_nova_poshta/parcels.php:13
-#: views/partial/settings_ukrposhta/parcels.php:13 views/ttn_forbidden.php:21
+#: views/partial/settings_ukrposhta/parcels.php:13
+#: views/ttn/ttn_forbidden.php:15
 msgid ""
 "The plugin must be connected to the Smarty Parcel service to use the "
 "functionality of creating a TTN"
@@ -467,14 +468,17 @@ msgid "Default carrier account"
 msgstr "Аккаунт перевозчика по-умолчанию"
 
 #: views/partial/settings_nova_poshta/parcels.php:34
+#: views/partial/settings_ukrposhta/parcels.php:38
 msgid "Delivery payer"
 msgstr "Плательщик за доставку"
 
 #: views/partial/settings_nova_poshta/parcels.php:38
+#: views/partial/settings_ukrposhta/parcels.php:40
 msgid "Sender"
 msgstr "Отправитель"
 
 #: views/partial/settings_nova_poshta/parcels.php:39
+#: views/partial/settings_ukrposhta/parcels.php:41
 msgid "Recipient"
 msgstr "Получатель"
 
@@ -540,22 +544,6 @@ msgstr "Текст пустого результата поиска"
 msgid "General settings"
 msgstr "Общие настройки"
 
-#: views/partial/settings_ukrposhta/parcels.php:39
-msgid "Sender first name"
-msgstr "Имя отправителя"
-
-#: views/partial/settings_ukrposhta/parcels.php:45
-msgid "Sender last name"
-msgstr "Фамилия отправителя"
-
-#: views/partial/settings_ukrposhta/parcels.php:51
-msgid "Sender middle name"
-msgstr "Отчество отправителя"
-
-#: views/partial/settings_ukrposhta/parcels.php:57
-msgid "Sender phone"
-msgstr "Телефон отправителя"
-
 #: views/settings_general.php:31
 msgid "General"
 msgstr "Общие"
@@ -605,11 +593,23 @@ msgstr ""
 "Если вы ранее пользовались нашей услугой отслеживания, включите эту опцию, "
 "чтобы получать статусы для ранее созданных накладных."
 
-#: views/ttn_forbidden.php:12
+#: views/ttn/ttn_custom.php:12 views/ttn/ttn_forbidden.php:12
 msgid "New TTN"
 msgstr "Новая накладная"
 
-#: views/ttn_forbidden.php:26
+#: views/ttn/ttn_custom.php:16
+msgid "The order has non-standard shipping method"
+msgstr "Этот заказ содержит нестандартный способ доставки"
+
+#: views/ttn/ttn_custom.php:22
+msgid "Create for Nova Poshta"
+msgstr "Создать для Новой Почты"
+
+#: views/ttn/ttn_custom.php:27
+msgid "Create for Ukrposhta"
+msgstr "Создать для Укрпочты"
+
+#: views/ttn/ttn_forbidden.php:20
 msgid "Read more"
 msgstr "Подробнее"
 
@@ -656,6 +656,18 @@ msgstr "год"
 #: views/upgrade_plan.php:59
 msgid "Switch to"
 msgstr "Сменить на"
+
+#~ msgid "Sender first name"
+#~ msgstr "Имя отправителя"
+
+#~ msgid "Sender last name"
+#~ msgstr "Фамилия отправителя"
+
+#~ msgid "Sender middle name"
+#~ msgstr "Отчество отправителя"
+
+#~ msgid "Sender phone"
+#~ msgstr "Телефон отправителя"
 
 #~ msgid "Invoice creation is unavailable for this order"
 #~ msgstr "Создание накладной недоступно для этого заказа"
@@ -761,9 +773,6 @@ msgstr "Сменить на"
 # End warehouse loader
 #~ msgid "Shipping cost"
 #~ msgstr "Стоимость доставки"
-
-#~ msgid "API key for Nova Poshta"
-#~ msgstr "API ключ Новой Почты"
 
 #~ msgid "Become PRO"
 #~ msgstr "Стать PRO клиентом"

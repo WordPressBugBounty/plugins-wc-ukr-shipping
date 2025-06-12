@@ -32,4 +32,16 @@
 
     <div id="wcus-ukrposhta-sender"></div>
 
+    <?php
+        HtmlHelper::selectField(
+            'wcus[ukrposhta_ttn_default_payer]',
+             __('Delivery payer', 'wc-ukr-shipping-i18n'),
+            [
+                'sender' => __('Sender', 'wc-ukr-shipping-i18n'),
+                'recipient' => __('Recipient', 'wc-ukr-shipping-i18n'),
+            ],
+            wc_ukr_shipping_get_option('wcus_ukrposhta_ttn_default_payer')
+        );
+    ?>
+
 </div>
