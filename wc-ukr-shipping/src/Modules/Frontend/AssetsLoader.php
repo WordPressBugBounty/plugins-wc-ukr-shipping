@@ -136,7 +136,7 @@ class AssetsLoader implements ModuleInterface
                 }
             }
         }
-        $globals['shippingMethods'] = array_unique($activeShippingMethods);
+        $globals['shippingMethods'] = array_values(array_unique($activeShippingMethods));
 
         wp_localize_script('wcus_checkout_js', 'wc_ukr_shipping_globals', $globals);
     }
