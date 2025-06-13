@@ -37,7 +37,9 @@ class AssetsLoader implements ModuleInterface
 
         wp_enqueue_style(
             'wc_ukr_shipping_css',
-            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/css/style.min.css'
+            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/css/style.min.css',
+            [],
+            filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/css/style.min.css')
         );
 
         wp_enqueue_script(
