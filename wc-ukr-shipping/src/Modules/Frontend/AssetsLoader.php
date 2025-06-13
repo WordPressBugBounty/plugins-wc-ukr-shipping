@@ -123,22 +123,10 @@ class AssetsLoader implements ModuleInterface
             apply_filters('wcus_checkout_i18n', $globals['i18n'], $translator->getCurrentLanguage())
         );
 
-        add_filter('wcus_checkout_i18n', function ($i18n, $lang) {
-            // Ваша логіка
-            return $i18n;
-        }, 10, 2);
-
-        // Get active shipping methods
-        $zones = \WC_Shipping_Zones::get_zones();
-        $activeShippingMethods = [];
-        foreach ($zones as $zone) {
-            foreach ($zone['shipping_methods'] ?? [] as $method) {
-                if ($method->is_enabled()) {
-                    $activeShippingMethods[] = $method->id;
-                }
-            }
-        }
-        $globals['shippingMethods'] = array_values(array_unique($activeShippingMethods));
+        $globals['shippingMethods'] = [
+            WC_UKR_SHIPPING_NP_SHIPPING_NAME,
+            'wcus_ukrposhta_shipping'
+        ];
 
         wp_localize_script('wcus_checkout_js', 'wc_ukr_shipping_globals', $globals);
     }
