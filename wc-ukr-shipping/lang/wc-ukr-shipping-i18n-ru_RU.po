@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2025-06-12T22:28:36+03:00\n"
+"POT-Creation-Date: 2025-06-18T20:19:59+03:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -199,80 +199,80 @@ msgstr "Накладная"
 msgid "Delete"
 msgstr "Удалить"
 
-#: src/Modules/Frontend/AssetsLoader.php:97
+#: src/Modules/Frontend/AssetsLoader.php:100
 #: src/Services/TranslateService.php:49
 msgid "Select shipping address"
 msgstr "Укажите адрес доставки"
 
-#: src/Modules/Frontend/AssetsLoader.php:98
+#: src/Modules/Frontend/AssetsLoader.php:101
 msgid "to warehouse"
 msgstr "на отделение"
 
-#: src/Modules/Frontend/AssetsLoader.php:99
+#: src/Modules/Frontend/AssetsLoader.php:102
 msgid "to doors"
 msgstr "до дверей"
 
-#: src/Modules/Frontend/AssetsLoader.php:100
+#: src/Modules/Frontend/AssetsLoader.php:103
 msgid "to the poshtomat"
 msgstr "на почтомат"
 
-#: src/Modules/Frontend/AssetsLoader.php:102
+#: src/Modules/Frontend/AssetsLoader.php:105
 #: src/Services/TranslateService.php:51
 msgid "Select city"
 msgstr "Выберите город"
 
-#: src/Modules/Frontend/AssetsLoader.php:103
+#: src/Modules/Frontend/AssetsLoader.php:106
 #: src/Services/TranslateService.php:52
 msgid "Select warehouse"
 msgstr "Выберите отделение"
 
-#: src/Modules/Frontend/AssetsLoader.php:104
+#: src/Modules/Frontend/AssetsLoader.php:107
 msgid "Select poshtomat"
 msgstr "Выберите почтомат"
 
-#: src/Modules/Frontend/AssetsLoader.php:105
+#: src/Modules/Frontend/AssetsLoader.php:108
 #: src/Services/TranslateService.php:54
 msgid "Enter address"
 msgstr "Введите адрес"
 
-#: src/Modules/Frontend/AssetsLoader.php:106
+#: src/Modules/Frontend/AssetsLoader.php:109
 msgid "Enter value for search"
 msgstr "Введите значение для поиска"
 
-#: src/Modules/Frontend/AssetsLoader.php:107
+#: src/Modules/Frontend/AssetsLoader.php:110
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: src/Modules/Frontend/AssetsLoader.php:108
+#: src/Modules/Frontend/AssetsLoader.php:111
 msgid "Load more"
 msgstr "Загрузить еще"
 
-#: src/Modules/Frontend/AssetsLoader.php:109
+#: src/Modules/Frontend/AssetsLoader.php:112
 #: src/Services/TranslateService.php:55
 msgid "Nothing found"
 msgstr "Ничего не найдено"
 
-#: src/Modules/Frontend/AssetsLoader.php:110
+#: src/Modules/Frontend/AssetsLoader.php:113
 msgid "Enter more chars"
 msgstr "Введите больше символов"
 
-#: src/Modules/Frontend/AssetsLoader.php:111
+#: src/Modules/Frontend/AssetsLoader.php:114
 msgid "Settlement"
 msgstr "Населенный пункт"
 
-#: src/Modules/Frontend/AssetsLoader.php:112
+#: src/Modules/Frontend/AssetsLoader.php:115
 msgid "Street"
 msgstr "Улица"
 
-#: src/Modules/Frontend/AssetsLoader.php:113
+#: src/Modules/Frontend/AssetsLoader.php:116
 msgid "House"
 msgstr "Дом"
 
-#: src/Modules/Frontend/AssetsLoader.php:114
+#: src/Modules/Frontend/AssetsLoader.php:117
 msgid "Flat"
 msgstr "Квартира"
 
-#: src/Modules/Frontend/AssetsLoader.php:115
+#: src/Modules/Frontend/AssetsLoader.php:118
 msgid "Something went wrong"
 msgstr "Что-то пошло не так"
 
@@ -438,6 +438,10 @@ msgstr "Автоматически добавлять посылки в трек
 msgid "COD method"
 msgstr "Метод наложенного платежа"
 
+#: views/partial/settings_general/shipping.php:21
+msgid "Inject additional shipping fields"
+msgstr "Внедрить дополнительные поля доставки"
+
 #: views/partial/settings_nova_poshta/checkout.php:12
 msgid "Display language of cities and departments"
 msgstr "Язык отображения городов и отделений"
@@ -474,11 +478,13 @@ msgstr "Плательщик за доставку"
 
 #: views/partial/settings_nova_poshta/parcels.php:38
 #: views/partial/settings_ukrposhta/parcels.php:40
+#: views/partial/settings_ukrposhta/parcels.php:73
 msgid "Sender"
 msgstr "Отправитель"
 
 #: views/partial/settings_nova_poshta/parcels.php:39
 #: views/partial/settings_ukrposhta/parcels.php:41
+#: views/partial/settings_ukrposhta/parcels.php:74
 msgid "Recipient"
 msgstr "Получатель"
 
@@ -543,6 +549,34 @@ msgstr "Текст пустого результата поиска"
 #: views/partial/settings_top.php:12
 msgid "General settings"
 msgstr "Общие настройки"
+
+#: views/partial/settings_ukrposhta/parcels.php:48
+msgid "On fail receive"
+msgstr "В случае невручения"
+
+#: views/partial/settings_ukrposhta/parcels.php:50
+msgid "Return"
+msgstr "Вернуть отправителю"
+
+#: views/partial/settings_ukrposhta/parcels.php:51
+msgid "Return after 7 days"
+msgstr "Вернуть после 7 дней хранения"
+
+#: views/partial/settings_ukrposhta/parcels.php:52
+msgid "Process as refusal"
+msgstr "Уничтожить отправление"
+
+#: views/partial/settings_ukrposhta/parcels.php:59
+msgid "Check on delivery"
+msgstr "Осмотр при вручении"
+
+#: views/partial/settings_ukrposhta/parcels.php:65
+msgid "SMS notification"
+msgstr "SMS сообщение о прибытии посылки"
+
+#: views/partial/settings_ukrposhta/parcels.php:71
+msgid "COD payer"
+msgstr "Плательщик за услугу обратной доставки"
 
 #: views/settings_general.php:31
 msgid "General"
@@ -696,9 +730,6 @@ msgstr "Сменить на"
 
 #~ msgid "Selecting a delivery department"
 #~ msgstr "Выбор отделения доставки"
-
-#~ msgid "Address delivery"
-#~ msgstr "Адресная доставка"
 
 #~ msgid "Fixed cost calculation"
 #~ msgstr "Фиксированный расчет стоимости"

@@ -33,6 +33,7 @@ class Checkout implements ModuleInterface
         add_filter('woocommerce_cart_totals_order_total_html', [$this, 'wrapOrderTotal']);
         add_action( 'woocommerce_after_shipping_rate', [ $this, 'injectShippingName' ], 10, 2);
         add_action('wcus_state_init', [ $this, 'initCheckoutState' ]);
+        add_filter('woocommerce_checkout_fields', [ $this, 'injectAdditionalFields' ]);
     }
 
     public function injectBillingFields()
@@ -71,6 +72,43 @@ class Checkout implements ModuleInterface
         if (wc_ukr_shipping_is_checkout()) {
             State::add('checkout', CheckoutState::class);
         }
+    }
+
+    public function injectAdditionalFields(array $fields): array
+    {
+        if ((int)wc_ukr_shipping_get_option('wcus_inject_additional_fields') !== 1) {
+            return $fields;
+        }
+
+        $middleName = [
+            'type' => 'text',
+            'label' => __('Middle name', 'wc-ukr-shipping-pro'),
+            'class' => [
+                'form-row-wide'
+            ],
+            'placeholder' => '',
+            'required' => true,
+            'priority' => 21,
+        ];
+
+        $fields['billing']['wcus_billing_middlename'] = $middleName;
+        $fields['shipping']['wcus_shipping_middlename'] = $middleName;
+
+        $fields['shipping']['wcus_shipping_phone'] = [
+            'type' => 'tel',
+            'label' => __('Phone Number', 'woocommerce'),
+            'class' => [
+                'form-row-wide'
+            ],
+            'validate' => [
+                'phone'
+            ],
+            'placeholder' => '',
+            'required' => true,
+            'priority' => 41,
+        ];
+
+        return $fields;
     }
 
     private function injectFields($type)

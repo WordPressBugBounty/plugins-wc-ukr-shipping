@@ -28,7 +28,7 @@ class UkrposhtaPUDOProvider implements PUDOProviderInterface
         }
 
         $response = $this->httpClient->get(
-            self::API_URL . sprintf('/address-classifier-ws/get_city_by_region_id_and_district_id_and_city_ua?city_ua=%s', $query),
+            self::API_URL . sprintf('/address-classifier-ws/get_city_by_region_id_and_district_id_and_city_ua?city_ua=%s', rawurlencode(wp_unslash($query))),
             [
                 'Authorization' => 'Bearer ' . $bearer,
                 'Accept' => 'application/json',

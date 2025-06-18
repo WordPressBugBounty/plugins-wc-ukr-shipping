@@ -6,6 +6,7 @@ use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 use kirillbdev\WCUkrShipping\Traits\StateInitiatorTrait;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
+use WC_Shipping_Zones;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -123,10 +124,31 @@ class AssetsLoader implements ModuleInterface
             apply_filters('wcus_checkout_i18n', $globals['i18n'], $translator->getCurrentLanguage())
         );
 
-        $globals['shippingMethods'] = [
+        $ownShippingMethods = [
             WC_UKR_SHIPPING_NP_SHIPPING_NAME,
-            'wcus_ukrposhta_shipping'
+            'wcus_ukrposhta_shipping',
         ];
+
+        // Get active shipping methods for zones
+        $zones = \WC_Shipping_Zones::get_zones();
+        $activeShippingMethods = [];
+        foreach ($zones as $zone) {
+            foreach ($zone['shipping_methods'] ?? [] as $method) {
+                if (in_array($method->id, $ownShippingMethods) && $method->is_enabled()) {
+                    $activeShippingMethods[] = $method->id;
+                }
+            }
+        }
+
+        // Get active shipping methods for default zone
+        $defaultZone = new \WC_Shipping_Zone(0);
+        foreach ($defaultZone->get_shipping_methods() as $method) {
+            if (in_array($method->id, $ownShippingMethods) && $method->is_enabled()) {
+                $activeShippingMethods[] = $method->id;
+            }
+        }
+
+        $globals['shippingMethods'] = array_values(array_unique($activeShippingMethods));
 
         wp_localize_script('wcus_checkout_js', 'wc_ukr_shipping_globals', $globals);
     }

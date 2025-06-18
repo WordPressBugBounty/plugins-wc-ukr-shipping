@@ -15,6 +15,12 @@
             $payment_methods,
             $cod_payment_id
         );
+
+        HtmlHelper::switcherField(
+            'wcus[inject_additional_fields]',
+            __('Inject additional shipping fields', 'wc-ukr-shipping-i18n'),
+            (int)wc_ukr_shipping_get_option('wcus_inject_additional_fields') === 1
+        );
     ?>
 
 </div>

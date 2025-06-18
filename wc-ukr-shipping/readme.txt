@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, укрпошта, shipping, woocommerce
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 1.15.8
+Stable tag: 1.15.9
 
 Connect Nova Poshta and Ukrposhta delivery services to your WooCommerce store. Create TTN, track orders and calculate rates in one place.
 
@@ -31,6 +31,7 @@ https://www.youtube.com/watch?v=K_NFNQ1qkko
 * Ability to print Nova Poshta labels (A4, marking 85x85, marking 100x100 zebra)
 * Ability to create Ukrposhta TTN (warehouse-warehouse)
 * Ability to print Ukrposhta labels (100x100, 100x100 (A4), 100x100 (A5))
+* Ability to track parcels
 * Support many functions includes COD and Payment control
 * Integration with popular plugins for localization: WPML and Polylang
 * Support latest versions of WordPress and WooCommerce
@@ -79,6 +80,13 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.15.9 / (18.06.2025) =
+* [Ukrposhta] Removed trailing slash when search for some settlements.
+* [Ukrposhta] Added COD payer, added ability to set up default service options.
+* Added option for inject additional fields in checkout.
+* Restored wcus_ttn_form_additional filter.
+* Checked compatibility with latest Wordpress and WooCommerce versions.
 
 = Version 1.15.8 / (13.06.2025) =
 * [Hotfix] Empty zones behavior
@@ -324,27 +332,3 @@ Unfortunately plugin doesn't support WC checkout blocks yet.
 * Добавлена настройка выбора типа переводов, которые будет использовать плагин (из mo файлов или из вкладки "Переводы"). Соответственно, улучшилась интеграция с плагинами переводов типа WPML, Polylang. Если ваш сайт не имеет языковых версий, то значение данной настройки можно оставить без изменений. Если же у вас несколько языковых версий, то установите значение опции в "из mo файлов". Это даст возможность получить переводы для 3-х базовых языков. Также, с помощью соответствующих плагинов (например WPML String Translations), вы сможете изменять данные переводы (домен локализации плагина: wc-ukr-shipping-l10n).
 * Добавлен перевод для пустого результата поиска в полях выбора области / города / отделения (ранее был "No results found").
 * Добавлена автоматическая интеграция языка отделений (русский, украинский) с плагином WPML.
-
-= Version 1.5.2 / (09.01.2020) =
-* Исправлена ошибка, при которой в поле выбора области дублировались все значения.
-* Улучшен алгоритм сортировки результатов при поиске города. Теперь, при вводе в поле поиска, например, строки "Кие", первым в списке городов будет доступен Киев (как наиболее подходящий под запрос), а уже после - все прилегающие пгт и села Киевской области.
-* Также улучшен алгоритм сортировки результатов при поиске отделений. Почти любое отделение теперь можно найти, введя нужную цифру.
-* Данные улучшения также внедрены в Premium версию.
-
-= Version 1.5.1 / (06.01.2020) =
-* Добавлена новая опция на странице настроек "Позиция блока на странице оформления заказа". Опция позволяет задать позицию блока выбора отделения в основной (по-умолчанию) или дополнительной секции. Положение блока в дополнительной секции актуально для тем, в которых поля оформления заказа расположены в две колонки. Таким образом данная опция придаст вашей странице оформления заказа более красивый вид.
-* Проделана мелкая работа над UI страниц настроек.
-* Проделана работа над функционалом, позволяющая более качественно интегрировать данные бесплатной версии плагина с Premium, при переходе на Premium.
-
-= Version 1.5.0 / (04.01.2020) =
-* Исправлена ошибка вызова несуществующей функции.
-* Исправлена ошибка, когда удалялись все данные из базы отделений при деактивации плагина.
-* Удаление ненужного функционала, а также некоторые мелкие исправления кода.
-* Теперь выбор отделения доставки сохраняется за пользователем.
-Для авторизованых клиентов срок хранения выбора - вечность, для гостей - в пределаж жизни сессии WooCommerce.
-* PRO версия доступна для покупки.
-
-= Version 1.4.5 / (19.10.2019) =
-* Исправлена ошибка парсинга js скриптов в браузере Internet Explorer.
-* Пункт настроек в меню админ-панели теперь имеет стандартные стили Wordpress.
-* Информация про адрес доставки теперь также записывается в данные о плательщике (billing_state, billing_city, billing_address_1).

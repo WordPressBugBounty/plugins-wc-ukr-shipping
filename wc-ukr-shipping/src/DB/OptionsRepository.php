@@ -37,6 +37,7 @@ class OptionsRepository
             'wc_ukr_shipping_np_price_type' => 'fixed',
             'wc_ukr_shipping_np_price' => 50,
             'wc_ukr_shipping_np_cargo_type' => 'Cargo',
+            'wcus_inject_additional_fields' => 1,
 
             // Ukrposhta
             'wcus_ukrposhta_service_type' => 'ukrposhta_standard',
@@ -48,6 +49,10 @@ class OptionsRepository
             'wc_ukr_shipping_np_address_api_ui' => 1,
             'wcus_sp_auto_tracking' => 1,
             'wcus_ukrposhta_ttn_default_payer' => 'recipient',
+            'wcus_ukrposhta_on_fail_receive' => 'return',
+            'wcus_ukrposhta_check_on_delivery' => 1,
+            'wcus_ukrposhta_sms_notification' => 0,
+            'wcus_ukrposhta_cod_payer' => 'recipient',
         ];
 
         return get_option($key, isset($defaults[$key]) ? $defaults[$key] : null);

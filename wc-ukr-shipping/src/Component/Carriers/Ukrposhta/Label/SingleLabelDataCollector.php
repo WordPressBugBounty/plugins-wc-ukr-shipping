@@ -113,7 +113,7 @@ class SingleLabelDataCollector
 
     private function collectRecipient(): void
     {
-        $maybeDifferentAddress = (int)$this->order->get_meta('wc_ukr_shipping_np_different_address');
+        $maybeDifferentAddress = (int)$this->order->get_meta('_wcus_ship_to_different_address') === 1;
         $shippingMethod = WCUSHelper::getOrderShippingMethod($this->order);
 
         $this->data['recipient'] = [
@@ -123,7 +123,7 @@ class SingleLabelDataCollector
             'last_name' => $maybeDifferentAddress
                 ? $this->order->get_shipping_last_name()
                 : $this->order->get_billing_last_name(),
-            'middle_name' => $this->order->get_meta('wcus_middlename'),
+            'middle_name' => $this->order->get_meta('wcus_middlename') ?? '',
             'phone' => $maybeDifferentAddress && $this->order->get_meta('wcus_shipping_phone')
                 ? $this->order->get_meta('wcus_shipping_phone')
                 : $this->order->get_billing_phone(),
@@ -149,9 +149,9 @@ class SingleLabelDataCollector
     private function collectAdditionalServices(): void
     {
         $this->data['additional_services'] = [
-            'on_fail_receive' => 'return',
-            'sms_notification' => false,
-            'check_on_delivery' => true,
+            'on_fail_receive' => wc_ukr_shipping_get_option('wcus_ukrposhta_on_fail_receive'),
+            'check_on_delivery' => (int)wc_ukr_shipping_get_option('wcus_ukrposhta_check_on_delivery') === 1,
+            'sms_notification' => (int)wc_ukr_shipping_get_option('wcus_ukrposhta_sms_notification') === 1,
         ];
     }
 
@@ -190,7 +190,7 @@ class SingleLabelDataCollector
         $codPaymentId = wc_ukr_shipping_get_option('wcus_cod_payment_id');
         $this->data['cod'] = [
             'active' => $codPaymentId && $codPaymentId === $this->order->get_payment_method(),
-            'paid_by' => 'recipient',
+            'paid_by' => wc_ukr_shipping_get_option('wcus_ukrposhta_cod_payer'),
             'amount' => $this->getDeclaredPrice(),
         ];
     }

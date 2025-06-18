@@ -30,7 +30,11 @@ class CheckoutOrderHandler implements OrderHandlerInterface
         $isShipToDifferentAddress = $this->isShipToDifferentAddress($data);
         $this->fieldGroup =  $isShipToDifferentAddress ? 'shipping' : 'billing';
 
-        if ( ! $isShipToDifferentAddress) {
+        if ($isShipToDifferentAddress) {
+            $order->set_shipping_phone(sanitize_text_field($data['wcus_shipping_phone'] ?? ''));
+            $order->update_meta_data('wcus_shipping_phone', sanitize_text_field($data['wcus_shipping_phone'] ?? ''));
+            $order->update_meta_data('_wcus_ship_to_different_address', 1);
+        } else {
             $order->set_shipping_first_name($order->get_billing_first_name());
             $order->set_shipping_last_name($order->get_billing_last_name());
         }

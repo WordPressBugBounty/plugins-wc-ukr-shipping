@@ -218,8 +218,8 @@ class TTNStore
 
     private function collectRecipient(): void
     {
-        $maybeDifferentAddress = (int)$this->order->get_meta('wc_ukr_shipping_np_different_address');
-
+        $maybeDifferentAddress = (int)$this->order->get_meta('_wcus_ship_to_different_address') === 1;
+        $data = [];
         $data['firstname'] = $maybeDifferentAddress
             ? $this->order->get_shipping_first_name()
             : $this->order->get_billing_first_name();
@@ -228,7 +228,7 @@ class TTNStore
             ? $this->order->get_shipping_last_name()
             : $this->order->get_billing_last_name();
 
-        $data['middlename'] = $this->order->get_meta('wcus_middlename');
+        $data['middlename'] = $this->order->get_meta('wcus_middlename') ?? '';
 
         $data['phone'] = $this->order->get_billing_phone();
         if ($maybeDifferentAddress && $this->order->get_meta('wcus_shipping_phone')) {

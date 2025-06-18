@@ -151,6 +151,11 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
 
         $labelRequest['shipment']['external_order_id'] = apply_filters('wcus_ttn_form_barcode', (string)$order->get_id(), $order);
 
+        $additional = apply_filters('wcus_ttn_form_additional', '', $order);
+        if (!empty($additional)) {
+            $labelRequest['custom_fields']['additional_information'] = $additional;
+        }
+
         $needPaymentControl = (int)wc_ukr_shipping_get_option('wcus_ttn_pay_control_default') === 1;
         $codPaymentId = wc_ukr_shipping_get_option('wcus_cod_payment_id');
         if ($codPaymentId && $codPaymentId === $this->order->get_payment_method()) {

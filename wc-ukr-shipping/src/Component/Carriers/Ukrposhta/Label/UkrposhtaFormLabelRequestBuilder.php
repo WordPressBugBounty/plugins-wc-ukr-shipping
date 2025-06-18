@@ -110,6 +110,7 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
         if ($request->get('cod')['active'] !== 'false') {
             $labelRequest['service_options']['cod'] = [
                 'payment_method' => 'cash',
+                'paid_by' => $request->get('cod')['paid_by'],
                 'value' => [
                     'amount' => (float)$request->get('cod')['amount'],
                     'currency' => 'UAH',

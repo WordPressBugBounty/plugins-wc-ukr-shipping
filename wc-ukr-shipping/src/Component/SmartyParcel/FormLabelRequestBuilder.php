@@ -111,6 +111,9 @@ class FormLabelRequestBuilder implements LabelRequestBuilderInterface
         if (!empty($request->get('ttn')['barcode'])) {
             $labelRequest['shipment']['external_order_id'] =  $request->get('ttn')['barcode'];
         }
+        if (!empty($request->get('ttn')['additional'])) {
+            $labelRequest['custom_fields']['additional_information'] =  $request->get('ttn')['additional'];
+        }
 
         // Payment Control and COD
         if ($request->get('ttn')['payment_control'] === '1') {

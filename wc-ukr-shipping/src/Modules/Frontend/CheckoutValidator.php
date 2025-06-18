@@ -36,6 +36,19 @@ class CheckoutValidator implements ModuleInterface
                     unset($fields[$type][$type . '_postcode']);
                 }
             }
+
+            $paymentMethod = $_POST['payment_method'] ?? '';
+            if (WCUSHelper::hasChosenShippingMethod('wcus_ukrposhta_shipping') && $paymentMethod === 'cod') {
+                $altType = $this->getTypeToValidate($_POST) === 'billing' ? 'shipping' : 'billing';
+                unset($fields[$altType]["wcus_{$altType}_middlename"]);
+            } else {
+                unset($fields['billing']["wcus_billing_middlename"]);
+                unset($fields['shipping']["wcus_shipping_middlename"]);
+            }
+        } else {
+            unset($fields['billing']["wcus_billing_middlename"]);
+            unset($fields['shipping']["wcus_shipping_middlename"]);
+            unset($fields['shipping']['wcus_shipping_phone']);
         }
 
         return $fields;
@@ -92,5 +105,14 @@ class CheckoutValidator implements ModuleInterface
         }
 
         return null;
+    }
+
+    private function getTypeToValidate(array $data): string
+    {
+        if (isset($data['ship_to_different_address']) && 1 === (int)$data['ship_to_different_address']) {
+            return 'shipping';
+        }
+
+        return 'billing';
     }
 }
