@@ -64,6 +64,7 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
 
         $labelRequest = [
             'carrier_account_id' => $request->get('sender')['carrier_account_id'],
+            'service_type' => $request->get('common')['service_type'],
             'billing' => [
                 'paid_by' => $request->get('common')['paid_by'],
                 'payment_method' => 'cash',
