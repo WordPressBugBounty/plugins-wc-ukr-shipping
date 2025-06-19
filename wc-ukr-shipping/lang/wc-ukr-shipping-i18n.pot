@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-18T20:19:59+03:00\n"
+"POT-Creation-Date: 2025-06-19T10:04:58+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-ukr-shipping-i18n\n"
@@ -279,6 +279,10 @@ msgstr ""
 
 #: src/Modules/Frontend/AssetsLoader.php:118
 msgid "Something went wrong"
+msgstr ""
+
+#: src/Modules/Frontend/Checkout.php:85
+msgid "Middle Name"
 msgstr ""
 
 #: src/Services/TranslateService.php:48

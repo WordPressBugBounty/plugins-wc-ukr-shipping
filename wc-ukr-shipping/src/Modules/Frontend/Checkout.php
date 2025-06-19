@@ -82,7 +82,7 @@ class Checkout implements ModuleInterface
 
         $middleName = [
             'type' => 'text',
-            'label' => __('Middle name', 'wc-ukr-shipping-pro'),
+            'label' => __('Middle Name', 'wc-ukr-shipping-i18n'),
             'class' => [
                 'form-row-wide'
             ],

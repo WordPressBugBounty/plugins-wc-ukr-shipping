@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2025-06-18T20:19:59+03:00\n"
+"POT-Creation-Date: 2025-06-19T10:04:58+03:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -274,6 +274,10 @@ msgstr "Номер квартири"
 #: src/Modules/Frontend/AssetsLoader.php:118
 msgid "Something went wrong"
 msgstr "Щось пішло не так"
+
+#: src/Modules/Frontend/Checkout.php:85
+msgid "Middle Name"
+msgstr "По-батькові"
 
 #: src/Services/TranslateService.php:48 views/partial/settings_top.php:16
 msgid "Nova Poshta"
@@ -695,9 +699,6 @@ msgstr "Перейти на"
 
 #~ msgid "Sender last name"
 #~ msgstr "Прізвище відправника"
-
-#~ msgid "Sender middle name"
-#~ msgstr "По-батькові відправника"
 
 #~ msgid "Sender phone"
 #~ msgstr "Телефон відправника"
