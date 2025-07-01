@@ -34,6 +34,7 @@ class Checkout implements ModuleInterface
         add_action( 'woocommerce_after_shipping_rate', [ $this, 'injectShippingName' ], 10, 2);
         add_action('wcus_state_init', [ $this, 'initCheckoutState' ]);
         add_filter('woocommerce_checkout_fields', [ $this, 'injectAdditionalFields' ]);
+        add_filter('woocommerce_package_rates', [$this, 'filterNovaPostCountries'], 10, 2);
     }
 
     public function injectBillingFields()
@@ -109,6 +110,25 @@ class Checkout implements ModuleInterface
         ];
 
         return $fields;
+    }
+
+    public function filterNovaPostCountries($rates, $package): array
+    {
+        $allowed_countries = [
+            'UA', 'CZ', 'DE', 'EE', 'HU', 'LT', 'LV', 'MD', 'PL', 'RO', 'SK', 'GB', 'FR', 'AT', 'IT', 'NL', 'ES'
+        ];
+
+        $country = $package['destination']['country'];
+
+        if (!in_array($country, $allowed_countries)) {
+            foreach ($rates as $rate_id => $rate) {
+                if ($rate->get_method_id() === WCUS_SHIPPING_METHOD_NOVA_POST) {
+                    unset($rates[$rate_id]);
+                }
+            }
+        }
+
+        return $rates;
     }
 
     private function injectFields($type)

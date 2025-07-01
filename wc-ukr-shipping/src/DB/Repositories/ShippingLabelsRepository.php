@@ -55,6 +55,20 @@ class ShippingLabelsRepository
             ]);
     }
 
+    public function attach(int $orderId, string $trackingNumber, string $carrierSlug): void
+    {
+        $now = date('Y-m-d H:i:s');
+        DB::table(DB::prefixedTable('wc_ukr_shipping_labels'))
+            ->insert([
+                'carrier_slug' => $carrierSlug,
+                'order_id' => $orderId,
+                'tracking_number' => $trackingNumber,
+                'tracking_active' => 0,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+    }
+
     public function addToTracking(int $id): void
     {
         global $wpdb;

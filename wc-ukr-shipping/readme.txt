@@ -5,9 +5,9 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, укрпошта, shipping, woocommerce
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 1.15.11
+Stable tag: 1.16.0
 
-Connect Nova Poshta and Ukrposhta delivery services to your WooCommerce store. Create TTN, track orders and calculate rates in one place.
+Connect Nova Poshta, Ukrposhta, Rozetka or international delivery services to your WooCommerce store. Create TTN, track orders and calculate rates in one place.
 
 == Description ==
 
@@ -25,6 +25,8 @@ https://www.youtube.com/watch?v=K_NFNQ1qkko
 * Simple and intuitive setup
 * Ability to select Nova Poshta warehouse, doors or poshtomat on checkout page
 * Ability to select Ukrposhta warehouse on checkout page
+* Ability to select Rozetka Delivery warehouse on checkout page
+* Ability to select Nova Post (Europe) warehouse on checkout page
 * Ability to set up fixed shipping cost
 * Ability to calculate cost without adding it to order total
 * Ability to create Nova Poshta TTN (warehouse-warehouse, warehouse-doors, warehouse-poshtomat)
@@ -33,21 +35,24 @@ https://www.youtube.com/watch?v=K_NFNQ1qkko
 * Ability to print Ukrposhta labels (100x100, 100x100 (A4), 100x100 (A5))
 * Ability to track parcels
 * Support many functions includes COD and Payment control
+* Advanced shipment analytics
 * Integration with popular plugins for localization: WPML and Polylang
 * Support latest versions of WordPress and WooCommerce
 * Support WooCommerce geo zones
 
-== PRO version ==
+== Premium features ==
 
 WC Ukraine Shipping has additional premium features that help you to optimize your daily shipping routine.
 
-* Automatic calculation of shipping costs via carrier
+* Unlimited shipments
+* Unlimited carrier accounts
+* Automatic calculation of shipping costs via carrier (Smart Rates API)
 * Shipping costs calculation based on order total
 * Ability to separate cost calculation for address shipping
 * Ability to bulk generation of shipping labels in one click
 * Tracking shipment statuses
 * Automatic email notifications after generating TTN
-* Automatic sms notifications after generating TTN
+* Automatic sms notifications after generating TTN (with our friendly plugin)
 * Premium support
 
 [Switch to SmartyParcel Advanced](https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=wporg)
@@ -80,6 +85,15 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.16.0 / (01.07.2025) =
+* [New] Rozetka Delivery shipping method.
+* [New] Nova Post (EU) shipping method.
+* Added ability to attach exist label to order.
+* Added displaying tracking number at my account page (orders).
+* [Fixed] Ukrposhta batch label creation.
+* Carrier account management was removed from plugin and moved to cloud account panel.
+* Checked compatibility with latest WordPress and WooCommerce versions.
 
 = Version 1.15.11 / (19.06.2025) =
 * [Ukrposhta] Fixed sending incorrect service type.

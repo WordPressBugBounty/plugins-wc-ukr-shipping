@@ -52,6 +52,7 @@ final class WCUkrShipping extends Kernel
             \kirillbdev\WCUkrShipping\Modules\Frontend\Checkout::class,
             \kirillbdev\WCUkrShipping\Modules\Frontend\CheckoutValidator::class,
             \kirillbdev\WCUkrShipping\Modules\Frontend\OrderCreator::class,
+            \kirillbdev\WCUkrShipping\Modules\Frontend\Account::class,
         ];
     }
 

@@ -35,7 +35,7 @@ class CalculationService
     {
         if ($shippingMethod === WC_UKR_SHIPPING_NP_SHIPPING_NAME) {
             return new NovaPoshtaRatesCalculatorFactory($this->smartyParcelService);
-        } elseif ($shippingMethod === 'wcus_ukrposhta_shipping') {
+        } elseif ($shippingMethod === WCUS_SHIPPING_METHOD_UKRPOSHTA) {
             return new UkrposhtaRatesCalculatorFactory($this->smartyParcelService);
         }
 

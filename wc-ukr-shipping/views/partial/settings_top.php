@@ -19,6 +19,14 @@
                class="wcus-top-panel__nav-link wcus-top-panel__nav-link--ukrposhta <?php echo $section === 'ukrposhta' ? 'wcus-top-panel__nav-link--active' : ''; ?>">
                 <?php esc_html_e('Ukrposhta', 'wc-ukr-shipping-i18n'); ?>
             </a>
+            <a href="<?php echo esc_attr(admin_url('admin.php?page=wc_ukr_shipping_options&section=rozetka')); ?>"
+               class="wcus-top-panel__nav-link wcus-top-panel__nav-link--rozetka <?php echo $section === 'rozetka' ? 'wcus-top-panel__nav-link--active' : ''; ?>">
+                <?php esc_html_e('Rozetka delivery', 'wc-ukr-shipping-i18n'); ?>
+            </a>
+            <a href="<?php echo esc_attr(admin_url('admin.php?page=wc_ukr_shipping_options&section=nova_post')); ?>"
+               class="wcus-top-panel__nav-link wcus-top-panel__nav-link--nova-post <?php echo $section === 'nova_post' ? 'wcus-top-panel__nav-link--active' : ''; ?>">
+                <?php esc_html_e('Nova Post', 'wc-ukr-shipping-i18n'); ?>
+            </a>
         </div>
     </div>
 </div>

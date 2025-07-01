@@ -3,6 +3,8 @@
 namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
 use kirillbdev\WCUkrShipping\Foundation\NovaPoshtaShipping;
+use kirillbdev\WCUkrShipping\Foundation\NovaPostShipping;
+use kirillbdev\WCUkrShipping\Foundation\RozetkaDeliveryShipping;
 use kirillbdev\WCUkrShipping\Foundation\UkrPoshtaShipping;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
@@ -35,7 +37,9 @@ class ShippingMethod implements ModuleInterface
     public function registerShippingMethod($methods)
     {
         $methods[WC_UKR_SHIPPING_NP_SHIPPING_NAME] = NovaPoshtaShipping::class;
-        $methods['wcus_ukrposhta_shipping'] = UkrPoshtaShipping::class;
+        $methods[WCUS_SHIPPING_METHOD_UKRPOSHTA] = UkrPoshtaShipping::class;
+        $methods[WCUS_SHIPPING_METHOD_NOVA_POST] = NovaPostShipping::class;
+        $methods[WCUS_SHIPPING_METHOD_ROZETKA] = RozetkaDeliveryShipping::class;
 
         return $methods;
     }
@@ -58,9 +62,15 @@ class ShippingMethod implements ModuleInterface
         }
 
         $chosenMethods = wc_get_chosen_shipping_method_ids();
+        $supportedMethods = [
+            WC_UKR_SHIPPING_NP_SHIPPING_NAME,
+            WCUS_SHIPPING_METHOD_UKRPOSHTA,
+            WCUS_SHIPPING_METHOD_NOVA_POST,
+            WCUS_SHIPPING_METHOD_ROZETKA,
+        ];
         foreach ($packages as $key => &$package) {
             if (isset($chosenMethods[$key])
-                && in_array($chosenMethods[$key], [WC_UKR_SHIPPING_NP_SHIPPING_NAME, 'wcus_ukrposhta_shipping'], true)) {
+                && in_array($chosenMethods[$key], $supportedMethods, true)) {
                 // todo: bad solution! provide array cache implementation instead
                 if (self::$cachedRateHash === null) {
                     self::$cachedRateHash = md5(
@@ -79,8 +89,12 @@ class ShippingMethod implements ModuleInterface
         $costViewOnly = false;
         if (WCUSHelper::hasChosenShippingMethod(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
             $costViewOnly = (int)get_option('wcus_cost_view_only') === 1;
-        } elseif (WCUSHelper::hasChosenShippingMethod('wcus_ukrposhta_shipping')) {
+        } elseif (WCUSHelper::hasChosenShippingMethod(WCUS_SHIPPING_METHOD_UKRPOSHTA)) {
             $costViewOnly = (int)get_option('wcus_ukrposhta_cost_view_only') === 1;
+        } elseif (WCUSHelper::hasChosenShippingMethod(WCUS_SHIPPING_METHOD_NOVA_POST)) {
+            $costViewOnly = (int)get_option('wcus_nova_post_cost_view_only') === 1;
+        } elseif (WCUSHelper::hasChosenShippingMethod(WCUS_SHIPPING_METHOD_ROZETKA)) {
+            $costViewOnly = (int)get_option('wcus_rozetka_cost_view_only') === 1;
         }
 
         return $costViewOnly

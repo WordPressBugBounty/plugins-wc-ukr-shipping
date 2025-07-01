@@ -11,7 +11,6 @@ use kirillbdev\WCUkrShipping\Foundation\State;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Http\Controllers\AddressBookController;
 use kirillbdev\WCUkrShipping\Http\Controllers\AutomationController;
-use kirillbdev\WCUkrShipping\Http\Controllers\MigrationController;
 use kirillbdev\WCUkrShipping\Http\Controllers\OptionsController;
 use kirillbdev\WCUkrShipping\Http\Controllers\SmartyParcelController;
 use kirillbdev\WCUkrShipping\Http\Controllers\ToolsController;
@@ -63,20 +62,17 @@ class OptionsPage implements ModuleInterface
             new Route('wcus_load_areas', AddressBookController::class, 'loadAreas'),
             new Route('wcus_load_cities', AddressBookController::class, 'loadCities'),
             new Route('wcus_load_warehouses', AddressBookController::class, 'loadWarehouses'),
-            //new Route('wcus_re_run_migrations', MigrationController::class, 'reRunMigrations'),
 
             new Route('wcus_smarty_parcel_check_verification', SmartyParcelController::class, 'checkVerification'),
             new Route('wcus_smarty_parcel_refresh_account', SmartyParcelController::class, 'refreshAccountInfo'),
             new Route('wcus_smarty_parcel_connect', SmartyParcelController::class, 'connect'),
             new Route('wcus_smarty_parcel_disconnect', SmartyParcelController::class, 'disconnect'),
             new Route('wcus_smarty_parcel_carrier_accounts', SmartyParcelController::class, 'getCarrierAccounts'),
-            new Route('wcus_smarty_parcel_connect_carrier', SmartyParcelController::class, 'connectCarrier'),
-            new Route('wcus_smarty_parcel_update_carrier', SmartyParcelController::class, 'updateCarrier'),
-            new Route('wcus_smarty_parcel_delete_carrier', SmartyParcelController::class, 'deleteCarrierAccount'),
             new Route('wcus_smarty_parcel_create_label', SmartyParcelController::class, 'createShippingLabel'),
             new Route('wcus_smarty_parcel_create_label_batch', SmartyParcelController::class, 'createLabelBatch'),
             new Route('wcus_smarty_parcel_void_label', SmartyParcelController::class, 'voidLabel'),
             new Route('wcus_smarty_parcel_upgrade', SmartyParcelController::class, 'upgradePlan'),
+            new Route('wcus_attach_label', SmartyParcelController::class, 'attachShippingLabel'),
             new Route('wcus_automation_save_rule', AutomationController::class, 'saveRule'),
 
             // Tools
@@ -218,12 +214,21 @@ class OptionsPage implements ModuleInterface
         $data['carrierAccounts'] = $this->smartyParcelService->getCarrierAccounts();
 
         $section = $_GET['section'] ?? null;
-        if ($section === 'nova_poshta') {
-            $view = 'settings_nova_poshta';
-        } elseif ($section === 'ukrposhta') {
-            $view = 'settings_ukrposhta';
-        } else {
-            $view = 'settings_general';
+        switch ($section) {
+            case 'nova_poshta':
+                $view = 'settings_nova_poshta';
+                break;
+            case 'ukrposhta':
+                $view = 'settings_ukrposhta';
+                break;
+            case 'nova_post':
+                $view = 'settings_nova_post';
+                break;
+            case 'rozetka':
+                $view = 'settings_rozetka';
+                break;
+            default:
+                $view = 'settings_general';
         }
 
         echo View::render($view, $data);

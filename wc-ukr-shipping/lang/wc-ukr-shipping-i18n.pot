@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the WC Ukraine Shipping plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WC Ukraine Shipping 1.15.9\n"
+"Project-Id-Version: WC Ukraine Shipping 1.15.11\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-19T10:04:58+03:00\n"
+"POT-Creation-Date: 2025-07-01T15:31:07+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-ukr-shipping-i18n\n"
@@ -31,30 +31,90 @@ msgstr ""
 msgid "kirillbdev"
 msgstr ""
 
-#: src/Component/Validation/NovaPoshtaCheckoutValidator.php:64
-msgid "Enter shipping address of Nova Poshta"
+#: lang/frontend.php:1
+msgid "Attach label for order"
 msgstr ""
 
-#: src/Component/Validation/UkrposhtaCheckoutValidator.php:29
-msgid "Select Ukrposhta warehouse"
+#: lang/frontend.php:1
+msgid "Carrier"
 msgstr ""
 
-#: src/Foundation/NovaPoshtaShipping.php:63
-#: src/Foundation/UkrPoshtaShipping.php:75
-msgid "You can manage shipping method options at"
+#: lang/frontend.php:1
+#: src/Services/TranslateService.php:48
+#: views/partial/settings_top.php:16
+msgid "Nova Poshta"
 msgstr ""
 
-#: src/Foundation/NovaPoshtaShipping.php:75
-#: src/Foundation/UkrPoshtaShipping.php:87
-msgid "plugin settings page"
-msgstr ""
-
+#: lang/frontend.php:1
 #: src/Foundation/UkrPoshtaShipping.php:20
 #: src/Foundation/UkrPoshtaShipping.php:48
 #: src/Foundation/UkrPoshtaShipping.php:61
 #: src/Services/TranslateService.php:71
 #: views/partial/settings_top.php:20
 msgid "Ukrposhta"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Nova Post (International)"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Tracking number"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Add to tracking"
+msgstr ""
+
+#: lang/frontend.php:1
+#: src/Modules/Backend/Orders.php:183
+msgid "Attach"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Unable to attach label for order"
+msgstr ""
+
+#: src/Component/Validation/NovaPoshtaCheckoutValidator.php:57
+msgid "Enter shipping address of Nova Poshta"
+msgstr ""
+
+#: src/Component/Validation/NovaPostCheckoutValidator.php:20
+msgid "Please provide shipping address"
+msgstr ""
+
+#: src/Component/Validation/RozetkaDeliveryCheckoutValidator.php:22
+msgid "Select warehouse for Rozetka Delivery"
+msgstr ""
+
+#: src/Component/Validation/UkrposhtaCheckoutValidator.php:22
+msgid "Select Ukrposhta warehouse"
+msgstr ""
+
+#: src/Foundation/NovaPoshtaShipping.php:63
+#: src/Foundation/NovaPostShipping.php:59
+#: src/Foundation/RozetkaDeliveryShipping.php:57
+#: src/Foundation/UkrPoshtaShipping.php:75
+msgid "You can manage shipping method options at"
+msgstr ""
+
+#: src/Foundation/NovaPoshtaShipping.php:75
+#: src/Foundation/NovaPostShipping.php:71
+#: src/Foundation/RozetkaDeliveryShipping.php:69
+#: src/Foundation/UkrPoshtaShipping.php:87
+msgid "plugin settings page"
+msgstr ""
+
+#: src/Foundation/NovaPostShipping.php:20
+#: src/Foundation/NovaPostShipping.php:42
+#: src/Foundation/NovaPostShipping.php:55
+#: views/partial/settings_top.php:28
+msgid "Nova Post"
+msgstr ""
+
+#: src/Foundation/RozetkaDeliveryShipping.php:18
+#: src/Foundation/RozetkaDeliveryShipping.php:53
+msgid "Rozetka Delivery"
 msgstr ""
 
 #: src/Foundation/UkrPoshtaShipping.php:64
@@ -86,114 +146,117 @@ msgstr ""
 msgid "Every minute"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:95
+#: src/Modules/Backend/OptionsPage.php:91
 #: views/settings_general.php:19
 #: views/settings_nova_poshta.php:19
+#: views/settings_nova_post.php:19
+#: views/settings_rozetka.php:19
 #: views/settings_ukrposhta.php:19
 msgid "Settings"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:106
-#: src/Modules/Backend/OptionsPage.php:107
+#: src/Modules/Backend/OptionsPage.php:102
+#: src/Modules/Backend/OptionsPage.php:103
 #: views/smarty_parcel.php:13
 msgid "Smarty Parcel"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:115
-#: src/Modules/Backend/OptionsPage.php:116
+#: src/Modules/Backend/OptionsPage.php:111
+#: src/Modules/Backend/OptionsPage.php:112
 msgid "Create TTN"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:124
-#: src/Modules/Backend/OptionsPage.php:125
+#: src/Modules/Backend/OptionsPage.php:120
+#: src/Modules/Backend/OptionsPage.php:121
 #: views/orders.php:4
 msgid "Orders"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:133
-#: src/Modules/Backend/OptionsPage.php:134
+#: src/Modules/Backend/OptionsPage.php:129
+#: src/Modules/Backend/OptionsPage.php:130
 msgid "Automation"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:145
-#: src/Modules/Backend/OptionsPage.php:146
+#: src/Modules/Backend/OptionsPage.php:141
+#: src/Modules/Backend/OptionsPage.php:142
 #: src/Modules/Backend/Orders.php:180
 msgid "Create"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:154
-#: src/Modules/Backend/OptionsPage.php:155
+#: src/Modules/Backend/OptionsPage.php:150
+#: src/Modules/Backend/OptionsPage.php:151
 msgid "Edit"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:163
-#: src/Modules/Backend/OptionsPage.php:164
+#: src/Modules/Backend/OptionsPage.php:159
+#: src/Modules/Backend/OptionsPage.php:160
 #: views/tools.php:14
 msgid "Tools"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:172
-#: src/Modules/Backend/OptionsPage.php:173
+#: src/Modules/Backend/OptionsPage.php:168
+#: src/Modules/Backend/OptionsPage.php:169
 msgid "Upgrade pricing plan"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:189
+#: src/Modules/Backend/OptionsPage.php:185
 msgid "Warehouses data of Nova Poshta"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:190
+#: src/Modules/Backend/OptionsPage.php:186
 msgid "Last update date:"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:191
+#: src/Modules/Backend/OptionsPage.php:187
 msgid "Status:"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:192
+#: src/Modules/Backend/OptionsPage.php:188
 msgid "Not completed"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:193
+#: src/Modules/Backend/OptionsPage.php:189
 msgid "Completed"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:194
+#: src/Modules/Backend/OptionsPage.php:190
 msgid "Unknown"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:195
+#: src/Modules/Backend/OptionsPage.php:191
 msgid "Update warehouses"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:196
+#: src/Modules/Backend/OptionsPage.php:192
 msgid "Continue update"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:197
+#: src/Modules/Backend/OptionsPage.php:193
 msgid "Load areas..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:198
+#: src/Modules/Backend/OptionsPage.php:194
 msgid "Load cities..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:199
+#: src/Modules/Backend/OptionsPage.php:195
 msgid "Load warehouses..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:200
+#: src/Modules/Backend/OptionsPage.php:196
 msgid "Warehouses db updated successfully"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:203
+#: src/Modules/Backend/OptionsPage.php:199
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:316
+#: src/Modules/Backend/OptionsPage.php:321
 msgid "Add rule"
 msgstr ""
 
 #: src/Modules/Backend/Orders.php:49
+#: src/Modules/Frontend/Account.php:31
 #: views/settings_nova_poshta.php:34
 #: views/settings_ukrposhta.php:32
 msgid "Shipping label"
@@ -204,90 +267,85 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:100
+#: src/Modules/Frontend/AssetsLoader.php:101
 #: src/Services/TranslateService.php:49
 msgid "Select shipping address"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:101
+#: src/Modules/Frontend/AssetsLoader.php:102
 msgid "to warehouse"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:102
+#: src/Modules/Frontend/AssetsLoader.php:103
 msgid "to doors"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:103
+#: src/Modules/Frontend/AssetsLoader.php:104
 msgid "to the poshtomat"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:105
+#: src/Modules/Frontend/AssetsLoader.php:106
 #: src/Services/TranslateService.php:51
 msgid "Select city"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:106
+#: src/Modules/Frontend/AssetsLoader.php:107
 #: src/Services/TranslateService.php:52
 msgid "Select warehouse"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:107
+#: src/Modules/Frontend/AssetsLoader.php:108
 msgid "Select poshtomat"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:108
+#: src/Modules/Frontend/AssetsLoader.php:109
 #: src/Services/TranslateService.php:54
 msgid "Enter address"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:109
+#: src/Modules/Frontend/AssetsLoader.php:110
 msgid "Enter value for search"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:110
+#: src/Modules/Frontend/AssetsLoader.php:111
 msgid "Loading..."
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:111
+#: src/Modules/Frontend/AssetsLoader.php:112
 msgid "Load more"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:112
+#: src/Modules/Frontend/AssetsLoader.php:113
 #: src/Services/TranslateService.php:55
 msgid "Nothing found"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:113
+#: src/Modules/Frontend/AssetsLoader.php:114
 msgid "Enter more chars"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:114
+#: src/Modules/Frontend/AssetsLoader.php:115
 msgid "Settlement"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:115
+#: src/Modules/Frontend/AssetsLoader.php:116
 msgid "Street"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:116
+#: src/Modules/Frontend/AssetsLoader.php:117
 msgid "House"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:117
+#: src/Modules/Frontend/AssetsLoader.php:118
 msgid "Flat"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:118
+#: src/Modules/Frontend/AssetsLoader.php:119
 msgid "Something went wrong"
 msgstr ""
 
-#: src/Modules/Frontend/Checkout.php:85
+#: src/Modules/Frontend/Checkout.php:86
 msgid "Middle Name"
-msgstr ""
-
-#: src/Services/TranslateService.php:48
-#: views/partial/settings_top.php:16
-msgid "Nova Poshta"
 msgstr ""
 
 #: src/Services/TranslateService.php:50
@@ -305,6 +363,8 @@ msgstr ""
 #: views/automation.php:17
 #: views/settings_general.php:23
 #: views/settings_nova_poshta.php:23
+#: views/settings_nova_post.php:23
+#: views/settings_rozetka.php:23
 #: views/settings_ukrposhta.php:23
 #: views/tools.php:17
 msgid "Save"
@@ -331,27 +391,27 @@ msgid "Open support chat"
 msgstr ""
 
 #: views/partial/pro_promotion.php:39
-msgid "Get more features from SmartyParcel Advanced"
+msgid "Unlock more features with premium subscription"
 msgstr ""
 
 #: views/partial/pro_promotion.php:43
-msgid "Higher shipments limit"
+msgid "Unlimited number of shipments"
 msgstr ""
 
 #: views/partial/pro_promotion.php:46
-msgid "Automatic calculation of shipping costs."
+msgid "Unlimited carrier accounts"
 msgstr ""
 
 #: views/partial/pro_promotion.php:49
-msgid "Shipping calculation based on order total"
+msgid "Automatic calculation of shipping costs."
 msgstr ""
 
 #: views/partial/pro_promotion.php:52
-msgid "Possibility of mass generation of TTN in one click"
+msgid "Shipping calculation based on order total"
 msgstr ""
 
 #: views/partial/pro_promotion.php:55
-msgid "SMS notifications"
+msgid "Possibility of mass generation of TTN in one click"
 msgstr ""
 
 #: views/partial/pro_promotion.php:58
@@ -508,6 +568,8 @@ msgid "Payment control"
 msgstr ""
 
 #: views/partial/settings_nova_poshta/shipping.php:14
+#: views/partial/settings_nova_post/shipping.php:14
+#: views/partial/settings_rozetka/shipping.php:14
 #: views/partial/settings_ukrposhta/shipping.php:14
 msgid "Calculate shipping cost for view only"
 msgstr ""
@@ -549,8 +611,30 @@ msgstr ""
 msgid "Empty result text"
 msgstr ""
 
+#: views/partial/settings_nova_post/shipping.php:20
+msgid "API Key"
+msgstr ""
+
+#: views/partial/settings_nova_post/shipping.php:22
+msgid "API key is required to search for warehouses and PUDO across Europe"
+msgstr ""
+
+#: views/partial/settings_nova_post/shipping.php:27
+#: views/partial/settings_rozetka/shipping.php:20
+msgid "Fixed shipping cost"
+msgstr ""
+
+#: views/partial/settings_nova_post/shipping.php:29
+#: views/partial/settings_rozetka/shipping.php:22
+msgid "Use 0 to disable shipping calculation"
+msgstr ""
+
 #: views/partial/settings_top.php:12
 msgid "General settings"
+msgstr ""
+
+#: views/partial/settings_top.php:24
+msgid "Rozetka delivery"
 msgstr ""
 
 #: views/partial/settings_ukrposhta/parcels.php:48
@@ -587,6 +671,8 @@ msgstr ""
 
 #: views/settings_general.php:32
 #: views/settings_nova_poshta.php:32
+#: views/settings_nova_post.php:31
+#: views/settings_rozetka.php:31
 #: views/settings_ukrposhta.php:31
 msgid "Shipping"
 msgstr ""

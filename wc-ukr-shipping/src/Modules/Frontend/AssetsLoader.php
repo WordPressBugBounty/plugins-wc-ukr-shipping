@@ -96,6 +96,7 @@ class AssetsLoader implements ModuleInterface
 
         $globals['default_cities'] = $this->getDefaultCities();
         $globals['ukrposhta']['defaultCities'] = WCUSHelper::getUkrposhtaDefaultCities();
+        $globals['rozetkaDelivery']['defaultCities'] = WCUSHelper::getRozetkaDefaultCities();
         $globals['i18n'] = [
             'fields_title' => __('Select shipping address', 'wc-ukr-shipping-i18n'),
             'shipping_type_warehouse' => __('to warehouse', 'wc-ukr-shipping-i18n'),
@@ -126,7 +127,9 @@ class AssetsLoader implements ModuleInterface
 
         $ownShippingMethods = [
             WC_UKR_SHIPPING_NP_SHIPPING_NAME,
-            'wcus_ukrposhta_shipping',
+            WCUS_SHIPPING_METHOD_UKRPOSHTA,
+            WCUS_SHIPPING_METHOD_NOVA_POST,
+            WCUS_SHIPPING_METHOD_ROZETKA,
         ];
 
         // Get active shipping methods for zones

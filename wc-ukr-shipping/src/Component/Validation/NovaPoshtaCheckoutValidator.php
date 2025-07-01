@@ -4,26 +4,19 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Component\Validation;
 
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+
 class NovaPoshtaCheckoutValidator implements CheckoutValidatorInterface
 {
     public function validate(array $data): void
     {
-        $type = $this->getTypeToValidate($data);
+        $type = WCUSHelper::getCheckoutFieldGroup($data);
 
         if ($this->maybeAddressShippingSelected($type, $data)) {
             $this->validateAddressShipping($type, $data);
         } else {
             $this->validateWarehouseShipping($type, $data);
         }
-    }
-
-    private function getTypeToValidate(array $data): string
-    {
-        if (isset($data['ship_to_different_address']) && 1 === (int)$data['ship_to_different_address']) {
-            return 'shipping';
-        }
-
-        return 'billing';
     }
 
     private function maybeAddressShippingSelected(string $type, array $data): bool

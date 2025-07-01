@@ -24,7 +24,7 @@
                         <?= __('Delete', 'wc-ukr-shipping-i18n'); ?>
                     </a>
                 </div>
-                <?php if ($shipping_label['carrier_slug'] !== 'wcus_pro') { ?>
+                <?php if ($shipping_label['label_id']) { ?>
                     <div>
                         <?php foreach ($download_formats as $format => $name) { ?>
                             <a href="<?php echo esc_attr(admin_url('admin.php?page=wc_ukr_shipping_print_label&label_id=' . $shipping_label['id'] . '&format=' . $format)); ?>"
@@ -41,10 +41,15 @@
         </div>
     <?php } else { ?>
         <div style="text-align: center; padding: 16px;">
-          <a href="<?= admin_url('admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order_id); ?>"
-             class="wcus-btn wcus-btn--docs wcus-btn--sm">
-              <?= __('Create shipping label', 'wc-ukr-shipping-pro'); ?>
-          </a>
+            <div class="wcus-mb-1">
+                <a href="<?= admin_url('admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order_id); ?>"
+                   class="wcus-btn wcus-btn--docs wcus-btn--sm">
+                    <?= __('Create shipping label', 'wc-ukr-shipping-i18n'); ?>
+                </a>
+            </div>
+            <a class="wcus-btn wcus-btn--docs wcus-btn--sm j-wcus-label-attach" data-order-id="<?php echo esc_attr($order_id); ?>">
+                <?= __('Attach shipping label', 'wc-ukr-shipping-i18n'); ?>
+            </a>
         </div>
     <?php } ?>
 </div>

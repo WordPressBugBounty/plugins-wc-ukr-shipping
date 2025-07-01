@@ -61,7 +61,7 @@ class NovaPoshtaShipping extends \WC_Shipping_Method
             'options_message' => [
                 'type' => 'wcus_message',
                 'text' => __('You can manage shipping method options at', 'wc-ukr-shipping-i18n'),
-                'link' => home_url('wp-admin/admin.php?page=wc_ukr_shipping_options'),
+                'link' => home_url('wp-admin/admin.php?page=wc_ukr_shipping_options&section=nova_poshta'),
             ],
         ];
     }

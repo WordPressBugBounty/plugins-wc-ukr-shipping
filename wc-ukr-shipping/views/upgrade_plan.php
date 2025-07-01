@@ -27,7 +27,7 @@
                             $plans = [
                                 'Basic' => [
                                     'id' => 'basic',
-                                    'price' => 49,
+                                    'price' => 59,
                                     'features' => [
                                         __('Calculation of delivery via courier', 'wc-ukr-shipping-i18n'),
                                         __('Calculation of delivery depending on the order amount', 'wc-ukr-shipping-i18n'),

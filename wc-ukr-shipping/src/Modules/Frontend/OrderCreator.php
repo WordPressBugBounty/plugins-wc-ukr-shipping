@@ -9,6 +9,10 @@ use kirillbdev\WCUkrShipping\Component\Carriers\NovaPoshta\Order\CheckoutOrderHa
 use kirillbdev\WCUkrShipping\Component\Carriers\NovaPoshta\Order\CheckoutOrderShippingHandler as NovaPoshtaCheckoutOrderShippingHandler;
 use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Order\CheckoutOrderHandler as UkrposhtaCheckoutOrderHandler;
 use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Order\CheckoutOrderShippingHandler as UkrposhtaCheckoutOrderShippingHandler;
+use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Order\CheckoutOrderHandler as RozetkaCheckoutOrderHandler;
+use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Order\CheckoutOrderShippingHandler as RozetkaCheckoutOrderShippingHandler;
+use kirillbdev\WCUkrShipping\Component\Carriers\NovaPost\Order\CheckoutOrderHandler as NovaPostCheckoutOrderHandler;
+use kirillbdev\WCUkrShipping\Component\Carriers\NovaPost\Order\CheckoutOrderShippingHandler as NovaPostCheckoutOrderShippingHandler;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -47,22 +51,32 @@ class OrderCreator implements ModuleInterface
 
     private function createOrderHandler(\WC_Order $order): ?OrderHandlerInterface
     {
-        if ($order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
-            return new NovaPoshtaCheckoutOrderHandler();
-        } elseif ($order->has_shipping_method('wcus_ukrposhta_shipping')) {
-            return new UkrposhtaCheckoutOrderHandler();
+        switch (true) {
+            case $order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME):
+                return new NovaPoshtaCheckoutOrderHandler();
+            case $order->has_shipping_method(WCUS_SHIPPING_METHOD_UKRPOSHTA):
+                return new UkrposhtaCheckoutOrderHandler();
+            case $order->has_shipping_method(WCUS_SHIPPING_METHOD_ROZETKA):
+                return new RozetkaCheckoutOrderHandler();
+            case $order->has_shipping_method(WCUS_SHIPPING_METHOD_NOVA_POST):
+                return new NovaPostCheckoutOrderHandler();
+            default:
+                return null;
         }
-
-        return null;
     }
 
     private function createOrderShippingHandler(string $shippingMethod): ?OrderShippingHandlerInterface
     {
         $fieldGroup = $this->isShipToDifferentAddress() ? 'shipping' : 'billing';
-        if ($shippingMethod === WC_UKR_SHIPPING_NP_SHIPPING_NAME) {
-            return new NovaPoshtaCheckoutOrderShippingHandler($fieldGroup);
-        } elseif ($shippingMethod === 'wcus_ukrposhta_shipping') {
-            return new UkrposhtaCheckoutOrderShippingHandler($fieldGroup);
+        switch ($shippingMethod) {
+            case WC_UKR_SHIPPING_NP_SHIPPING_NAME:
+                return new NovaPoshtaCheckoutOrderShippingHandler($fieldGroup);
+            case WCUS_SHIPPING_METHOD_UKRPOSHTA:
+                return new UkrposhtaCheckoutOrderShippingHandler($fieldGroup);
+            case WCUS_SHIPPING_METHOD_ROZETKA:
+                return new RozetkaCheckoutOrderShippingHandler($fieldGroup);
+            case WCUS_SHIPPING_METHOD_NOVA_POST:
+                return new NovaPostCheckoutOrderShippingHandler($fieldGroup);
         }
 
         return null;

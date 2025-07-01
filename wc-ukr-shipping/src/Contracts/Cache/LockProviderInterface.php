@@ -6,7 +6,7 @@ namespace kirillbdev\WCUkrShipping\Contracts\Cache;
 
 interface LockProviderInterface
 {
-    public function lock(string $eky, int $seconds): bool;
+    public function lock(string $key, int $seconds): bool;
 
-    public function releaseLock(string $eky): bool;
+    public function releaseLock(string $key): bool;
 }

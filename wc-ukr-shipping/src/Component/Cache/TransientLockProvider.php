@@ -8,27 +8,27 @@ use kirillbdev\WCUkrShipping\Contracts\Cache\LockProviderInterface;
 
 class TransientLockProvider implements LockProviderInterface
 {
-    public function lock(string $eky, int $seconds): bool
+    public function lock(string $key, int $seconds): bool
     {
-        $lock = get_transient($this->getKey($eky));
+        $lock = get_transient($this->getKey($key));
         if ($lock !== false) {
             return false;
         }
 
-        set_transient($this->getKey($eky), 1, $seconds);
+        set_transient($this->getKey($key), 1, $seconds);
 
         return true;
     }
 
-    public function releaseLock(string $eky): bool
+    public function releaseLock(string $key): bool
     {
-        delete_transient($this->getKey($eky));
+        delete_transient($this->getKey($key));
 
         return true;
     }
 
-    private function getKey(string $eky): string
+    private function getKey(string $key): string
     {
-        return 'wcus_lock:' . md5($eky);
+        return 'wcus_lock:' . md5($key);
     }
 }

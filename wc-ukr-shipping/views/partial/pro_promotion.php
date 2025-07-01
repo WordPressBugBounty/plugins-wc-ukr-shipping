@@ -36,11 +36,14 @@ if ( ! defined('ABSPATH')) {
                     <div class="wcus-pro-features__logo">
                         <img src="<?php echo esc_attr(WC_UKR_SHIPPING_PLUGIN_URL . '/image/smarty-parcel.jpg'); ?>" />
                     </div>
-                    <div class="wcus-card__title wcus-pro-features__title"><?= __('Get more features from SmartyParcel Advanced', 'wc-ukr-shipping-i18n'); ?></div>
+                    <div class="wcus-card__title wcus-pro-features__title"><?= __('Unlock more features with premium subscription', 'wc-ukr-shipping-i18n'); ?></div>
                 </div>
                 <div class="wcus-pro-features__list">
                     <div class="wcus-pro-features__feature">
-                        <?= __('Higher shipments limit', 'wc-ukr-shipping-i18n'); ?>
+                        <?= __('Unlimited number of shipments', 'wc-ukr-shipping-i18n'); ?>
+                    </div>
+                    <div class="wcus-pro-features__feature">
+                        <?= __('Unlimited carrier accounts', 'wc-ukr-shipping-i18n'); ?>
                     </div>
                     <div class="wcus-pro-features__feature">
                         <?= __('Automatic calculation of shipping costs.', 'wc-ukr-shipping-i18n'); ?>
@@ -50,9 +53,6 @@ if ( ! defined('ABSPATH')) {
                     </div>
                     <div class="wcus-pro-features__feature">
                         <?= __('Possibility of mass generation of TTN in one click', 'wc-ukr-shipping-i18n'); ?>
-                    </div>
-                    <div class="wcus-pro-features__feature">
-                        <?= __('SMS notifications', 'wc-ukr-shipping-i18n'); ?>
                     </div>
                     <div class="wcus-pro-features__feature">
                         <?= __('Extended parcels analytics', 'wc-ukr-shipping-i18n'); ?>

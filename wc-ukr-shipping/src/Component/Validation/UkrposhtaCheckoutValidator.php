@@ -4,20 +4,13 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Component\Validation;
 
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+
 class UkrposhtaCheckoutValidator implements CheckoutValidatorInterface
 {
     public function validate(array $data): void
     {
-        $this->validateWarehouseShipping($this->getTypeToValidate($data), $data);
-    }
-
-    private function getTypeToValidate(array $data): string
-    {
-        if (isset($data['ship_to_different_address']) && 1 === (int)$data['ship_to_different_address']) {
-            return 'shipping';
-        }
-
-        return 'billing';
+        $this->validateWarehouseShipping(WCUSHelper::getCheckoutFieldGroup($data), $data);
     }
 
     private function validateWarehouseShipping(string $type, array $data): void

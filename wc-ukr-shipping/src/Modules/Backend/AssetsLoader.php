@@ -56,7 +56,7 @@ class AssetsLoader implements ModuleInterface
             wp_enqueue_script(
                 'wcus_settings_js',
                 WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/settings.min.js',
-                [],
+                ['jquery'],
                 filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/settings.min.js'),
                 true
             );
@@ -131,9 +131,10 @@ class AssetsLoader implements ModuleInterface
         }
 
         $this->injectGlobals('jquery');
+        $this->injectTranslates('jquery');
     }
 
-    private function injectGlobals($scriptId)
+    private function injectGlobals($scriptId): void
     {
         $translator = $this->translateService;
         $translates = $translator->getTranslates();
@@ -171,6 +172,26 @@ class AssetsLoader implements ModuleInterface
         $i18n = [];
         $globals['i18n'] = apply_filters('wcus_load_admin_i18n', $i18n);
         wp_localize_script($scriptId, 'wc_ukr_shipping_globals', $globals);
+    }
+
+    private function injectTranslates($scriptId): void
+    {
+        $translates = file_get_contents(WC_UKR_SHIPPING_PLUGIN_DIR . 'lang/frontend.json');
+        if ($translates === false) {
+            return;
+        }
+
+        $json = json_decode($translates, true);
+        if (json_last_error()) {
+            return;
+        }
+
+        $translations = [];
+        foreach ($json['messages'] ?? [] as $message) {
+            $translations[$message] = __($message, $json['domain']);
+        }
+
+        wp_localize_script($scriptId, 'wc_ukr_shipping_i18n', $translations);
     }
 
     private function getDefaultCities(): array

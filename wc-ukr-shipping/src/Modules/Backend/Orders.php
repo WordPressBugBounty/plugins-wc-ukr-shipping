@@ -125,16 +125,8 @@ class Orders implements ModuleInterface
 
         $data['shipping_label'] = $this->shippingLabelsRepository->findByOrderId((int)$order->get_id());
         $data['order_id'] = $order->get_id();
-
-        $carrier = null;
-        if ($order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
-            $carrier = 'nova_poshta';
-        } elseif ($order->has_shipping_method('wcus_ukrposhta_shipping')) {
-            $carrier = 'ukrposhta';
-        }
-
-        $data['carrier'] = $carrier;
-        $data['download_formats'] = WCUSHelper::getLabelDownloadFormats($carrier);
+        $data['carrier'] = $data['shipping_label']['carrier_slug'] ?? null;
+        $data['download_formats'] = WCUSHelper::getLabelDownloadFormats($data['carrier']);
 
         echo View::render('order/edit_order_metabox', $data);
     }
@@ -176,8 +168,11 @@ class Orders implements ModuleInterface
                 <?php } else { ?>
                     <div style="text-align: center;">
                         <a href="<?= admin_url('admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order->get_id()); ?>"
-                           class="wcus-svg-btn">
+                           class="wcus-svg-btn" style="margin-right: 8px;">
                             <?= __('Create', 'wc-ukr-shipping-i18n'); ?>
+                        </a>
+                        <a href="#" class="wcus-svg-btn j-wcus-label-attach" data-order-id="<?php echo esc_attr($order->get_id()); ?>">
+                            <?php esc_html_e('Attach', 'wc-ukr-shipping-i18n'); ?>
                         </a>
                     </div>
             <?php } ?>

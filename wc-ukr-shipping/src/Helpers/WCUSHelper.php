@@ -90,6 +90,13 @@ class WCUSHelper
         return array_replace_recursive($default, empty($option) ? [] : $option);
     }
 
+    public static function getCheckoutFieldGroup(array $postData): string
+    {
+        return isset($postData['ship_to_different_address']) && (int)$postData['ship_to_different_address'] === 1
+            ? 'shipping'
+            : 'billing';
+    }
+
     public static function getDefaultCities()
     {
         return [
@@ -319,6 +326,100 @@ class WCUSHelper
             [
                 'value' => '26481',
                 'name' => 'м. Хмельницький, Хмельницький р-н, Хмельницька обл.'
+            ],
+        ];
+    }
+
+    public static function getRozetkaDefaultCities(): array
+    {
+        return [
+            [
+                'value' => 'b205dde2-2e2e-4eb9-aef2-a67c82bbdf27',
+                'name' => 'м. Київ, Київська обл.',
+            ],
+            [
+                'value' => 'e1d394d7-1f52-4f6f-b0ba-f7f5afb1628c',
+                'name' => 'м. Харків, Харківська обл.',
+            ],
+            [
+                'value' => "d2ab80d6-1c4e-4ff9-b789-092914d451c6",
+                'name' => 'м. Одеса, Одеська обл.',
+            ],
+            [
+                'value' => '45e6986c-06d0-45d0-9240-49f5b4b4f8a5',
+                'name' => 'м. Дніпро, Дніпропетровська обл.'
+            ],
+            [
+                'value' => '8bee71da-d8dc-4c1a-b1f8-a237f876866d',
+                'name' => 'м. Запоріжжя, Запорізька обл.'
+            ],
+            [
+                'value' => '548de26c-2ba4-4b32-82a2-1216f6886ebd',
+                'name' => 'м. Львів, Львівська обл.'
+            ],
+            [
+                'value' => '6f987ac6-6eb6-4532-bcc0-0f67a8320fe4',
+                'name' => 'м. Кривий Ріг, Дніпропетровська обл.'
+            ],
+            [
+                'value' => '2bc572e9-0013-47ea-a52b-cba7941d0a09',
+                'name' => 'м. Миколаїв, Миколаївська обл.'
+            ],
+            [
+                'value' => '6dc9024c-84fa-42d6-bb6d-cfeb08f9ca1d',
+                'name' => 'м. Вінниця, Вінницька обл.'
+            ],
+            [
+                'value' => 'b054c9be-9b4c-4a76-86f8-cb2161a1ca29',
+                'name' => 'м. Полтава, Полтавська обл.'
+            ],
+            [
+                'value' => '88efb2ad-7403-4c17-ab1c-03521330f367',
+                'name' => 'м. Чернігів, Чернігівська обл.'
+            ],
+            [
+                'value' => 'c403d165-a0d1-42b8-ac99-5221cedc20d4',
+                'name' => 'м. Черкаси, Черкаська обл.'
+            ],
+            [
+                'value' => '8ea8dd6d-57dd-4a63-880f-fcb54c63f060',
+                'name' => 'м. Хмельницький, Хмельницька обл.'
+            ],
+            [
+                'value' => 'c8eb2d3a-5841-4726-9c53-ef39439f4b97',
+                'name' => 'м. Житомир, Житомирська обл.'
+            ],
+            [
+                'value' => '23a8e1df-c399-4815-b45e-dcf9264cf12e',
+                'name' => 'м. Суми, Сумська обл.'
+            ],
+            [
+                'value' => '4b76ddbb-ee57-4455-b790-f2a30b82a223',
+                'name' => 'м. Рівне, Рівненська обл.'
+            ],
+            [
+                'value' => '94567ef8-66b9-4fd7-b01a-82074226b2d7',
+                'name' => 'м. Івано-Франківськ, Івано-Франківська обл.'
+            ],
+            [
+                'value' => '914ff927-0e28-49ef-96c5-1d60bb090d84',
+                'name' => 'м. Кременчук, Полтавська обл.'
+            ],
+            [
+                'value' => '6d83c51c-0eab-4569-b25e-c8a9554f4a26',
+                'name' => 'м. Тернопіль, Тернопільська обл.'
+            ],
+            [
+                'value' => '7de497f2-f8f3-4dea-9ed3-0d5bca4cc4e5',
+                'name' => 'м. Луцьк, Волинська обл.'
+            ],
+            [
+                'value' => 'b2b3f211-5a00-488d-a187-9ef6ed000fb5',
+                'name' => 'м. Біла Церква, Київська обл.'
+            ],
+            [
+                'value' => 'f5e22dc5-2d17-4b0a-b84a-652d6e27e78a',
+                'name' => 'м. Чернівці, Чернівецька обл.'
             ],
         ];
     }

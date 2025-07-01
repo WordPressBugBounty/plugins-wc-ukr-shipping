@@ -4,6 +4,7 @@ namespace kirillbdev\WCUkrShipping\Http\Controllers;
 
 use kirillbdev\WCUkrShipping\Api\SmartyParcelApi;
 use kirillbdev\WCUkrShipping\Component\Automation\Context;
+use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\UkrposhtaBatchLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\UkrposhtaFormLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\FormLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\OrderLabelRequestBuilder;
@@ -133,7 +134,7 @@ class SmartyParcelController extends Controller
     {
         try {
             $carrierAccounts = $this->getCarrierAccountCached();
-            if (count($carrierAccounts) === 0) {
+            if ($request->get('forceReload') === 'true' || count($carrierAccounts) === 0) {
                 $response = $this->api->getCarrierAccounts(
                     get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY)
                 );
@@ -326,6 +327,30 @@ class SmartyParcelController extends Controller
         }
     }
 
+    public function attachShippingLabel(Request $request): ResponseInterface
+    {
+        try {
+            $this->smartyParcelService->attachLabel(
+                $request->get('carrierSlug'),
+                $request->get('trackingNumber'),
+                (int)$request->get('orderId'),
+                $request->get('addToTracking') === 'true'
+            );
+
+            return $this->jsonResponse([
+                'success' => true,
+            ]);
+        } catch (\Exception $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error' => [
+                    'code' => 0,
+                    'message' => $e->getMessage(),
+                ],
+            ]);
+        }
+    }
+
     public function createLabelBatch(Request $request): ResponseInterface
     {
         $order = wc_get_order((int)$request->get('orderId'));
@@ -333,11 +358,29 @@ class SmartyParcelController extends Controller
             throw new \Exception("Order " . (int)$request->get('orderId') . " not found");
         }
 
+        $shippingMethod = WCUSHelper::getOrderShippingMethod($order);
+        if ($shippingMethod === null) {
+            throw new \Exception('Unable to get order shipping method');
+        }
+
+        switch ($shippingMethod->get_method_id()) {
+            case WC_UKR_SHIPPING_NP_SHIPPING_NAME:
+                $carrier = 'nova_poshta';
+                $builder = new OrderLabelRequestBuilder($order);
+                break;
+            case WCUS_SHIPPING_METHOD_UKRPOSHTA:
+                $carrier = 'ukrposhta';
+                $builder = new UkrposhtaBatchLabelRequestBuilder($order);
+                break;
+            default:
+                throw new \Exception('Unable to detect carrier for shipping method');
+        }
+
         try {
             $response = $this->smartyParcelService->createLabel(
-                'nova_poshta', // todo: refactor
+                $carrier,
                 $order->get_id(),
-                new OrderLabelRequestBuilder($order),
+                $builder,
                 (int)$request->get('options')['autoTracking'] === 1
             );
 
@@ -380,8 +423,8 @@ class SmartyParcelController extends Controller
                 throw new \Exception('Label by id ' . $request->get('label_id') . ' not found');
             }
 
-            // We can't void legacy WCUS Pro labels yet
-            if ($label['carrier_slug'] !== 'wcus_pro') {
+            // We can't void legacy WCUS Pro labels or attached labels yet
+            if ($label['label_id']) {
                 $this->api->voidLabel($label['label_id']);
             }
             $this->shippingLabelsRepository->deleteById((int)$label['id']);

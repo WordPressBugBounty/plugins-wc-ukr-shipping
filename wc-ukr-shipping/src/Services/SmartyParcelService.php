@@ -168,6 +168,42 @@ class SmartyParcelService
         );
     }
 
+    public function attachLabel(
+        string $carrierSlug,
+        string $trackingNumber,
+        int $orderId,
+        bool $addTracking
+    ) {
+        $order = wc_get_order($orderId);
+        if ($order === null) {
+            throw new \Exception("Order $orderId not found");
+        }
+
+        $this->labelsRepository->attach($orderId, $trackingNumber, $carrierSlug);
+        $shippingLabel = $this->labelsRepository->findByOrderId($orderId);
+
+        if ($addTracking) {
+            try {
+                $this->api->addTracking($trackingNumber, $carrierSlug);
+                $this->labelsRepository->addToTracking((int)$shippingLabel['id']);
+            } catch (\Throwable $e) {
+                // todo: logs ?
+            }
+        }
+
+        $this->automationService->executeEvent(
+            AutomationService::EVENT_LABEL_ATTACHED,
+            new Context(
+                AutomationService::EVENT_LABEL_CREATED,
+                $order,
+                [
+                    'tracking_number' => $trackingNumber,
+                    'carrier_status' => ''
+                ]
+            )
+        );
+    }
+
     public function createOneTimeUpgradeAction(string $subscription): string
     {
         $response = $this->api->createSubscriptionChangeAction($subscription);

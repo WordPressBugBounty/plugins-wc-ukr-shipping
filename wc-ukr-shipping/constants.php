@@ -4,6 +4,11 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+// Shipping methods
+define('WCUS_SHIPPING_METHOD_UKRPOSHTA', 'wcus_ukrposhta_shipping');
+define('WCUS_SHIPPING_METHOD_NOVA_POST', 'wcus_nova_post_shipping');
+define('WCUS_SHIPPING_METHOD_ROZETKA', 'wcus_rozetka_delivery_shipping');
+
 // Warehouse Type
 define('WCUS_WAREHOUSE_TYPE_REGULAR', 1);
 define('WCUS_WAREHOUSE_TYPE_CARGO', 2);

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Http\Controllers;
 
+use kirillbdev\WCUkrShipping\Component\Carriers\NovaPost\Shipping\NovaPostPUDOProvider;
+use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Shipping\RozetkaDeliveryPUDOProvider;
 use kirillbdev\WCUkrShipping\Component\Shipping\NovaPoshtaPUDOProvider;
 use kirillbdev\WCUkrShipping\Component\Shipping\UkrposhtaPUDOProvider;
 use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
@@ -118,6 +120,7 @@ class AddressController extends Controller
             return [
                 'value' => $item->id,
                 'name' => $locale === 'ru' ? $item->nameRu : $item->nameUa,
+                'meta' => $item->meta,
             ];
         }, $warehouses);
     }
@@ -129,6 +132,10 @@ class AddressController extends Controller
                 return wcus_container()->make(NovaPoshtaPUDOProvider::class);
             case 'ukrposhta':
                 return wcus_container()->make(UkrposhtaPUDOProvider::class);
+            case 'nova_post':
+                return wcus_container()->make(NovaPostPUDOProvider::class);
+            case 'rozetka_delivery':
+                return wcus_container()->make(RozetkaDeliveryPUDOProvider::class);
         }
 
         throw new \Exception('Wrong carrier ' . $carrier);
