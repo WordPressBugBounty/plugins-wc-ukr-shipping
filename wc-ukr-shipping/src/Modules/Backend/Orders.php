@@ -40,7 +40,6 @@ class Orders implements ModuleInterface
     {
         return [
             new Route('wcus_orders_list', OrdersController::class, 'getOrders'),
-            new Route('wcus_generate_ttn', OrdersController::class, 'generateTTN')
         ];
     }
 

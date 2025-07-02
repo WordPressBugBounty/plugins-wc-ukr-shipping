@@ -47,7 +47,7 @@ class UkrPoshtaShipping extends \WC_Shipping_Method
 
         $this->title = __('Ukrposhta', 'wc-ukr-shipping-i18n') . ' ' . __($this->get_option('service_type'), 'wc-ukr-shipping-i18n');
 
-        // Save settings in admin if you have any defined
+        // @phpstan-ignore-next-line
         add_action('woocommerce_update_options_shipping_' . $this->id, [$this, 'process_admin_options']);
     }
 

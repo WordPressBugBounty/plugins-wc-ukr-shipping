@@ -49,7 +49,7 @@ final class Dependencies
             },
             OrderRepositoryInterface::class => function ($container) {
                 $controller = wcus_wc_container_safe_get(CustomOrdersTableController::class);
-                return $controller !== null && $controller ->custom_orders_table_usage_is_enabled()
+                return $controller !== null && $controller->custom_orders_table_usage_is_enabled()
                     ? $container->make(HposOrderRepository::class)
                     : $container->make(OrderRepository::class);
             },
@@ -57,10 +57,6 @@ final class Dependencies
             Activator::class => function ($container) {
                 return new Activator($container->make(Migrator::class));
             },
-            // Controllers
-            AddressController::class => function ($container) {
-                return new AddressController($container->make(MySqlAddressProvider::class));
-            }
         ];
     }
 }

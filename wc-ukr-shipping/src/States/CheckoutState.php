@@ -22,7 +22,7 @@ class CheckoutState extends AppState
         if ((int)wc_ukr_shipping_get_option('wc_ukr_shipping_address_shipping') === 1) {
             $shippingTypes['doors'] = 1;
         }
-        if ((int)wc_ukr_shipping_get_option('wcus_show_poshtomats', 1) === 1) {
+        if ((int)wc_ukr_shipping_get_option('wcus_show_poshtomats') === 1) {
             $shippingTypes['poshtomat'] = 1;
         }
 

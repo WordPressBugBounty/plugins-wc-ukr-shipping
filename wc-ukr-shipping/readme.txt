@@ -5,7 +5,7 @@ License URI: http://www.gnu.org/licenses/gpl.html
 Tags: nova poshta, нова пошта, укрпошта, shipping, woocommerce
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 1.16.0
+Stable tag: 1.16.1
 
 Connect Nova Poshta, Ukrposhta, Rozetka or international delivery services to your WooCommerce store. Create TTN, track orders and calculate rates in one place.
 
@@ -85,6 +85,10 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support WC checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.16.1 / (02.07.2025) =
+* Fixed PHP 8.2 deprecation notice.
+* Code quality improvements.
 
 = Version 1.16.0 / (01.07.2025) =
 * [New] Rozetka Delivery shipping method.

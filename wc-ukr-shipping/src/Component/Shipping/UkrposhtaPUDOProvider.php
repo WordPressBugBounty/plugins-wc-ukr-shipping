@@ -60,7 +60,7 @@ class UkrposhtaPUDOProvider implements PUDOProviderInterface
 
     public function searchCityById(string $id): ?City
     {
-        // TODO: Implement searchCityById() method.
+        throw new \RuntimeException('Not implemented');
     }
 
     public function searchPUDOByQuery(string $cityId, string $query, int $page, array $types = []): array
@@ -111,6 +111,6 @@ class UkrposhtaPUDOProvider implements PUDOProviderInterface
 
     public function searchPUDOById(string $id): ?PUDO
     {
-        // TODO: Implement searchPUDOById() method.
+        throw new \RuntimeException('Not implemented');
     }
 }

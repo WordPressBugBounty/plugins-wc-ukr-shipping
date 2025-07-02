@@ -51,7 +51,7 @@ class NovaPoshtaShipping extends \WC_Shipping_Method
 
         $this->title = $translates['method_title'];
 
-        // Save settings in admin if you have any defined
+        // @phpstan-ignore-next-line
         add_action('woocommerce_update_options_shipping_' . $this->id, array($this, 'process_admin_options'));
     }
 

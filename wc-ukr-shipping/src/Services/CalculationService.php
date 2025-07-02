@@ -6,7 +6,6 @@ use kirillbdev\WCUkrShipping\Dto\Rates\OrderInfoDto;
 use kirillbdev\WCUkrShipping\Factories\Rates\NovaPoshta\NovaPoshtaRatesCalculatorFactory;
 use kirillbdev\WCUkrShipping\Factories\Rates\RatesCalculatorFactoryInterface;
 use kirillbdev\WCUkrShipping\Factories\Rates\Ukrposhta\UkrposhtaRatesCalculatorFactory;
-use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -18,7 +17,6 @@ class CalculationService
 
     public function __construct()
     {
-        $this->productDimensionService = wcus_container()->make(ProductDimensionService::class);
         $this->smartyParcelService = wcus_container()->make(SmartyParcelService::class);
     }
 
