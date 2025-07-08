@@ -2,16 +2,16 @@
 Contributors: kirillbdev
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
-Tags: nova poshta, нова пошта, укрпошта, shipping, woocommerce
+Tags: nova poshta, нова пошта, укрпошта, rozetka delivery, shipping
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 1.16.1
+Stable tag: 1.16.2
 
-Connect Nova Poshta, Ukrposhta, Rozetka or international delivery services to your WooCommerce store. Create TTN, track orders and calculate rates in one place.
+Connect Nova Poshta, Ukrposhta or international delivery services with your store. Create labels, track orders and calculate rates in one place.
 
 == Description ==
 
-**Connect Nova Poshta and Ukrposhta delivery services to your WooCommerce store. Create TTN, track orders and calculate rates in one place.**
+Connect Nova Poshta, Ukrposhta or international delivery services with your store. Create labels, track orders and calculate rates in one place.
 
 [Documentation](https://kirillbdev.pro/docs/wcus-base-setup/)
 [PRO features](https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=wporg)
@@ -37,8 +37,6 @@ https://www.youtube.com/watch?v=K_NFNQ1qkko
 * Support many functions includes COD and Payment control
 * Advanced shipment analytics
 * Integration with popular plugins for localization: WPML and Polylang
-* Support latest versions of WordPress and WooCommerce
-* Support WooCommerce geo zones
 
 == Premium features ==
 
@@ -66,7 +64,7 @@ WC Ukraine Shipping has additional premium features that help you to optimize yo
 
 = Automatic installation =
 
-Automatic installation is the easiest option as WordPress handles the file transfers itself and you don’t need to leave your web browser. To do an automatic install of WooCommerce, log in to your WordPress dashboard, navigate to the Plugins menu and click Add New.
+Automatic installation is the easiest option as WordPress handles the file transfers itself and you don’t need to leave your web browser. To do an automatic install of plugin, log in to your WordPress dashboard, navigate to the Plugins menu and click Add New.
 
 In the search field type “WC Ukr Shipping” and click Search Plugins. Once you’ve found it you can view details about it such as the point release, rating and description. Most importantly of course, you can install it by simply clicking “Install Now”.
 
@@ -82,9 +80,12 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 = Does plugin supports WooCommerce checkout blocks? =
 
-Unfortunately plugin doesn't support WC checkout blocks yet.
+Unfortunately plugin doesn't support checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.16.2 / (08.07.2025) =
+* Code quality improvements.
 
 = Version 1.16.1 / (02.07.2025) =
 * Fixed PHP 8.2 deprecation notice.
