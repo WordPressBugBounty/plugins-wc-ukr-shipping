@@ -131,7 +131,7 @@ class TranslateService
         if (is_admin()) {
             $lang = preg_replace('/_.+$/', '', get_user_locale());
         } else {
-            $lang = get_option('wc_ukr_shipping_np_lang', 'ru');
+            $lang = get_option('wc_ukr_shipping_np_lang', 'uk');
         }
 
         if (function_exists('wpml_get_current_language')) {

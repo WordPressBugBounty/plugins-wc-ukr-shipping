@@ -16,7 +16,7 @@ class UkrPoshtaShipping extends \WC_Shipping_Method
     {
         parent::__construct($instance_id);
 
-        $this->id = 'wcus_ukrposhta_shipping';
+        $this->id = WCUS_SHIPPING_METHOD_UKRPOSHTA;
         $this->method_title = __('Ukrposhta', 'wc-ukr-shipping-i18n');
         $this->method_description = 'Ukrposhta by WC Ukraine Shipping';
 
@@ -45,7 +45,7 @@ class UkrPoshtaShipping extends \WC_Shipping_Method
         $this->init_settings();
         $this->init_form_fields();
 
-        $this->title = __('Ukrposhta', 'wc-ukr-shipping-i18n') . ' ' . __($this->get_option('service_type'), 'wc-ukr-shipping-i18n');
+        $this->title = $this->get_option('title');
 
         // @phpstan-ignore-next-line
         add_action('woocommerce_update_options_shipping_' . $this->id, [$this, 'process_admin_options']);
@@ -58,7 +58,7 @@ class UkrPoshtaShipping extends \WC_Shipping_Method
                 'title' => __('Name', 'woocommerce' ),
                 'type' => 'text',
                 'description' => '',
-                'default' => __('Ukrposhta', 'wc-ukr-shipping-i18n'),
+                'default' => __('Ukrposhta', 'wc-ukr-shipping-i18n') . ' ' . __($this->get_option('service_type'), 'wc-ukr-shipping-i18n'),
             ],
             'service_type' => [
                 'title' => __('Type of shipment', 'wc-ukr-shipping-i18n'),

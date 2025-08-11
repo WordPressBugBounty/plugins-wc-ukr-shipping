@@ -37,6 +37,12 @@
     </div>
 
     <?php
+        HtmlHelper::switcherField(
+            'wcus[combine_poshtomats]',
+            __('Combine poshtomats and warehouses', 'wc-ukr-shipping-i18n'),
+            (int)wc_ukr_shipping_get_option('wcus_combine_poshtomats') === 1
+        );
+
         \kirillbdev\WCUkrShipping\Helpers\HtmlHelper::switcherField(
             'wc_ukr_shipping[np_address_api_ui]',
             __('Use Nova Poshta API for address shipping', 'wc-ukr-shipping-i18n'),

@@ -14,8 +14,8 @@ use kirillbdev\WCUkrShipping\DB\Repositories\HardcodedAreaRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\Orders\HposOrderRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\Orders\OrderRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\Orders\OrderRepositoryInterface;
-use kirillbdev\WCUkrShipping\Http\Controllers\AddressController;
 use kirillbdev\WCUkrShipping\Includes\Customer\LoggedCustomerStorage;
+use kirillbdev\WCUkrShipping\Includes\Customer\NullCustomerStorage;
 use kirillbdev\WCUkrShipping\Includes\Customer\SessionCustomerStorage;
 use kirillbdev\WCUkrShipping\Modules\Core\Activator;
 use kirillbdev\WCUSCore\DB\Migrator;
@@ -33,6 +33,12 @@ final class Dependencies
             // Contracts
             CustomerStorageInterface::class => function ($container) {
                 $customer = wc()->customer;
+                $session = wc()->session;
+
+                if (!$customer && !$session) {
+                    return $container->make(NullCustomerStorage::class);
+                }
+
                 return $container->make($customer ? LoggedCustomerStorage::class : SessionCustomerStorage::class);
             },
             NovaPoshtaAddressProviderInterface::class => function ($container) {

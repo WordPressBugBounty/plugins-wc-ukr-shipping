@@ -37,12 +37,13 @@ class OptionsRepository
             'wc_ukr_shipping_np_price_type' => 'fixed',
             'wc_ukr_shipping_np_price' => 50,
             'wc_ukr_shipping_np_cargo_type' => 'Cargo',
-            'wcus_inject_additional_fields' => 1,
-            'wcus_cost_view_only' => 1,
+            'wcus_inject_additional_fields' => 0,
+            'wcus_cost_view_only' => 0,
+            'wcus_combine_poshtomats' => 0,
 
             // Ukrposhta
             'wcus_ukrposhta_service_type' => 'ukrposhta_standard',
-            'wcus_ukrposhta_cost_view_only' => 1,
+            'wcus_ukrposhta_cost_view_only' => 0,
             'wcus_ukrposhta_cod_payment_active' => 0,
             'wcus_ukrposhta_price_type' => 'fixed',
             'wcus_ukrposhta_price' => 30,
@@ -56,12 +57,12 @@ class OptionsRepository
             'wcus_ukrposhta_cod_payer' => 'recipient',
 
             // Nova Post
-            'wcus_nova_post_cost_view_only' => 1,
+            'wcus_nova_post_cost_view_only' => 0,
             'wcus_nova_post_fixed_cost' => 0,
 
             // Rozetka delivery
             'wcus_rozetka_fixed_cost' => 0,
-            'wcus_rozetka_cost_view_only' => 1,
+            'wcus_rozetka_cost_view_only' => 0,
         ];
 
         return get_option($key, isset($defaults[$key]) ? $defaults[$key] : null);

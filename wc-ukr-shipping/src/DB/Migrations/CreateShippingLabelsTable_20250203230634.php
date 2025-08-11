@@ -21,10 +21,10 @@ class CreateShippingLabelsTable_20250203230634 extends Migration
         $db->query("
             CREATE TABLE IF NOT EXISTS `{$prefix}wc_ukr_shipping_labels` (
                 `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-                `label_id` varchar(255) NOT NULL,
+                `label_id` varchar(191) NOT NULL,
                 `carrier_slug` varchar(50) DEFAULT NULL,
                 `order_id` int(10) NOT NULL DEFAULT '0',
-                `tracking_number` varchar(255) NOT NULL,
+                `tracking_number` varchar(191) NOT NULL,
                 `tracking_status` varchar(100) DEFAULT NULL,
                 `carrier_status` varchar(255) DEFAULT NULL,
                 `carrier_status_code` varchar(255) DEFAULT NULL,

@@ -39,7 +39,7 @@ class NovaPostShipping extends \WC_Shipping_Method
         $this->init_settings();
         $this->init_form_fields();
 
-        $this->title = __('Nova Post', 'wc-ukr-shipping-i18n');
+        $this->title = $this->get_option('title');
 
         // @phpstan-ignore-next-line
         add_action('woocommerce_update_options_shipping_' . $this->id, [$this, 'process_admin_options']);

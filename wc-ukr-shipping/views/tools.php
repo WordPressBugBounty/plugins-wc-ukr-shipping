@@ -11,10 +11,10 @@
         <div class="wcus-settings-layout">
             <div class="wcus-settings">
                 <div class="wcus-settings__header">
-                    <h1 class="wcus-settings__title"><?= __('Tools', 'wc-ukr-shipping-i18n'); ?></h1>
+                    <h1 class="wcus-settings__title"><?php esc_html_e('Tools', 'wc-ukr-shipping-i18n'); ?></h1>
                     <div class="wcus-settings__head-buttons">
                         <button type="submit" class="wcus-settings__submit wcus-btn wcus-btn--primary wcus-btn--md">
-                            <?= __('Save', 'wc-ukr-shipping-i18n'); ?>
+                            <?php esc_html_e('Save', 'wc-ukr-shipping-i18n'); ?>
                         </button>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <?= \kirillbdev\WCUSCore\Foundation\View::render('partial/pro_promotion'); ?>
+        <?php echo \kirillbdev\WCUSCore\Foundation\View::render('partial/pro_promotion'); ?>
 
     </div>
 </form>

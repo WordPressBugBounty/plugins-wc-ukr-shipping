@@ -43,9 +43,9 @@ class Account implements ModuleInterface
     {
         $label = $this->labelsRepository->findByOrderId($order->get_id());
         if ($label !== null) {
-            echo apply_filters(
+            echo esc_html(apply_filters(
                 'wcus_my_account_tracking_number_html', $label['tracking_number'], $label, $order
-            );
+            ));
         }
     }
 }

@@ -42,13 +42,6 @@ if ( ! function_exists('wcus_container')) {
 
 }
 
-if ( ! function_exists('wcus_i18n')) {
-    function wcus_i18n(string $text): string
-    {
-        return __($text, WCUS_TRANSLATE_DOMAIN);
-    }
-}
-
 if (!function_exists('wcus_wc_container_safe_get')) {
 
     function wcus_wc_container_safe_get(string $alias)

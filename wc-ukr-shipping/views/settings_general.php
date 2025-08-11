@@ -16,11 +16,11 @@
             <div class="wcus-settings__header">
                 <div class="wcus-card-icon"><?php echo wc_ukr_shipping_import_svg('settings.svg') ?></div>
                 <h1 class="wcus-settings__title">
-                    <?= __('Settings', 'wc-ukr-shipping-i18n'); ?>
+                    <?php esc_html_e('Settings', 'wc-ukr-shipping-i18n'); ?>
                 </h1>
                 <div class="wcus-settings__head-buttons">
                     <button type="submit" form="wc-ukr-shipping-settings-form" class="wcus-settings__submit wcus-btn wcus-btn--primary wcus-btn--md">
-                        <?= __('Save', 'wc-ukr-shipping-i18n'); ?>
+                        <?php esc_html_e('Save', 'wc-ukr-shipping-i18n'); ?>
                     </button>
                 </div>
                 <div id="wcus-settings-success-msg" class="wcus-settings__success wcus-message wcus-message--success"></div>
@@ -32,12 +32,12 @@
                         <li data-pane="wcus-pane-shipping"><?php esc_html_e('Shipping', 'wc-ukr-shipping-i18n'); ?></li>
                         <li data-pane="wcus-pane-parcels"><?php esc_html_e('Shipping Label', 'wc-ukr-shipping-i18n'); ?></li>
                     </ul>
-                    <?= View::render('partial/settings_general/common'); ?>
-                    <?= View::render('partial/settings_general/shipping', [
+                    <?php echo View::render('partial/settings_general/common'); ?>
+                    <?php echo View::render('partial/settings_general/shipping', [
                         'payment_methods' => $payment_methods,
                         'cod_payment_id' => $cod_payment_id,
                     ]); ?>
-                    <?= View::render('partial/settings_general/parcels'); ?>
+                    <?php echo View::render('partial/settings_general/parcels'); ?>
                 </form>
             </div>
         </div>

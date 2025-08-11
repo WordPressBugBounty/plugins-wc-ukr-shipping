@@ -1,11 +1,11 @@
 === WC Ukraine Shipping - Integration of Nova Poshta and Ukrposhta for WooCommerce ===
 Contributors: kirillbdev
 License: GPLv3
-License URI: http://www.gnu.org/licenses/gpl.html
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: nova poshta, нова пошта, укрпошта, rozetka delivery, shipping
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 1.16.2
+Stable tag: 1.16.3
 
 Connect Nova Poshta, Ukrposhta or international delivery services with your store. Create labels, track orders and calculate rates in one place.
 
@@ -44,13 +44,13 @@ WC Ukraine Shipping has additional premium features that help you to optimize yo
 
 * Unlimited shipments
 * Unlimited carrier accounts
-* Automatic calculation of shipping costs via carrier (Smart Rates API)
+* Automatic calculation of shipping costs via carrier (Smarty Parcel Rates API)
 * Shipping costs calculation based on order total
 * Ability to separate cost calculation for address shipping
 * Ability to bulk generation of shipping labels in one click
 * Tracking shipment statuses
 * Automatic email notifications after generating TTN
-* Automatic sms notifications after generating TTN (with our friendly plugin)
+* Automatic sms notifications after generating TTN
 * Premium support
 
 [Switch to SmartyParcel Advanced](https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=wporg)
@@ -76,6 +76,10 @@ The manual installation method involves downloading this plugin and uploading it
 
 Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
 
+== External services ==
+
+This plugin uses SmartyParcel API to provide advanced logistic functions (like create labels, tracking etc.) and also external API to collect user feedbacks ([Privacy Policy](https://kirillbdev.pro/privacy/)).
+
 == FAQ ==
 
 = Does plugin supports WooCommerce checkout blocks? =
@@ -83,6 +87,12 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 Unfortunately plugin doesn't support checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.16.3 / (11.08.2025) =
+* Added new option "Combine poshtomats and warehouses" for Nova Poshta.
+* Added ability to change shipping method name for Ukrposhta and NovaPost (EU).
+* Fixed blank screen when edit checkout in some cases.
+* Checked compatibility with latest WordPress and WooCommerce versions.
 
 = Version 1.16.2 / (08.07.2025) =
 * Code quality improvements.

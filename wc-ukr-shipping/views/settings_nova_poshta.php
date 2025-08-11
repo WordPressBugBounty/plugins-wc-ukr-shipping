@@ -16,11 +16,11 @@
             <div class="wcus-settings__header">
                 <div class="wcus-card-icon"><?php echo wc_ukr_shipping_import_svg('settings.svg') ?></div>
                 <h1 class="wcus-settings__title">
-                    <?= __('Settings', 'wc-ukr-shipping-i18n'); ?>
+                    <?php esc_html_e('Settings', 'wc-ukr-shipping-i18n'); ?>
                 </h1>
                 <div class="wcus-settings__head-buttons">
                     <button type="submit" form="wc-ukr-shipping-settings-form" class="wcus-settings__submit wcus-btn wcus-btn--primary wcus-btn--md">
-                        <?= __('Save', 'wc-ukr-shipping-i18n'); ?>
+                        <?php esc_html_e('Save', 'wc-ukr-shipping-i18n'); ?>
                     </button>
                 </div>
                 <div id="wcus-settings-success-msg" class="wcus-settings__success wcus-message wcus-message--success"></div>
@@ -33,10 +33,10 @@
                         <li data-pane="wcus-pane-translates"><?php esc_html_e('Translates', 'wc-ukr-shipping-i18n'); ?></li>
                         <li data-pane="wcus-pane-parcels"><?php esc_html_e('Shipping label', 'wc-ukr-shipping-i18n'); ?></li>
                     </ul>
-                    <?= View::render('partial/settings_nova_poshta/checkout'); ?>
-                    <?= View::render('partial/settings_nova_poshta/shipping'); ?>
-                    <?= View::render('partial/settings_nova_poshta/translates'); ?>
-                    <?= View::render('partial/settings_nova_poshta/parcels', [
+                    <?php echo View::render('partial/settings_nova_poshta/checkout'); ?>
+                    <?php echo View::render('partial/settings_nova_poshta/shipping'); ?>
+                    <?php echo View::render('partial/settings_nova_poshta/translates'); ?>
+                    <?php echo View::render('partial/settings_nova_poshta/parcels', [
                         'carrierAccounts' => $carrierAccounts,
                         'payment_control_default' => $payment_control_default,
                     ]); ?>

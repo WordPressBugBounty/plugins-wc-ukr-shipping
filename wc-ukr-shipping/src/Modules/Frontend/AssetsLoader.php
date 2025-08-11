@@ -67,7 +67,7 @@ class AssetsLoader implements ModuleInterface
           }
 
           .wcus-state-loading:after {
-              border-color: <?= get_option('wc_ukr_shipping_spinner_color', '#dddddd'); ?>;
+              border-color: <?php echo esc_html(get_option('wc_ukr_shipping_spinner_color', '#dddddd')); ?>;
               border-left-color: #fff;
           }
       </style>
@@ -90,6 +90,7 @@ class AssetsLoader implements ModuleInterface
             'options' => [
                 'address_shipping_enable' => (int)wc_ukr_shipping_get_option('wc_ukr_shipping_address_shipping'),
                 'apiAddressEnable' => (int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui'),
+                'combinePoshtomats' => (int)wc_ukr_shipping_get_option('wcus_combine_poshtomats') === 1,
                 'ukrposhtaDDProvider' => wc_ukr_shipping_get_option('wcus_ukrposhta_dd_provider'),
             ]
         ];

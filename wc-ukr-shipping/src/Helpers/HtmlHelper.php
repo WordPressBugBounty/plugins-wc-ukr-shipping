@@ -87,7 +87,7 @@ class HtmlHelper
             <label for="<?php echo esc_attr($id); ?>"><?php echo esc_html($label); ?></label>
             <select name="<?php echo esc_attr($name); ?>" id="<?php echo esc_attr($id); ?>" class="wcus-form-control">
                 <?php foreach ($options as $optionValue => $optionName) { ?>
-                    <option value="<?php echo esc_attr($optionValue); ?>" <?php echo $optionValue === $value ? 'selected' : ''; ?>>
+                    <option value="<?php echo esc_attr($optionValue); ?>" <?php echo (string)$optionValue === $value ? 'selected' : ''; ?>>
                         <?php echo esc_html($optionName); ?>
                     </option>
                 <?php } ?>

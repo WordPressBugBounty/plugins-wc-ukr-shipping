@@ -14,24 +14,24 @@
             <h1 class="wcus-settings__title"><?php esc_html_e('Rule constructor', 'wc-ukr-shipping-i18n'); ?></h1>
             <div class="wcus-settings__head-buttons">
                 <button type="submit" class="wcus-settings__submit wcus-btn wcus-btn--primary wcus-btn--md">
-                    <?= __('Save', 'wc-ukr-shipping-i18n'); ?>
+                    <?php esc_html_e('Save', 'wc-ukr-shipping-i18n'); ?>
                 </button>
             </div>
         </div>
         <div class="wcus-settings__content">
-            <input type="hidden" name="rule_id" value="<?= $model !== null ? $model->id : 0; ?>" />
+            <input type="hidden" name="rule_id" value="<?php echo esc_attr($model !== null ? $model->id : 0); ?>" />
             <?php
-            HtmlHelper::textField(
-                'rule_name',
-                __('Name', 'wc-ukr-shipping-i18n'),
-                $model->name ?? ''
-            );
+                HtmlHelper::textField(
+                    'rule_name',
+                    __('Name', 'wc-ukr-shipping-i18n'),
+                    $model->name ?? ''
+                );
 
-            HtmlHelper::switcherField(
-                'active',
-                __('Active', 'wc-ukr-shipping-i18n'),
-                $model !== null ? (bool)$model->active : true
-            );
+                HtmlHelper::switcherField(
+                    'active',
+                    __('Active', 'wc-ukr-shipping-i18n'),
+                    $model !== null ? (bool)$model->active : true
+                );
             ?>
             <div id="wcus-automation-app"></div>
         </div>
@@ -43,10 +43,10 @@
             <?php if ($model !== null) { ?>
                 window.WcusAutomation.init({
                     event: {
-                        type: '<?= $model->event_name ?>',
-                        params: <?= $model->event_data; ?>
+                        type: '<?php echo esc_js($model->event_name); ?>',
+                        params: <?php echo $model->event_data; ?>
                     },
-                    actions: <?= json_encode($model->actions); ?>
+                    actions: <?php echo json_encode($model->actions); ?>
                 });
             <?php } else { ?>
                 window.WcusAutomation.init();

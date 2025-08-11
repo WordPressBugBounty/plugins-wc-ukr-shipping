@@ -11,7 +11,7 @@ class CheckoutService
     public function renderCheckoutFields(string $type)
     {
         ?>
-        <div id="wcus-<?= $type ?>-fields"></div>
+        <div id="wcus-<?php echo esc_attr($type); ?>-fields"></div>
         <?php
     }
 }

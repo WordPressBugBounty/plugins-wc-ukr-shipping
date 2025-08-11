@@ -25,6 +25,9 @@ class CheckoutState extends AppState
         if ((int)wc_ukr_shipping_get_option('wcus_show_poshtomats') === 1) {
             $shippingTypes['poshtomat'] = 1;
         }
+        if ((int)wc_ukr_shipping_get_option('wcus_combine_poshtomats') === 1) {
+            unset($shippingTypes['poshtomat']);
+        }
 
         return [
             'city' => CityUIValue::fromFinder($finder),

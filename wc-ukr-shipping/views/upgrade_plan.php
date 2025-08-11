@@ -69,6 +69,6 @@
         </div>
     </div>
 
-    <?= \kirillbdev\WCUSCore\Foundation\View::render('partial/pro_promotion', ['hidePromo' => true]); ?>
+    <?php echo \kirillbdev\WCUSCore\Foundation\View::render('partial/pro_promotion', ['hidePromo' => true]); ?>
 
 </div>

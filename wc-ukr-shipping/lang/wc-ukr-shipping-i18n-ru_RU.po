@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2025-07-01T15:31:07+03:00\n"
+"POT-Creation-Date: 2025-08-11T23:39:17+03:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Domain: wc-ukr-shipping-i18n\n"
 
 #. Plugin Name of the plugin
-#: src/Modules/Backend/Orders.php:112
+#: src/Modules/Backend/Orders.php:111
 msgid "WC Ukraine Shipping"
 msgstr ""
 
@@ -47,7 +47,6 @@ msgid "Nova Poshta"
 msgstr "Новая Почта"
 
 #: lang/frontend.php:1 src/Foundation/UkrPoshtaShipping.php:20
-#: src/Foundation/UkrPoshtaShipping.php:48
 #: src/Foundation/UkrPoshtaShipping.php:61 src/Services/TranslateService.php:71
 #: views/partial/settings_top.php:20
 msgid "Ukrposhta"
@@ -65,13 +64,48 @@ msgstr "Трекинг номер"
 msgid "Add to tracking"
 msgstr "Добавить в трекинг"
 
-#: lang/frontend.php:1 src/Modules/Backend/Orders.php:183
+#: lang/frontend.php:1 src/Modules/Backend/Orders.php:174
 msgid "Attach"
 msgstr "Привязать"
 
 #: lang/frontend.php:1
 msgid "Unable to attach label for order"
 msgstr "Не удалось привязать накладную к заказу"
+
+#: src/Component/ListTable/AutomationListTable.php:56 views/automation.php:26
+msgid "Name"
+msgstr "Название"
+
+#: src/Component/ListTable/AutomationListTable.php:57
+msgid "Event"
+msgstr ""
+
+#: src/Component/ListTable/AutomationListTable.php:58
+msgid "Event data"
+msgstr ""
+
+#: src/Component/ListTable/AutomationListTable.php:59 views/automation.php:32
+msgid "Active"
+msgstr "Активный"
+
+#: src/Component/ListTable/AutomationListTable.php:60
+msgid "Created At"
+msgstr "Дата создания"
+
+#: src/Component/ListTable/AutomationListTable.php:92
+#: src/Modules/Backend/OptionsPage.php:150
+#: src/Modules/Backend/OptionsPage.php:151
+msgid "Edit"
+msgstr "Редактировать"
+
+#: src/Component/ListTable/AutomationListTable.php:97
+msgid "Confirm action"
+msgstr ""
+
+#: src/Component/ListTable/AutomationListTable.php:98
+#: src/Modules/Backend/Orders.php:163 views/order/edit_order_metabox.php:24
+msgid "Delete"
+msgstr "Удалить"
 
 #: src/Component/Validation/NovaPoshtaCheckoutValidator.php:57
 msgid "Enter shipping address of Nova Poshta"
@@ -104,7 +138,6 @@ msgid "plugin settings page"
 msgstr "странице настроек плагина"
 
 #: src/Foundation/NovaPostShipping.php:20
-#: src/Foundation/NovaPostShipping.php:42
 #: src/Foundation/NovaPostShipping.php:55 views/partial/settings_top.php:28
 msgid "Nova Post"
 msgstr ""
@@ -170,14 +203,9 @@ msgid "Automation"
 msgstr "Автоматизация"
 
 #: src/Modules/Backend/OptionsPage.php:141
-#: src/Modules/Backend/OptionsPage.php:142 src/Modules/Backend/Orders.php:180
+#: src/Modules/Backend/OptionsPage.php:142 src/Modules/Backend/Orders.php:171
 msgid "Create"
 msgstr "Создать"
-
-#: src/Modules/Backend/OptionsPage.php:150
-#: src/Modules/Backend/OptionsPage.php:151
-msgid "Edit"
-msgstr "Редактировать"
 
 #: src/Modules/Backend/OptionsPage.php:159
 #: src/Modules/Backend/OptionsPage.php:160 views/tools.php:14
@@ -248,89 +276,93 @@ msgstr ""
 msgid "Add rule"
 msgstr "Добавить правило"
 
-#: src/Modules/Backend/Orders.php:49 src/Modules/Frontend/Account.php:31
+#: src/Modules/Backend/OptionsPage.php:339
+msgid "Rule not found"
+msgstr "Правило не найдено"
+
+#: src/Modules/Backend/OptionsPage.php:348
+msgid "Rule saved successfully"
+msgstr "Правило успешно сохранено"
+
+#: src/Modules/Backend/Orders.php:48 src/Modules/Frontend/Account.php:31
 #: views/settings_nova_poshta.php:34 views/settings_ukrposhta.php:32
 msgid "Shipping label"
 msgstr "Накладная"
 
-#: src/Modules/Backend/Orders.php:172 views/order/edit_order_metabox.php:24
-msgid "Delete"
-msgstr "Удалить"
-
-#: src/Modules/Frontend/AssetsLoader.php:101
+#: src/Modules/Frontend/AssetsLoader.php:102
 #: src/Services/TranslateService.php:49
 msgid "Select shipping address"
 msgstr "Укажите адрес доставки"
 
-#: src/Modules/Frontend/AssetsLoader.php:102
+#: src/Modules/Frontend/AssetsLoader.php:103
 msgid "to warehouse"
 msgstr "на отделение"
 
-#: src/Modules/Frontend/AssetsLoader.php:103
+#: src/Modules/Frontend/AssetsLoader.php:104
 msgid "to doors"
 msgstr "до дверей"
 
-#: src/Modules/Frontend/AssetsLoader.php:104
+#: src/Modules/Frontend/AssetsLoader.php:105
 msgid "to the poshtomat"
 msgstr "на почтомат"
 
-#: src/Modules/Frontend/AssetsLoader.php:106
+#: src/Modules/Frontend/AssetsLoader.php:107
 #: src/Services/TranslateService.php:51
 msgid "Select city"
 msgstr "Выберите город"
 
-#: src/Modules/Frontend/AssetsLoader.php:107
+#: src/Modules/Frontend/AssetsLoader.php:108
 #: src/Services/TranslateService.php:52
 msgid "Select warehouse"
 msgstr "Выберите отделение"
 
-#: src/Modules/Frontend/AssetsLoader.php:108
+#: src/Modules/Frontend/AssetsLoader.php:109
 msgid "Select poshtomat"
 msgstr "Выберите почтомат"
 
-#: src/Modules/Frontend/AssetsLoader.php:109
+#: src/Modules/Frontend/AssetsLoader.php:110
 #: src/Services/TranslateService.php:54
 msgid "Enter address"
 msgstr "Введите адрес"
 
-#: src/Modules/Frontend/AssetsLoader.php:110
+#: src/Modules/Frontend/AssetsLoader.php:111
 msgid "Enter value for search"
 msgstr "Введите значение для поиска"
 
-#: src/Modules/Frontend/AssetsLoader.php:111
+#: src/Modules/Frontend/AssetsLoader.php:112
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: src/Modules/Frontend/AssetsLoader.php:112
+#: src/Modules/Frontend/AssetsLoader.php:113
 msgid "Load more"
 msgstr "Загрузить еще"
 
-#: src/Modules/Frontend/AssetsLoader.php:113
+#: src/Modules/Frontend/AssetsLoader.php:114
 #: src/Services/TranslateService.php:55
 msgid "Nothing found"
 msgstr "Ничего не найдено"
 
-#: src/Modules/Frontend/AssetsLoader.php:114
+#: src/Modules/Frontend/AssetsLoader.php:115
 msgid "Enter more chars"
 msgstr "Введите больше символов"
 
-#: src/Modules/Frontend/AssetsLoader.php:115
+#: src/Modules/Frontend/AssetsLoader.php:116
 msgid "Settlement"
 msgstr "Населенный пункт"
 
-#: src/Modules/Frontend/AssetsLoader.php:116
+#: src/Modules/Frontend/AssetsLoader.php:117
 msgid "Street"
 msgstr "Улица"
 
-#: src/Modules/Frontend/AssetsLoader.php:117
+#: src/Modules/Frontend/AssetsLoader.php:118
 msgid "House"
 msgstr "Дом"
 
-#: src/Modules/Frontend/AssetsLoader.php:118
+#: src/Modules/Frontend/AssetsLoader.php:119
 msgid "Flat"
 msgstr "Квартира"
 
-#: src/Modules/Frontend/AssetsLoader.php:119
+#: src/Modules/Frontend/AssetsLoader.php:120
 msgid "Something went wrong"
 msgstr "Что-то пошло не так"
 
@@ -357,13 +389,13 @@ msgstr "Конструктор правил"
 msgid "Save"
 msgstr "Сохранить"
 
-#: views/automation.php:26
-msgid "Name"
-msgstr "Название"
+#: views/order/edit_order_metabox.php:47
+msgid "Create shipping label"
+msgstr "Создать накладную"
 
-#: views/automation.php:32
-msgid "Active"
-msgstr "Активный"
+#: views/order/edit_order_metabox.php:51
+msgid "Attach shipping label"
+msgstr "Привязать накладную"
 
 #: views/partial/pro_promotion.php:12
 msgid "Need help?"
@@ -521,6 +553,10 @@ msgid "Show poshtomats"
 msgstr "Показывать почтоматы"
 
 #: views/partial/settings_nova_poshta/checkout.php:42
+msgid "Combine poshtomats and warehouses"
+msgstr "Объединить почтоматы и отделения"
+
+#: views/partial/settings_nova_poshta/checkout.php:48
 msgid "Use Nova Poshta API for address shipping"
 msgstr "Использовать API новой Почты для адресной доставки"
 
@@ -565,12 +601,12 @@ msgstr "Контроль оплаты"
 #: views/partial/settings_nova_poshta/shipping.php:14
 #: views/partial/settings_nova_post/shipping.php:14
 #: views/partial/settings_rozetka/shipping.php:14
-#: views/partial/settings_ukrposhta/shipping.php:14
+#: views/partial/settings_ukrposhta/shipping.php:21
 msgid "Calculate shipping cost for view only"
 msgstr "Рассчитывать стоимость доставки только для просмотра"
 
 #: views/partial/settings_nova_poshta/shipping.php:20
-#: views/partial/settings_ukrposhta/shipping.php:20
+#: views/partial/settings_ukrposhta/shipping.php:27
 msgid "Take COD into account when calculating shipping cost"
 msgstr "Учитывать наложенный платеж при расчете стоимости доставки"
 
@@ -660,6 +696,14 @@ msgstr "SMS сообщение о прибытии посылки"
 #: views/partial/settings_ukrposhta/parcels.php:71
 msgid "COD payer"
 msgstr "Плательщик за услугу обратной доставки"
+
+#: views/partial/settings_ukrposhta/shipping.php:14
+msgid "Bearer eCom"
+msgstr ""
+
+#: views/partial/settings_ukrposhta/shipping.php:16
+msgid "Bearer eCom token is required to search for warehouses across Ukraine."
+msgstr "Bearer eCom токен необходим для поиска отделений по Украине."
 
 #: views/settings_general.php:31
 msgid "General"

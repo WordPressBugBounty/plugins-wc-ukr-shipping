@@ -9,7 +9,7 @@ if ( ! defined('ABSPATH')) {
     <div class="wcus-settings-layout" style="width: 90%;">
         <div id="wcus-smarty-parcel-settings" class="wcus-settings">
             <div class="wcus-settings__header">
-                <h1 class="wcus-settings__title"><?= __('New TTN', 'wc-ukr-shipping-i18n'); ?></h1>
+                <h1 class="wcus-settings__title"><?php esc_html_e('New TTN', 'wc-ukr-shipping-i18n'); ?></h1>
             </div>
             <div class="wcus-settings__content">
                 <?php esc_html_e('The plugin must be connected to the Smarty Parcel service to use the functionality of creating a TTN', 'wc-ukr-shipping-i18n'); ?>

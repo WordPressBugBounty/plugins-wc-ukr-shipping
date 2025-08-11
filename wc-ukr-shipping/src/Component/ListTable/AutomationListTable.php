@@ -53,11 +53,11 @@ class AutomationListTable extends \WP_List_Table
     {
         return [
             'cb' => '<input type="checkbox" />',
-            'name' => __('Name', 'wc-ukr-shipping-pro'),
-            'event_name' => __('Event', 'wc-ukr-shipping-pro'),
-            'event_data' => __('Event data', 'wc-ukr-shipping-pro'),
-            'active' => __('Active', 'wc-ukr-shipping-pro'),
-            'created_at' => __('Created At', 'wc-ukr-shipping-pro'),
+            'name' => __('Name', 'wc-ukr-shipping-i18n'),
+            'event_name' => __('Event', 'wc-ukr-shipping-i18n'),
+            'event_data' => __('Event data', 'wc-ukr-shipping-i18n'),
+            'active' => __('Active', 'wc-ukr-shipping-i18n'),
+            'created_at' => __('Created At', 'wc-ukr-shipping-i18n'),
         ];
     }
 
@@ -89,13 +89,13 @@ class AutomationListTable extends \WP_List_Table
             $actions['edit'] = sprintf(
                 '<a href="%s">%s</a>',
                 admin_url('admin.php?page=wcus_automation_rule_edit&id=' . (int)$item->id),
-                __('Edit','wc-ukr-shipping-pro')
+                __('Edit','wc-ukr-shipping-i18n')
             );
             $actions['delete'] = sprintf(
                 '<a href="%s" onclick = "return confirm( \'%s\' );">%s</a>',
                 wp_nonce_url('?page=wcus_automation&action=delete&id=' . $item->id, 'wcus_automation_delete'),
-                esc_js(__( 'Confirm action', 'wc-ukr-shipping-pro')),
-                esc_html__( 'Delete', 'wc-ukr-shipping-pro')
+                esc_js(__( 'Confirm action', 'wc-ukr-shipping-i18n')),
+                esc_html__( 'Delete', 'wc-ukr-shipping-i18n')
             );
 
             return esc_html( $item->name ) . $this->row_actions( $actions );
@@ -110,7 +110,9 @@ class AutomationListTable extends \WP_List_Table
      */
     function column_cb($item): void
     {
-        echo '<input type="checkbox" name="licids[]" id="cb-select-'. $item->id .'" value="'. $item->id .'" />';
+    ?>
+        <input type="checkbox" name="licids[]" id="cb-select-<?php echo esc_attr($item->id); ?>" value="<?php echo esc_attr($item->id); ?>" />
+    <?php
     }
 
     private function bulk_action_handler(): void

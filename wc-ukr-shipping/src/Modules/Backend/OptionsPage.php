@@ -336,7 +336,7 @@ class OptionsPage implements ModuleInterface
             if ($model === null) {
                 echo sprintf(
                     '<div class="notice notice-error">%s</div>',
-                    __('Rule not found', 'wc-ukr-shipping-pro')
+                    esc_html(__('Rule not found', 'wc-ukr-shipping-i18n'))
                 );
                 return;
             }
@@ -345,7 +345,7 @@ class OptionsPage implements ModuleInterface
         echo View::render('automation', [
             'model' => $model,
             'successMsg' => isset($_GET['success']) && $_GET['success'] === '1'
-                ? __('Rule saved successfully', 'wc-ukr-shipping-pro')
+                ? __('Rule saved successfully', 'wc-ukr-shipping-i18n')
                 : null,
         ]);
     }
