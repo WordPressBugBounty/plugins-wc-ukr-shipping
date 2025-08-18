@@ -3,6 +3,7 @@
 namespace kirillbdev\WCUkrShipping\Http\Controllers;
 
 use kirillbdev\WCUkrShipping\Api\SmartyParcelApi;
+use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 use kirillbdev\WCUkrShipping\Component\Automation\Context;
 use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\UkrposhtaBatchLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\UkrposhtaFormLabelRequestBuilder;
@@ -20,89 +21,40 @@ use kirillbdev\WCUSCore\Http\Request;
 class SmartyParcelController extends Controller
 {
     private SmartyParcelApi $api;
+    private SmartyParcelWPApi $spApi;
     private SmartyParcelService $smartyParcelService;
     private ShippingLabelsRepository $shippingLabelsRepository;
     private AutomationService $automationService;
 
     public function __construct(
         SmartyParcelApi $api,
+        SmartyParcelWPApi $spApi,
         SmartyParcelService $smartyParcelService,
         ShippingLabelsRepository $shippingLabelsRepository,
         AutomationService $automationService
     ) {
         $this->api = $api;
+        $this->spApi = $spApi;
         $this->smartyParcelService = $smartyParcelService;
         $this->shippingLabelsRepository = $shippingLabelsRepository;
         $this->automationService = $automationService;
     }
 
-    public function connect(Request $request): ResponseInterface
+    public function sendApiRequest(Request $request): ResponseInterface
     {
         try {
-            $apiKey = $request->get('api_key');
-            $data = $this->api->connectApplication($apiKey);
-
-            update_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY, $apiKey);
-            update_option(WCUS_OPTION_SMARTY_PARCEL_APP_STATUS, 'connected');
-            if ($data['verified']) {
-                update_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS, 'connected');
-            } else {
-                update_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS, 'waiting_verification');
-            }
-
             return $this->jsonResponse([
                 'success' => true,
-                'data' => [
-                    'auth_state' => get_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS),
-                    'account' => $data,
+                'data' => $this->spApi->sendRequest($request->get('route'), $request->get('payload')),
+            ]);
+        } catch (SmartyParcelErrorException $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error' => [
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage(),
+                    'details ' => $e->getDetails(),
                 ]
-            ]);
-        } catch (\Throwable $e) {
-            return $this->jsonResponse([
-                'success' => false,
-                'error'   => $e->getMessage(),
-            ]);
-        }
-    }
-
-    public function checkVerification(Request $request): ResponseInterface
-    {
-        try {
-            $data = $this->api->getUserStatus(get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY));
-            if ($data['verified']) {
-                update_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS, 'connected');
-            }
-
-            return $this->jsonResponse([
-                'success' => true,
-                'data' => [
-                    'auth_state' => get_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS),
-                    'account' => $data,
-                ]
-            ]);
-        } catch (\Throwable $e) {
-            return $this->jsonResponse([
-                'success' => false,
-                'error'   => $e->getMessage(),
-            ]);
-        }
-    }
-
-    public function refreshAccountInfo(Request $request): ResponseInterface
-    {
-        try {
-            $this->smartyParcelService->tryConnectApplication();
-            $account = $this->api->getUserStatus(get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY));
-            set_transient('smarty_parcel_account', $account, 900);
-
-            return $this->jsonResponse([
-                'success' => true,
-                'data' => $account,
-            ]);
-        } catch (\Throwable $e) {
-            return $this->jsonResponse([
-                'success' => false,
-                'error'   => $e->getMessage(),
             ]);
         }
     }
@@ -114,43 +66,12 @@ class SmartyParcelController extends Controller
 
             delete_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
             delete_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS);
-            delete_option(WCUS_OPTION_SMARTY_PARCEL_CARRIERS);
             delete_option('wcus_nova_poshta_default_carrier');
-            delete_option(WCUS_OPTION_SMARTY_PARCEL_APP_STATUS);
-            delete_transient('smarty_parcel_account');
+            delete_option('wcus_ukrposhta_default_carrier');
+            delete_transient('smarty_parcel_acc');
 
             return $this->jsonResponse([
                 'success' => true,
-            ]);
-        } catch (\Throwable $e) {
-            return $this->jsonResponse([
-                'success' => false,
-                'error'   => $e->getMessage(),
-            ]);
-        }
-    }
-
-    public function getCarrierAccounts(Request $request): ResponseInterface
-    {
-        try {
-            $carrierAccounts = $this->getCarrierAccountCached();
-            if ($request->get('forceReload') === 'true' || count($carrierAccounts) === 0) {
-                $response = $this->api->getCarrierAccounts(
-                    get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY)
-                );
-                $carrierAccounts = array_map(function ($acc) {
-                    return [
-                        'id' => $acc['id'],
-                        'name' => $acc['name'],
-                        'carrier_slug' => $acc['carrier_slug']
-                    ];
-                }, $response['carriers']);
-                update_option(WCUS_OPTION_SMARTY_PARCEL_CARRIERS, json_encode($carrierAccounts));
-            }
-
-            return $this->jsonResponse([
-                'success' => true,
-                'data' => $carrierAccounts,
             ]);
         } catch (\Throwable $e) {
             return $this->jsonResponse([

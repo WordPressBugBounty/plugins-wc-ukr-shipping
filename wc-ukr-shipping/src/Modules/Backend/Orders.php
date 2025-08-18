@@ -89,7 +89,7 @@ class Orders implements ModuleInterface
         header('Content-Type: application/pdf');
         $client = new WpHttpClient();
         echo $client->get(
-            'https://api.smartyparcel.com/beta/labels/' . $shippingLabel['label_id'] . "/pdf?format=$format",
+            'https://wp-api.smartyparcel.com/v1/labels/' . $shippingLabel['label_id'] . "/pdf?format=$format",
             [
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
                 'SP-Site-Url' => site_url(),

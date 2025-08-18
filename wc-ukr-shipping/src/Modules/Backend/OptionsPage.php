@@ -8,6 +8,7 @@ use kirillbdev\WCUkrShipping\DB\Repositories\AutomationRulesRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\LegacyTtnRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUkrShipping\Foundation\State;
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Http\Controllers\AddressBookController;
 use kirillbdev\WCUkrShipping\Http\Controllers\AutomationController;
@@ -18,7 +19,6 @@ use kirillbdev\WCUkrShipping\Model\Document\TTNStore;
 use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUkrShipping\States\OptionsPageState;
 use kirillbdev\WCUkrShipping\States\OrdersState;
-use kirillbdev\WCUkrShipping\States\SmartyParcelState;
 use kirillbdev\WCUkrShipping\States\WarehouseLoaderState;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 use kirillbdev\WCUSCore\Foundation\View;
@@ -63,15 +63,12 @@ class OptionsPage implements ModuleInterface
             new Route('wcus_load_cities', AddressBookController::class, 'loadCities'),
             new Route('wcus_load_warehouses', AddressBookController::class, 'loadWarehouses'),
 
-            new Route('wcus_smarty_parcel_check_verification', SmartyParcelController::class, 'checkVerification'),
-            new Route('wcus_smarty_parcel_refresh_account', SmartyParcelController::class, 'refreshAccountInfo'),
-            new Route('wcus_smarty_parcel_connect', SmartyParcelController::class, 'connect'),
-            new Route('wcus_smarty_parcel_disconnect', SmartyParcelController::class, 'disconnect'),
-            new Route('wcus_smarty_parcel_carrier_accounts', SmartyParcelController::class, 'getCarrierAccounts'),
+            new Route('wcus_smartyparcel_api', SmartyParcelController::class, 'sendApiRequest'),
+            new Route('wcus_smartyparcel_connect', SmartyParcelController::class, 'connect'),
+            new Route('wcus_smartyparcel_disconnect', SmartyParcelController::class, 'disconnect'),
             new Route('wcus_smarty_parcel_create_label', SmartyParcelController::class, 'createShippingLabel'),
             new Route('wcus_smarty_parcel_create_label_batch', SmartyParcelController::class, 'createLabelBatch'),
             new Route('wcus_smarty_parcel_void_label', SmartyParcelController::class, 'voidLabel'),
-            new Route('wcus_smarty_parcel_upgrade', SmartyParcelController::class, 'upgradePlan'),
             new Route('wcus_attach_label', SmartyParcelController::class, 'attachShippingLabel'),
             new Route('wcus_automation_save_rule', AutomationController::class, 'saveRule'),
 
@@ -84,7 +81,6 @@ class OptionsPage implements ModuleInterface
     {
         State::add('warehouse_loader', WarehouseLoaderState::class);
         State::add('options', OptionsPageState::class);
-        State::add('smarty_parcel', SmartyParcelState::class);
         State::add('orders', OrdersState::class);
 
         add_menu_page(
@@ -162,15 +158,6 @@ class OptionsPage implements ModuleInterface
             'wc_ukr_shipping_tools',
             [$this, 'toolsHtml']
         );
-
-        add_submenu_page(
-            '',
-            __('Upgrade pricing plan', 'wc-ukr-shipping-i18n'),
-            __('Upgrade pricing plan', 'wc-ukr-shipping-i18n'),
-            'manage_woocommerce',
-            'wcus_smarty_parcel_upgrade_plan',
-            [$this, 'upgradePlanHtml']
-        );
     }
 
     public function registerSettings(): void
@@ -241,7 +228,7 @@ class OptionsPage implements ModuleInterface
 
     public function ttnHtml(): void
     {
-        if (get_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS) !== 'connected') {
+        if (!SmartyParcelHelper::isConnected()) {
             echo View::render('ttn/ttn_forbidden');
             return;
         }
@@ -354,13 +341,6 @@ class OptionsPage implements ModuleInterface
     {
         echo View::render('tools', [
             'legacyTtnCount' => $this->legacyTtnRepository->getCountTtn(),
-        ]);
-    }
-
-    public function upgradePlanHtml(): void
-    {
-        echo View::render('upgrade_plan', [
-            'quotaReached' => isset($_GET['source']) && $_GET['source'] === 'free_quota_reached',
         ]);
     }
 }

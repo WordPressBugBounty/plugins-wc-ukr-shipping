@@ -8,6 +8,7 @@ use kirillbdev\WCUkrShipping\Factories\ProductFactory;
 use kirillbdev\WCUkrShipping\Foundation\UkrPoshtaShipping;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
+use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 
 class SingleLabelDataCollector
 {
@@ -16,6 +17,7 @@ class SingleLabelDataCollector
     private \WC_Order_Item_Shipping $orderShipping;
     private array $orderProducts;
     private ProductDimensionService $productDimensionService;
+    private SmartyParcelService $smartyParcelService;
 
     public function __construct(\WC_Order $order)
     {
@@ -25,6 +27,7 @@ class SingleLabelDataCollector
 
         $factory = new ProductFactory();
         $this->productDimensionService = wcus_container()->make(ProductDimensionService::class);
+        $this->smartyParcelService = wcus_container()->make(SmartyParcelService::class);
 
         foreach ($this->order->get_items() as $item) {
             /** @var \WC_Order_Item_Product $item */
@@ -77,12 +80,7 @@ class SingleLabelDataCollector
 
     private function collectSender(): void
     {
-        $accounts = array_values(
-            array_filter($this->getCarrierAccountCached(), function (array $account) {
-                return ($account['carrier_slug'] ?? '') === 'ukrposhta';
-            })
-        );
-
+        $accounts = $this->smartyParcelService->getCarrierAccounts('ukrposhta');
         $defaultAcc = wc_ukr_shipping_get_option('wcus_ukrposhta_default_carrier');
         if (empty($defaultAcc)) {
             $defaultAcc = $accounts[0]['id'] ?? '';
@@ -153,19 +151,6 @@ class SingleLabelDataCollector
             'check_on_delivery' => (int)wc_ukr_shipping_get_option('wcus_ukrposhta_check_on_delivery') === 1,
             'sms_notification' => (int)wc_ukr_shipping_get_option('wcus_ukrposhta_sms_notification') === 1,
         ];
-    }
-
-    private function getCarrierAccountCached(): array
-    {
-        $carrierAccounts = get_option(WCUS_OPTION_SMARTY_PARCEL_CARRIERS);
-        if ($carrierAccounts) {
-            $carrierAccounts = json_decode($carrierAccounts, true);
-            if (json_last_error() === JSON_ERROR_NONE) {
-                return $carrierAccounts;
-            }
-        }
-
-        return [];
     }
 
     private function calculateWeight(): float

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-11T23:39:17+03:00\n"
+"POT-Creation-Date: 2025-08-19T01:25:14+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-ukr-shipping-i18n\n"
@@ -97,8 +97,8 @@ msgid "Created At"
 msgstr ""
 
 #: src/Component/ListTable/AutomationListTable.php:92
-#: src/Modules/Backend/OptionsPage.php:150
-#: src/Modules/Backend/OptionsPage.php:151
+#: src/Modules/Backend/OptionsPage.php:146
+#: src/Modules/Backend/OptionsPage.php:147
 msgid "Edit"
 msgstr ""
 
@@ -182,7 +182,7 @@ msgstr ""
 msgid "Every minute"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:91
+#: src/Modules/Backend/OptionsPage.php:87
 #: views/settings_general.php:19
 #: views/settings_nova_poshta.php:19
 #: views/settings_nova_post.php:19
@@ -191,106 +191,100 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:102
-#: src/Modules/Backend/OptionsPage.php:103
-#: views/smarty_parcel.php:13
+#: src/Modules/Backend/OptionsPage.php:98
+#: src/Modules/Backend/OptionsPage.php:99
 msgid "Smarty Parcel"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:111
-#: src/Modules/Backend/OptionsPage.php:112
+#: src/Modules/Backend/OptionsPage.php:107
+#: src/Modules/Backend/OptionsPage.php:108
 msgid "Create TTN"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:120
-#: src/Modules/Backend/OptionsPage.php:121
+#: src/Modules/Backend/OptionsPage.php:116
+#: src/Modules/Backend/OptionsPage.php:117
 #: views/orders.php:4
 msgid "Orders"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:129
-#: src/Modules/Backend/OptionsPage.php:130
+#: src/Modules/Backend/OptionsPage.php:125
+#: src/Modules/Backend/OptionsPage.php:126
 msgid "Automation"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:141
-#: src/Modules/Backend/OptionsPage.php:142
+#: src/Modules/Backend/OptionsPage.php:137
+#: src/Modules/Backend/OptionsPage.php:138
 #: src/Modules/Backend/Orders.php:171
 msgid "Create"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:159
-#: src/Modules/Backend/OptionsPage.php:160
+#: src/Modules/Backend/OptionsPage.php:155
+#: src/Modules/Backend/OptionsPage.php:156
 #: views/tools.php:14
 msgid "Tools"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:168
-#: src/Modules/Backend/OptionsPage.php:169
-msgid "Upgrade pricing plan"
-msgstr ""
-
-#: src/Modules/Backend/OptionsPage.php:185
+#: src/Modules/Backend/OptionsPage.php:172
 msgid "Warehouses data of Nova Poshta"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:186
+#: src/Modules/Backend/OptionsPage.php:173
 msgid "Last update date:"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:187
+#: src/Modules/Backend/OptionsPage.php:174
 msgid "Status:"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:188
+#: src/Modules/Backend/OptionsPage.php:175
 msgid "Not completed"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:189
+#: src/Modules/Backend/OptionsPage.php:176
 msgid "Completed"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:190
+#: src/Modules/Backend/OptionsPage.php:177
 msgid "Unknown"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:191
+#: src/Modules/Backend/OptionsPage.php:178
 msgid "Update warehouses"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:192
+#: src/Modules/Backend/OptionsPage.php:179
 msgid "Continue update"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:193
+#: src/Modules/Backend/OptionsPage.php:180
 msgid "Load areas..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:194
+#: src/Modules/Backend/OptionsPage.php:181
 msgid "Load cities..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:195
+#: src/Modules/Backend/OptionsPage.php:182
 msgid "Load warehouses..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:196
+#: src/Modules/Backend/OptionsPage.php:183
 msgid "Warehouses db updated successfully"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:199
+#: src/Modules/Backend/OptionsPage.php:186
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:321
+#: src/Modules/Backend/OptionsPage.php:308
 msgid "Add rule"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:339
+#: src/Modules/Backend/OptionsPage.php:326
 msgid "Rule not found"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:348
+#: src/Modules/Backend/OptionsPage.php:335
 msgid "Rule saved successfully"
 msgstr ""
 
@@ -425,15 +419,15 @@ msgid "Open support chat"
 msgstr ""
 
 #: views/partial/pro_promotion.php:39
-msgid "Unlock more features with premium subscription"
+msgid "Unlock more features with paid plans"
 msgstr ""
 
 #: views/partial/pro_promotion.php:43
-msgid "Unlimited number of shipments"
+msgid "More shipments limit"
 msgstr ""
 
 #: views/partial/pro_promotion.php:46
-msgid "Unlimited carrier accounts"
+msgid "More carrier accounts"
 msgstr ""
 
 #: views/partial/pro_promotion.php:49
@@ -457,7 +451,7 @@ msgid "Premium support"
 msgstr ""
 
 #: views/partial/pro_promotion.php:69
-msgid "Switch to Advanced plan"
+msgid "Switch to paid plan"
 msgstr ""
 
 #: views/partial/settings_general/common.php:14
@@ -778,44 +772,4 @@ msgstr ""
 
 #: views/ttn/ttn_forbidden.php:20
 msgid "Read more"
-msgstr ""
-
-#: views/upgrade_plan.php:15
-msgid "Unfortunately, you have exhausted your trial quota on the Free plan. To continue creating invoices, please upgrade to the Advanced plan."
-msgstr ""
-
-#: views/upgrade_plan.php:23
-msgid "Unlock powerful logistics automation tools"
-msgstr ""
-
-#: views/upgrade_plan.php:32
-msgid "Calculation of delivery via courier"
-msgstr ""
-
-#: views/upgrade_plan.php:33
-msgid "Calculation of delivery depending on the order amount"
-msgstr ""
-
-#: views/upgrade_plan.php:34
-msgid "Creating invoices"
-msgstr ""
-
-#: views/upgrade_plan.php:35
-msgid "Printing invoices"
-msgstr ""
-
-#: views/upgrade_plan.php:36
-msgid "Tracking invoices"
-msgstr ""
-
-#: views/upgrade_plan.php:37
-msgid "Bulk generation of invoices in one click"
-msgstr ""
-
-#: views/upgrade_plan.php:48
-msgid "year"
-msgstr ""
-
-#: views/upgrade_plan.php:59
-msgid "Switch to"
 msgstr ""

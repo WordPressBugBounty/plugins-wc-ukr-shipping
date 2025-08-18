@@ -2,6 +2,7 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
@@ -70,22 +71,27 @@ class AssetsLoader implements ModuleInterface
             true
         );
 
+        wp_enqueue_style(
+            'smarty_parcel_admin_css',
+            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/css/sp-admin.min.css',
+            [],
+            filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/css/sp-admin.min.css')
+        );
+
+        wp_enqueue_script(
+            'smarty_parcel_admin_js',
+            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/sp-admin.min.js',
+            ['jquery'],
+            filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/sp-admin.min.js'),
+            true
+        );
+
         if (get_current_screen() !== null && get_current_screen()->id === 'plugins') {
             wp_enqueue_script(
                 'wcus_plugin_js',
                 WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/plugin.min.js',
                 ['jquery'],
                 filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/plugin.min.js'),
-                true
-            );
-        }
-
-        if (get_current_screen() !== null && get_current_screen()->id === 'wc-ukr-shipping_page_wcus_smarty_parcel') {
-            wp_enqueue_script(
-                'wcus_smarty_parcel_js',
-                WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/smarty-parcel.min.js',
-                ['jquery'],
-                filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/smarty-parcel.min.js'),
                 true
             );
         }
@@ -116,16 +122,6 @@ class AssetsLoader implements ModuleInterface
                 WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/tools.min.js',
                 ['jquery'],
                 filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/tools.min.js'),
-                true
-            );
-        }
-
-        if (get_current_screen() !== null && get_current_screen()->id === 'admin_page_wcus_smarty_parcel_upgrade_plan') {
-            wp_enqueue_script(
-                'wcus_marketing_js',
-                WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/marketing.min.js',
-                ['jquery'],
-                filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/marketing.min.js'),
                 true
             );
         }
@@ -162,16 +158,44 @@ class AssetsLoader implements ModuleInterface
             'ukrposhta' => [
                 'defaultCities' => WCUSHelper::getUkrposhtaDefaultCities(),
             ],
-            'smarty_parcel' => [
-                'account' => $this->smartyParcelService->getAccountInfo(),
-                'autoTracking' => (int)wc_ukr_shipping_get_option('wcus_sp_auto_tracking'),
-                'upgradePlanUrl' => admin_url('admin.php?page=wcus_smarty_parcel_upgrade_plan'),
-            ]
         ];
+        $globals = $this->initSmartyParcelGlobals($globals);
 
         $i18n = [];
         $globals['i18n'] = apply_filters('wcus_load_admin_i18n', $i18n);
         wp_localize_script($scriptId, 'wc_ukr_shipping_globals', $globals);
+    }
+
+    private function initSmartyParcelGlobals(array $globals): array
+    {
+        $connectUrl = null;
+        if (!SmartyParcelHelper::isConnected()) {
+            $sessionData = urlencode(base64_encode(json_encode([
+                'storeUrl' => rtrim(site_url(), '/'),
+                'callbackUrl' => admin_url('admin.php?page=wcus_oauth_callback'),
+                'platform' => 'woocommerce',
+                'nonce' => wp_create_nonce('smartyparcel_oauth'),
+            ])));
+            $connectUrl = 'https://app.smartyparcel.com/oauth-session?session_data=' . $sessionData;
+        }
+
+        $globals['smarty_parcel'] = [
+            'isConnected' => SmartyParcelHelper::isConnected(),
+            'connectUrl' => $connectUrl,
+            'account' => null,
+            'autoTracking' => (int)wc_ukr_shipping_get_option('wcus_sp_auto_tracking'),
+            'upgradePlanUrl' => admin_url('admin.php?page=wcus_smarty_parcel#/upgrade'),
+        ];
+
+        $needAccountScreens = [
+            'toplevel_page_wc_ukr_shipping_options',
+            'wc-ukr-shipping_page_wc_ukr_shipping_ttn_list',
+        ];
+        if (get_current_screen() !== null && in_array(get_current_screen()->id, $needAccountScreens)) {
+            $globals['smarty_parcel']['account'] = $this->smartyParcelService->getAccountInfo();
+        }
+
+        return $globals;
     }
 
     private function injectTranslates($scriptId): void

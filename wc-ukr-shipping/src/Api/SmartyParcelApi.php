@@ -11,7 +11,7 @@ use kirillbdev\WCUSCore\Http\Request;
 
 final class SmartyParcelApi
 {
-    private const API_URL = 'https://api.smartyparcel.com';
+    private const API_URL = 'https://wp-api.smartyparcel.com';
 
     public function register(
         string $email,
@@ -37,9 +37,9 @@ final class SmartyParcelApi
         return $data['api_key'];
     }
 
-    public function getUserStatus(string $apiKey): array
+    public function getAccount(string $apiKey): array
     {
-        $response = wp_remote_get(self::API_URL . '/beta/user', [
+        $response = wp_remote_get(self::API_URL . '/v1/account', [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
@@ -52,26 +52,9 @@ final class SmartyParcelApi
         return $this->processResponse($response);
     }
 
-    public function connectApplication(string $apiKey): array
-    {
-        $response = wp_remote_post(self::API_URL . '/beta/applications/connect', [
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
-            ],
-            'timeout' => 5,
-            'body' => json_encode([
-                'api_key' => $apiKey,
-                'site_url' => get_site_url(),
-            ])
-        ]);
-
-        return $this->processResponse($response);
-    }
-
     public function disconnectApplication(string $apiKey): array
     {
-        $response = wp_remote_post(self::API_URL . '/beta/applications/disconnect', [
+        $response = wp_remote_post(self::API_URL . '/v1/app/disconnect', [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
@@ -86,7 +69,7 @@ final class SmartyParcelApi
 
     public function getCarrierAccounts(string $apiKey): array
     {
-        $response = wp_remote_get(self::API_URL . '/beta/carriers', [
+        $response = wp_remote_get(self::API_URL . '/v1/carriers', [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
@@ -104,9 +87,9 @@ final class SmartyParcelApi
         array $data
     ): array {
         if ($carrierSlug === 'nova_poshta') {
-            $uri = '/beta/carriers/nova_poshta';
+            $uri = '/v1/carriers/nova_poshta';
         } elseif ($carrierSlug === 'ukrposhta') {
-            $uri = '/beta/carriers/ukrposhta';
+            $uri = '/v1/carriers/ukrposhta';
         } else {
             throw new \InvalidArgumentException('Unknown carrier ' . sanitize_text_field($carrierSlug));
         }
@@ -132,7 +115,7 @@ final class SmartyParcelApi
         string $senderRef,
         string $senderContactRef
     ): array {
-        $response = wp_remote_request(self::API_URL . '/beta/carriers/nova_poshta/' . $id, [
+        $response = wp_remote_request(self::API_URL . '/v1/carriers/nova_poshta/' . $id, [
             'method' => 'PUT',
             'headers' => [
                 'Accept' => 'application/json',
@@ -154,7 +137,7 @@ final class SmartyParcelApi
 
     public function createLabel(LabelRequestBuilderInterface $builder): array
     {
-        $response = wp_remote_post(self::API_URL . '/beta/labels', [
+        $response = wp_remote_post(self::API_URL . '/v1/labels', [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
@@ -170,7 +153,7 @@ final class SmartyParcelApi
 
     public function deleteCarrier(string $carrierId): array
     {
-        $response = wp_remote_request(self::API_URL . "/beta/carriers/$carrierId", [
+        $response = wp_remote_request(self::API_URL . "/v1/carriers/$carrierId", [
             'method' => 'DELETE',
             'headers' => [
                 'Accept' => 'application/json',
@@ -186,7 +169,7 @@ final class SmartyParcelApi
 
     public function voidLabel(string $labelId): array
     {
-        $response = wp_remote_request(self::API_URL . "/beta/labels/$labelId/void", [
+        $response = wp_remote_request(self::API_URL . "/v1/labels/$labelId/void", [
             'method' => 'PUT',
             'headers' => [
                 'Accept' => 'application/json',
@@ -233,7 +216,7 @@ final class SmartyParcelApi
             $payload['service_type'] = $serviceType;
         }
 
-        $response = wp_remote_post(self::API_URL . "/beta/rates/estimate", [
+        $response = wp_remote_post(self::API_URL . "/v1/rates/estimate", [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
@@ -249,7 +232,7 @@ final class SmartyParcelApi
 
     public function addTracking(string $trackingNumber, string $carrierSlug): array
     {
-        $response = wp_remote_post(self::API_URL . "/beta/trackings", [
+        $response = wp_remote_post(self::API_URL . "/v1/trackings", [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
@@ -268,7 +251,7 @@ final class SmartyParcelApi
 
     public function getTrackings(array $trackingNumbers): array
     {
-        $response = wp_remote_post(self::API_URL . "/beta/trackings/search", [
+        $response = wp_remote_post(self::API_URL . "/v1/trackings/search", [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
@@ -287,7 +270,7 @@ final class SmartyParcelApi
 
     public function createSubscriptionChangeAction(string $subscription): array
     {
-        $response = wp_remote_post(self::API_URL . "/beta/marketing/subscriptions/change", [
+        $response = wp_remote_post(self::API_URL . "/v1/marketing/subscriptions/change", [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',

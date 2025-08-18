@@ -12,6 +12,8 @@ class CheckoutService
     {
         ?>
         <div id="wcus-<?php echo esc_attr($type); ?>-fields"></div>
+
+        <div id="wcus-billing-fields"></div>
         <?php
     }
 }

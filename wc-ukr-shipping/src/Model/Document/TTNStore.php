@@ -11,6 +11,7 @@ use kirillbdev\WCUkrShipping\Includes\UI\CityUIValue;
 use kirillbdev\WCUkrShipping\Includes\UI\WarehouseUIValue;
 use kirillbdev\WCUkrShipping\Model\OrderProduct;
 use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
+use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 
 if ( ! defined('ABSPATH')) {
@@ -48,6 +49,7 @@ class TTNStore
     private $data = [];
 
     private ProductDimensionService $productDimensionService;
+    private SmartyParcelService $smartyParcelService;
 
     public function __construct(int $orderId)
     {
@@ -61,6 +63,7 @@ class TTNStore
 
         $factory = new ProductFactory();
         $this->productDimensionService = wcus_container()->make(ProductDimensionService::class);
+        $this->smartyParcelService = wcus_container()->make(SmartyParcelService::class);
 
         foreach ($this->order->get_items() as $item) {
             /** @var \WC_Order_Item_Product $item */
@@ -164,12 +167,7 @@ class TTNStore
 
     private function collectSender(): void
     {
-        $accounts = array_values(
-            array_filter($this->getCarrierAccountCached(), function (array $account) {
-                return ($account['carrier_slug'] ?? '') === 'nova_poshta';
-            })
-        );
-
+        $accounts = $this->smartyParcelService->getCarrierAccounts('nova_poshta');
         $defaultAcc = wc_ukr_shipping_get_option('wcus_nova_poshta_default_carrier');
         if (empty($defaultAcc)) {
             $defaultAcc = $accounts[0]['id'] ?? '';
@@ -309,18 +307,5 @@ class TTNStore
                 $this->data['ttn']['global_params'] = 0;
             }
         }
-    }
-
-    private function getCarrierAccountCached(): array
-    {
-        $carrierAccounts = get_option(WCUS_OPTION_SMARTY_PARCEL_CARRIERS);
-        if ($carrierAccounts) {
-            $carrierAccounts = json_decode($carrierAccounts, true);
-            if (json_last_error() === JSON_ERROR_NONE) {
-                return $carrierAccounts;
-            }
-        }
-
-        return [];
     }
 }

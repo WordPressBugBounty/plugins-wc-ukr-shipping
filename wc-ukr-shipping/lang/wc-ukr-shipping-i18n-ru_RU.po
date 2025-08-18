@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2025-08-11T23:39:17+03:00\n"
+"POT-Creation-Date: 2025-08-19T01:25:14+03:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -93,8 +93,8 @@ msgid "Created At"
 msgstr "Дата создания"
 
 #: src/Component/ListTable/AutomationListTable.php:92
-#: src/Modules/Backend/OptionsPage.php:150
-#: src/Modules/Backend/OptionsPage.php:151
+#: src/Modules/Backend/OptionsPage.php:146
+#: src/Modules/Backend/OptionsPage.php:147
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -176,111 +176,106 @@ msgid "Every minute"
 msgstr ""
 
 # Options page
-#: src/Modules/Backend/OptionsPage.php:91 views/settings_general.php:19
+#: src/Modules/Backend/OptionsPage.php:87 views/settings_general.php:19
 #: views/settings_nova_poshta.php:19 views/settings_nova_post.php:19
 #: views/settings_rozetka.php:19 views/settings_ukrposhta.php:19
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/Modules/Backend/OptionsPage.php:102
-#: src/Modules/Backend/OptionsPage.php:103 views/smarty_parcel.php:13
+#: src/Modules/Backend/OptionsPage.php:98
+#: src/Modules/Backend/OptionsPage.php:99
 msgid "Smarty Parcel"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:111
-#: src/Modules/Backend/OptionsPage.php:112
+#: src/Modules/Backend/OptionsPage.php:107
+#: src/Modules/Backend/OptionsPage.php:108
 msgid "Create TTN"
 msgstr "Создать ТТН"
 
-#: src/Modules/Backend/OptionsPage.php:120
-#: src/Modules/Backend/OptionsPage.php:121 views/orders.php:4
+#: src/Modules/Backend/OptionsPage.php:116
+#: src/Modules/Backend/OptionsPage.php:117 views/orders.php:4
 msgid "Orders"
 msgstr "Заказы"
 
-#: src/Modules/Backend/OptionsPage.php:129
-#: src/Modules/Backend/OptionsPage.php:130
+#: src/Modules/Backend/OptionsPage.php:125
+#: src/Modules/Backend/OptionsPage.php:126
 msgid "Automation"
 msgstr "Автоматизация"
 
-#: src/Modules/Backend/OptionsPage.php:141
-#: src/Modules/Backend/OptionsPage.php:142 src/Modules/Backend/Orders.php:171
+#: src/Modules/Backend/OptionsPage.php:137
+#: src/Modules/Backend/OptionsPage.php:138 src/Modules/Backend/Orders.php:171
 msgid "Create"
 msgstr "Создать"
 
-#: src/Modules/Backend/OptionsPage.php:159
-#: src/Modules/Backend/OptionsPage.php:160 views/tools.php:14
+#: src/Modules/Backend/OptionsPage.php:155
+#: src/Modules/Backend/OptionsPage.php:156 views/tools.php:14
 msgid "Tools"
 msgstr "Инструменты"
 
-#: src/Modules/Backend/OptionsPage.php:168
-#: src/Modules/Backend/OptionsPage.php:169
-msgid "Upgrade pricing plan"
-msgstr "Сменить тарифный план"
-
 # Warehouse loader
-#: src/Modules/Backend/OptionsPage.php:185
+#: src/Modules/Backend/OptionsPage.php:172
 msgid "Warehouses data of Nova Poshta"
 msgstr "Данные отделений Новой Почты"
 
-#: src/Modules/Backend/OptionsPage.php:186
+#: src/Modules/Backend/OptionsPage.php:173
 msgid "Last update date:"
 msgstr "Дата последнего обновления:"
 
-#: src/Modules/Backend/OptionsPage.php:187
+#: src/Modules/Backend/OptionsPage.php:174
 msgid "Status:"
 msgstr "Статус:"
 
-#: src/Modules/Backend/OptionsPage.php:188
+#: src/Modules/Backend/OptionsPage.php:175
 msgid "Not completed"
 msgstr "Не завершено"
 
-#: src/Modules/Backend/OptionsPage.php:189
+#: src/Modules/Backend/OptionsPage.php:176
 msgid "Completed"
 msgstr "Завершено"
 
-#: src/Modules/Backend/OptionsPage.php:190
+#: src/Modules/Backend/OptionsPage.php:177
 msgid "Unknown"
 msgstr "Неизвестный"
 
-#: src/Modules/Backend/OptionsPage.php:191
+#: src/Modules/Backend/OptionsPage.php:178
 msgid "Update warehouses"
 msgstr "Обновить отделения"
 
-#: src/Modules/Backend/OptionsPage.php:192
+#: src/Modules/Backend/OptionsPage.php:179
 msgid "Continue update"
 msgstr "Продолжить обновление"
 
-#: src/Modules/Backend/OptionsPage.php:193
+#: src/Modules/Backend/OptionsPage.php:180
 msgid "Load areas..."
 msgstr "Загрузка областей..."
 
-#: src/Modules/Backend/OptionsPage.php:194
+#: src/Modules/Backend/OptionsPage.php:181
 msgid "Load cities..."
 msgstr "Загрузка городов..."
 
-#: src/Modules/Backend/OptionsPage.php:195
+#: src/Modules/Backend/OptionsPage.php:182
 msgid "Load warehouses..."
 msgstr "Загрузка отделений..."
 
-#: src/Modules/Backend/OptionsPage.php:196
+#: src/Modules/Backend/OptionsPage.php:183
 msgid "Warehouses db updated successfully"
 msgstr "Данные отделений успешно обновлены"
 
-#: src/Modules/Backend/OptionsPage.php:199
+#: src/Modules/Backend/OptionsPage.php:186
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 "Вы уверены, что хотите перезапустить миграции? Это действие не может быть "
 "отменено."
 
-#: src/Modules/Backend/OptionsPage.php:321
+#: src/Modules/Backend/OptionsPage.php:308
 msgid "Add rule"
 msgstr "Добавить правило"
 
-#: src/Modules/Backend/OptionsPage.php:339
+#: src/Modules/Backend/OptionsPage.php:326
 msgid "Rule not found"
 msgstr "Правило не найдено"
 
-#: src/Modules/Backend/OptionsPage.php:348
+#: src/Modules/Backend/OptionsPage.php:335
 msgid "Rule saved successfully"
 msgstr "Правило успешно сохранено"
 
@@ -410,16 +405,16 @@ msgid "Open support chat"
 msgstr "Открыть чат поддержки"
 
 #: views/partial/pro_promotion.php:39
-msgid "Unlock more features with premium subscription"
-msgstr "Разблокируйте больше функций с премиум-подпиской"
+msgid "Unlock more features with paid plans"
+msgstr "Разблокируйте больше функций с платным тарифом"
 
 #: views/partial/pro_promotion.php:43
-msgid "Unlimited number of shipments"
-msgstr "Неограниченное количество отправлений"
+msgid "More shipments limit"
+msgstr "Больше лимитов на отправления"
 
 #: views/partial/pro_promotion.php:46
-msgid "Unlimited carrier accounts"
-msgstr "Неограниченное количество аккаунтов перевозчика"
+msgid "More carrier accounts"
+msgstr "Больше аккаунтов перевозчика"
 
 #: views/partial/pro_promotion.php:49
 msgid "Automatic calculation of shipping costs."
@@ -442,8 +437,8 @@ msgid "Premium support"
 msgstr "Premium поддержка"
 
 #: views/partial/pro_promotion.php:69
-msgid "Switch to Advanced plan"
-msgstr "Перейти на Advanced план"
+msgid "Switch to paid plan"
+msgstr "Перейти на платный тариф"
 
 #: views/partial/settings_general/common.php:14
 msgid "Load translates from"
@@ -775,56 +770,52 @@ msgstr "Создать для Укрпочты"
 msgid "Read more"
 msgstr "Подробнее"
 
-#: views/upgrade_plan.php:15
-msgid ""
-"Unfortunately, you have exhausted your trial quota on the Free plan. To "
-"continue creating invoices, please upgrade to the Advanced plan."
-msgstr ""
-"К сожалению вы исчерпали свою пробную квоту для бесплатного плана. Чтобы "
-"продолжить создание накладных, пожалуйста, перейдите на Advanced план."
+#~ msgid "Upgrade pricing plan"
+#~ msgstr "Сменить тарифный план"
 
-#: views/upgrade_plan.php:23
-msgid "Unlock powerful logistics automation tools"
-msgstr "Разблокируйте мощные инструменты автоматизации логистики"
+#~ msgid "Unlimited number of shipments"
+#~ msgstr "Неограниченное количество отправлений"
 
-#: views/upgrade_plan.php:32
-msgid "Calculation of delivery via courier"
-msgstr "Расчет стоимости через курьера"
+#~ msgid "Unlimited carrier accounts"
+#~ msgstr "Неограниченное количество аккаунтов перевозчика"
 
-#: views/upgrade_plan.php:33
-msgid "Calculation of delivery depending on the order amount"
-msgstr "Расчет стоимости в зависимости от суммы заказа"
+#~ msgid ""
+#~ "Unfortunately, you have exhausted your trial quota on the Free plan. To "
+#~ "continue creating invoices, please upgrade to the Advanced plan."
+#~ msgstr ""
+#~ "К сожалению вы исчерпали свою пробную квоту для бесплатного плана. Чтобы "
+#~ "продолжить создание накладных, пожалуйста, перейдите на Advanced план."
 
-#: views/upgrade_plan.php:34
-msgid "Creating invoices"
-msgstr "Создание ТТН"
+#~ msgid "Unlock powerful logistics automation tools"
+#~ msgstr "Разблокируйте мощные инструменты автоматизации логистики"
 
-#: views/upgrade_plan.php:35
-msgid "Printing invoices"
-msgstr "Печать ТТН"
+#~ msgid "Calculation of delivery via courier"
+#~ msgstr "Расчет стоимости через курьера"
 
-#: views/upgrade_plan.php:36
-msgid "Tracking invoices"
-msgstr "Трекинг ТТН"
+#~ msgid "Calculation of delivery depending on the order amount"
+#~ msgstr "Расчет стоимости в зависимости от суммы заказа"
 
-#: views/upgrade_plan.php:37
-msgid "Bulk generation of invoices in one click"
-msgstr "Массовое создание ТТН в один клик"
+#~ msgid "Creating invoices"
+#~ msgstr "Создание ТТН"
 
-#: views/upgrade_plan.php:48
-msgid "year"
-msgstr "год"
+#~ msgid "Printing invoices"
+#~ msgstr "Печать ТТН"
 
-#: views/upgrade_plan.php:59
-msgid "Switch to"
-msgstr "Сменить на"
+#~ msgid "Tracking invoices"
+#~ msgstr "Трекинг ТТН"
+
+#~ msgid "Bulk generation of invoices in one click"
+#~ msgstr "Массовое создание ТТН в один клик"
+
+#~ msgid "year"
+#~ msgstr "год"
+
+#~ msgid "Switch to"
+#~ msgstr "Сменить на"
 
 # PRO features
 #~ msgid "Get more features from SmartyParcel Advanced"
 #~ msgstr "Получите больше возможностей от SmartyParcel Advanced"
-
-#~ msgid "Higher shipments limit"
-#~ msgstr "Выше лимит создания накладных"
 
 #~ msgid "SMS notifications"
 #~ msgstr "СМС оповещения"

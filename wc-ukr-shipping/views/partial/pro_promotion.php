@@ -36,14 +36,14 @@ if ( ! defined('ABSPATH')) {
                     <div class="wcus-pro-features__logo">
                         <img src="<?php echo esc_attr(WC_UKR_SHIPPING_PLUGIN_URL . '/image/smarty-parcel.jpg'); ?>" />
                     </div>
-                    <div class="wcus-card__title wcus-pro-features__title"><?php esc_html_e('Unlock more features with premium subscription', 'wc-ukr-shipping-i18n'); ?></div>
+                    <div class="wcus-card__title wcus-pro-features__title"><?php esc_html_e('Unlock more features with paid plans', 'wc-ukr-shipping-i18n'); ?></div>
                 </div>
                 <div class="wcus-pro-features__list">
                     <div class="wcus-pro-features__feature">
-                        <?php esc_html_e('Unlimited number of shipments', 'wc-ukr-shipping-i18n'); ?>
+                        <?php esc_html_e('More shipments limit', 'wc-ukr-shipping-i18n'); ?>
                     </div>
                     <div class="wcus-pro-features__feature">
-                        <?php esc_html_e('Unlimited carrier accounts', 'wc-ukr-shipping-i18n'); ?>
+                        <?php esc_html_e('More carrier accounts', 'wc-ukr-shipping-i18n'); ?>
                     </div>
                     <div class="wcus-pro-features__feature">
                         <?php esc_html_e('Automatic calculation of shipping costs.', 'wc-ukr-shipping-i18n'); ?>
@@ -63,10 +63,12 @@ if ( ! defined('ABSPATH')) {
                 </div>
 
                 <a target="_blank"
-                   href="https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=plugin"
+                   href="<?php echo get_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS) === 'connected'
+                        ? admin_url('admin.php?page=wcus_smarty_parcel#/upgrade')
+                        : 'https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=plugin' ;?>"
                    class="wcus-btn wcus-btn--md wcus-btn--block wcus-pro-features__btn">
                     <?php echo wc_ukr_shipping_import_svg('star.svg'); ?>
-                    <?php esc_html_e('Switch to Advanced plan', 'wc-ukr-shipping-i18n'); ?>
+                    <?php esc_html_e('Switch to paid plan', 'wc-ukr-shipping-i18n'); ?>
                 </a>
 
             </div>
