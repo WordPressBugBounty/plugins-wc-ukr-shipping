@@ -28,10 +28,13 @@ class SmartyParcelService
 
     public function getCarrierAccounts(?string $carrierSlug = null): array
     {
+        $apiKey = get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
+        if (!$apiKey) {
+            return [];
+        }
+
         try {
-            $carriers = $this->api->getCarrierAccounts(
-                get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY)
-            )['carriers'] ?? [];
+            $carriers = $this->api->getCarrierAccounts($apiKey)['carriers'] ?? [];
 
             $result = [];
             foreach ($carriers as $carrier) {
@@ -46,7 +49,7 @@ class SmartyParcelService
             }
 
             return $result;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return [];
         }
     }
