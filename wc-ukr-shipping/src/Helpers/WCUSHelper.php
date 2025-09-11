@@ -441,6 +441,9 @@ class WCUSHelper
                 's100a4' => '100x100 (A4)',
                 's100a5' => '100x100 (A5)',
             ],
+            'rozetka_delivery' => [
+                'default' => '100x100'
+            ]
         ];
 
         return $validFormats[$carrierSlug] ?? [];

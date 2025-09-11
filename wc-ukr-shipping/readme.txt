@@ -5,13 +5,13 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: nova poshta, нова пошта, укрпошта, rozetka delivery, shipping
 Requires PHP: 7.4
 Tested up to: 6.8
-Stable tag: 1.16.5
+Stable tag: 1.17.0
 
 Connect Nova Poshta, Ukrposhta or international delivery services with your store. Create labels, track orders and calculate rates in one place.
 
 == Description ==
 
-Connect Nova Poshta, Ukrposhta or international delivery services with your store. Create labels, track orders and calculate rates in one place.
+Connect Nova Poshta, Ukrposhta and many others delivery services with your store. Create labels, track orders and calculate rates in one place.
 
 [Documentation](https://kirillbdev.pro/docs/wcus-base-setup/)
 [PRO features](https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=wporg)
@@ -37,6 +37,12 @@ https://www.youtube.com/watch?v=K_NFNQ1qkko
 * Support many functions includes COD and Payment control
 * Advanced shipment analytics
 * Integration with popular plugins for localization: WPML and Polylang
+
+== Supported carriers ==
+* Nova Poshta
+* Ukrposhta
+* Rozetka Delivery
+* Nova Post (EU, International)
 
 == Premium features ==
 
@@ -87,6 +93,13 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 Unfortunately plugin doesn't support checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.17.0 / (12.09.2025) =
+* [SmartyParcel] Added integration with Rozetka Delivery (labels, stickers).
+* [SmartyParcel] Improved dashboard UI.
+* Added ability to print labels from orders management pge.
+* Improved translates at checkout page when "Combine poshtomats" option is active.
+* Added compatibility with Divi at checkout page.
 
 = Version 1.16.5 / (19.08.2025) =
 * Fixed fatal error on plugin setting page when store not connected to SmartyParcel.
@@ -312,66 +325,3 @@ Unfortunately plugin doesn't support checkout blocks yet.
 * Добавлена новая вкладка Доставка для страницы настроек (для более логического разделения настроек).
 * Добавлен фильтр wcus_checkout_i18n (будет описан в документации).
 * Core update.
-
-= Version 1.7.7 / (17.05.2021) =
-* Исправлена ошибка при загрузке областей на странице оформления заказа.
-
-= Version 1.7.6 / (16.05.2021) =
-* Core update.
-
-= Version 1.7.5 / (07.05.2021) =
-* Основная логика была вынесена в отдельное ядро (которое также используется для PRO версии).
-* Добавлен фильтр wcus_checkout_validation_active. С помощью него можно отключить валидацию полей плагина на странице оформления заказа.
-* Добавлен фильтр wcus_dynamic_shipping_label (будет описан в документации).
-* Теперь для корректной работы плагина требуется PHP не ниже версии 7.0.
-* Улучшения безопасности и производительности.
-
-= Version 1.7.4 / (05.02.2021) =
-* Исправлена ошибка сохранения адреса доставки на украинском языке, даже если в настройках выбран русский.
-* Добавлена опция "Показывать почтоматы" (включена по-умолчанию).
-* Добавлен фильтр wcus_get_areas.
-* Улучшения локализации админ-части.
-* Общие улучшения производительности.
-
-= Version 1.7.3 / (24.12.2020) =
-* Исправлены некоторые несовместимости с PHP8.
-* Добавлен фильтр: wcus_http_post_timeout. Позволяет увеличить таймаут опроса API при загрузке отделений.
-
-= Version 1.7.2 / (11.12.2020) =
-* Исправлен некорректный вывод названия доставки, если оно содержит кавычки.
-* Добавлен вывод стоимости доставки на странице корзины.
-* Исправлены некоторые ошибки несовместимости с плагином Saphali Woocommerce.
-* Добавлена локализация сообщения о незаполненных данных Новой Почты.
-
-= Version 1.7.1 / (29.09.2020) =
-* Исравлен баг, когда плагин при любом выбранном методе доставки добавлял свою стоимость к итоговой сумме заказа.
-
-= Version 1.7.0 / (06.09.2020) =
-* Глобальные работы по оптимизации кода (улучшения скорости работы, удаление старого и ненужного кода).
-* Полная смена логики сохранения заказа (по аналогии с PRO версией).
-* Новые возможности для расширения расчета стоимости доставки (по аналогии с PRO версией).
-* Убрана настройка "Сохранять последнее отделение пользователя" (в связи с подготовкой нового функционала).
-* Убрана кнопка "Наш сайт" с верней панели настроек.
-* Новая, улучшенная обработка ошибок, которые могут возникать при первоначальных настройках плагина (вывод ошибок API, ошибок доступности API).
-
-= Version 1.6.3 / (09.05.2020) =
-* Корректировка вывода верстки на странице оформления заказа.
-
-= Version 1.6.2 / (09.05.2020) =
-* Небольшие исправления подгрузки переводов.
-
-= Version 1.6.1 / (09.05.2020) =
-* Интеграция локализации отделений (русский и украинский) с плагином Polylang.
-* Внедрена опция "Использовать новые UI компоненты". По-умолчанию эта опция включена. Опция должна решить частую проблему несовместимости с плагином WooCommerce Checkout Manager.
-* Блок выбора отделения доставки теперь функционирует как для billing секции, так и для shipping (доставка по другому адресу) секции. Следовательно, теперь плагин пишет данные адреса заказа в одну из этих секций.
-* Исправлены некоторые мелкие баги, а также проведен плановый рефакторинг кодовой базы.
-
-= Version 1.6.0 / (22.04.2020) =
-* Исправлена ошибка монопольной установки отделения Новой Почты, даже, если для заказа выбран другой способ доставки.
-* Теперь поле произвольного адреса не убирает выбор области и города (соответственно, для адресной доставки эти поля теперь необходимы к заполнению).
-* Сохранение последнего отделения доставки для пользователя теперь можно опционально отключить в настройках плагина.
-* Добавлена CSRF защита на странице оформления заказа.
-* Добавлены базовы файлы переводов для 3-х языков (русский, украинский, английский). Домен локализации: wc-ukr-shipping-l10n
-* Добавлена настройка выбора типа переводов, которые будет использовать плагин (из mo файлов или из вкладки "Переводы"). Соответственно, улучшилась интеграция с плагинами переводов типа WPML, Polylang. Если ваш сайт не имеет языковых версий, то значение данной настройки можно оставить без изменений. Если же у вас несколько языковых версий, то установите значение опции в "из mo файлов". Это даст возможность получить переводы для 3-х базовых языков. Также, с помощью соответствующих плагинов (например WPML String Translations), вы сможете изменять данные переводы (домен локализации плагина: wc-ukr-shipping-l10n).
-* Добавлен перевод для пустого результата поиска в полях выбора области / города / отделения (ранее был "No results found").
-* Добавлена автоматическая интеграция языка отделений (русский, украинский) с плагином WPML.

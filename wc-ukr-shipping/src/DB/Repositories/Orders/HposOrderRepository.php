@@ -67,7 +67,7 @@ class HposOrderRepository implements OrderRepositoryInterface
     {
         $pageCount = DB::table(DB::prefixedTable('wc_orders'))
             ->where('status', '!=', 'trash')
-            ->where('o.type', '=', 'shop_order')
+            ->where('type', '=', 'shop_order')
             ->count();
 
         return ceil($pageCount / $limit);

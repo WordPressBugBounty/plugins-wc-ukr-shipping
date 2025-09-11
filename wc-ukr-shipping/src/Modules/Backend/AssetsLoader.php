@@ -158,6 +158,9 @@ class AssetsLoader implements ModuleInterface
             'ukrposhta' => [
                 'defaultCities' => WCUSHelper::getUkrposhtaDefaultCities(),
             ],
+            'rozetkaDelivery' => [
+                'defaultCities' => WCUSHelper::getRozetkaDefaultCities(),
+            ],
         ];
         $globals = $this->initSmartyParcelGlobals($globals);
 

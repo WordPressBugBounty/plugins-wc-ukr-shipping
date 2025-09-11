@@ -120,7 +120,7 @@ class SmartyParcelService
             $response['id'],
             $response['carrier_label_id'],
             $response['tracking_number'],
-            $response['carrier_slug'] ?? 'nova_poshta'
+            $response['carrier_slug']
         );
         $shippingLabel = $this->labelsRepository->findByOrderId($orderId);
 
@@ -153,7 +153,9 @@ class SmartyParcelService
             $response['id'],
             $response['tracking_number'],
             (float)$response['shipment_cost']['amount'],
-            new \DateTimeImmutable($response['estimated_delivery_date']),
+            empty($response['estimated_delivery_date'])
+                ? null
+                : new \DateTimeImmutable($response['estimated_delivery_date']),
             $addTracking ? 'PENDING' : ''
         );
     }

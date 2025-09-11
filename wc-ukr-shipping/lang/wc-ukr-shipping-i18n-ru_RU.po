@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2025-08-19T01:25:14+03:00\n"
+"POT-Creation-Date: 2025-09-01T10:49:49+03:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 "X-Domain: wc-ukr-shipping-i18n\n"
 
 #. Plugin Name of the plugin
@@ -289,75 +289,79 @@ msgstr "Накладная"
 msgid "Select shipping address"
 msgstr "Укажите адрес доставки"
 
-#: src/Modules/Frontend/AssetsLoader.php:103
-msgid "to warehouse"
-msgstr "на отделение"
-
 #: src/Modules/Frontend/AssetsLoader.php:104
-msgid "to doors"
-msgstr "до дверей"
+msgid "To warehouse or poshtomat"
+msgstr "В отделение или почтомат"
 
 #: src/Modules/Frontend/AssetsLoader.php:105
-msgid "to the poshtomat"
-msgstr "на почтомат"
+msgid "To warehouse"
+msgstr "В отделение"
+
+#: src/Modules/Frontend/AssetsLoader.php:106
+msgid "By courier"
+msgstr "Курьером"
 
 #: src/Modules/Frontend/AssetsLoader.php:107
+msgid "To poshtomat"
+msgstr "В почтомат"
+
+#: src/Modules/Frontend/AssetsLoader.php:109
 #: src/Services/TranslateService.php:51
 msgid "Select city"
 msgstr "Выберите город"
 
-#: src/Modules/Frontend/AssetsLoader.php:108
+#: src/Modules/Frontend/AssetsLoader.php:110
 #: src/Services/TranslateService.php:52
 msgid "Select warehouse"
 msgstr "Выберите отделение"
 
-#: src/Modules/Frontend/AssetsLoader.php:109
+#: src/Modules/Frontend/AssetsLoader.php:111
 msgid "Select poshtomat"
 msgstr "Выберите почтомат"
 
-#: src/Modules/Frontend/AssetsLoader.php:110
+#: src/Modules/Frontend/AssetsLoader.php:112
 #: src/Services/TranslateService.php:54
 msgid "Enter address"
 msgstr "Введите адрес"
 
-#: src/Modules/Frontend/AssetsLoader.php:111
+#: src/Modules/Frontend/AssetsLoader.php:113
 msgid "Enter value for search"
 msgstr "Введите значение для поиска"
 
-#: src/Modules/Frontend/AssetsLoader.php:112
+#: src/Modules/Frontend/AssetsLoader.php:114
 msgid "Loading..."
 msgstr "Загрузка..."
 
-#: src/Modules/Frontend/AssetsLoader.php:113
+#: src/Modules/Frontend/AssetsLoader.php:115
 msgid "Load more"
 msgstr "Загрузить еще"
 
-#: src/Modules/Frontend/AssetsLoader.php:114
+#: src/Modules/Frontend/AssetsLoader.php:116
 #: src/Services/TranslateService.php:55
 msgid "Nothing found"
 msgstr "Ничего не найдено"
 
-#: src/Modules/Frontend/AssetsLoader.php:115
+#: src/Modules/Frontend/AssetsLoader.php:117
 msgid "Enter more chars"
 msgstr "Введите больше символов"
 
-#: src/Modules/Frontend/AssetsLoader.php:116
+#: src/Modules/Frontend/AssetsLoader.php:118
 msgid "Settlement"
 msgstr "Населенный пункт"
 
-#: src/Modules/Frontend/AssetsLoader.php:117
+#: src/Modules/Frontend/AssetsLoader.php:119
 msgid "Street"
 msgstr "Улица"
 
-#: src/Modules/Frontend/AssetsLoader.php:118
+#: src/Modules/Frontend/AssetsLoader.php:120
 msgid "House"
 msgstr "Дом"
 
-#: src/Modules/Frontend/AssetsLoader.php:119
+#: src/Modules/Frontend/AssetsLoader.php:121
 msgid "Flat"
 msgstr "Квартира"
 
-#: src/Modules/Frontend/AssetsLoader.php:120
+#: src/Modules/Frontend/AssetsLoader.php:122
 msgid "Something went wrong"
 msgstr "Что-то пошло не так"
 
@@ -436,7 +440,7 @@ msgstr "Расширенная аналитика посылок"
 msgid "Premium support"
 msgstr "Premium поддержка"
 
-#: views/partial/pro_promotion.php:69
+#: views/partial/pro_promotion.php:71
 msgid "Switch to paid plan"
 msgstr "Перейти на платный тариф"
 
@@ -769,6 +773,9 @@ msgstr "Создать для Укрпочты"
 #: views/ttn/ttn_forbidden.php:20
 msgid "Read more"
 msgstr "Подробнее"
+
+#~ msgid "to doors"
+#~ msgstr "до дверей"
 
 #~ msgid "Upgrade pricing plan"
 #~ msgstr "Сменить тарифный план"

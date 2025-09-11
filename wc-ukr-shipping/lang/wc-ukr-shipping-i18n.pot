@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: WC Ukraine Shipping 1.16.3\n"
+"Project-Id-Version: WC Ukraine Shipping 1.16.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-19T01:25:14+03:00\n"
+"POT-Creation-Date: 2025-09-01T10:49:49+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-ukr-shipping-i18n\n"
@@ -300,75 +300,79 @@ msgstr ""
 msgid "Select shipping address"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:103
-msgid "to warehouse"
-msgstr ""
-
 #: src/Modules/Frontend/AssetsLoader.php:104
-msgid "to doors"
+msgid "To warehouse or poshtomat"
 msgstr ""
 
 #: src/Modules/Frontend/AssetsLoader.php:105
-msgid "to the poshtomat"
+msgid "To warehouse"
+msgstr ""
+
+#: src/Modules/Frontend/AssetsLoader.php:106
+msgid "By courier"
 msgstr ""
 
 #: src/Modules/Frontend/AssetsLoader.php:107
+msgid "To poshtomat"
+msgstr ""
+
+#: src/Modules/Frontend/AssetsLoader.php:109
 #: src/Services/TranslateService.php:51
 msgid "Select city"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:108
+#: src/Modules/Frontend/AssetsLoader.php:110
 #: src/Services/TranslateService.php:52
 msgid "Select warehouse"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:109
+#: src/Modules/Frontend/AssetsLoader.php:111
 msgid "Select poshtomat"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:110
+#: src/Modules/Frontend/AssetsLoader.php:112
 #: src/Services/TranslateService.php:54
 msgid "Enter address"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:111
+#: src/Modules/Frontend/AssetsLoader.php:113
 msgid "Enter value for search"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:112
+#: src/Modules/Frontend/AssetsLoader.php:114
 msgid "Loading..."
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:113
+#: src/Modules/Frontend/AssetsLoader.php:115
 msgid "Load more"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:114
+#: src/Modules/Frontend/AssetsLoader.php:116
 #: src/Services/TranslateService.php:55
 msgid "Nothing found"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:115
+#: src/Modules/Frontend/AssetsLoader.php:117
 msgid "Enter more chars"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:116
+#: src/Modules/Frontend/AssetsLoader.php:118
 msgid "Settlement"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:117
+#: src/Modules/Frontend/AssetsLoader.php:119
 msgid "Street"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:118
+#: src/Modules/Frontend/AssetsLoader.php:120
 msgid "House"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:119
+#: src/Modules/Frontend/AssetsLoader.php:121
 msgid "Flat"
 msgstr ""
 
-#: src/Modules/Frontend/AssetsLoader.php:120
+#: src/Modules/Frontend/AssetsLoader.php:122
 msgid "Something went wrong"
 msgstr ""
 
@@ -450,7 +454,7 @@ msgstr ""
 msgid "Premium support"
 msgstr ""
 
-#: views/partial/pro_promotion.php:69
+#: views/partial/pro_promotion.php:71
 msgid "Switch to paid plan"
 msgstr ""
 

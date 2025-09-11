@@ -35,7 +35,7 @@ class LegacyTtnRepository
 
         $items = DB::table(DB::prefixedTable('wc_ukr_shipping_np_ttn'))
             ->where('id', '>', $lastId)
-            ->orderBy('id')
+            ->orderBy('id', 'desc')
             ->limit($limit)
             ->get();
 

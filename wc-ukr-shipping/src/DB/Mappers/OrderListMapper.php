@@ -2,6 +2,8 @@
 
 namespace kirillbdev\WCUkrShipping\DB\Mappers;
 
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+
 if ( ! defined('ABSPATH')) {
     exit;
 }
@@ -37,6 +39,16 @@ class OrderListMapper
 
             foreach ($item['info'] as $info) {
                 $order[ $this->mapKey($info['meta_key']) ] = $this->mapValue($info['meta_key'], $info['meta_value']);
+            }
+
+            if (!empty($order['label_id'])) {
+                $order['label_downloads'] = [];
+                foreach (WCUSHelper::getLabelDownloadFormats($order['label_carrier_slug'] ?? '') as $format => $name) {
+                    $order['label_downloads'][] = [
+                        'name' => $name,
+                        'url' => admin_url('admin.php?page=wc_ukr_shipping_print_label&label_id=' . $order['label_db_id'] . '&format=' . $format),
+                    ];
+                }
             }
 
             $orders[] = $order;

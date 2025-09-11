@@ -11,7 +11,7 @@ class CreateLabelResponseDto
     public string $labelId;
     public string $trackingNumber;
     public float $shipmentCost;
-    public \DateTimeImmutable $estimatedDeliveryDate;
+    public ?\DateTimeImmutable $estimatedDeliveryDate;
     public string $trackingStatus = '';
 
     public function __construct(
@@ -20,7 +20,7 @@ class CreateLabelResponseDto
         string $labelId,
         string $trackingNumber,
         float $shipmentCost,
-        \DateTimeImmutable $estimatedDeliveryDate,
+        ?\DateTimeImmutable $estimatedDeliveryDate = null,
         string $trackingStatus = ''
     ) {
         $this->id = $id;

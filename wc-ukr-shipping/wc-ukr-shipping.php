@@ -3,7 +3,7 @@
  * Plugin Name: WC Ukraine Shipping
  * Plugin URI: https://kirillbdev.pro/wc-ukr-shipping-pro/
  * Description: Integration of Nova Poshta and Ukrposhta delivery services for WooCommerce
- * Version: 1.16.5
+ * Version: 1.17.0
  * Author: kirillbdev
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html

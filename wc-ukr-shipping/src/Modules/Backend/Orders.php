@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Http\Controllers\OrdersController;
 use kirillbdev\WCUkrShipping\Http\WpHttpClient;
@@ -108,7 +109,7 @@ class Orders implements ModuleInterface
 
         add_meta_box(
             'wcus_edit_order_ttn_metabox',
-            __('WC Ukraine Shipping', 'wc-ukr-shipping-i18n'),
+            __('SmartyParcel', 'wc-ukr-shipping-i18n'),
             [$this, 'editOrderTTNMetaboxHtml'],
             $screen,
             'side'
@@ -119,6 +120,11 @@ class Orders implements ModuleInterface
     {
         $order = ($editedOrder instanceof \WP_Post) ? wc_get_order($editedOrder->ID) : $editedOrder;
         if (!$order) {
+            return;
+        }
+
+        if (!SmartyParcelHelper::canPurchaseLabelForOrder($order)) {
+            esc_html_e('Purchase label is not available for this order.', 'wc-ukr-shipping-i18n');
             return;
         }
 
@@ -138,12 +144,18 @@ class Orders implements ModuleInterface
     private function renderTtnInfo($order, string $column): void
     {
         if ($column === 'wcus_ttn_actions') {
+            if (!SmartyParcelHelper::canPurchaseLabelForOrder($order)) {
+                return;
+            }
+
             $ttn = $this->shippingLabelsRepository->findByOrderId((int)$order->get_id());
             $carrier = null;
             if ($order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
                 $carrier = 'nova_poshta';
             } elseif ($order->has_shipping_method('wcus_ukrposhta_shipping')) {
                 $carrier = 'ukrposhta';
+            } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_ROZETKA)) {
+                $carrier = 'rozetka_delivery';
             }
             ?>
                 <?php if ($ttn !== null) { ?>

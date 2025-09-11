@@ -2,6 +2,7 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
+use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Label\PurchaseLabelDataCollector;
 use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\SingleLabelDataCollector;
 use kirillbdev\WCUkrShipping\Component\ListTable\AutomationListTable;
 use kirillbdev\WCUkrShipping\DB\Repositories\AutomationRulesRepository;
@@ -67,6 +68,7 @@ class OptionsPage implements ModuleInterface
             new Route('wcus_smartyparcel_connect', SmartyParcelController::class, 'connect'),
             new Route('wcus_smartyparcel_disconnect', SmartyParcelController::class, 'disconnect'),
             new Route('wcus_smarty_parcel_create_label', SmartyParcelController::class, 'createShippingLabel'),
+            new Route('wcus_smartyparcel_purchase_label', SmartyParcelController::class, 'purchaseLabel'),
             new Route('wcus_smarty_parcel_create_label_batch', SmartyParcelController::class, 'createLabelBatch'),
             new Route('wcus_smarty_parcel_void_label', SmartyParcelController::class, 'voidLabel'),
             new Route('wcus_attach_label', SmartyParcelController::class, 'attachShippingLabel'),
@@ -239,6 +241,14 @@ class OptionsPage implements ModuleInterface
         }
 
         wp_enqueue_script(
+            'smarty_parcel_elements_js',
+            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/smartyparcel/elements.min.js',
+            [ 'jquery' ],
+            filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/smartyparcel/elements.min.js'),
+            true
+        );
+
+        wp_enqueue_script(
             'wcus_ttn_form_js',
             WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/ttn-form.min.js',
             [ 'jquery' ],
@@ -254,10 +264,12 @@ class OptionsPage implements ModuleInterface
         $carrier = null;
         if (isset($_GET['carrier'])) {
             $carrier = $_GET['carrier'];
-        } elseif ($order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
+        } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_NOVA_POSHTA)) {
             $carrier = 'nova_poshta';
-        } elseif ($order->has_shipping_method('wcus_ukrposhta_shipping')) {
+        } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_UKRPOSHTA)) {
             $carrier = 'ukrposhta';
+        } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_ROZETKA)) {
+            $carrier = 'rozetka_delivery';
         }
 
         $store = null;
@@ -268,6 +280,8 @@ class OptionsPage implements ModuleInterface
             case 'ukrposhta':
                 $store = new SingleLabelDataCollector($order);
                 break;
+            case 'rozetka_delivery':
+                $store = new PurchaseLabelDataCollector($order);
         }
 
         if ($store === null) {
@@ -279,6 +293,9 @@ class OptionsPage implements ModuleInterface
                 ),
                 'ukrposhtaFormUrl' => admin_url(
                     'admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order->get_id() . '&carrier=ukrposhta'
+                ),
+                'rozetkaFormUrl' => admin_url(
+                    'admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order->get_id() . '&carrier=rozetka_delivery'
                 ),
             ]);
         } else {

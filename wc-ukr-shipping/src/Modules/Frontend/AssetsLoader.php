@@ -100,9 +100,11 @@ class AssetsLoader implements ModuleInterface
         $globals['rozetkaDelivery']['defaultCities'] = WCUSHelper::getRozetkaDefaultCities();
         $globals['i18n'] = [
             'fields_title' => __('Select shipping address', 'wc-ukr-shipping-i18n'),
-            'shipping_type_warehouse' => __('to warehouse', 'wc-ukr-shipping-i18n'),
-            'shipping_type_doors' => __('to doors', 'wc-ukr-shipping-i18n'),
-            'shipping_type_poshtomat' => __('to the poshtomat', 'wc-ukr-shipping-i18n'),
+            'shipping_type_warehouse' => (int)wc_ukr_shipping_get_option('wcus_combine_poshtomats') === 1
+                ? __('To warehouse or poshtomat', 'wc-ukr-shipping-i18n')
+                : __('To warehouse', 'wc-ukr-shipping-i18n'),
+            'shipping_type_doors' => __('By courier', 'wc-ukr-shipping-i18n'),
+            'shipping_type_poshtomat' => __('To poshtomat', 'wc-ukr-shipping-i18n'),
             'ui' => [
                 'city_placeholder' => __('Select city', 'wc-ukr-shipping-i18n'),
                 'warehouse_placeholder' => __('Select warehouse', 'wc-ukr-shipping-i18n'),
