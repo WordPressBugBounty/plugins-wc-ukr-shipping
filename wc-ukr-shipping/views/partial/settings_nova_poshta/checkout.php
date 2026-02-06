@@ -4,6 +4,7 @@
     }
 
     use \kirillbdev\WCUkrShipping\Helpers\HtmlHelper;
+    use \kirillbdev\WCUSCore\Foundation\View;
 ?>
 
 <div id="wcus-pane-checkout" class="wcus-tab-pane active">
@@ -18,38 +19,12 @@
         </select>
     </div>
 
-    <div class="wcus-form-group wcus-form-group--horizontal">
-        <label class="wcus-switcher">
-            <input type="hidden" name="wc_ukr_shipping[address_shipping]" value="0">
-            <input type="checkbox" name="wc_ukr_shipping[address_shipping]" value="1" <?= (int)get_option('wc_ukr_shipping_address_shipping', 1) === 1 ? 'checked' : ''; ?>>
-            <span class="wcus-switcher__control"></span>
-        </label>
-        <div class="wcus-control-label"><?= __('Enable address shipping', 'wc-ukr-shipping-i18n'); ?></div>
-    </div>
-
-    <div class="wcus-form-group wcus-form-group--horizontal">
-        <label class="wcus-switcher">
-            <input type="hidden" name="wcus[show_poshtomats]" value="0">
-            <input type="checkbox" name="wcus[show_poshtomats]" value="1" <?= (int)get_option('wcus_show_poshtomats', 1) === 1 ? 'checked' : ''; ?>>
-            <span class="wcus-switcher__control"></span>
-        </label>
-        <div class="wcus-control-label"><?= __('Show poshtomats', 'wc-ukr-shipping-i18n'); ?></div>
-    </div>
-
     <?php
-        HtmlHelper::switcherField(
-            'wcus[combine_poshtomats]',
-            __('Combine poshtomats and warehouses', 'wc-ukr-shipping-i18n'),
-            (int)wc_ukr_shipping_get_option('wcus_combine_poshtomats') === 1
-        );
-
         \kirillbdev\WCUkrShipping\Helpers\HtmlHelper::switcherField(
-            'wc_ukr_shipping[np_address_api_ui]',
-            __('Use Nova Poshta API for address shipping', 'wc-ukr-shipping-i18n'),
-            (int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui')
+            'wcus[np_use_online_directory]',
+            __('Use Nova Poshta online directory for search settlements', 'wc-ukr-shipping-i18n'),
+            (int)wc_ukr_shipping_get_option('wcus_np_use_online_directory'),
+            __('If enabled, the plugin will use online directory api for both warehouse and address delivery', 'wc-ukr-shipping-i18n'),
         );
     ?>
-
-    <div id="wcus-warehouse-loader"></div>
-
 </div>

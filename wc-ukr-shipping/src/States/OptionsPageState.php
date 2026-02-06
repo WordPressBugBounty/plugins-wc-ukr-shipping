@@ -69,7 +69,6 @@ class OptionsPageState extends AppState
     private function getUkrposhtaDeliveryDataState(): array
     {
         return [
-            'provider' => wc_ukr_shipping_get_option('wcus_ukrposhta_dd_provider'),
             'bearerEcom' => wc_ukr_shipping_get_option('wcus_ukrposhta_bearer_ecom'),
         ];
     }

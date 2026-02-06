@@ -13,14 +13,17 @@ if ( ! defined('ABSPATH')) {
 class CloudStatusChangedEvent implements EventInterface
 {
     private string $newStatus;
+    private ?string $newSubStatus;
 
-    public function __construct(string $newStatus)
+    public function __construct(string $newStatus, ?string $newSubStatus)
     {
         $this->newStatus = $newStatus;
+        $this->newSubStatus = $newSubStatus;
     }
 
     public function canProcess(Context $context): bool
     {
-        return $context->getLabel()['cloud_status'] === $this->newStatus;
+        return $context->getLabel()['cloud_status'] === $this->newStatus
+            && $context->getLabel()['cloud_sub_status'] === $this->newSubStatus;
     }
 }

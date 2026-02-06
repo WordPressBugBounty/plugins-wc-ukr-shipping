@@ -5,21 +5,27 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
+use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Http\Controllers\OrdersController;
 use kirillbdev\WCUkrShipping\Http\WpHttpClient;
 use kirillbdev\WCUSCore\Foundation\View;
-use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;use kirillbdev\WCUSCore\Contracts\ModuleInterface;
+use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
+use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 use kirillbdev\WCUSCore\Http\Routing\Route;
 
 class Orders implements ModuleInterface
 {
     private ShippingLabelsRepository $shippingLabelsRepository;
+    private SmartyParcelWPApi $smartyParcelApi;
 
-    public function __construct(ShippingLabelsRepository $shippingLabelsRepository)
-    {
+    public function __construct(
+        ShippingLabelsRepository $shippingLabelsRepository,
+        SmartyParcelWPApi $smartyParcelApi
+    ) {
         $this->shippingLabelsRepository = $shippingLabelsRepository;
+        $this->smartyParcelApi = $smartyParcelApi;
     }
 
     public function init()
@@ -33,8 +39,10 @@ class Orders implements ModuleInterface
         add_action('manage_woocommerce_page_wc-orders_custom_column', [$this, 'renderTTNButtonHPOS'], 10, 2);
 
         add_action('init', [$this, 'handlePrintPage']);
+        add_action('init', [$this, 'handleBatchDownloadPage']);
 
         add_action('add_meta_boxes', [$this, 'addTTNBlockToOrderEdit']);
+        add_action('woocommerce_after_order_itemmeta', [$this, 'renderEditBtn'], 10, 2);
     }
 
     public function routes()
@@ -46,7 +54,7 @@ class Orders implements ModuleInterface
 
     public function extendOrderColumns($columns)
     {
-        $columns['wcus_ttn_actions'] = '<span class="wcus-sp-label-col">' . __('Shipping label', 'wc-ukr-shipping-i18n') . '</span>';
+        $columns['wcus_ttn_actions'] = '<span class="wcus-sp-label-col">SmartyParcel</span>';
 
         return $columns;
     }
@@ -87,15 +95,45 @@ class Orders implements ModuleInterface
             return;
         }
 
-        header('Content-Type: application/pdf');
-        $client = new WpHttpClient();
-        echo $client->get(
-            'https://wp-api.smartyparcel.com/v1/labels/' . $shippingLabel['label_id'] . "/pdf?format=$format",
+        $response = $this->smartyParcelApi->sendRequest(
+            '/v1/downloads/l5/:uuid.pdf',
+            null,
             [
-                'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
-                'SP-Site-Url' => site_url(),
+                'layout' => $format,
+            ],
+            [
+                'uuid' => $shippingLabel['label_id'],
             ]
         );
+
+        header('Location: ' . $response['url']);
+        exit;
+    }
+
+    public function handleBatchDownloadPage(): void
+    {
+        $isCurrentRoute = isset($_GET['page'])
+                && $_GET['page'] === 'wc_ukr_shipping_batch_download'
+                && isset($_GET['batch_id']);
+
+        if (!is_admin() || !$isCurrentRoute) {
+            return;
+        }
+
+        if (!get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY)) {
+            return;
+        }
+
+        $response = $this->smartyParcelApi->sendRequest(
+            '/v1/downloads/b6/:uuid.pdf',
+            null,
+            [],
+            [
+                'uuid' => sanitize_text_field($_GET['batch_id']),
+            ]
+        );
+
+        header('Location: ' . $response['url']);
         exit;
     }
 
@@ -129,11 +167,37 @@ class Orders implements ModuleInterface
         }
 
         $data['shipping_label'] = $this->shippingLabelsRepository->findByOrderId((int)$order->get_id());
+        if ($data['shipping_label'] === null && $order->get_meta('_smartyparcel_label_id')) {
+            $data['shipping_label'] = $this->shippingLabelsRepository->findById((int)$order->get_meta('_smartyparcel_label_id'));
+        }
+
         $data['order_id'] = $order->get_id();
         $data['carrier'] = $data['shipping_label']['carrier_slug'] ?? null;
+        if ($data['carrier'] === 'wcus_pro') {
+            $data['carrier'] = 'nova_poshta';
+        }
         $data['download_formats'] = WCUSHelper::getLabelDownloadFormats($data['carrier']);
 
         echo View::render('order/edit_order_metabox', $data);
+    }
+
+    /**
+     * @param int $itemId
+     * @param \WC_Order_Item_Shipping $item
+     */
+    public function renderEditBtn(int $itemId, $item): void
+    {
+        if ( ! is_a($item, 'WC_Order_Item_Shipping') || $item->get_method_id() !== WC_UKR_SHIPPING_NP_SHIPPING_NAME) {
+            return;
+        }
+
+        ?>
+        <div class="wcus-order-shipping__edit-wrap">
+            <button id="wcus-edit-shipping-btn" data-order-id="<?php echo esc_attr($item->get_order_id()); ?>" class="wcus-btn wcus-btn--default wcus-btn--xs">
+                <?php esc_html_e('Edit shipping address', 'wc-ukr-shipping-i18n'); ?>
+            </button>
+        </div>
+        <?php
     }
 
     /**
@@ -149,45 +213,23 @@ class Orders implements ModuleInterface
             }
 
             $ttn = $this->shippingLabelsRepository->findByOrderId((int)$order->get_id());
-            $carrier = null;
-            if ($order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)) {
-                $carrier = 'nova_poshta';
-            } elseif ($order->has_shipping_method('wcus_ukrposhta_shipping')) {
-                $carrier = 'ukrposhta';
-            } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_ROZETKA)) {
-                $carrier = 'rozetka_delivery';
+            if ($ttn === null && $order->get_meta('_smartyparcel_label_id')) {
+                $ttn = $this->shippingLabelsRepository->findById((int)$order->get_meta('_smartyparcel_label_id'));
             }
-            ?>
-                <?php if ($ttn !== null) { ?>
-                    <div class="wcus-icon-block" style="text-align: center;">
-                        <div class="wcus-label-widget j-wcus-label-widget">
-                            <span class="wcus-label-widget__label <?php echo esc_attr($carrier !== null ? 'wcus-label-widget__label--' . $carrier : ''); ?>">
-                                <?php echo esc_html($ttn['tracking_number']); ?>
-                            </span>
-                            <?php if ($ttn['carrier_slug'] === 'wcus_pro') { ?>
-                                <span style="color: #ff4500; font-size: 12px; margin-left: 4px;" title="WC Ukraine Shipping PRO">*</span>
-                            <?php } ?>
-                        </div>
-                        <div style="text-align: center;">
-                            <a href="#" class="wcus-svg-btn wcus-svg-btn--error j-wcus-label-delete"
-                               style="font-size: 13px; color: #f00;"
-                               data-label-id="<?php echo esc_attr($ttn['id']); ?>">
-                                <?php esc_html_e('Delete', 'wc-ukr-shipping-i18n'); ?>
-                            </a>
-                        </div>
-                    </div>
-                <?php } else { ?>
-                    <div style="text-align: center;">
-                        <a href="<?php echo esc_attr(admin_url('admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order->get_id())); ?>"
-                           class="wcus-svg-btn" style="margin-right: 8px;">
-                            <?php esc_html_e('Create', 'wc-ukr-shipping-i18n'); ?>
-                        </a>
-                        <a href="#" class="wcus-svg-btn j-wcus-label-attach" data-order-id="<?php echo esc_attr($order->get_id()); ?>">
-                            <?php esc_html_e('Attach', 'wc-ukr-shipping-i18n'); ?>
-                        </a>
-                    </div>
-            <?php } ?>
-            <?php
+
+            $carrier = null;
+            if ($ttn !== null) {
+                $carrier = $ttn['carrier_slug'];
+                if (in_array($carrier, ['wcus_pro', 'nova_global'])) {
+                    $carrier = 'nova_poshta';
+                }
+            }
+
+            echo View::render('order/ttn_widget', [
+                'ttn' => $ttn,
+                'carrier' => $carrier,
+                'order' => $order,
+            ]);
         }
     }
 }

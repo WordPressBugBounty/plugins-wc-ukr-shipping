@@ -10,6 +10,9 @@ use kirillbdev\WCUkrShipping\DB\Repositories\WarehouseRepository;
 use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
 
+/**
+ * todo Remove by SmartyParcel Locator in future
+ */
 class NovaPoshtaPUDOProvider implements PUDOProviderInterface
 {
     private CityRepository $cityRepository;

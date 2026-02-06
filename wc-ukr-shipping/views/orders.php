@@ -12,9 +12,7 @@
 <script>
     (function ($) {
         $(function () {
-            window.WcusOrders.init({
-                autoTracking: <?php echo esc_js((int)wc_ukr_shipping_get_option('wcus_sp_auto_tracking')); ?>
-            });
+            window.WcusOrders.init({});
         });
     })(jQuery);
 </script>

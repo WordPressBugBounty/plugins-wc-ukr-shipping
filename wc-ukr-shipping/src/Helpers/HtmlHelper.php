@@ -99,18 +99,29 @@ class HtmlHelper
         <?php
     }
 
-    public static function switcherField(string $name, string $label, bool $checked): void
+    public static function switcherField(string $name, string $label, bool $checked, ?string $tooltip = null, ?string $value = null): void
     {
     ?>
-        <div class="wcus-form-group wcus-form-group--horizontal">
-            <label class="wcus-switcher">
-                <input type="hidden" name="<?php echo esc_attr($name); ?>" value="0">
-                <input type="checkbox"
-                       name="<?php echo esc_attr($name); ?>"
-                       value="1" <?php echo $checked ? 'checked' : ''; ?>>
-                <span class="wcus-switcher__control"></span>
-            </label>
-            <div class="wcus-control-label"><?php echo esc_html($label); ?></div>
+        <div class="wcus-form-group">
+            <div class="wcus-form-group--horizontal">
+                <label class="wcus-switcher">
+                    <?php if ($value === null) { ?>
+                        <input type="hidden" name="<?php echo esc_attr($name); ?>" value="0">
+                        <input type="checkbox"
+                               name="<?php echo esc_attr($name); ?>"
+                               value="1" <?php echo $checked ? 'checked' : ''; ?>>
+                    <?php } else { ?>
+                        <input type="checkbox"
+                               name="<?php echo esc_attr($name); ?>"
+                               value="<?php echo esc_attr($value); ?>" <?php echo $checked ? 'checked' : ''; ?>>
+                    <?php } ?>
+                    <span class="wcus-switcher__control"></span>
+                </label>
+                <div class="wcus-control-label"><?php echo esc_html($label); ?></div>
+            </div>
+            <?php if ($tooltip !== null) { ?>
+                <div class="wcus-form-group__tooltip" style="padding-left: 58px;"><?php echo esc_html($tooltip); ?></div>
+            <?php } ?>
         </div>
     <?php
     }

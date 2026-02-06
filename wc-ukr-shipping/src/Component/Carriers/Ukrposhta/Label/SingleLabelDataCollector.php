@@ -115,6 +115,7 @@ class SingleLabelDataCollector
         $shippingMethod = WCUSHelper::getOrderShippingMethod($this->order);
 
         $this->data['recipient'] = [
+            'delivery_type' => 'warehouse',
             'first_name' => $maybeDifferentAddress
                 ? $this->order->get_shipping_first_name()
                 : $this->order->get_billing_first_name(),
@@ -142,6 +143,32 @@ class SingleLabelDataCollector
                 )
                 : '',
         ];
+
+        if ($shippingMethod->get_method_id() === WCUS_SHIPPING_METHOD_UKRPOSHTA_ADDRESS) {
+            $this->data['recipient']['delivery_type'] = 'door';
+            $this->data['recipient']['ship_to'] = [
+                'country_code' => 'UA',
+                'city' => $maybeDifferentAddress
+                    ? $this->order->get_shipping_city()
+                    : $this->order->get_billing_city(),
+                'address_1' => $maybeDifferentAddress
+                    ? $this->order->get_shipping_address_1()
+                    : $this->order->get_billing_address_1(),
+                'address_2' => $maybeDifferentAddress
+                    ? $this->order->get_shipping_address_2()
+                    : $this->order->get_billing_address_2(),
+                'postal_code' => $maybeDifferentAddress
+                    ? $this->order->get_shipping_postcode()
+                    : $this->order->get_billing_postcode(),
+            ];
+            $this->data['recipient']['ship_to']['address_full'] = sprintf(
+                '%s<br/>%s<br/>%s, %s',
+                $this->data['recipient']['ship_to']['country_code'],
+                $this->data['recipient']['ship_to']['city'],
+                $this->data['recipient']['ship_to']['address_1'],
+                $this->data['recipient']['ship_to']['postal_code']
+            );
+        }
     }
 
     private function collectAdditionalServices(): void

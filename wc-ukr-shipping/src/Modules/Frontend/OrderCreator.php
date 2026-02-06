@@ -13,6 +13,7 @@ use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Order\CheckoutOr
 use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Order\CheckoutOrderShippingHandler as RozetkaCheckoutOrderShippingHandler;
 use kirillbdev\WCUkrShipping\Component\Carriers\NovaPost\Order\CheckoutOrderHandler as NovaPostCheckoutOrderHandler;
 use kirillbdev\WCUkrShipping\Component\Carriers\NovaPost\Order\CheckoutOrderShippingHandler as NovaPostCheckoutOrderShippingHandler;
+use kirillbdev\WCUkrShipping\Component\Carriers\Meest\Order\CheckoutOrderHandler as MeestCheckoutOrderHandler;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -60,6 +61,8 @@ class OrderCreator implements ModuleInterface
                 return new RozetkaCheckoutOrderHandler();
             case $order->has_shipping_method(WCUS_SHIPPING_METHOD_NOVA_POST):
                 return new NovaPostCheckoutOrderHandler();
+            case $order->has_shipping_method(WCUS_SHIPPING_METHOD_MEEST):
+                return new MeestCheckoutOrderHandler();
             default:
                 return null;
         }

@@ -8,10 +8,9 @@
 
 <div id="wcus-pane-parcels" class="wcus-tab-pane">
 
-    <div class="wcus-form-group">
-        <div class="wcus-form-group__tooltip">
-            <?php esc_html_e('The plugin must be connected to the Smarty Parcel service to use the functionality of creating a TTN', 'wc-ukr-shipping-i18n'); ?>
-        </div>
+    <div class="wcus-message wcus-message--warning wcus-mb-2">
+        <?php esc_html_e('The plugin must be connected to the Smarty Parcel service to use the functionality of creating a TTN', 'wc-ukr-shipping-i18n'); ?>
+        <a href="https://smartyparcel.com/docs/wcus-smarty-parcel-connect/" target="_blank"><?php esc_html_e('Documentation', 'wc-ukr-shipping-i18n'); ?></a>
     </div>
 
     <div class="wcus-form-group">
@@ -56,6 +55,12 @@
             'wcus[ttn_pay_control_default]',
             __('Payment control', 'wc-ukr-shipping-i18n'),
             $payment_control_default === 1
+        );
+
+        HtmlHelper::switcherField(
+            'wcus[ttn_global_params_default]',
+            __('Global params as default', 'wc-ukr-shipping-i18n'),
+            (int)wc_ukr_shipping_get_option('wcus_ttn_global_params_default') === 1
         );
     ?>
 

@@ -35,21 +35,6 @@ class AddressBookService
         $this->warehouseRepository = $warehouseRepository;
     }
 
-    /**
-     * @throws NovaPoshtaAddressProviderException
-     */
-    public function loadAreas()
-    {
-        /** @var AreaRepository $areaRepository */
-        $areaRepository = wcus_container()->make(AreaRepository::class);
-        $areas = $this->addressProvider->getAreas();
-        $areaRepository->clearAreas();
-
-        foreach ($areas as $area) {
-            $areaRepository->insertArea($area);
-        }
-    }
-
     public function loadCities(int $page): int
     {
         $cities = $this->addressProvider->getCities(

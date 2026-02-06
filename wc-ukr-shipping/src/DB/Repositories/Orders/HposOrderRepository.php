@@ -6,13 +6,18 @@ use kirillbdev\WCUSCore\Facades\DB;
 
 class HposOrderRepository implements OrderRepositoryInterface
 {
-    public function getOrdersWithTTN(int $offset, int $limit): array
+    public function getOrdersWithTTN(int $offset, int $limit, array $filters = []): array
     {
-        return DB::table(DB::prefixedTable('wc_orders') . ' as o')
+        $query = DB::table(DB::prefixedTable('wc_orders') . ' as o')
             ->leftJoin(DB::prefixedTable('wc_ukr_shipping_labels') . ' as l', 'o.id = l.order_id')
             ->where('o.status', '!=', 'trash')
-            ->where('o.type', '=', 'shop_order')
-            ->orderBy('o.id', 'desc')
+            ->where('o.type', '=', 'shop_order');
+
+        if (!empty($filters['carrier_slug'])) {
+            $query->where('l.carrier_slug', '=', $filters['carrier_slug']);
+        }
+
+        return $query->orderBy('o.id', 'desc')
             ->skip($offset)
             ->limit($limit)
             ->get([
@@ -50,6 +55,10 @@ class HposOrderRepository implements OrderRepositoryInterface
                 'meta_key' => '_order_total',
                 'meta_value' => $order->get_total(),
             ],
+            [
+                'meta_key' => '_smartyparcel_label_id',
+                'meta_value' => $order->get_meta('_smartyparcel_label_id'),
+            ]
         ];
     }
 
@@ -63,12 +72,18 @@ class HposOrderRepository implements OrderRepositoryInterface
             ]);
     }
 
-    public function getCountOrderPages(int $limit): int
+    public function getCountOrderPages(int $limit, array $filters = []): int
     {
-        $pageCount = DB::table(DB::prefixedTable('wc_orders'))
-            ->where('status', '!=', 'trash')
-            ->where('type', '=', 'shop_order')
-            ->count();
+        $query = DB::table(DB::prefixedTable('wc_orders') . ' as o')
+            ->leftJoin(DB::prefixedTable('wc_ukr_shipping_labels') . ' as l', 'o.id = l.order_id')
+            ->where('o.status', '!=', 'trash')
+            ->where('o.type', '=', 'shop_order');
+
+        if (!empty($filters['carrier_slug'])) {
+            $query->where('l.carrier_slug', '=', $filters['carrier_slug']);
+        }
+
+        $pageCount = $query->count('o.id');
 
         return ceil($pageCount / $limit);
     }

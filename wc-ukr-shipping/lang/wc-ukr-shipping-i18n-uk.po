@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2025-09-01T10:49:49+03:00\n"
+"POT-Creation-Date: 2025-12-27T14:38:09+02:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,22 +12,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 "X-Domain: wc-ukr-shipping-i18n\n"
 
 #. Plugin Name of the plugin
-#: src/Modules/Backend/Orders.php:111
 msgid "WC Ukraine Shipping"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "https://kirillbdev.pro/wc-ukr-shipping-pro/"
+msgid "https://smartyparcel.com"
 msgstr ""
 
 #. Description of the plugin
-msgid ""
-"Integration of Nova Poshta and Ukrposhta delivery services for WooCommerce"
-msgstr "Інтеграція служби доставки Нова Пошта та Укрпошта для WooCommerce"
+msgid "Multi-carrier shipping solution for WooCommerce"
+msgstr ""
 
 #. Author of the plugin
 msgid "kirillbdev"
@@ -41,14 +39,12 @@ msgstr "Прив'язати накладну до замовлення"
 msgid "Carrier"
 msgstr "Перевізник"
 
-#: lang/frontend.php:1 src/Services/TranslateService.php:48
-#: views/partial/settings_top.php:16
+#: lang/frontend.php:1 views/partial/settings_top.php:16
 msgid "Nova Poshta"
 msgstr "Нова Пошта"
 
-#: lang/frontend.php:1 src/Foundation/UkrPoshtaShipping.php:20
-#: src/Foundation/UkrPoshtaShipping.php:61 src/Services/TranslateService.php:71
-#: views/partial/settings_top.php:20
+#: lang/frontend.php:1 src/Foundation/UkrPoshtaShipping.php:19
+#: src/Foundation/UkrPoshtaShipping.php:60 views/partial/settings_top.php:20
 msgid "Ukrposhta"
 msgstr "Укрпошта"
 
@@ -64,7 +60,7 @@ msgstr "Трекінг номер"
 msgid "Add to tracking"
 msgstr "Додати у трекінг"
 
-#: lang/frontend.php:1 src/Modules/Backend/Orders.php:174
+#: lang/frontend.php:1 views/order/ttn_widget.php:32
 msgid "Attach"
 msgstr "Прив'язати"
 
@@ -73,6 +69,7 @@ msgid "Unable to attach label for order"
 msgstr "Не вдалося прив'язати накладну до замовлення"
 
 #: src/Component/ListTable/AutomationListTable.php:56 views/automation.php:26
+#: views/partial/settings_rozetka/parcels.php:42
 msgid "Name"
 msgstr "Назва"
 
@@ -93,8 +90,8 @@ msgid "Created At"
 msgstr "Дата створення"
 
 #: src/Component/ListTable/AutomationListTable.php:92
-#: src/Modules/Backend/OptionsPage.php:146
-#: src/Modules/Backend/OptionsPage.php:147
+#: src/Modules/Backend/OptionsPage.php:150
+#: src/Modules/Backend/OptionsPage.php:151
 msgid "Edit"
 msgstr "Редагувати"
 
@@ -103,13 +100,21 @@ msgid "Confirm action"
 msgstr ""
 
 #: src/Component/ListTable/AutomationListTable.php:98
-#: src/Modules/Backend/Orders.php:163 views/order/edit_order_metabox.php:24
+#: views/order/edit_order_metabox.php:31 views/order/ttn_widget.php:21
 msgid "Delete"
 msgstr "Видалити"
 
-#: src/Component/Validation/NovaPoshtaCheckoutValidator.php:57
+#: src/Component/Validation/MeestCheckoutValidator.php:22
+msgid "Select warehouse of Meest Post"
+msgstr "Виберіть відділення Meest"
+
+#: src/Component/Validation/NovaPoshtaCheckoutValidator.php:33
 msgid "Enter shipping address of Nova Poshta"
-msgstr "Виберіть адресу Нової Пошти"
+msgstr "Виберіть адресу доставки Новою Поштою"
+
+#: src/Component/Validation/NovaPoshtaCheckoutValidator.php:42
+msgid "Select warehouse of Nova Poshta"
+msgstr "Виберіть відділення Нової Пошти"
 
 #: src/Component/Validation/NovaPostCheckoutValidator.php:20
 msgid "Please provide shipping address"
@@ -123,39 +128,200 @@ msgstr "Оберіть відділення Rozetka"
 msgid "Select Ukrposhta warehouse"
 msgstr "Оберіть відділення Укрпошти"
 
-#: src/Foundation/NovaPoshtaShipping.php:63
-#: src/Foundation/NovaPostShipping.php:59
+#: src/Foundation/MeestAddressShipping.php:19
+#: src/Foundation/MeestAddressShipping.php:54
+msgid "Meest Post Address"
+msgstr ""
+
+#: src/Foundation/MeestAddressShipping.php:57
+#: src/Foundation/MeestShipping.php:57 src/Foundation/NovaGlobalAddress.php:57
+#: src/Foundation/NovaPoshtaShipping.php:84
+#: src/Foundation/NovaPostShipping.php:57
 #: src/Foundation/RozetkaDeliveryShipping.php:57
+#: src/Foundation/UkrPoshtaShipping.php:73
+msgid "Type of shipping cost calculation"
+msgstr "Тип розрахунку вартості доставки"
+
+#: src/Foundation/MeestAddressShipping.php:59
+#: src/Foundation/MeestShipping.php:59 src/Foundation/NovaGlobalAddress.php:59
+#: src/Foundation/NovaPoshtaShipping.php:86
+#: src/Foundation/NovaPostShipping.php:59
 #: src/Foundation/UkrPoshtaShipping.php:75
-msgid "You can manage shipping method options at"
-msgstr "Ви можете налаштувати метод доставки на"
+msgid "Access to the SmartyParcel Rates API is only available on paid plans"
+msgstr ""
+"Доступ до SmartyParcel Rates API доступний лише для платних тарифних планів."
 
-#: src/Foundation/NovaPoshtaShipping.php:75
-#: src/Foundation/NovaPostShipping.php:71
-#: src/Foundation/RozetkaDeliveryShipping.php:69
+#: src/Foundation/MeestAddressShipping.php:63
+#: src/Foundation/MeestShipping.php:63 src/Foundation/NovaGlobalAddress.php:63
+#: src/Foundation/NovaPoshtaShipping.php:90
+#: src/Foundation/NovaPostShipping.php:63
+#: src/Foundation/RozetkaDeliveryShipping.php:61
+#: src/Foundation/UkrPoshtaShipping.php:79
+msgid "Fixed"
+msgstr "Фіксований"
+
+#: src/Foundation/MeestAddressShipping.php:64
+#: src/Foundation/MeestShipping.php:64 src/Foundation/NovaGlobalAddress.php:64
+#: src/Foundation/NovaPoshtaShipping.php:91
+#: src/Foundation/NovaPostShipping.php:64
+#: src/Foundation/UkrPoshtaShipping.php:80
+msgid "SmartyParcel Rates API"
+msgstr ""
+
+# End warehouse loader
+#: src/Foundation/MeestAddressShipping.php:69
+#: src/Foundation/MeestShipping.php:69 src/Foundation/NovaGlobalAddress.php:69
+#: src/Foundation/NovaPoshtaShipping.php:96
+#: src/Foundation/NovaPostShipping.php:69
+#: src/Foundation/RozetkaDeliveryShipping.php:66
 #: src/Foundation/UkrPoshtaShipping.php:87
-msgid "plugin settings page"
-msgstr "сторінці налаштувань плагіну"
+msgid "Fixed shipping cost"
+msgstr "Фіксована вартість доставки"
 
-#: src/Foundation/NovaPostShipping.php:20
-#: src/Foundation/NovaPostShipping.php:55 views/partial/settings_top.php:28
+#: src/Foundation/MeestAddressShipping.php:77
+#: src/Foundation/MeestShipping.php:77
+#: src/Foundation/NovaPoshtaShipping.php:104
+#: src/Foundation/UkrPoshtaShipping.php:95
+msgid "Include COD when calculating shipping cost"
+msgstr "Враховувати післяплату при розрахунку вартості доставки"
+
+#: src/Foundation/MeestAddressShipping.php:79
+#: src/Foundation/MeestShipping.php:79
+#: src/Foundation/NovaPoshtaShipping.php:106
+#: src/Foundation/UkrPoshtaShipping.php:97
+msgid ""
+"If checked and function supported by carrier, the COD service will be "
+"included in shipping cost."
+msgstr ""
+"Якщо увімкнено та підтримується перевізником, послуга післяплати буде "
+"включена у вартість доставки."
+
+#: src/Foundation/MeestAddressShipping.php:85
+#: src/Foundation/MeestShipping.php:85 src/Foundation/NovaGlobalAddress.php:77
+#: src/Foundation/NovaPoshtaShipping.php:112
+#: src/Foundation/NovaPostShipping.php:77
+#: src/Foundation/RozetkaDeliveryShipping.php:74
+#: src/Foundation/UkrPoshtaShipping.php:103
+msgid "Include shipping cost to order total"
+msgstr "Включати вартість доставки у загальну суму замовлення"
+
+#: src/Foundation/MeestAddressShipping.php:87
+#: src/Foundation/MeestShipping.php:87 src/Foundation/NovaGlobalAddress.php:79
+#: src/Foundation/NovaPoshtaShipping.php:114
+#: src/Foundation/NovaPostShipping.php:79
+#: src/Foundation/RozetkaDeliveryShipping.php:76
+#: src/Foundation/UkrPoshtaShipping.php:105
+msgid "If checked, the shipping cost will be added to the order total."
+msgstr ""
+"Якщо увімкнено, вартість доставки буде додана до загальної суми замовлення."
+
+#: src/Foundation/MeestAddressShipping.php:92
+#: src/Foundation/MeestShipping.php:92 src/Foundation/NovaGlobalAddress.php:84
+#: src/Foundation/NovaPoshtaShipping.php:119
+#: src/Foundation/NovaPostShipping.php:84
+#: src/Foundation/RozetkaDeliveryShipping.php:81
+#: src/Foundation/UkrPoshtaShipping.php:110
+msgid "Enable free shipping rule"
+msgstr "Увімкнути правило безкоштовної доставки"
+
+#: src/Foundation/MeestAddressShipping.php:94
+#: src/Foundation/MeestShipping.php:94 src/Foundation/NovaGlobalAddress.php:86
+#: src/Foundation/NovaPoshtaShipping.php:121
+#: src/Foundation/NovaPostShipping.php:86
+#: src/Foundation/RozetkaDeliveryShipping.php:83
+#: src/Foundation/UkrPoshtaShipping.php:112
+msgid "If checked, free shipping would be available based on order amount."
+msgstr ""
+"Якщо цю опцію увімкнено, буде доступна безкоштовна доставка в залежності від "
+"суми замовлення."
+
+#: src/Foundation/MeestAddressShipping.php:99
+#: src/Foundation/MeestShipping.php:99 src/Foundation/NovaGlobalAddress.php:91
+#: src/Foundation/NovaPoshtaShipping.php:126
+#: src/Foundation/NovaPostShipping.php:91
+#: src/Foundation/RozetkaDeliveryShipping.php:88
+#: src/Foundation/UkrPoshtaShipping.php:117
+msgid "Minimum amount for free shipping"
+msgstr "Мінімальна сума для безкоштовної доставки"
+
+#: src/Foundation/MeestAddressShipping.php:106
+#: src/Foundation/MeestShipping.php:106 src/Foundation/NovaGlobalAddress.php:98
+#: src/Foundation/NovaPoshtaShipping.php:133
+#: src/Foundation/NovaPostShipping.php:98
+#: src/Foundation/RozetkaDeliveryShipping.php:95
+#: src/Foundation/UkrPoshtaShipping.php:124
+msgid "Free shipping method name"
+msgstr "Назва методу безкоштовної доставки"
+
+#: src/Foundation/MeestAddressShipping.php:108
+#: src/Foundation/MeestShipping.php:108
+#: src/Foundation/NovaGlobalAddress.php:100
+#: src/Foundation/NovaPoshtaShipping.php:135
+#: src/Foundation/NovaPostShipping.php:100
+#: src/Foundation/RozetkaDeliveryShipping.php:97
+#: src/Foundation/UkrPoshtaShipping.php:126
+msgid "Free shipping"
+msgstr "Безкоштовна доставка"
+
+#: src/Foundation/MeestShipping.php:19 src/Foundation/MeestShipping.php:54
+msgid "Meest Post"
+msgstr ""
+
+#: src/Foundation/NovaGlobalAddress.php:19
+msgid "Nova Global Address"
+msgstr ""
+
+#: src/Foundation/NovaPoshtaShipping.php:65
+msgid "Delivery types"
+msgstr "Види доставки"
+
+#: src/Foundation/NovaPoshtaShipping.php:68
+#: src/Modules/Frontend/AssetsLoader.php:99
+msgid "To warehouse"
+msgstr "У відділення"
+
+#: src/Foundation/NovaPoshtaShipping.php:69
+#: src/Modules/Frontend/AssetsLoader.php:100
+msgid "By courier"
+msgstr "Кур'єром"
+
+#: src/Foundation/NovaPoshtaShipping.php:70
+#: src/Modules/Frontend/AssetsLoader.php:101
+msgid "To poshtomat"
+msgstr "У поштомат"
+
+#: src/Foundation/NovaPoshtaShipping.php:74
+msgid ""
+"You can choose which types of delivery will be processed by this shipping "
+"method or create several shipping methods with concrete delivery types "
+"separately."
+msgstr ""
+"Ви можете вибрати, які види доставки будуть оброблятись цим методом, або "
+"створити кілька методів доставки з конкретними видами доставки окремо."
+
+#: src/Foundation/NovaPoshtaShipping.php:78
+msgid "Combine poshtomats and warehouses"
+msgstr "Об'єднати поштомати та відділення"
+
+#: src/Foundation/NovaPostShipping.php:19
+#: src/Foundation/NovaPostShipping.php:54
 msgid "Nova Post"
 msgstr ""
 
-#: src/Foundation/RozetkaDeliveryShipping.php:18
-#: src/Foundation/RozetkaDeliveryShipping.php:53
+#: src/Foundation/RozetkaDeliveryShipping.php:19
+#: src/Foundation/RozetkaDeliveryShipping.php:54
 msgid "Rozetka Delivery"
 msgstr ""
 
-#: src/Foundation/UkrPoshtaShipping.php:64
+#: src/Foundation/UkrPoshtaShipping.php:63
 msgid "Type of shipment"
 msgstr "Тип відправки"
 
-#: src/Foundation/UkrPoshtaShipping.php:69
+#: src/Foundation/UkrPoshtaShipping.php:68
 msgid "STANDARD"
 msgstr "СТАНДАРТ"
 
-#: src/Foundation/UkrPoshtaShipping.php:70
+#: src/Foundation/UkrPoshtaShipping.php:69
 msgid "EXPRESS"
 msgstr "ЕКСПРЕС"
 
@@ -171,196 +337,197 @@ msgstr "Не вдалося застосувати міграції"
 msgid "Settings saved successfully!"
 msgstr "Налаштування успішно збережені!"
 
-#: src/Modules/Backend/Jobs.php:38
-msgid "Every minute"
-msgstr ""
-
 # Options page
-#: src/Modules/Backend/OptionsPage.php:87 views/settings_general.php:19
-#: views/settings_nova_poshta.php:19 views/settings_nova_post.php:19
-#: views/settings_rozetka.php:19 views/settings_ukrposhta.php:19
+#: src/Modules/Backend/OptionsPage.php:91 views/settings_general.php:19
+#: views/settings_nova_poshta.php:19 views/settings_rozetka.php:19
+#: views/settings_ukrposhta.php:19
 msgid "Settings"
 msgstr "Налаштування"
 
-#: src/Modules/Backend/OptionsPage.php:98
-#: src/Modules/Backend/OptionsPage.php:99
+#: src/Modules/Backend/OptionsPage.php:102
+#: src/Modules/Backend/OptionsPage.php:103
 msgid "Smarty Parcel"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:107
-#: src/Modules/Backend/OptionsPage.php:108
+#: src/Modules/Backend/OptionsPage.php:111
+#: src/Modules/Backend/OptionsPage.php:112
 msgid "Create TTN"
 msgstr "Створити ТТН"
 
-#: src/Modules/Backend/OptionsPage.php:116
-#: src/Modules/Backend/OptionsPage.php:117 views/orders.php:4
+#: src/Modules/Backend/OptionsPage.php:120
+#: src/Modules/Backend/OptionsPage.php:121 views/orders.php:4
 msgid "Orders"
 msgstr "Замовлення"
 
-#: src/Modules/Backend/OptionsPage.php:125
-#: src/Modules/Backend/OptionsPage.php:126
+#: src/Modules/Backend/OptionsPage.php:129
+#: src/Modules/Backend/OptionsPage.php:130
 msgid "Automation"
 msgstr "Автоматизація"
 
-#: src/Modules/Backend/OptionsPage.php:137
-#: src/Modules/Backend/OptionsPage.php:138 src/Modules/Backend/Orders.php:171
+#: src/Modules/Backend/OptionsPage.php:141
+#: src/Modules/Backend/OptionsPage.php:142 views/order/ttn_widget.php:29
 msgid "Create"
 msgstr "Створити"
 
-#: src/Modules/Backend/OptionsPage.php:155
-#: src/Modules/Backend/OptionsPage.php:156 views/tools.php:14
+#: src/Modules/Backend/OptionsPage.php:159
+#: src/Modules/Backend/OptionsPage.php:160 views/tools.php:14
 msgid "Tools"
 msgstr "Інструменти"
 
 # Warehouse loader
-#: src/Modules/Backend/OptionsPage.php:172
+#: src/Modules/Backend/OptionsPage.php:171
 msgid "Warehouses data of Nova Poshta"
 msgstr "Дані відділень Нової Пошти"
 
-#: src/Modules/Backend/OptionsPage.php:173
+#: src/Modules/Backend/OptionsPage.php:172
 msgid "Last update date:"
 msgstr "Дата останнього оновлення:"
 
-#: src/Modules/Backend/OptionsPage.php:174
+#: src/Modules/Backend/OptionsPage.php:173
 msgid "Status:"
 msgstr "Статус:"
 
-#: src/Modules/Backend/OptionsPage.php:175
+#: src/Modules/Backend/OptionsPage.php:174
 msgid "Not completed"
 msgstr "Не завершено"
 
-#: src/Modules/Backend/OptionsPage.php:176
+#: src/Modules/Backend/OptionsPage.php:175
 msgid "Completed"
 msgstr "Завершено"
 
-#: src/Modules/Backend/OptionsPage.php:177
+#: src/Modules/Backend/OptionsPage.php:176
 msgid "Unknown"
 msgstr "Невідомий"
 
-#: src/Modules/Backend/OptionsPage.php:178
+#: src/Modules/Backend/OptionsPage.php:177
 msgid "Update warehouses"
 msgstr "Оновити відділення"
 
-#: src/Modules/Backend/OptionsPage.php:179
+#: src/Modules/Backend/OptionsPage.php:178
 msgid "Continue update"
 msgstr "Продовжити оновлення"
 
-#: src/Modules/Backend/OptionsPage.php:180
+#: src/Modules/Backend/OptionsPage.php:179
 msgid "Load areas..."
 msgstr "Завантаження областей..."
 
-#: src/Modules/Backend/OptionsPage.php:181
+#: src/Modules/Backend/OptionsPage.php:180
 msgid "Load cities..."
 msgstr "Завантаження міст..."
 
-#: src/Modules/Backend/OptionsPage.php:182
+#: src/Modules/Backend/OptionsPage.php:181
 msgid "Load warehouses..."
 msgstr "Завантаження відділень..."
 
-#: src/Modules/Backend/OptionsPage.php:183
+#: src/Modules/Backend/OptionsPage.php:182
 msgid "Warehouses db updated successfully"
 msgstr "Дані відділень успішно оновлені"
 
-#: src/Modules/Backend/OptionsPage.php:186
+#: src/Modules/Backend/OptionsPage.php:185
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 "Ви впевнені, що хочете перезапустити міграції? Ця дія не може бути скасована."
 
-#: src/Modules/Backend/OptionsPage.php:308
+#: src/Modules/Backend/OptionsPage.php:319
+msgid "Unable to detect order shipping method or carrier"
+msgstr "Не вдалося визначити спосіб доставки замовлення або перевізника"
+
+#: src/Modules/Backend/OptionsPage.php:347
 msgid "Add rule"
 msgstr "Додати правило"
 
-#: src/Modules/Backend/OptionsPage.php:326
+#: src/Modules/Backend/OptionsPage.php:365
 msgid "Rule not found"
 msgstr "Правило не знайдене"
 
-#: src/Modules/Backend/OptionsPage.php:335
+#: src/Modules/Backend/OptionsPage.php:374
 msgid "Rule saved successfully"
 msgstr "Правило успішно збережене"
 
-#: src/Modules/Backend/Orders.php:48 src/Modules/Frontend/Account.php:31
-#: views/settings_nova_poshta.php:34 views/settings_ukrposhta.php:32
+#: src/Modules/Backend/Orders.php:57 src/Modules/Frontend/Account.php:31
+#: views/settings_nova_poshta.php:32 views/settings_rozetka.php:31
+#: views/settings_ukrposhta.php:31
 msgid "Shipping label"
 msgstr "Накладна"
 
-#: src/Modules/Frontend/AssetsLoader.php:102
-#: src/Services/TranslateService.php:49
+#: src/Modules/Backend/Orders.php:150
+msgid "SmartyParcel"
+msgstr ""
+
+#: src/Modules/Backend/Orders.php:165
+msgid "Purchase label is not available for this order."
+msgstr "Створення накладної недоступне для цього замовлення."
+
+#: src/Modules/Backend/Orders.php:197
+msgid "Edit shipping address"
+msgstr "Редагувати адресу доставки"
+
+#: src/Modules/Frontend/AssetsLoader.php:98
 msgid "Select shipping address"
 msgstr "Вкажіть адресу доставки"
 
-#: src/Modules/Frontend/AssetsLoader.php:104
+#: src/Modules/Frontend/AssetsLoader.php:102
 msgid "To warehouse or poshtomat"
 msgstr "У відділення або поштомат"
 
+#: src/Modules/Frontend/AssetsLoader.php:104
+#: src/Modules/Frontend/AssetsLoader.php:115
+msgid "Select locality"
+msgstr "Виберіть населений пункт"
+
 #: src/Modules/Frontend/AssetsLoader.php:105
-msgid "To warehouse"
-msgstr "У відділення"
+msgid "Select warehouse"
+msgstr "Виберіть відділення"
 
 #: src/Modules/Frontend/AssetsLoader.php:106
-msgid "By courier"
-msgstr "Кур'єром"
+msgid "Select poshtomat"
+msgstr "Виберіть поштомат"
 
 #: src/Modules/Frontend/AssetsLoader.php:107
-msgid "To poshtomat"
-msgstr "У поштомат"
+msgid "Select warehouse or poshtomat"
+msgstr "Виберіть відділення або поштомат"
 
-#: src/Modules/Frontend/AssetsLoader.php:109
-#: src/Services/TranslateService.php:51
-msgid "Select city"
-msgstr "Оберіть місто"
-
-#: src/Modules/Frontend/AssetsLoader.php:110
-#: src/Services/TranslateService.php:52
-msgid "Select warehouse"
-msgstr "Оберіть відділення"
-
-#: src/Modules/Frontend/AssetsLoader.php:111
-msgid "Select poshtomat"
-msgstr "Оберіть поштомат"
-
-#: src/Modules/Frontend/AssetsLoader.php:112
-#: src/Services/TranslateService.php:54
+#: src/Modules/Frontend/AssetsLoader.php:108
 msgid "Enter address"
 msgstr "Введіть адресу"
 
-#: src/Modules/Frontend/AssetsLoader.php:113
-msgid "Enter value for search"
-msgstr "Введіть значення для пошуку"
+#: src/Modules/Frontend/AssetsLoader.php:109
+msgid "Enter 3 or more characters to search"
+msgstr "Введіть 3 або більше символів для пошуку"
 
-#: src/Modules/Frontend/AssetsLoader.php:114
+#: src/Modules/Frontend/AssetsLoader.php:110
+msgid "Enter number or address of warehouse"
+msgstr "Введіть номер або адресу відділення"
+
+#: src/Modules/Frontend/AssetsLoader.php:111
 msgid "Loading..."
 msgstr "Завантаження..."
 
-#: src/Modules/Frontend/AssetsLoader.php:115
+#: src/Modules/Frontend/AssetsLoader.php:112
 msgid "Load more"
 msgstr "Завантажити ще"
 
-#: src/Modules/Frontend/AssetsLoader.php:116
-#: src/Services/TranslateService.php:55
+#: src/Modules/Frontend/AssetsLoader.php:113
 msgid "Nothing found"
 msgstr "Нічого не знайдено"
 
-#: src/Modules/Frontend/AssetsLoader.php:117
+#: src/Modules/Frontend/AssetsLoader.php:114
 msgid "Enter more chars"
 msgstr "Введіть більше символів"
 
+#: src/Modules/Frontend/AssetsLoader.php:116
+msgid "Select street"
+msgstr "Виберіть вулицю"
+
+#: src/Modules/Frontend/AssetsLoader.php:117
+msgid "Enter house"
+msgstr "Вкажіть будинок"
+
 #: src/Modules/Frontend/AssetsLoader.php:118
-msgid "Settlement"
-msgstr "Населений пункт"
+msgid "Enter flat number"
+msgstr "Вкажіть квартиру"
 
 #: src/Modules/Frontend/AssetsLoader.php:119
-msgid "Street"
-msgstr "Вулиця"
-
-#: src/Modules/Frontend/AssetsLoader.php:120
-msgid "House"
-msgstr "Номер дому"
-
-#: src/Modules/Frontend/AssetsLoader.php:121
-msgid "Flat"
-msgstr "Номер квартири"
-
-#: src/Modules/Frontend/AssetsLoader.php:122
 msgid "Something went wrong"
 msgstr "Щось пішло не так"
 
@@ -368,38 +535,51 @@ msgstr "Щось пішло не так"
 msgid "Middle Name"
 msgstr "По-батькові"
 
-#: src/Services/TranslateService.php:50
-msgid "Select area"
-msgstr "Оберіть область"
-
-#: src/Services/TranslateService.php:53
-msgid "Need address delivery"
-msgstr "Потрібна адресна доставка"
-
 #: views/automation.php:14
 msgid "Rule constructor"
 msgstr "Конструктор правил"
 
 #: views/automation.php:17 views/settings_general.php:23
-#: views/settings_nova_poshta.php:23 views/settings_nova_post.php:23
-#: views/settings_rozetka.php:23 views/settings_ukrposhta.php:23
-#: views/tools.php:17
+#: views/settings_nova_poshta.php:23 views/settings_rozetka.php:23
+#: views/settings_ukrposhta.php:23 views/tools.php:17
 msgid "Save"
 msgstr "Зберегти"
 
-#: views/order/edit_order_metabox.php:47
+#: views/order/edit_order_metabox.php:45
 msgid "Create shipping label"
 msgstr "Створити накладну"
 
-#: views/order/edit_order_metabox.php:51
+#: views/order/edit_order_metabox.php:49
 msgid "Attach shipping label"
 msgstr "Прив'язати накладну"
+
+#: views/partial/locator_message.php:13
+msgid "Use SmartyParcel Locator API"
+msgstr "Використовувати SmartyParcel Locator API"
+
+#: views/partial/locator_message.php:18
+msgid ""
+"Connect your store to SmartyParcel to access a unified database of pickup "
+"points from multiple carriers — without worrying about data updates or "
+"signing additional agreements."
+msgstr ""
+"Підключіть свій магазин до SmartyParcel, щоб отримати доступ до єдиної бази "
+"точок видачі різних перевізників без турбот про оновлення даних або "
+"укладання додаткових договорів."
+
+#: views/partial/locator_message.php:19
+msgid "Learn more"
+msgstr "Дізнатися більше"
 
 #: views/partial/pro_promotion.php:12
 msgid "Need help?"
 msgstr "Потрібна допомога?"
 
 #: views/partial/pro_promotion.php:20
+#: views/partial/settings_general/parcels.php:13
+#: views/partial/settings_nova_poshta/parcels.php:13
+#: views/partial/settings_rozetka/parcels.php:14
+#: views/partial/settings_ukrposhta/parcels.php:13
 msgid "Documentation"
 msgstr "Документація"
 
@@ -439,23 +619,35 @@ msgstr "Розширена аналітика посилок"
 msgid "Premium support"
 msgstr "Premium підтримка"
 
-#: views/partial/pro_promotion.php:71
+#: views/partial/pro_promotion.php:69
 msgid "Switch to paid plan"
 msgstr "Перейти на платну підписку"
 
-#: views/partial/settings_general/common.php:14
+#: views/partial/settings_general/carriers.php:15
+msgid ""
+"On this page, you can enable the carriers you want to integrate with your "
+"store."
+msgstr ""
+"На цій сторінці ви можете ввімкнути перевізників, яких хочете інтегрувати у "
+"свій магазин."
+
+#: views/partial/settings_general/carriers.php:16
+msgid "List of supported carriers"
+msgstr "Список підтримуваних перевізників"
+
+#: views/partial/settings_general/checkout.php:14
 msgid "Load translates from"
 msgstr "Завантажувати переклади з"
 
-#: views/partial/settings_general/common.php:16
+#: views/partial/settings_general/checkout.php:16
 msgid "Plugin settings"
 msgstr "Налаштувань плагіну"
 
-#: views/partial/settings_general/common.php:17
+#: views/partial/settings_general/checkout.php:17
 msgid "Wordpress localization files"
 msgstr "Файли локалізації Wordpress"
 
-#: views/partial/settings_general/common.php:20
+#: views/partial/settings_general/checkout.php:20
 msgid ""
 "If you are using language plugins such as WPML or Polylang - select "
 "\"Wordpress localization files\" option"
@@ -463,29 +655,48 @@ msgstr ""
 "Якщо ви використовуєте плагіни локалізації, такі як WPML або Polylang, то "
 "виберіть опцію \"Файли локалізації Wordpress\""
 
-#: views/partial/settings_general/common.php:25
+#: views/partial/settings_general/checkout.php:25
 msgid "Shipping block position on checkout page"
 msgstr "Позиція блока доставки на сторінці чекаута"
 
-#: views/partial/settings_general/common.php:27
+#: views/partial/settings_general/checkout.php:27
 msgid "Default section"
 msgstr "Основна секція"
 
-#: views/partial/settings_general/common.php:28
+#: views/partial/settings_general/checkout.php:28
 msgid "Additional section"
 msgstr "Додаткова секція"
 
-#: views/partial/settings_general/common.php:35
+#: views/partial/settings_general/checkout.php:35
 msgid "Color of spinner in frontend"
 msgstr "Колір спінера у frontend"
 
-#: views/partial/settings_general/common.php:42
+#: views/partial/settings_general/checkout.php:42
 msgid "Save last customer address"
 msgstr "Зберігати останню адресу користувача"
 
-#: views/partial/settings_general/parcels.php:13
-#: views/partial/settings_nova_poshta/parcels.php:13
-#: views/partial/settings_ukrposhta/parcels.php:13
+#: views/partial/settings_general/checkout.php:48
+msgid "Inject additional shipping fields"
+msgstr "Впровадити додаткові поля достаки"
+
+#: views/partial/settings_general/checkout.php:54
+msgid "Use currency conversion on rates estimation"
+msgstr "Використовувати конвертацію валюти при розрахунку вартості доставки"
+
+#: views/partial/settings_general/checkout.php:56
+msgid ""
+"Carriers often return shipping costs in the destination currency. If this "
+"option is enabled, SmartyParcel will convert the shipping cost to the "
+"store’s selected currency using average worldwide exchange rates."
+msgstr ""
+"Перевізники часто повертають вартість доставки у валюті країни призначення. "
+"Якщо ця опція включена, SmartyParcel конвертуватиме вартість доставки в "
+"поточну валюту магазину, використовуючи усереднені світові обмінні курси."
+
+#: views/partial/settings_general/parcels.php:12
+#: views/partial/settings_nova_poshta/parcels.php:12
+#: views/partial/settings_rozetka/parcels.php:13
+#: views/partial/settings_ukrposhta/parcels.php:12
 #: views/ttn/ttn_forbidden.php:15
 msgid ""
 "The plugin must be connected to the Smarty Parcel service to use the "
@@ -494,170 +705,135 @@ msgstr ""
 "Для використання функціоналу створення ТТН плагін повинен бути підключений "
 "до сервісу Smarty Parcel"
 
-#: views/partial/settings_general/parcels.php:18
-msgid "Default description"
-msgstr "Опис за замовчуванням"
-
-#: views/partial/settings_general/parcels.php:27
-msgid "Default weight"
-msgstr "Вага за замовчуванням"
-
-#: views/partial/settings_general/parcels.php:33
-msgid "Default dimensions"
-msgstr "Габарити за замовчуванням"
-
-#: views/partial/settings_general/parcels.php:38
-msgid "Width (cm)"
-msgstr "Ширина (см)"
-
-#: views/partial/settings_general/parcels.php:48
-msgid "Height (cm)"
-msgstr "Висота (см)"
-
-#: views/partial/settings_general/parcels.php:58
-msgid "Length (cm)"
-msgstr "Довжина (см)"
-
-#: views/partial/settings_general/parcels.php:73
-msgid "Automatically add shipments to tracking"
-msgstr "Автоматично додавати посилки у трекінг"
-
-#: views/partial/settings_general/shipping.php:14
+#: views/partial/settings_general/parcels.php:19
 msgid "COD method"
 msgstr "Метод зворотньої доставки"
 
-#: views/partial/settings_general/shipping.php:21
-msgid "Inject additional shipping fields"
-msgstr "Впровадити додаткові поля достаки"
+#: views/partial/settings_general/parcels.php:26
+msgid "Default description"
+msgstr "Опис за замовчуванням"
 
-#: views/partial/settings_nova_poshta/checkout.php:12
+#: views/partial/settings_general/parcels.php:35
+msgid "Default weight"
+msgstr "Вага за замовчуванням"
+
+#: views/partial/settings_general/parcels.php:41
+msgid "Default dimensions"
+msgstr "Габарити за замовчуванням"
+
+#: views/partial/settings_general/parcels.php:46
+msgid "Width (cm)"
+msgstr "Ширина (см)"
+
+#: views/partial/settings_general/parcels.php:56
+msgid "Height (cm)"
+msgstr "Висота (см)"
+
+#: views/partial/settings_general/parcels.php:66
+msgid "Length (cm)"
+msgstr "Довжина (см)"
+
+#: views/partial/settings_general/pickup_points.php:21
+msgid "Bearer eCom token of Ukrposhta"
+msgstr "Bearer eCom token Укрпошти"
+
+#: views/partial/settings_general/pickup_points.php:23
+msgid "Bearer eCom token is required to search for warehouses across Ukraine."
+msgstr "Bearer eCom токен необхідний для пошуку відділень по Україні."
+
+#: views/partial/settings_general/pickup_points.php:28
+msgid "API Key of Nova Post"
+msgstr "API ключ від Nova Post"
+
+#: views/partial/settings_general/pickup_points.php:30
+msgid "API key is required to search for warehouses and PUDO across Europe"
+msgstr "API ключ потрібен для пошуку відділень та PUDO по всій Європі"
+
+#: views/partial/settings_general/pickup_points.php:35
+msgid "API Token of Meest Post"
+msgstr "API токен Meest"
+
+#: views/partial/settings_general/pickup_points.php:37
+msgid "API token is required to search for warehouses and PUDO of Meest Post"
+msgstr ""
+"API токен потрібен для пошуку відділень та пунктів видачі Meest по Україні"
+
+#: views/partial/settings_nova_poshta/checkout.php:13
 msgid "Display language of cities and departments"
 msgstr "Мова відображення міст та відділень"
 
-#: views/partial/settings_nova_poshta/checkout.php:16
+#: views/partial/settings_nova_poshta/checkout.php:17
 msgid "Russian"
 msgstr "Російська"
 
-#: views/partial/settings_nova_poshta/checkout.php:17
+#: views/partial/settings_nova_poshta/checkout.php:18
 msgid "Ukrainian"
 msgstr "Українська"
 
+#: views/partial/settings_nova_poshta/checkout.php:25
+msgid "Use Nova Poshta online directory for search settlements"
+msgstr ""
+"Використовувати онлайн-довідник Нової Пошти для пошуку населених пунктів"
+
 #: views/partial/settings_nova_poshta/checkout.php:27
-msgid "Enable address shipping"
-msgstr "Увімкнути адресну доставку"
+msgid ""
+"If enabled, the plugin will use online directory api for both warehouse and "
+"address delivery"
+msgstr ""
+"Якщо увімкнено, плагін буде використовувати API онлайн-довідника як для "
+"адресної доставки, так і для доставки на відділення"
 
-#: views/partial/settings_nova_poshta/checkout.php:36
-msgid "Show poshtomats"
-msgstr "Показувати поштомати"
-
-#: views/partial/settings_nova_poshta/checkout.php:42
-msgid "Combine poshtomats and warehouses"
-msgstr "Об'єднати поштомати та відділення"
-
-#: views/partial/settings_nova_poshta/checkout.php:48
-msgid "Use Nova Poshta API for address shipping"
-msgstr "Використовувати API Нової Пошти для адресної доставки"
-
-#: views/partial/settings_nova_poshta/parcels.php:18
-#: views/partial/settings_ukrposhta/parcels.php:27
+#: views/partial/settings_nova_poshta/parcels.php:17
+#: views/partial/settings_rozetka/parcels.php:27
+#: views/partial/settings_ukrposhta/parcels.php:26
 msgid "Default carrier account"
 msgstr "Аккаунт перевізника за замовчуванням"
 
-#: views/partial/settings_nova_poshta/parcels.php:34
-#: views/partial/settings_ukrposhta/parcels.php:38
+#: views/partial/settings_nova_poshta/parcels.php:33
+#: views/partial/settings_ukrposhta/parcels.php:37
 msgid "Delivery payer"
 msgstr "Платник за доставку"
+
+#: views/partial/settings_nova_poshta/parcels.php:37
+#: views/partial/settings_rozetka/parcels.php:34
+#: views/partial/settings_ukrposhta/parcels.php:39
+#: views/partial/settings_ukrposhta/parcels.php:72
+msgid "Sender"
+msgstr "Відправник"
 
 #: views/partial/settings_nova_poshta/parcels.php:38
 #: views/partial/settings_ukrposhta/parcels.php:40
 #: views/partial/settings_ukrposhta/parcels.php:73
-msgid "Sender"
-msgstr "Відправник"
-
-#: views/partial/settings_nova_poshta/parcels.php:39
-#: views/partial/settings_ukrposhta/parcels.php:41
-#: views/partial/settings_ukrposhta/parcels.php:74
 msgid "Recipient"
 msgstr "Отримувач"
 
-#: views/partial/settings_nova_poshta/parcels.php:45
+#: views/partial/settings_nova_poshta/parcels.php:44
 msgid "Payment method"
 msgstr "Спосіб оплати"
 
-#: views/partial/settings_nova_poshta/parcels.php:49
+#: views/partial/settings_nova_poshta/parcels.php:48
 msgid "Cash"
 msgstr "Готівка"
 
-#: views/partial/settings_nova_poshta/parcels.php:50
+#: views/partial/settings_nova_poshta/parcels.php:49
 msgid "NonCash"
 msgstr "Безготівка"
 
-#: views/partial/settings_nova_poshta/parcels.php:57
+#: views/partial/settings_nova_poshta/parcels.php:56
 msgid "Payment control"
 msgstr "Контроль оплати"
 
-#: views/partial/settings_nova_poshta/shipping.php:14
-#: views/partial/settings_nova_post/shipping.php:14
-#: views/partial/settings_rozetka/shipping.php:14
-#: views/partial/settings_ukrposhta/shipping.php:21
-msgid "Calculate shipping cost for view only"
-msgstr "Розраховувати вартість доставки лише для перегляду"
+#: views/partial/settings_nova_poshta/parcels.php:62
+msgid "Global params as default"
+msgstr "Глобальні параметри за замовчуванням"
 
-#: views/partial/settings_nova_poshta/shipping.php:20
-#: views/partial/settings_ukrposhta/shipping.php:27
-msgid "Take COD into account when calculating shipping cost"
-msgstr "Враховувати зворотню доставку при розрахунку вартості доставки"
+#: views/partial/settings_rozetka/parcels.php:48
+msgid "Phone"
+msgstr ""
 
-#: views/partial/settings_nova_poshta/translates.php:11
-msgid "Shipping method name"
-msgstr "Назва способу доставки"
-
-#: views/partial/settings_nova_poshta/translates.php:19
-msgid "Shipping block title"
-msgstr "Заголовок блоку доставки"
-
-#: views/partial/settings_nova_poshta/translates.php:27
-msgid "Placeholder of select area field"
-msgstr "Placeholder вибору області"
-
-#: views/partial/settings_nova_poshta/translates.php:35
-msgid "Placeholder of select city field"
-msgstr "Placeholder вибору міста"
-
-#: views/partial/settings_nova_poshta/translates.php:43
-msgid "Placeholder of select warehouse field"
-msgstr "Placeholder вибору відділення"
-
-#: views/partial/settings_nova_poshta/translates.php:51
-msgid "Label of address selector"
-msgstr "Checkbox адресної доставки"
-
-#: views/partial/settings_nova_poshta/translates.php:59
-msgid "Placeholder of address field"
-msgstr "Placeholder адресної доставки"
-
-#: views/partial/settings_nova_poshta/translates.php:67
-msgid "Empty result text"
-msgstr "Текст порожнього результату пошуку"
-
-#: views/partial/settings_nova_post/shipping.php:20
-msgid "API Key"
-msgstr "API ключ"
-
-#: views/partial/settings_nova_post/shipping.php:22
-msgid "API key is required to search for warehouses and PUDO across Europe"
-msgstr "API ключ потрібен для пошуку відділень та PUDO по всій Європі"
-
-# End warehouse loader
-#: views/partial/settings_nova_post/shipping.php:27
-#: views/partial/settings_rozetka/shipping.php:20
-msgid "Fixed shipping cost"
-msgstr "Фіксована вартість доставки"
-
-#: views/partial/settings_nova_post/shipping.php:29
-#: views/partial/settings_rozetka/shipping.php:22
-msgid "Use 0 to disable shipping calculation"
-msgstr "Введіть 0 щоб відключити розрахунок вартості"
+#: views/partial/settings_rozetka/parcels.php:54
+msgid "Email"
+msgstr ""
 
 #: views/partial/settings_top.php:12
 msgid "General settings"
@@ -667,63 +843,49 @@ msgstr "Загальні налаштування"
 msgid "Rozetka delivery"
 msgstr ""
 
-#: views/partial/settings_ukrposhta/parcels.php:48
+#: views/partial/settings_ukrposhta/parcels.php:47
 msgid "On fail receive"
 msgstr "У випадку невручення"
 
-#: views/partial/settings_ukrposhta/parcels.php:50
+#: views/partial/settings_ukrposhta/parcels.php:49
 msgid "Return"
 msgstr "Повернути відправнику"
 
-#: views/partial/settings_ukrposhta/parcels.php:51
+#: views/partial/settings_ukrposhta/parcels.php:50
 msgid "Return after 7 days"
 msgstr "Повернути після 7 днів зберігання"
 
-#: views/partial/settings_ukrposhta/parcels.php:52
+#: views/partial/settings_ukrposhta/parcels.php:51
 msgid "Process as refusal"
 msgstr "Знищити відправлення"
 
-#: views/partial/settings_ukrposhta/parcels.php:59
+#: views/partial/settings_ukrposhta/parcels.php:58
 msgid "Check on delivery"
 msgstr "Огляд при вручені"
 
-#: views/partial/settings_ukrposhta/parcels.php:65
+#: views/partial/settings_ukrposhta/parcels.php:64
 msgid "SMS notification"
 msgstr "SMS повідомлення про прибуття посилки"
 
-#: views/partial/settings_ukrposhta/parcels.php:71
+#: views/partial/settings_ukrposhta/parcels.php:70
 msgid "COD payer"
 msgstr "Платник за послугу зворотної доставки"
 
-#: views/partial/settings_ukrposhta/shipping.php:14
-msgid "Bearer eCom"
-msgstr ""
-
-#: views/partial/settings_ukrposhta/shipping.php:16
-msgid "Bearer eCom token is required to search for warehouses across Ukraine."
-msgstr "Bearer eCom токен необхідний для пошуку відділень по Україні."
-
 #: views/settings_general.php:31
-msgid "General"
-msgstr "Загальні"
+msgid "Carriers"
+msgstr "Перевізники"
 
-#: views/settings_general.php:32 views/settings_nova_poshta.php:32
-#: views/settings_nova_post.php:31 views/settings_rozetka.php:31
-#: views/settings_ukrposhta.php:31
-msgid "Shipping"
-msgstr "Доставка"
+#: views/settings_general.php:32
+msgid "Pickup points"
+msgstr "Пункти видачі"
 
-#: views/settings_general.php:33
-msgid "Shipping Label"
-msgstr "Накладна"
-
-#: views/settings_nova_poshta.php:31
+#: views/settings_general.php:33 views/settings_nova_poshta.php:31
 msgid "Checkout"
 msgstr ""
 
-#: views/settings_nova_poshta.php:33
-msgid "Translates"
-msgstr "Переклади"
+#: views/settings_general.php:34
+msgid "Shipping Label"
+msgstr "Накладна"
 
 #: views/tools.php:30
 msgid "Migrate from WC Ukraine Shipping PRO"
@@ -740,18 +902,6 @@ msgstr "Доступно <strong>%d ТТН</strong> для синхроніза�
 #: views/tools.php:40
 msgid "Start sync"
 msgstr "Запустити синхронізацію"
-
-#: views/tools.php:50
-msgid "Enable legacy tracking compatibility"
-msgstr "Увімкнути сумісність із застарілою функцією трекінгу"
-
-#: views/tools.php:54
-msgid ""
-"If you have previously used our tracking service, enable this option to "
-"receive statuses for already added invoices."
-msgstr ""
-"Якщо ви раніше користувалися нашою послугою відстеження, увімкніть цю опцію, "
-"щоб отримувати статуси для раніше створених накладних."
 
 #: views/ttn/ttn_custom.php:12 views/ttn/ttn_forbidden.php:12
 msgid "New TTN"
@@ -772,6 +922,113 @@ msgstr "Створити для Укрпошти"
 #: views/ttn/ttn_forbidden.php:20
 msgid "Read more"
 msgstr "Подробиці"
+
+#~ msgid ""
+#~ "Integration of Nova Poshta and Ukrposhta delivery services for WooCommerce"
+#~ msgstr "Інтеграція служби доставки Нова Пошта та Укрпошта для WooCommerce"
+
+#~ msgid "Additional settings also available at"
+#~ msgstr "Додаткові параметри також доступні на"
+
+#~ msgid "plugin settings page"
+#~ msgstr "сторінці налаштувань плагіну"
+
+#~ msgid "You can manage shipping method options at"
+#~ msgstr "Ви можете налаштувати метод доставки на"
+
+#~ msgid "The part of options have been moved to the shipping method settings."
+#~ msgstr "Частину опцій перенесено до налаштувань способу доставки."
+
+#~ msgid "Calculate shipping cost for view only"
+#~ msgstr "Розраховувати вартість доставки лише для перегляду"
+
+#~ msgid "Use 0 to disable shipping calculation"
+#~ msgstr "Введіть 0 щоб відключити розрахунок вартості"
+
+#~ msgid "Take COD into account when calculating shipping cost"
+#~ msgstr "Враховувати зворотню доставку при розрахунку вартості доставки"
+
+#~ msgid "Shipping"
+#~ msgstr "Доставка"
+
+#~ msgid "Enable address shipping"
+#~ msgstr "Увімкнути адресну доставку"
+
+#~ msgid "Show poshtomats"
+#~ msgstr "Показувати поштомати"
+
+#~ msgid "Select area"
+#~ msgstr "Оберіть область"
+
+#~ msgid "Select city"
+#~ msgstr "Оберіть місто"
+
+#~ msgid "Need address delivery"
+#~ msgstr "Потрібна адресна доставка"
+
+#~ msgid "Shipping block title"
+#~ msgstr "Заголовок блоку доставки"
+
+#~ msgid "Placeholder of select area field"
+#~ msgstr "Placeholder вибору області"
+
+#~ msgid "Placeholder of select city field"
+#~ msgstr "Placeholder вибору міста"
+
+#~ msgid "Placeholder of select warehouse field"
+#~ msgstr "Placeholder вибору відділення"
+
+#~ msgid "Label of address selector"
+#~ msgstr "Checkbox адресної доставки"
+
+#~ msgid "Placeholder of address field"
+#~ msgstr "Placeholder адресної доставки"
+
+#~ msgid "Empty result text"
+#~ msgstr "Текст порожнього результату пошуку"
+
+#~ msgid "Translates"
+#~ msgstr "Переклади"
+
+#~ msgid "Connect store"
+#~ msgstr "Підключити магазин"
+
+#~ msgid "Use Nova Poshta API for address shipping"
+#~ msgstr "Використовувати API Нової Пошти для адресної доставки"
+
+#~ msgid "API Key"
+#~ msgstr "API ключ"
+
+#~ msgid "General"
+#~ msgstr "Загальні"
+
+#~ msgid "Automatically add shipments to tracking"
+#~ msgstr "Автоматично додавати посилки у трекінг"
+
+#~ msgid "Enable legacy tracking compatibility"
+#~ msgstr "Увімкнути сумісність із застарілою функцією трекінгу"
+
+#~ msgid ""
+#~ "If you have previously used our tracking service, enable this option to "
+#~ "receive statuses for already added invoices."
+#~ msgstr ""
+#~ "Якщо ви раніше користувалися нашою послугою відстеження, увімкніть цю "
+#~ "опцію, щоб отримувати статуси для раніше створених накладних."
+
+#~ msgid "Enter value for search"
+#~ msgstr "Введіть значення для пошуку"
+
+#~ msgid "Settlement"
+#~ msgstr "Населений пункт"
+
+#~ msgid "Street"
+#~ msgstr "Вулиця"
+
+#~ msgid "House"
+#~ msgstr "Номер дому"
+
+#~ msgid "Flat"
+#~ msgstr "Номер квартири"
 
 #~ msgid "to doors"
 #~ msgstr "до дверей"
@@ -834,9 +1091,6 @@ msgstr "Подробиці"
 
 #~ msgid "Sender phone"
 #~ msgstr "Телефон відправника"
-
-#~ msgid "Invoice creation is unavailable for this order"
-#~ msgstr "Створення накладної недоступне для цього замовлення"
 
 #~ msgid "Use new UI"
 #~ msgstr "Використовувати новий UI"

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Component\Rates;
 
 use kirillbdev\WCUkrShipping\Contracts\Rates\RatesCalculatorInterface;
-use kirillbdev\WCUkrShipping\Dto\Rates\OrderInfoDto;
+use kirillbdev\WCUkrShipping\Dto\Rates\RateShipmentDTO;
 
 class FixedRatesCalculator implements RatesCalculatorInterface
 {
@@ -16,7 +16,7 @@ class FixedRatesCalculator implements RatesCalculatorInterface
         $this->fixedRate = $fixedRate;
     }
 
-    public function calculateRates(OrderInfoDto $orderInfo): ?float
+    public function calculateRates(RateShipmentDTO $rateShipmentDTO): ?float
     {
         return $this->fixedRate;
     }

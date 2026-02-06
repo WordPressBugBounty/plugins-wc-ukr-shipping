@@ -27,18 +27,10 @@ class NovaPoshtaCheckoutValidator implements CheckoutValidatorInterface
 
     private function validateAddressShipping(string $type, array $data): void
     {
-        if ((int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui') === 1) {
-            if (empty($data['wcus_np_' . $type . '_settlement_name'])
-                || empty($data['wcus_np_' . $type . '_street_name'])
-                || empty($data['wcus_np_' . $type . '_house'])) {
-                $this->addErrorNotice();
-            }
-        } else {
-            if (empty($data['wcus_np_' . $type . '_city'])
-                || empty($data['wcus_np_' . $type . '_custom_address'])
-            ) {
-                $this->addErrorNotice();
-            }
+        if (empty($data['wcus_np_' . $type . '_settlement_name'])
+            || empty($data['wcus_np_' . $type . '_street_name'])
+            || empty($data['wcus_np_' . $type . '_house'])) {
+            $this->addErrorNotice(__('Enter shipping address of Nova Poshta', 'wc-ukr-shipping-i18n'));
         }
     }
 
@@ -47,15 +39,12 @@ class NovaPoshtaCheckoutValidator implements CheckoutValidatorInterface
         if (empty($data['wcus_np_' . $type . '_city'])
             || empty($data['wcus_np_' . $type . '_warehouse'])
         ) {
-            $this->addErrorNotice();
+            $this->addErrorNotice(__('Select warehouse of Nova Poshta', 'wc-ukr-shipping-i18n'));
         }
     }
 
-    private function addErrorNotice(): void
+    private function addErrorNotice(string $message): void
     {
-        wc_add_notice(
-            __('Enter shipping address of Nova Poshta', 'wc-ukr-shipping-i18n'),
-            'error'
-        );
+        wc_add_notice($message, 'error');
     }
 }

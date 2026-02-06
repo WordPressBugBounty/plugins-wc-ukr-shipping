@@ -37,6 +37,7 @@ final class WCUkrShipping extends Kernel
             \kirillbdev\WCUkrShipping\Modules\Core\Activator::class,
             \kirillbdev\WCUkrShipping\Modules\Core\Localization::class,
             \kirillbdev\WCUkrShipping\Modules\Core\PluginInfo::class,
+            \kirillbdev\WCUkrShipping\Modules\Core\Router::class,
             // Legacy
             \kirillbdev\WCUkrShipping\Modules\WcusLegacyCompatibility::class,
             // Backend

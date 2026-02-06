@@ -25,8 +25,6 @@ class AddressBookController extends Controller
     public function loadAreas(Request $request)
     {
         try {
-            $this->addressBookService->loadAreas();
-
             return $this->jsonResponse([
                 'success' => true
             ]);

@@ -8,11 +8,19 @@
 
 <div id="wcus-pane-parcels" class="wcus-tab-pane">
 
-    <div class="wcus-form-group">
-        <div class="wcus-form-group__tooltip">
-            <?php esc_html_e('The plugin must be connected to the Smarty Parcel service to use the functionality of creating a TTN', 'wc-ukr-shipping-i18n'); ?>
-        </div>
+    <div class="wcus-message wcus-message--warning wcus-mb-2">
+        <?php esc_html_e('The plugin must be connected to the Smarty Parcel service to use the functionality of creating a TTN', 'wc-ukr-shipping-i18n'); ?>
+        <a href="https://smartyparcel.com/docs/wcus-smarty-parcel-connect/" target="_blank"><?php esc_html_e('Documentation', 'wc-ukr-shipping-i18n'); ?></a>
     </div>
+
+    <?php
+        HtmlHelper::selectField(
+            'wcus[cod_payment_id]',
+            __('COD method', 'wc-ukr-shipping-i18n'),
+            $payment_methods,
+            $cod_payment_id
+        );
+    ?>
 
     <div class="wcus-form-group">
         <label for="wcus_ttn_description"><?= __('Default description', 'wc-ukr-shipping-i18n'); ?></label>
@@ -66,13 +74,5 @@
             </div>
         </div>
     </div>
-
-    <?php
-        HtmlHelper::switcherField(
-            'wcus[sp_auto_tracking]',
-            __('Automatically add shipments to tracking', 'wc-ukr-shipping-i18n'),
-            (int)wc_ukr_shipping_get_option('wcus_sp_auto_tracking') === 1
-        );
-    ?>
 
 </div>

@@ -98,27 +98,21 @@ class CheckoutOrderHandler implements OrderHandlerInterface
 
     private function saveAddressShipping(\WC_Order $order, array $data): void
     {
-        if ((int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui') === 1) {
-            $settlement = $data['wcus_np_' . $this->fieldGroup . '_settlement_full'] ?? '';
-            $street = $data['wcus_np_' . $this->fieldGroup . '_street_full'] ?? '';
-            $house = $data['wcus_np_' . $this->fieldGroup . '_house'] ?? '';
-            $flat = $data['wcus_np_' . $this->fieldGroup . '_flat'] ?? '';
+        $settlement = $data['wcus_np_' . $this->fieldGroup . '_settlement_full'] ?? '';
+        $street = $data['wcus_np_' . $this->fieldGroup . '_street_full'] ?? '';
+        $house = $data['wcus_np_' . $this->fieldGroup . '_house'] ?? '';
+        $flat = $data['wcus_np_' . $this->fieldGroup . '_flat'] ?? '';
 
-            $this->setCity($order, $settlement);
-            $this->setAddress(
-                $order,
-                sprintf(
-                    '%s, %s%s',
-                    $street,
-                    $house,
-                    empty($flat) ? '' : (' кв. ' . $flat)
-                )
-            );
-        } else {
-            $this->saveArea($order, $data);;
-            $this->saveCity($order, $data);
-            $this->setAddress($order, $data['wcus_np_' . $this->fieldGroup . '_custom_address'] ?? '');
-        }
+        $this->setCity($order, $settlement);
+        $this->setAddress(
+            $order,
+            sprintf(
+                '%s, %s%s',
+                $street,
+                $house,
+                empty($flat) ? '' : (' кв. ' . $flat)
+            )
+        );
     }
 
     private function saveArea(\WC_Order $order, array $data): void

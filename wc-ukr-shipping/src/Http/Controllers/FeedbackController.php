@@ -9,22 +9,28 @@ use kirillbdev\WCUSCore\Http\Request;
 
 class FeedbackController extends Controller
 {
-    private const FEEDBACK_API_URL = 'https://kirillbdev.pro/api/v1/feedbacks';
+    private const FEEDBACK_API_URL = 'https://wp-api.smartyparcel.com/v1/feedbacks';
 
     public function store(Request $request)
     {
-        wp_remote_post(self::FEEDBACK_API_URL, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ],
-            'timeout' => 5,
-            'body' => json_encode([
-                'product' => 'wc-ukr-shipping',
-                'reason' => $request->get('reason'),
-                'message' => $request->get('message'),
-                'site_url' => home_url(),
-            ]),
-        ]);
+        try {
+            $meta = get_file_data(WC_UKR_SHIPPING_PLUGIN_ENTRY, ['Version' => 'Version']);
+            $response = wp_remote_post(self::FEEDBACK_API_URL, [
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+                'timeout' => 5,
+                'body' => json_encode([
+                    'app_name' => 'wc-ukr-shipping',
+                    'app_version' => $meta['Version'] ?? 'undefined',
+                    'store_url' => home_url(),
+                    'reason' => $request->get('reason'),
+                    'message' => $request->get('message'),
+                ]),
+            ]);
+        } catch (\Throwable $e) {
+            // safe
+        }
 
         return $this->jsonResponse([
             'success' => true

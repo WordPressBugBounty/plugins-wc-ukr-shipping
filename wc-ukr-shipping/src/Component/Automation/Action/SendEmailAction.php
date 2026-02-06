@@ -35,6 +35,7 @@ class SendEmailAction implements ActionInterface
                 '{{billing_lastname}}',
                 '{{city}}',
                 '{{address}}',
+                '{{carrier_edd}}',
             ],
             [
                 $context->getLabel()['tracking_number'],
@@ -44,6 +45,7 @@ class SendEmailAction implements ActionInterface
                 $order->getOrigin()->get_billing_last_name(),
                 $order->getCity(),
                 $order->getAddress1(),
+                $context->getLabel()['metadata']['estimated_delivery_date'] ?? '{{carrier_edd}}',
             ],
             $this->message
         );

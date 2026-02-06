@@ -3,6 +3,7 @@
 namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
 use kirillbdev\WCUkrShipping\Component\Validation\CheckoutValidatorInterface;
+use kirillbdev\WCUkrShipping\Component\Validation\MeestCheckoutValidator;
 use kirillbdev\WCUkrShipping\Component\Validation\NovaPoshtaCheckoutValidator;
 use kirillbdev\WCUkrShipping\Component\Validation\NovaPostCheckoutValidator;
 use kirillbdev\WCUkrShipping\Component\Validation\RozetkaDeliveryCheckoutValidator;
@@ -71,6 +72,7 @@ class CheckoutValidator implements ModuleInterface
             WCUS_SHIPPING_METHOD_UKRPOSHTA,
             WCUS_SHIPPING_METHOD_NOVA_POST,
             WCUS_SHIPPING_METHOD_ROZETKA,
+            WCUS_SHIPPING_METHOD_MEEST,
         ];
 
         foreach ($pluginShippingMethods as $method) {
@@ -92,6 +94,8 @@ class CheckoutValidator implements ModuleInterface
             return new NovaPostCheckoutValidator();
         } elseif (WCUSHelper::hasChosenShippingMethod(WCUS_SHIPPING_METHOD_ROZETKA)) {
             return new RozetkaDeliveryCheckoutValidator();
+        } elseif (WCUSHelper::hasChosenShippingMethod(WCUS_SHIPPING_METHOD_MEEST)) {
+            return new MeestCheckoutValidator();
         }
 
         return null;

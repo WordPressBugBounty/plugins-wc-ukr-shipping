@@ -13,10 +13,12 @@ if ( ! defined('ABSPATH')) {
 class AddOrderNoteAction implements ActionInterface
 {
     private string $message;
+    private string $type;
 
-    public function __construct(string $message)
+    public function __construct(string $message, string $type)
     {
         $this->message = $message;
+        $this->type = $type;
     }
 
     public function execute(Context $context): void
@@ -31,6 +33,7 @@ class AddOrderNoteAction implements ActionInterface
                 '{{billing_lastname}}',
                 '{{city}}',
                 '{{address}}',
+                '{{carrier_edd}}',
             ],
             [
                 $context->getLabel()['tracking_number'],
@@ -40,9 +43,10 @@ class AddOrderNoteAction implements ActionInterface
                 $order->getOrigin()->get_billing_last_name(),
                 $order->getCity(),
                 $order->getAddress1(),
+                $context->getLabel()['metadata']['estimated_delivery_date'] ?? '{{carrier_edd}}',
             ],
             $this->message
         );
-        $order->getOrigin()->add_order_note($compiled);
+        $order->getOrigin()->add_order_note($compiled, $this->type === 'customer');
     }
 }

@@ -37,43 +37,6 @@ class TranslateService
     ];
 
     /**
-     * @return array
-     */
-    public function getTranslates()
-    {
-        $translates = [];
-
-        if (WCUS_TRANSLATE_TYPE_MO_FILE === (int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_translates_type')) {
-            $translates = [
-                'method_title' => __('Nova Poshta', 'wc-ukr-shipping-i18n'),
-                'block_title' => __('Select shipping address', 'wc-ukr-shipping-i18n'),
-                'placeholder_area' => __('Select area', 'wc-ukr-shipping-i18n'),
-                'placeholder_city' => __('Select city', 'wc-ukr-shipping-i18n'),
-                'placeholder_warehouse' => __('Select warehouse', 'wc-ukr-shipping-i18n'),
-                'address_title' => __('Need address delivery', 'wc-ukr-shipping-i18n'),
-                'address_placeholder' => __('Enter address', 'wc-ukr-shipping-i18n'),
-                'not_found' => __('Nothing found', 'wc-ukr-shipping-i18n'),
-            ];
-        } else {
-            $translates = [
-                'method_title' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_method_title'),
-                'block_title' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_block_title'),
-                'placeholder_area' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_placeholder_area'),
-                'placeholder_city' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_placeholder_city'),
-                'placeholder_warehouse' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_placeholder_warehouse'),
-                'address_title' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_title'),
-                'address_placeholder' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_placeholder'),
-                'not_found' => wc_ukr_shipping_get_option('wc_ukr_shipping_np_not_found_text')
-            ];
-        }
-
-        // Ukrposhta
-        $translates['ukrposhta_method_title'] = __('Ukrposhta', 'wc-ukr-shipping-i18n');
-
-        return apply_filters('wc_ukr_shipping_get_nova_poshta_translates', $translates);
-    }
-
-    /**
      * @param array $area
      *
      * @return string

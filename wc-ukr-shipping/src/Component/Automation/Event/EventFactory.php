@@ -16,7 +16,10 @@ class EventFactory
     {
         switch ($rule['event_name']) {
             case AutomationService::EVENT_SP_TRACKING_STATUS_CHANGED:
-                return new CloudStatusChangedEvent($rule['event_data']['newStatus']);
+                return new CloudStatusChangedEvent(
+                    $rule['event_data']['newStatus'],
+                    $rule['event_data']['newSubStatus'] ?? null
+                );
             case AutomationService::EVENT_SP_CARRIER_STATUS_CHANGED:
                 return new CarrierStatusChangedEvent(
                     $rule['event_data']['carrierSlug'] ?? 'nova_poshta',

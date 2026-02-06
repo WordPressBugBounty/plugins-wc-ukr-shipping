@@ -113,12 +113,14 @@ class TTNStore
         }
 
         $description = wc_ukr_shipping_get_option('wcus_ttn_description') ?: 'Order #' . $this->order->get_id();
+        $globalParams = (int)wc_ukr_shipping_get_option('wcus_ttn_global_params_default') === 1;
 
         $this->data['ttn'] = [
             'order_id' => $this->order->get_id(),
             'payer_type' => $payerType,
             'payment_method' => $paymentMethod,
-            'global_params' => apply_filters('wcus_ttn_form_global_params', false, $this->order),
+            'global_params' => apply_filters('wcus_ttn_form_global_params', $globalParams, $this->order),
+            'seats_amount' => apply_filters('wcus_ttn_form_seats_amount', 1, $this->order),
             'weight' => $this->calculateWeight(),
             'volumetric_weight' => apply_filters('wcus_ttn_form_volumetric_weight', '', $this->order),
             'date' => $date->format('Y-m-d'),
@@ -240,6 +242,7 @@ class TTNStore
         $this->data['recipient']['phone'] = $data['phone'];
         $this->data['recipient']['email'] = $data['email'];
         $this->data['recipient']['type'] = 'private_person';
+        $this->data['recipient']['address_instructions'] = '';
 
         $shippingAddress = $this->order->has_shipping_method(WC_UKR_SHIPPING_NP_SHIPPING_NAME)
             ? new ShippingRecipientAddress($this->order, $this->orderShipping)

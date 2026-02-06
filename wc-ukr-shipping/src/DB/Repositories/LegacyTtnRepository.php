@@ -17,7 +17,9 @@ class LegacyTtnRepository
             return 0;
         }
 
-        return DB::table(DB::prefixedTable('wc_ukr_shipping_np_ttn'))->count();
+        return DB::table(DB::prefixedTable('wc_ukr_shipping_np_ttn'))
+            ->where('created_at', '>', (new \DateTime())->sub(new \DateInterval('P3M'))->format('Y-m-d'))
+            ->count();
     }
 
     public function syncTtn(int $limit, int $lastId = 0): array
@@ -34,8 +36,9 @@ class LegacyTtnRepository
         }
 
         $items = DB::table(DB::prefixedTable('wc_ukr_shipping_np_ttn'))
+            ->where('created_at', '>', (new \DateTime())->sub(new \DateInterval('P3M'))->format('Y-m-d'))
             ->where('id', '>', $lastId)
-            ->orderBy('id', 'desc')
+            ->orderBy('id')
             ->limit($limit)
             ->get();
 

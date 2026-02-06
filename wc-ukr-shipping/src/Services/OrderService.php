@@ -26,7 +26,11 @@ class OrderService
     {
         $limit = (int)$request->get('limit', 20);
         $offset = ((int)$request->get('page', 1) - 1) * $limit;
-        $orders = $this->orderRepository->getOrdersWithTTN($offset, $limit);
+        $orders = $this->orderRepository->getOrdersWithTTN(
+            $offset,
+            $limit,
+            $request->get('filters', [])
+        );
 
         foreach ($orders as &$order) {
             $order['info'] = $this->orderRepository->getOrderInfo($order['id']);
@@ -38,6 +42,9 @@ class OrderService
 
     public function getCountPagesFromRequest(Request $request): int
     {
-        return $this->orderRepository->getCountOrderPages((int)$request->get('limit', 20));
+        return $this->orderRepository->getCountOrderPages(
+            (int)$request->get('limit', 20),
+            $request->get('filters', [])
+        );
     }
 }

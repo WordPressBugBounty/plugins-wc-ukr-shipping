@@ -35,100 +35,6 @@ class WcusLegacyCompatibility implements ModuleInterface
                 return true;
             }
         ]);
-
-        if ((int)wc_ukr_shipping_get_option('wcus_legacy_pro_tracking') === 1
-            && !empty(wc_ukr_shipping_get_option('wc_ukr_shipping_license_key'))) {
-            register_rest_route('wc-ukr-shipping/v1', 'track', [
-                'methods' => 'POST',
-                'callback' => [$this, 'trackStatus'],
-                'permission_callback' => function (WP_REST_Request $request) {
-                    return true;
-                }
-            ]);
-        }
-    }
-
-    public function trackStatus(WP_REST_Request $request): WP_REST_Response
-    {
-        $json = json_decode($request->get_body(), true);
-        if (json_last_error() || empty($json['signature']) || empty($json['data'])) {
-            return new WP_REST_Response([
-                'success' => false,
-                'errorMessage' => 'Bad request format',
-            ], 400);
-        }
-
-        $key = wc_ukr_shipping_get_option('wc_ukr_shipping_license_key');
-        if (empty($key)) {
-            return new WP_REST_Response([
-                'success' => false,
-                'errorMessage' => 'Internal server error',
-            ], 500);
-        }
-
-        // Compare signatures
-        $signature = hash('sha256', "$key." . base64_encode(json_encode($json['data'] ?? [], JSON_UNESCAPED_UNICODE)));
-        if ($signature !== $json['signature']) {
-            return new WP_REST_Response([
-                'success' => false,
-                'errorMessage' => 'Request not valid',
-            ], 400);
-        }
-
-        $data = $json['data'];
-        try {
-            $label = DB::table(DB::prefixedTable('wc_ukr_shipping_labels'))
-                ->where('tracking_number', $data['tracking_number'])
-                ->where('carrier_slug', 'wcus_pro')
-                ->first();
-
-            if ($label === null) {
-                // Do nothing
-                return new WP_REST_Response([
-                    'success' => true,
-                ], 200);
-            }
-
-            $label = (array)$label;
-            if ($label['carrier_status_code'] !== $data['carrier_status']) {
-                global $wpdb;
-                $wpdb->update(
-                    "{$wpdb->prefix}wc_ukr_shipping_labels",
-                    [
-                        'tracking_status' => $data['status'],
-                        'carrier_status' => $data['carrier_status_additional'],
-                        'carrier_status_code' => $data['carrier_status'],
-                        'updated_at' => date('Y-m-d H:i:s'),
-                    ],
-                    [ 'id' => $label['id'] ],
-                    [ '%s', '%s', '%s', '%s' ],
-                    [ '%d' ]
-                );
-
-                $this->automationService->executeEvent(
-                    AutomationService::EVENT_SP_CARRIER_STATUS_CHANGED,
-                    new Context(
-                        AutomationService::EVENT_SP_CARRIER_STATUS_CHANGED,
-                        wc_get_order((int)$label['order_id']),
-                        [
-                            'carrier_slug' => 'nova_poshta',
-                            'tracking_number' => $label['tracking_number'],
-                            'carrier_status_code' => $data['carrier_status'],
-                            'carrier_status' => $data['carrier_status_additional'],
-                        ]
-                    )
-                );
-            }
-
-            return new WP_REST_Response([
-                'success' => true,
-            ], 200);
-        } catch (\Throwable $e) {
-            return new WP_REST_Response([
-                'success' => false,
-                'errorMessage' => 'Internal server error',
-            ], 500);
-        }
     }
 
     public function trackingHandler(WP_REST_Request $request): WP_REST_Response
@@ -200,6 +106,22 @@ class WcusLegacyCompatibility implements ModuleInterface
                         [
                             'carrier_slug' => $label['carrier_slug'] ?? '',
                             'tracking_number' => $label['tracking_number'],
+                            'carrier_status_code' => $json['carrier_status'],
+                            'carrier_status' => $json['carrier_status_description'],
+                        ]
+                    )
+                );
+
+                $this->automationService->executeEvent(
+                    AutomationService::EVENT_SP_TRACKING_STATUS_CHANGED,
+                    new Context(
+                        AutomationService::EVENT_SP_TRACKING_STATUS_CHANGED,
+                        wc_get_order((int)$label['order_id']),
+                        [
+                            'carrier_slug' => $label['carrier_slug'] ?? '',
+                            'tracking_number' => $label['tracking_number'],
+                            'cloud_status' => $json['status'],
+                            'cloud_sub_status' => $json['sub_status'] ?? null,
                             'carrier_status_code' => $json['carrier_status'],
                             'carrier_status' => $json['carrier_status_description'],
                         ]

@@ -30,6 +30,14 @@ class CustomRecipientAddress
         $data['recipient']['area_ref'] = '';
         $data['recipient']['city_ref'] = '';
         $data['recipient']['warehouse_ref'] = '';
+        $data['recipient']['default_city'] = [
+            'name' => '',
+            'value' => ''
+        ];
+        $data['recipient']['default_warehouse'] = [
+            'name' => '',
+            'value' => ''
+        ];
 
         $billingOnly = 'billing_only' === get_option('woocommerce_ship_to_destination');
 

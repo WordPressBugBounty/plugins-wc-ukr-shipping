@@ -2,64 +2,80 @@
 Contributors: kirillbdev
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Tags: nova poshta, нова пошта, укрпошта, rozetka delivery, shipping
+Tags: нова пошта, укрпошта, rozetka delivery, nova post, shipping
 Requires PHP: 7.4
-Tested up to: 6.8
-Stable tag: 1.17.1
+Tested up to: 6.9
+Stable tag: 1.21.1
 
-Connect Nova Poshta, Ukrposhta or international delivery services with your store. Create labels, track orders and calculate rates in one place.
+Connect Nova Poshta, Ukrposhta, Meest or international delivery services with your store. Create labels, track orders and calculate rates in one place.
 
 == Description ==
 
-Connect Nova Poshta, Ukrposhta and many others delivery services with your store. Create labels, track orders and calculate rates in one place.
+Connect Nova Poshta, Ukrposhta, Meest, Nova Global and many other delivery services with your store. Create labels, track orders and calculate rates in one place.
 
-[Documentation](https://kirillbdev.pro/docs/wcus-base-setup/)
-[PRO features](https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=wporg)
+[Documentation](https://smartyparcel.com/docs/knowledge-base-woocommerce/)
+[Product Overview](https://smartyparcel.com/?utm_source=wporg)
 
 == Installation and setup tutorial ==
 
-https://www.youtube.com/watch?v=K_NFNQ1qkko
+https://www.youtube.com/watch?v=NYKgP3cw1WY
 
 == Features ==
 
 * Simple and intuitive setup
 * Ability to select Nova Poshta warehouse, doors or poshtomat on checkout page
-* Ability to select Ukrposhta warehouse on checkout page
-* Ability to select Rozetka Delivery warehouse on checkout page
-* Ability to select Nova Post (Europe) warehouse on checkout page
+* Ability to separate delivery types by different shipping methods (ex. create "to warehouse" and "to doors" as separated shipping methods)
+* Ability to select Ukrposhta warehouse on the checkout page
+* Ability to select Rozetka Delivery warehouse on the checkout page
+* Ability to select Nova Post (Europe) warehouse on the checkout page
+* Ability to select Meest Post warehouse on the checkout page
 * Ability to set up fixed shipping cost
 * Ability to calculate cost without adding it to order total
 * Ability to create Nova Poshta TTN (warehouse-warehouse, warehouse-doors, warehouse-poshtomat)
 * Ability to print Nova Poshta labels (A4, marking 85x85, marking 100x100 zebra)
 * Ability to create Ukrposhta TTN (warehouse-warehouse)
 * Ability to print Ukrposhta labels (100x100, 100x100 (A4), 100x100 (A5))
-* Ability to track parcels
+* Shipments tracking
+* Bulk label creation
+* Bulk label printing
 * Support many functions includes COD and Payment control
 * Advanced shipment analytics
 * Integration with popular plugins for localization: WPML and Polylang
 
-== Supported carriers ==
+== Carriers ==
+* Nova Poshta
+* Ukrposhta
+* Rozetka Delivery
+* Nova Post (EU, International)
+* Nova Global
+* Meest (Ukraine, International)
+* DHL API (tracking only yet)
+
+== Pickup points (SmartyParcel Locator for WooCommerce) ==
 * Nova Poshta
 * Ukrposhta
 * Rozetka Delivery
 * Nova Post (EU, International)
 
+SmartyParcel **guarantees** access to its Locator API for all WooCommerce stores for free!
+
 == Premium features ==
 
-WC Ukraine Shipping has additional premium features that help you to optimize your daily shipping routine.
+SmartyParcel has additional premium features that help you to optimize your daily shipping routine.
 
-* Unlimited shipments
-* Unlimited carrier accounts
-* Automatic calculation of shipping costs via carrier (Smarty Parcel Rates API)
+* More shipment limits
+* More carrier account limits
+* Display real-time carrier rates in checkout (Smarty Parcel Rates API)
+* Branded tracking page
 * Shipping costs calculation based on order total
-* Ability to separate cost calculation for address shipping
-* Ability to bulk generation of shipping labels in one click
-* Tracking shipment statuses
-* Automatic email notifications after generating TTN
-* Automatic sms notifications after generating TTN
+* Shipping costs calculation based on shipment weight
+* Automatic Email notifications
+* Automatic SMS notifications
+* Easy integration with custom platforms via our REST Api
+* White Label Integration for Enterprises
 * Premium support
 
-[Switch to SmartyParcel Advanced](https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=wporg)
+[Switch to Premium Plans](https://smartyparcel.com/?utm_source=wporg#pricing)
 
 == Installation ==
 
@@ -84,7 +100,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 == External services ==
 
-This plugin uses SmartyParcel API to provide advanced logistic functions (like create labels, tracking etc.) and also external API to collect user feedbacks ([Privacy Policy](https://kirillbdev.pro/privacy/)).
+This plugin uses SmartyParcel API to provide advanced logistic functions (like create labels, tracking etc.) and also external API to collect user feedbacks ([Privacy Policy](https://smartyparcel.com/privacy/)).
 
 == FAQ ==
 
@@ -93,6 +109,104 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 Unfortunately plugin doesn't support checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.21.1 / (29.01.2026) =
+* UI / UX upgrade.
+
+= Version 1.21.0 / (23.01.2026) =
+* [Meest] Added full flow integration (creating labels, tracking).
+* [Rozetka Delivery] Old label form was replaced with SmartyParcel Elements.
+* [Ukrposhta] Added UkrPoshta Address shipping method.
+* Added request caching for SmartyParcel Rates API.
+* [Nova Poshta] Added address notes field when creating shipment to address.
+
+= Version 1.20.1 / (27.12.2025) =
+* [Meest] Fixed search warehouses error when SmartyParcel Locator is enabled.
+
+= Version 1.20.0 / (27.12.2025) =
+* Added Meest Post warehouse shipping method.
+* Added Meest Post address shipping method.
+* [Ukrposhta] Migrated shipping options to the shipping method's settings page.
+* [Rozetka Delivery] Migrated shipping options to the shipping method's settings page.
+* Fixed warehouse clear bug for Nova Poshta in checkout.
+* Improved weight and dimensions conversion when calculating rates.
+
+= Version 1.19.0 / (17.12.2025) =
+* Added currency conversion option. If enabled, the SmartyParcel Rates API will convert shipping costs to store's selected currency.
+* [Nova Post] Migrated shipping options to shipping method's settings page.
+* [Nova Post] Implemented supporting of SmartyParcel Rates API.
+* [Nova Post] Added ability to set up "Free shipping" rule, based on order total.
+* [Nova Global] Implemented supporting of SmartyParcel Rates API.
+* [Nova Global] Added ability to set up "Free shipping" rule, based on order total.
+
+= Version 1.18.9 / (12.12.2025) =
+* [Checkout] Improved state pre-initialization.
+
+= Version 1.18.7 / (12.12.2025) =
+* [Checkout] Added state pre-initialization before mounting component.
+* Replaced shipping method detection function on shipping calculation to support backward compatibility.
+
+= Version 1.18.6 / (11.12.2025) =
+* Removed strict checking of delivery type at shipping cost calculation.
+* Added more option defaults.
+
+= Version 1.18.5 / (11.12.2025) =
+* Hotfix: Shipping recalculation when changing delivery type.
+
+= Version 1.18.4 / (11.12.2025) =
+* [Nova Poshta] Migrated other shipping options to shipping method's settings page.
+* [Nova Poshta] Fixed bug with total calculation for address delivery.
+* Checked compatibility with latest WordPress and WooCommerce versions.
+
+= Version 1.18.3 / (03.12.2025) =
+* [Nova Poshta] Removed legacy translates option group.
+* [Nova Poshta] Migrated delivery cost options to shipping method's settings page. We will continue migrating other options that are directly related to shipping to the shipping method settings in the future.
+* Checked compatibility with latest WordPress and WooCommerce versions.
+
+= Version 1.18.2 / (25.11.2025) =
+* Restored ability to update order shipping address in admin (Nova Poshta only yet).
+* Fixed fatal error on shipment creation form for orders without shipping method.
+
+= Version 1.18.1 / (19.11.2025) =
+* [Ukrposhta] Added bulk label printing.
+* [Automation] Added order note type option.
+* [Orders] Added filter by carrier (only for created shipments).
+* Fixed issue with SmartyParcel Elements and Redis Object Cache plugin (negative lifetime of transient option).
+
+= Version 1.18.0 / (17.11.2025) =
+* Added integration with Nova Global (labels, tracking, address delivery).
+* [Nova Poshta] Restored ability to create shipments shipped to companies.
+* Switched some plugin widgets in admin panel to SmartyParcel Elements.
+* Checked compatibility with latest WordPress and WooCommerce versions.
+
+= Version 1.17.8 / (11.11.2025) =
+* [Nova Poshta] Added new option "Global params as default".
+
+= Version 1.17.7 / (06.11.2025) =
+* Fixed error in batch modal for fresh labels.
+* Improved UX in SmartyParcel onboarding element.
+
+= Version 1.17.5 / (06.11.2025) =
+* Implemented labels batches feature: ability to print multiple labels at a time (only for Nova Poshta yet).
+* Added option to use Nova Poshta online directory API for search settlements.
+* [PUDO] Added pre-query filters (to override query string before search pickup points and settlements).
+* [Ukrposhta] Fixed internal error after creating labels without estimated delivery date.
+* [Checkout] Improved validation error messages for Nova Poshta.
+
+= Version 1.17.4 / (14.10.2025) =
+* Added the ability to manually control the SmartyParcel Locator feature.
+
+= Version 1.17.3 / (13.10.2025) =
+* Improved usage strategy for SmartyParcel Locator API.
+
+= Version 1.17.2 / (11.10.2025) =
+* Now plugin supports SmartyParcel Locator - unified API for search pickup points across different carriers.
+* [Automation] Added shortcode for carrier estimated delivery.
+* Tracking is now an integral part of the shipment creation process.
+* Added ability to attach exist shipping label for many orders.
+* [Checkout] Fixed load more option issue.
+* Fixed conflict with other plugins that used vue-router.
+* Fixed several issues with additional slashes on label creation.
 
 = Version 1.17.1 / (30.09.2025) =
 * [Checkout] Improved logic and usability of fields.
@@ -191,141 +305,3 @@ Unfortunately plugin doesn't support checkout blocks yet.
 * Legacy checkout UI was fully removed.
 * Improved Nova Poshta cities search.
 * Architecture improvements.
-
-= Version 1.14.5 / (18.05.2025) =
-* Change default values for some options.
-* Improve UI / UX on creating labels.
-
-= Version 1.14.4 / (14.05.2025) =
-* Remove PHP 8.3 deprecation notices.
-* Fixed critical issues when WooCommerce is disabled.
-* Architecture and UI improvements.
-
-= Version 1.14.3 / (30.04.2025) =
-* [SmartyParcel] Added more readable errors for Bad Request responses.
-* [SmartyParcel] Added the ability to update carrier account credentials.
-* Added tools to migrate from WC Ukraine Shipping PRO.
-
-= Version 1.14.2 / (17.04.2025) =
-* Removed duplicated payment control option.
-* Improved cron workers.
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.14.1 / (14.04.2025) =
-* [SmartyParcel] Added batch label generation feature.
-* Added automation feature (no-code business rule constructor).
-* [Checkout] Added placeholders to house and flat fields.
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.14.0 / (08.04.2025) =
-* Added ship to doors feature
-* Implement SmartyParcel Rates API (Advanced plan only)
-* Implement SmartyParcel Tracking API (Advanced plan only)
-* Removed jQuery deprecated methods from checkout.js
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.13.5 / (09.03.2025) =
-* Added COD feature
-* Added Payment Control feature
-* Added shipping payer features: shipping payer and payment method
-* Added dimensions support and default dimensions option
-* Checked compatibility with latest Wordpress and WooCommerce versions
-
-= Version 1.13.4 / (03.03.2025) =
-* [Fixed] PHP 8.2+ deprecation notices
-
-= Version 1.13.3 / (03.03.2025) =
-* [Fixed] Migrator PHP 8.2+ deprecation notice
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.13.2 / (13.02.2025) =
-* [Feature] Nova Poshta labels printing (A4, 85x85, 100x100 zebra).
-* Added sender default city/warehouse option.
-* [Fix] Some UI errors on TTN form page.
-
-= Version 1.13.1 / (06.02.2025) =
-* [Hotfix] Fatal error on server with PHP 7.4
-
-= Version 1.13.0 / (06.02.2025) =
-* Now the plugin allows you to create TTN using Smarty Parcel service (our new service). At the moment, limited capabilities from the PRO version are implemented. The functionality will be expanded with every new releases.
-* [Checkout] Improved UX and usability.
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.12.7 / (24.10.2024) =
-* Architecture improvements.
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.12.6 / (04.10.2024) =
-* Checkout process and performance improvements.
-* Added new option "Calculate shipping cost view only". Allows you to calculate shipping rates but without adding it to order total.
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.12.5 / (12.09.2024) =
-* [Feature] Migration mechanism V2.
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.12.4 / (29.06.2024) =
-* [Fix] Removed extra slashes when saving shipping address.
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.12.3 / (26.04.2024) =
-* Divided search of warehouses and poshtomats.
-* [New UI] Saving Nova Poshta area when order placed.
-* Some localization improvements.
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.12.2 / (02.03.2024) =
-* [Fix] Broken ukrainian localization.
-* [Feature] Trimming spaces for search cities/warehouses query.
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.12.1 / (19.10.2023) =
-* Added HPOS support.
-
-= Version 1.12.0 / (09.07.2023) =
-* Improved warehouse data loading performance.
-* [Checkout old] Removed country check as required condition for show shipping fields.
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.11.3 / (25.09.2022) =
-* Improved integration with migration plugins.
-* Improved plugin localization.
-
-= Version 1.11.2 / (07.06.2022) =
-* Remove old files from vcs.
-
-= Version 1.11.1 / (07.06.2022) =
-* Плановые улучшения кодовой базы.
-* Плановые улучшения производительности.
-
-= Version 1.11.0 / (08.04.2022) =
-* Минимальная версия PHP увеличена до 7.4
-* Новый UI теперь включен по-умолчанию для всех новых магазинов.
-* Улучшено описание некоторых настроек.
-* Проведены мелкие улучшения производительности.
-
-= Version 1.10.0 / (12.12.2021) =
-* Плановые улучшения и переработки кодовой базы.
-
-= Version 1.9.1 / (29.09.2021) =
-* Мелкие исправления.
-
-= Version 1.9.0 / (29.09.2021) =
-* Обновлен модуль загрузки отделений (аналогичен PRO версии).
-* Восстановлена опция сохранения последнего отделения (работает только с новым UI).
-* Улучшена синхронизация данных на странице оформления заказа (новый UI).
-* Улучшения архитектуры и кодовой базы.
-
-= Version 1.8.2 / (01.08.2021) =
-* Backend UI rework.
-
-= Version 1.8.1 / (01.08.2021) =
-* Улучшена отзывчивость нового UI на мобильных устройствах.
-* Увеличен базовый таймаут запросов к API Новой Почты до 15 секунд.
-* Интеграция работы опции "Включить блок Адресной доставки" для нового UI.
-
-= Version 1.8.0 / (16.06.2021) =
-* Внедрен новый UI для страницы оформления заказа (включается во вкладке Общие). Подробное описание его работы: https://kirillbdev.pro/wcus-pro-new-ui-110/
-* Добавлена новая вкладка Доставка для страницы настроек (для более логического разделения настроек).
-* Добавлен фильтр wcus_checkout_i18n (будет описан в документации).
-* Core update.

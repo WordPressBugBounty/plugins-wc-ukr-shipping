@@ -10,6 +10,21 @@ class ProductDimensionService
 {
     /**
      * @param OrderProduct[] $products
+     * @return float
+     */
+    public function getTotalWeight(array $products): float
+    {
+        $defaultWeight = wc_ukr_shipping_get_option('wcus_ttn_weight_default') ?: 0.1;
+        $weight = 0;
+        foreach ($products as $product) {
+            $weight += $product->getWeight() * $product->getQuantity();
+        }
+
+        return round(max($weight, (float)$defaultWeight), 2);
+    }
+
+    /**
+     * @param OrderProduct[] $products
      * @return array
      */
     public function getTotalDimensions(array $products): array

@@ -9,6 +9,9 @@ use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
 use kirillbdev\WCUkrShipping\Http\WpHttpClient;
 
+/**
+ * todo Remove by SmartyParcel Locator in future
+ */
 class NovaPostPUDOProvider implements PUDOProviderInterface
 {
     private const API_URL = 'https://api.novapost.com/v.1.0';

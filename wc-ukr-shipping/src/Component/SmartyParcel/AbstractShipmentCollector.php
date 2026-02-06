@@ -71,13 +71,14 @@ abstract class AbstractShipmentCollector
         $recipient = $this->getRecipientInfo();
         $this->data['shipment']['ship_to'] = array_merge([
             'name' => $recipient['first_name'] . ' ' . $recipient['last_name'] . ' ' . $recipient['middle_name'],
-            'phone' => $recipient['phone'],
+            'phone' => WCUSHelper::preparePhone($recipient['phone']),
             'email' => $recipient['email'],
         ], $this->collectShipToAAddress());
     }
 
     protected function collectServiceOptions(): void
     {
+        $this->data['service_options'] = [];
         $this->collectCOD();
     }
 

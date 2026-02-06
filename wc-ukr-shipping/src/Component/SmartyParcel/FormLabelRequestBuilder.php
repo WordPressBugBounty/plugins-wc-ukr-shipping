@@ -22,10 +22,10 @@ class FormLabelRequestBuilder implements LabelRequestBuilderInterface
         $shipTo = [
             'name' => sprintf(
                 '%s %s%s',
-                $request->get('recipient')['firstname'],
-                $request->get('recipient')['lastname'],
+                WCUSHelper::prepareApiString($request->get('recipient')['firstname']),
+                WCUSHelper::prepareApiString($request->get('recipient')['lastname']),
                 $request->get('recipient')['middlename']
-                    ? ' ' . $request->get('recipient')['middlename']
+                    ? ' ' . WCUSHelper::prepareApiString($request->get('recipient')['middlename'])
                     : '',
             ),
             'phone' => WCUSHelper::preparePhone($request->get('recipient')['phone']),
@@ -36,12 +36,29 @@ class FormLabelRequestBuilder implements LabelRequestBuilderInterface
             $shipTo['carrier_warehouse_id'] = $request->get('recipient')['warehouse_ref'];
         } else {
             $shipTo['country_code'] = 'UA';
-            $shipTo['city'] = $request->get('recipient')['settlement_name'];
-            $shipTo['state'] = $request->get('recipient')['settlement_area'];
-            $shipTo['district'] = $request->get('recipient')['settlement_region'];
-            $shipTo['address_1'] = $request->get('recipient')['street_name'];
+            $shipTo['city'] = WCUSHelper::prepareApiString($request->get('recipient')['settlement_name']);
+            $shipTo['state'] = WCUSHelper::prepareApiString($request->get('recipient')['settlement_area']);
+            $shipTo['district'] = WCUSHelper::prepareApiString($request->get('recipient')['settlement_region']);
+            $shipTo['address_1'] = WCUSHelper::prepareApiString($request->get('recipient')['street_name']);
             $shipTo['address_2'] = $request->get('recipient')['house'];
             $shipTo['address_3'] = $request->get('recipient')['flat'];
+            if (!empty($request->get('recipient')['address_instructions'])) {
+                $shipTo['instructions'] = $request->get('recipient')['address_instructions'];
+            }
+        }
+
+        // Check for organization
+        if ($request->get('recipient')['type'] === 'organization') {
+            $shipTo['company_name'] = WCUSHelper::prepareApiString(
+                $request->get('recipient')['organization_name'] ?? 'Unknown company'
+            );
+            $shipTo['tax_ids'] = [
+                [
+                    'type' => 'edrpou',
+                    'number' => $request->get('recipient')['organization_edrpou'],
+                    'country' => 'UA',
+                ]
+            ];
         }
 
         $shipFrom = [];
@@ -50,10 +67,10 @@ class FormLabelRequestBuilder implements LabelRequestBuilderInterface
             $shipFrom['carrier_warehouse_id'] = $request->get('sender')['warehouse_ref'];
         } else {
             $shipFrom['country_code'] = 'UA';
-            $shipFrom['city'] = $request->get('sender')['settlement_name'];
-            $shipFrom['state'] = $request->get('sender')['settlement_area'];
-            $shipFrom['district'] = $request->get('sender')['settlement_region'];
-            $shipFrom['address_1'] = $request->get('sender')['street_name'];
+            $shipFrom['city'] = WCUSHelper::prepareApiString($request->get('sender')['settlement_name']);
+            $shipFrom['state'] = WCUSHelper::prepareApiString($request->get('sender')['settlement_area']);
+            $shipFrom['district'] = WCUSHelper::prepareApiString($request->get('sender')['settlement_region']);
+            $shipFrom['address_1'] = WCUSHelper::prepareApiString($request->get('sender')['street_name']);
             $shipFrom['address_2'] = $request->get('sender')['house'];
             $shipFrom['address_3'] = $request->get('sender')['flat'];
         }
@@ -75,7 +92,10 @@ class FormLabelRequestBuilder implements LabelRequestBuilderInterface
 
         // Parcels
         $parcels = [];
-        if ($request->get('ttn')['global_params'] === 'true') {
+        if (
+            $request->get('ttn')['global_params'] === 'true'
+            && $request->get('ttn')['isPoshtomatDelivery'] === 'false'
+        ) {
             $parcel = [
                 'insurance_cost' => $request->get('ttn')['cost'],
                 'weight' => [
@@ -88,6 +108,8 @@ class FormLabelRequestBuilder implements LabelRequestBuilderInterface
                 $parcel['volumetric_weight'] = (float)$request->get('ttn')['volumetric_weight'];
             }
             $parcels[] = $parcel;
+
+            $labelRequest['custom_fields']['np_seats_amount'] = (int)$request->get('ttn')['seats_amount'];
         } else {
             foreach ($request->get('ttn')['seats'] as $index => $seat) {
                 $parcels[] = [

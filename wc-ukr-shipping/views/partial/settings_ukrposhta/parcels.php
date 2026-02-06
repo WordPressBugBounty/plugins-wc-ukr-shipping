@@ -6,12 +6,11 @@
     use \kirillbdev\WCUkrShipping\Helpers\HtmlHelper;
 ?>
 
-<div id="wcus-pane-parcels" class="wcus-tab-pane">
+<div id="wcus-pane-parcels" class="wcus-tab-pane active">
 
-    <div class="wcus-form-group">
-        <div class="wcus-form-group__tooltip">
-            <?php esc_html_e('The plugin must be connected to the Smarty Parcel service to use the functionality of creating a TTN', 'wc-ukr-shipping-i18n'); ?>
-        </div>
+    <div class="wcus-message wcus-message--warning wcus-mb-2">
+        <?php esc_html_e('The plugin must be connected to the Smarty Parcel service to use the functionality of creating a TTN', 'wc-ukr-shipping-i18n'); ?>
+        <a href="https://smartyparcel.com/docs/wcus-smarty-parcel-connect/" target="_blank"><?php esc_html_e('Documentation', 'wc-ukr-shipping-i18n'); ?></a>
     </div>
 
     <?php
@@ -48,7 +47,6 @@
             __('On fail receive', 'wc-ukr-shipping-i18n'),
             [
                 'return' => __('Return', 'wc-ukr-shipping-i18n'),
-                'return_after_7_days' => __('Return after 7 days', 'wc-ukr-shipping-i18n'),
                 'process_as_refusal' => __('Process as refusal', 'wc-ukr-shipping-i18n'),
             ],
             wc_ukr_shipping_get_option('wcus_ukrposhta_on_fail_receive')

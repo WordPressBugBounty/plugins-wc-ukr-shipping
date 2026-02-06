@@ -29,13 +29,9 @@
                 <form id="wc-ukr-shipping-settings-form" action="/" method="POST">
                     <ul class="wcus-tabs">
                         <li data-pane="wcus-pane-checkout" class="active"><?php esc_html_e('Checkout', 'wc-ukr-shipping-i18n'); ?></li>
-                        <li data-pane="wcus-pane-shipping"><?php esc_html_e('Shipping', 'wc-ukr-shipping-i18n'); ?></li>
-                        <li data-pane="wcus-pane-translates"><?php esc_html_e('Translates', 'wc-ukr-shipping-i18n'); ?></li>
                         <li data-pane="wcus-pane-parcels"><?php esc_html_e('Shipping label', 'wc-ukr-shipping-i18n'); ?></li>
                     </ul>
                     <?php echo View::render('partial/settings_nova_poshta/checkout'); ?>
-                    <?php echo View::render('partial/settings_nova_poshta/shipping'); ?>
-                    <?php echo View::render('partial/settings_nova_poshta/translates'); ?>
                     <?php echo View::render('partial/settings_nova_poshta/parcels', [
                         'carrierAccounts' => $carrierAccounts,
                         'payment_control_default' => $payment_control_default,

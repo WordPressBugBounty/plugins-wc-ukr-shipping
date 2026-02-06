@@ -2,13 +2,14 @@
 
 namespace kirillbdev\WCUkrShipping\Foundation;
 
-use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
+use kirillbdev\WCUkrShipping\Factories\Rates\CheckoutRateShipmentFactory;
 
 if ( ! defined('ABSPATH')) {
     exit;
 }
 
-class RozetkaDeliveryShipping extends \WC_Shipping_Method
+class RozetkaDeliveryShipping extends AbstractShippingMethod
 {
     public function __construct($instance_id = 0)
     {
@@ -52,56 +53,54 @@ class RozetkaDeliveryShipping extends \WC_Shipping_Method
                 'description' => '',
                 'default' => __('Rozetka Delivery', 'wc-ukr-shipping-i18n'),
             ],
-            'manage_options' => [
-                'type' => 'wcus_message',
-                'text' => __('You can manage shipping method options at', 'wc-ukr-shipping-i18n'),
-                'link' => home_url('wp-admin/admin.php?page=wc_ukr_shipping_options&section=rozetka'),
+            'cost_calculation_type' => [
+                'title' => __('Type of shipping cost calculation', 'wc-ukr-shipping-i18n'),
+                'type' => 'select',
+                'class' => 'j-wcus-shipping-calc-type',
+                'options' => [
+                    'fixed' => __('Fixed', 'wc-ukr-shipping-i18n'),
+                ],
+                'default' => 'fixed',
+            ],
+            'fixed_cost' => [
+                'title' => __('Fixed shipping cost', 'wc-ukr-shipping-i18n'),
+                'type' => 'text',
+                'default' =>  wc_ukr_shipping_get_option('wcus_rozetka_fixed_cost'),
+                'desc_tip' => true,
+                'class' => 'j-wcus-shipping-fixed-cost',
+                'sanitize_callback' => [$this, 'sanitizePrice'],
+            ],
+            'add_cost_to_order' => [
+                'label' => __('Include shipping cost to order total', 'wc-ukr-shipping-i18n'),
+                'type' => 'checkbox',
+                'description' => __('If checked, the shipping cost will be added to the order total.', 'wc-ukr-shipping-i18n'),
+                'default' =>  (int)wc_ukr_shipping_get_option('wcus_rozetka_cost_view_only') === 1 ? 'no' : 'yes',
+                'desc_tip' => true,
+            ],
+            'enable_free_shipping' => [
+                'label' => __('Enable free shipping rule', 'wc-ukr-shipping-i18n'),
+                'type' => 'checkbox',
+                'description' => __('If checked, free shipping would be available based on order amount.', 'wc-ukr-shipping-i18n'),
+                'default' => 'no',
+                'desc_tip' => true,
+            ],
+            'free_shipping_min_amount' => [
+                'title' => __('Minimum amount for free shipping', 'wc-ukr-shipping-i18n'),
+                'type' => 'text',
+                'default' => 1000,
+                'desc_tip' => true,
+                'sanitize_callback' => [$this, 'sanitizePrice'],
+            ],
+            'free_shipping_title' => [
+                'title' => __('Free shipping method name', 'wc-ukr-shipping-i18n'),
+                'type' => 'text',
+                'default' => __('Free shipping', 'wc-ukr-shipping-i18n'),
             ],
         ];
     }
 
-    public function generate_wcus_message_html(string $key, array $data): string
+    protected function getCheckoutRateShipmentFactory(): CheckoutRateShipmentFactory
     {
-        $html = sprintf(
-            '<div style="margin-bottom: 16px;">%s <a href="%s" target="_blank">%s</a></div>',
-            esc_html($data['text']),
-            esc_attr($data['link']),
-            __('plugin settings page', 'wc-ukr-shipping-i18n')
-        );
-
-        return $html;
-    }
-
-    public function calculate_shipping($package = []): void
-    {
-        $this->add_rate([
-            'label' => $this->title,
-            'cost' => (float)wc_ukr_shipping_get_option('wcus_rozetka_fixed_cost'),
-            'package' => $package,
-        ]);
-    }
-
-    /**
-     * Is this method available?
-     * @param array $package
-     * @return bool
-     */
-    public function is_available($package)
-    {
-        return $this->is_enabled();
-    }
-
-    private function shouldCalculated(): bool
-    {
-        if ( ! isset($_GET['wc-ajax'])) {
-            return false;
-        }
-
-        if (!WCUSHelper::hasChosenShippingMethodInstance($this)) {
-            return false;
-        }
-
-        return ($_GET['wc-ajax'] === 'update_order_review' && ! empty($_POST['post_data']))
-            || $_GET['wc-ajax'] === 'checkout';
+        return new CheckoutRateShipmentFactory(CarrierSlug::ROZETKA_DELIVERY);
     }
 }

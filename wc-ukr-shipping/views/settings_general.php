@@ -28,16 +28,18 @@
             <div class="wcus-settings__content">
                 <form id="wc-ukr-shipping-settings-form" action="/" method="POST">
                     <ul class="wcus-tabs">
-                        <li data-pane="wcus-pane-general" class="active"><?php esc_html_e('General', 'wc-ukr-shipping-i18n'); ?></li>
-                        <li data-pane="wcus-pane-shipping"><?php esc_html_e('Shipping', 'wc-ukr-shipping-i18n'); ?></li>
+                        <li data-pane="wcus-pane-carriers" class="active"><?php esc_html_e('Carriers', 'wc-ukr-shipping-i18n'); ?></li>
+                        <li data-pane="wcus-pane-pickup-points"><?php esc_html_e('Pickup points', 'wc-ukr-shipping-i18n'); ?></li>
+                        <li data-pane="wcus-pane-checkout"><?php esc_html_e('Checkout', 'wc-ukr-shipping-i18n'); ?></li>
                         <li data-pane="wcus-pane-parcels"><?php esc_html_e('Shipping Label', 'wc-ukr-shipping-i18n'); ?></li>
                     </ul>
-                    <?php echo View::render('partial/settings_general/common'); ?>
-                    <?php echo View::render('partial/settings_general/shipping', [
+                    <?php echo View::render('partial/settings_general/carriers'); ?>
+                    <?php echo View::render('partial/settings_general/pickup_points'); ?>
+                    <?php echo View::render('partial/settings_general/checkout'); ?>
+                    <?php echo View::render('partial/settings_general/parcels', [
                         'payment_methods' => $payment_methods,
                         'cod_payment_id' => $cod_payment_id,
                     ]); ?>
-                    <?php echo View::render('partial/settings_general/parcels'); ?>
                 </form>
             </div>
         </div>

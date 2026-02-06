@@ -53,7 +53,7 @@ class OrderProduct
      */
     public function getWidth()
     {
-        $width = $this->convertDimension((float)$this->wcProduct->get_width());
+        $width = round($this->convertDimension((float)$this->wcProduct->get_width()));
 
         return apply_filters('wcus_order_product_width', $width, $this);
     }
@@ -63,7 +63,7 @@ class OrderProduct
      */
     public function getHeight()
     {
-        $height = $this->convertDimension((float)$this->wcProduct->get_height());
+        $height = round($this->convertDimension((float)$this->wcProduct->get_height()));
 
         return apply_filters('wcus_order_product_height', $height, $this);
     }
@@ -73,7 +73,7 @@ class OrderProduct
      */
     public function getLength()
     {
-        $length = $this->convertDimension((float)$this->wcProduct->get_length());
+        $length = round($this->convertDimension((float)$this->wcProduct->get_length()));
 
         return apply_filters('wcus_order_product_length', $length, $this);
     }

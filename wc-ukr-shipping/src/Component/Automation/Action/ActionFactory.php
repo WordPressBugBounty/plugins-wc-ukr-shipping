@@ -22,7 +22,10 @@ class ActionFactory
                     $action['action_data']['destination'] ?? 'customer'
                 );
             case 'add_order_note':
-                return new AddOrderNoteAction($action['action_data']['message']);
+                return new AddOrderNoteAction(
+                    $action['action_data']['message'],
+                    $action['action_data']['type'] ?? 'admin',
+                );
             default:
                 throw new \LogicException("Invalid action '{$action['name']}'");
         }

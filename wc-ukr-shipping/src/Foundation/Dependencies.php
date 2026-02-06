@@ -4,7 +4,7 @@ namespace kirillbdev\WCUkrShipping\Foundation;
 
 use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
 use kirillbdev\WCUkrShipping\Address\Provider\AddressProviderInterface;
-use kirillbdev\WCUkrShipping\Api\CloudApi;
+use kirillbdev\WCUkrShipping\Api\SmartyParcelAddressBook;
 use kirillbdev\WCUkrShipping\Component\Cache\TransientLockProvider;
 use kirillbdev\WCUkrShipping\Contracts\Cache\LockProviderInterface;
 use kirillbdev\WCUkrShipping\Contracts\Customer\CustomerStorageInterface;
@@ -42,7 +42,7 @@ final class Dependencies
                 return $container->make($customer ? LoggedCustomerStorage::class : SessionCustomerStorage::class);
             },
             NovaPoshtaAddressProviderInterface::class => function ($container) {
-                return $container->make(CloudApi::class);
+                return $container->make(SmartyParcelAddressBook::class);
             },
             AddressProviderInterface::class => function ($container) {
                 return $container->make(MySqlAddressProvider::class);

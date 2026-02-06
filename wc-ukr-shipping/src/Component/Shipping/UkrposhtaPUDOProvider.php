@@ -9,6 +9,9 @@ use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
 use kirillbdev\WCUkrShipping\Http\WpHttpClient;
 
+/**
+ * todo Remove by SmartyParcel Locator in future
+ */
 class UkrposhtaPUDOProvider implements PUDOProviderInterface
 {
     private const API_URL = 'https://www.ukrposhta.ua';

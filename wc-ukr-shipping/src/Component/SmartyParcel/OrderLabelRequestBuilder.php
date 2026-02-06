@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Component\SmartyParcel;
 
-use kirillbdev\WCUkrShipping\Component\Shipping\NovaPoshtaPUDOProvider;
-use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
-use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
 use kirillbdev\WCUkrShipping\Factories\ProductFactory;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
@@ -14,13 +11,11 @@ use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
 class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
 {
     private \WC_Order $order;
-    private PUDOProviderInterface $pudoProvider;
     private ProductDimensionService $productDimensionService;
 
     public function __construct(\WC_Order $order)
     {
         $this->order = $order;
-        $this->pudoProvider = wcus_container()->make(NovaPoshtaPUDOProvider::class);
         $this->productDimensionService = wcus_container()->make(ProductDimensionService::class);
     }
 
@@ -133,20 +128,22 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
             ]
         ];
 
-        $warehouse = $this->pudoProvider->searchPUDOById($orderShipping->get_meta('wcus_warehouse_ref'));
-        if ($warehouse !== null && $warehouse->type === PUDO::PUDO_TYPE_LOCKER) {
-            $dimensions = apply_filters(
-                'wcus_ttn_form_dimensions',
-                $this->productDimensionService->getTotalDimensions($orderProducts),
-                $this->order
-            );
+        $warehouseName = $orderShipping->get_meta('wcus_warehouse_name');
+        if (is_string($warehouseName)) {
+            if (preg_match('/(почтомат|поштомат)/', mb_strtolower($warehouseName))) {
+                $dimensions = apply_filters(
+                    'wcus_ttn_form_dimensions',
+                    $this->productDimensionService->getTotalDimensions($orderProducts),
+                    $this->order
+                );
 
-            $labelRequest['shipment']['parcels'][0]['dimensions'] = [
-                'width' => $dimensions['width'],
-                'height' => $dimensions['height'],
-                'length' => $dimensions['length'],
-                'unit' => 'cm',
-            ];
+                $labelRequest['shipment']['parcels'][0]['dimensions'] = [
+                    'width' => $dimensions['width'],
+                    'height' => $dimensions['height'],
+                    'length' => $dimensions['length'],
+                    'unit' => 'cm',
+                ];
+            }
         }
 
         $labelRequest['shipment']['external_order_id'] = apply_filters('wcus_ttn_form_barcode', (string)$order->get_id(), $order);

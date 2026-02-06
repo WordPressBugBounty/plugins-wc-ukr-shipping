@@ -2,15 +2,14 @@
 
 namespace kirillbdev\WCUkrShipping\Foundation;
 
-use kirillbdev\WCUkrShipping\Factories\Rates\Ukrposhta\UkrposhtaCheckoutOrderFactory;
-use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
-use kirillbdev\WCUkrShipping\Services\CalculationService;
+use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Rates\UkrposhtaCheckoutRateShipmentFactory;
+use kirillbdev\WCUkrShipping\Factories\Rates\CheckoutRateShipmentFactory;
 
 if ( ! defined('ABSPATH')) {
     exit;
 }
 
-class UkrPoshtaShipping extends \WC_Shipping_Method
+class UkrPoshtaShipping extends AbstractShippingMethod
 {
     public function __construct($instance_id = 0)
     {
@@ -70,69 +69,70 @@ class UkrPoshtaShipping extends \WC_Shipping_Method
                     'EXPRESS'  => __('EXPRESS', 'wc-ukr-shipping-i18n'),
                 ],
             ],
-            'manage_options' => [
-                'type' => 'wcus_message',
-                'text' => __('You can manage shipping method options at', 'wc-ukr-shipping-i18n'),
-                'link' => home_url('wp-admin/admin.php?page=wc_ukr_shipping_options&section=ukrposhta'),
+            'cost_calculation_type' => [
+                'title' => __('Type of shipping cost calculation', 'wc-ukr-shipping-i18n'),
+                'type' => 'select',
+                'description' => __('Access to the SmartyParcel Rates API is only available on paid plans', 'wc-ukr-shipping-i18n'),
+                'desc_tip' => true,
+                'class' => 'j-wcus-shipping-calc-type',
+                'options' => [
+                    'fixed' => __('Fixed', 'wc-ukr-shipping-i18n'),
+                    'rates_api'  => __('SmartyParcel Rates API', 'wc-ukr-shipping-i18n'),
+                ],
+                'default' => wc_ukr_shipping_get_option('wcus_ukrposhta_price_type') === 'calculate'
+                    ? 'rates_api'
+                    : 'fixed',
+            ],
+            'fixed_cost' => [
+                'title' => __('Fixed shipping cost', 'wc-ukr-shipping-i18n'),
+                'type' => 'text',
+                'default' =>  (float)wc_ukr_shipping_get_option('wcus_ukrposhta_price'),
+                'desc_tip' => true,
+                'class' => 'j-wcus-shipping-fixed-cost',
+                'sanitize_callback' => [$this, 'sanitizePrice'],
+            ],
+            'include_cod' => [
+                'label' => __('Include COD when calculating shipping cost', 'wc-ukr-shipping-i18n'),
+                'type' => 'checkbox',
+                'description' => __('If checked and function supported by carrier, the COD service will be included in shipping cost.', 'wc-ukr-shipping-i18n'),
+                'default' =>  (int)wc_ukr_shipping_get_option('wcus_ukrposhta_cod_payment_active') === 1 ? 'yes' : 'no',
+                'desc_tip' => true,
+                'class' => 'j-wcus-shipping-option-cod',
+            ],
+            'add_cost_to_order' => [
+                'label' => __('Include shipping cost to order total', 'wc-ukr-shipping-i18n'),
+                'type' => 'checkbox',
+                'description' => __('If checked, the shipping cost will be added to the order total.', 'wc-ukr-shipping-i18n'),
+                'default' =>  (int)wc_ukr_shipping_get_option('wcus_ukrposhta_cost_view_only') === 1 ? 'no' : 'yes',
+                'desc_tip' => true,
+            ],
+            'enable_free_shipping' => [
+                'label' => __('Enable free shipping rule', 'wc-ukr-shipping-i18n'),
+                'type' => 'checkbox',
+                'description' => __('If checked, free shipping would be available based on order amount.', 'wc-ukr-shipping-i18n'),
+                'default' => 'no',
+                'desc_tip' => true,
+            ],
+            'free_shipping_min_amount' => [
+                'title' => __('Minimum amount for free shipping', 'wc-ukr-shipping-i18n'),
+                'type' => 'text',
+                'default' => '',
+                'desc_tip' => true,
+                'sanitize_callback' => [$this, 'sanitizePrice'],
+            ],
+            'free_shipping_title' => [
+                'title' => __('Free shipping method name', 'wc-ukr-shipping-i18n'),
+                'type' => 'text',
+                'default' => __('Free shipping', 'wc-ukr-shipping-i18n'),
             ],
         ];
     }
 
-    public function generate_wcus_message_html(string $key, array $data): string
+    protected function getCheckoutRateShipmentFactory(): CheckoutRateShipmentFactory
     {
-        $html = sprintf(
-            '<div style="margin-bottom: 16px;">%s <a href="%s" target="_blank">%s</a></div>',
-            esc_html($data['text']),
-            esc_attr($data['link']),
-            __('plugin settings page', 'wc-ukr-shipping-i18n')
+        return new UkrposhtaCheckoutRateShipmentFactory(
+            strtolower($this->get_option('service_type')),
+            'warehouse'
         );
-
-        return $html;
-    }
-
-    public function calculate_shipping($package = []): void
-    {
-        if ( ! $this->shouldCalculated()) {
-            $this->add_rate([
-                'label' => $this->title,
-                'cost' => 0,
-                'package' => $package,
-            ]);
-            return;
-        }
-
-        $service = new CalculationService();
-        $factory = new UkrposhtaCheckoutOrderFactory($this->get_option('service_type'));
-
-        $rate = [
-            'label' => $this->title,
-            'cost' => $service->calculateRates($factory->createOrderInfo()),
-            'package' => $package,
-        ];
-        $this->add_rate($rate);
-    }
-
-    /**
-     * Is this method available?
-     * @param array $package
-     * @return bool
-     */
-    public function is_available($package)
-    {
-        return $this->is_enabled();
-    }
-
-    private function shouldCalculated(): bool
-    {
-        if ( ! isset($_GET['wc-ajax'])) {
-            return false;
-        }
-
-        if (!WCUSHelper::hasChosenShippingMethodInstance($this)) {
-            return false;
-        }
-
-        return ($_GET['wc-ajax'] === 'update_order_review' && ! empty($_POST['post_data']))
-            || $_GET['wc-ajax'] === 'checkout';
     }
 }

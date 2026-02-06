@@ -37,59 +37,49 @@ class CheckoutOrderShippingHandler implements OrderShippingHandlerInterface
 
     private function saveAddressShipping(\WC_Order_Item_Shipping $item, array $data): void
     {
-        if ((int)wc_ukr_shipping_get_option('wc_ukr_shipping_np_address_api_ui') === 1 || is_admin()) {
-            $settlementRef = $data['wcus_np_' . $this->fieldGroup . '_settlement_ref'] ?? '';
-            $settlementFull = $data['wcus_np_' . $this->fieldGroup . '_settlement_full'] ?? '';
-            $settlementName = $data['wcus_np_' . $this->fieldGroup . '_settlement_name'] ?? '';
-            $settlementArea = $data['wcus_np_' . $this->fieldGroup . '_settlement_area'] ?? '';
-            $settlementRegion = $data['wcus_np_' . $this->fieldGroup . '_settlement_region'] ?? '';
+        $settlementRef = $data['wcus_np_' . $this->fieldGroup . '_settlement_ref'] ?? '';
+        $settlementFull = $data['wcus_np_' . $this->fieldGroup . '_settlement_full'] ?? '';
+        $settlementName = $data['wcus_np_' . $this->fieldGroup . '_settlement_name'] ?? '';
+        $settlementArea = $data['wcus_np_' . $this->fieldGroup . '_settlement_area'] ?? '';
+        $settlementRegion = $data['wcus_np_' . $this->fieldGroup . '_settlement_region'] ?? '';
 
-            $streetRef = $data['wcus_np_' . $this->fieldGroup . '_street_ref'] ?? '';
-            $streetName = $data['wcus_np_' . $this->fieldGroup . '_street_name'] ?? '';
-            $streetFull = $data['wcus_np_' . $this->fieldGroup . '_street_full'] ?? '';
+        $streetRef = $data['wcus_np_' . $this->fieldGroup . '_street_ref'] ?? '';
+        $streetName = $data['wcus_np_' . $this->fieldGroup . '_street_name'] ?? '';
+        $streetFull = $data['wcus_np_' . $this->fieldGroup . '_street_full'] ?? '';
 
-            $house = $data['wcus_np_' . $this->fieldGroup . '_house'] ?? '';
-            $flat = $data['wcus_np_' . $this->fieldGroup . '_flat'] ?? '';
+        $house = $data['wcus_np_' . $this->fieldGroup . '_house'] ?? '';
+        $flat = $data['wcus_np_' . $this->fieldGroup . '_flat'] ?? '';
 
-            $this->updateMeta($item, 'wcus_settlement_ref', $settlementRef);
-            $this->updateMeta($item, 'wcus_settlement_full', $settlementFull);
-            $this->updateMeta($item, 'wcus_settlement_name', $settlementName);
-            $this->updateMeta($item, 'wcus_settlement_area', $settlementArea);
-            $this->updateMeta($item, 'wcus_settlement_region', $settlementRegion);
+        $this->updateMeta($item, 'wcus_settlement_ref', $settlementRef);
+        $this->updateMeta($item, 'wcus_settlement_full', $settlementFull);
+        $this->updateMeta($item, 'wcus_settlement_name', $settlementName);
+        $this->updateMeta($item, 'wcus_settlement_area', $settlementArea);
+        $this->updateMeta($item, 'wcus_settlement_region', $settlementRegion);
 
-            $this->updateMeta($item, 'wcus_street_ref', $streetRef);
-            $this->updateMeta($item, 'wcus_street_name', $streetName);
-            $this->updateMeta($item, 'wcus_street_full', $streetFull);
+        $this->updateMeta($item, 'wcus_street_ref', $streetRef);
+        $this->updateMeta($item, 'wcus_street_name', $streetName);
+        $this->updateMeta($item, 'wcus_street_full', $streetFull);
 
-            $this->updateMeta($item, 'wcus_house', $house);
-            $this->updateMeta($item,'wcus_flat', $flat);
+        $this->updateMeta($item, 'wcus_house', $house);
+        $this->updateMeta($item,'wcus_flat', $flat);
 
-            $item->update_meta_data('wcus_api_address', 1);
+        $item->update_meta_data('wcus_api_address', 1);
 
-            // todo: This logic may be attached through event model
-            $this->customerStorage->add(CustomerStorageInterface::KEY_LAST_SETTLEMENT, [
-                'full' => $this->sanitizeValue($settlementFull),
-                'ref' => $this->sanitizeValue($settlementRef),
-                'name' => $this->sanitizeValue($settlementName),
-                'area' => $this->sanitizeValue($settlementArea),
-                'region' => $this->sanitizeValue($settlementRegion)
-            ]);
-            $this->customerStorage->add(CustomerStorageInterface::KEY_LAST_STREET, [
-                'full' => $this->sanitizeValue($streetFull),
-                'ref' => $this->sanitizeValue($streetRef),
-                'name' => $this->sanitizeValue($streetName)
-            ]);
-            $this->customerStorage->add(CustomerStorageInterface::KEY_LAST_HOUSE, $this->sanitizeValue($house));
-            $this->customerStorage->add(CustomerStorageInterface::KEY_LAST_FLAT, $this->sanitizeValue($flat));
-        } else {
-            $cityRef = $data['wcus_np_' . $this->fieldGroup . '_city'] ?? '';
-            $address = $data['wcus_np_' . $this->fieldGroup . '_custom_address'] ?? '';
-
-            $this->updateMeta($item,'wcus_city_ref', $cityRef);
-            $this->updateMeta($item, 'wcus_address', $address);
-
-            $this->customerStorage->add(CustomerStorageInterface::KEY_LAST_CITY_REF, sanitize_text_field($address));
-        }
+        // todo: This logic may be attached through event model
+        $this->customerStorage->add(CustomerStorageInterface::KEY_LAST_SETTLEMENT, [
+            'full' => $this->sanitizeValue($settlementFull),
+            'ref' => $this->sanitizeValue($settlementRef),
+            'name' => $this->sanitizeValue($settlementName),
+            'area' => $this->sanitizeValue($settlementArea),
+            'region' => $this->sanitizeValue($settlementRegion)
+        ]);
+        $this->customerStorage->add(CustomerStorageInterface::KEY_LAST_STREET, [
+            'full' => $this->sanitizeValue($streetFull),
+            'ref' => $this->sanitizeValue($streetRef),
+            'name' => $this->sanitizeValue($streetName)
+        ]);
+        $this->customerStorage->add(CustomerStorageInterface::KEY_LAST_HOUSE, $this->sanitizeValue($house));
+        $this->customerStorage->add(CustomerStorageInterface::KEY_LAST_FLAT, $this->sanitizeValue($flat));
     }
 
     private function saveWarehouseShipping(\WC_Order_Item_Shipping $item, array $data): void

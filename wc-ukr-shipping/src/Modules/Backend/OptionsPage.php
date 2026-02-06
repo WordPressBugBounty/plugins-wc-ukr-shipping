@@ -2,12 +2,17 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
+use kirillbdev\WCUkrShipping\Component\Carriers\Meest\Label\MeestOrderCollector;
 use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Label\PurchaseLabelDataCollector;
+use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Label\RozetkaOrderCollector;
 use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\SingleLabelDataCollector;
 use kirillbdev\WCUkrShipping\Component\ListTable\AutomationListTable;
+use kirillbdev\WCUkrShipping\Component\SmartyParcel\BaseOrderCollector;
 use kirillbdev\WCUkrShipping\DB\Repositories\AutomationRulesRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\LegacyTtnRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
+use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
+use kirillbdev\WCUkrShipping\Foundation\NovaGlobalAddress;
 use kirillbdev\WCUkrShipping\Foundation\State;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
@@ -53,7 +58,6 @@ class OptionsPage implements ModuleInterface
     {
         add_action('admin_menu', [$this, 'registerOptionsPage'], 99);
         add_filter('wcus_load_admin_i18n', [$this, 'registerTranslates']);
-        add_action('admin_init', [$this, 'registerSettings']);
     }
 
     public function routes()
@@ -162,11 +166,6 @@ class OptionsPage implements ModuleInterface
         );
     }
 
-    public function registerSettings(): void
-    {
-        register_setting('wcus_settings_tools', 'wcus_legacy_pro_tracking', 'intval');
-    }
-
     public function registerTranslates($i18n): array
     {
         return array_merge($i18n, [
@@ -210,9 +209,6 @@ class OptionsPage implements ModuleInterface
             case 'ukrposhta':
                 $view = 'settings_ukrposhta';
                 break;
-            case 'nova_post':
-                $view = 'settings_nova_post';
-                break;
             case 'rozetka':
                 $view = 'settings_rozetka';
                 break;
@@ -240,6 +236,25 @@ class OptionsPage implements ModuleInterface
             return;
         }
 
+        $order = wc_get_order((int)$_GET['order_id']);
+        if ( ! $order) {
+            throw new \InvalidArgumentException('Order #' . (int)$_GET['order_id'] . ' not found.');
+        }
+        $shippingMethod = WCUSHelper::getOrderShippingMethod($order);
+
+        // Hardcoded yet: detect and process elements-sdk flow
+        $v2Methods = [
+            WCUS_SHIPPING_METHOD_NOVA_GLOBAL_ADDRESS,
+            WCUS_SHIPPING_METHOD_ROZETKA,
+            WCUS_SHIPPING_METHOD_MEEST,
+            WCUS_SHIPPING_METHOD_MEEST_ADDRESS,
+            WCUS_SHIPPING_METHOD_NOVA_POST,
+        ];
+        if ($shippingMethod !== null && in_array($shippingMethod->get_method_id(), $v2Methods, true)) {
+            $this->processPurchaseLabelV2($order, $shippingMethod);
+            return;
+        }
+
         wp_enqueue_script(
             'smarty_parcel_elements_js',
             WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/smartyparcel/elements.min.js',
@@ -256,17 +271,14 @@ class OptionsPage implements ModuleInterface
             true
         );
 
-        $order = wc_get_order((int)$_GET['order_id']);
-        if ( ! $order) {
-            throw new \InvalidArgumentException('Order #' . (int)$_GET['order_id'] . ' not found.');
-        }
-
         $carrier = null;
         if (isset($_GET['carrier'])) {
             $carrier = $_GET['carrier'];
         } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_NOVA_POSHTA)) {
             $carrier = 'nova_poshta';
         } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_UKRPOSHTA)) {
+            $carrier = 'ukrposhta';
+        } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_UKRPOSHTA_ADDRESS)) {
             $carrier = 'ukrposhta';
         } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_ROZETKA)) {
             $carrier = 'rozetka_delivery';
@@ -285,7 +297,6 @@ class OptionsPage implements ModuleInterface
         }
 
         if ($store === null) {
-            $shippingMethod = WCUSHelper::getOrderShippingMethod($order);
             echo View::render('ttn/ttn_custom', [
                 'shippingMethod' => $shippingMethod !== null ? $shippingMethod->get_name() : null,
                 'novaPoshtaFormUrl' => admin_url(
@@ -302,6 +313,38 @@ class OptionsPage implements ModuleInterface
             wp_localize_script('wcus_ttn_form_js', 'wcus_ttn_form_state', $store->collect());
             echo View::render('ttn/ttn');
         }
+    }
+
+    public function processPurchaseLabelV2(\WC_Order $order, \WC_Order_Item_Shipping $orderShipping): void
+    {
+        wp_enqueue_script(
+        'smartyparcel_labels_js',
+            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/labels.min.js',
+            ['smartyparcel_elements_sdk_js'],
+            filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/labels.min.js'),
+            true
+        );
+
+        $carrier = SmartyParcelHelper::getCarrierFromShippingMethod($orderShipping->get_method_id());
+        if ($carrier === null) {
+            esc_html_e('Unable to detect carrier for order', 'wc-ukr-shipping-i18n');
+            return;
+        }
+
+        switch ($carrier) {
+            case CarrierSlug::ROZETKA_DELIVERY:
+                $collector = new RozetkaOrderCollector($order);
+                break;
+            case CarrierSlug::MEEST:
+                $collector = new MeestOrderCollector($order);
+                break;
+            default:
+                $collector = new BaseOrderCollector($order, $carrier);
+        }
+
+        wp_localize_script('smartyparcel_labels_js', 'wcus_sp_label_data', $collector->collect());
+
+        echo View::render('ttn/ttn_v2');
     }
 
     public function orderListHtml(): void

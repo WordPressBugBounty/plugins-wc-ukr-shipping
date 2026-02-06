@@ -14,7 +14,7 @@ if ( ! defined('ABSPATH')) {
         </div>
         <div class="wcus-card__content">
             <a target="_blank"
-               href="https://kirillbdev.pro/docs/wcus-base-setup/"
+               href="https://smartyparcel.com/docs/knowledge-base-woocommerce/"
                class="wcus-btn wcus-btn--docs wcus-btn--md wcus-btn--block wcus-mb-1">
                 <?php echo wc_ukr_shipping_import_svg('docs.svg'); ?>
                 <?php esc_html_e('Documentation', 'wc-ukr-shipping-i18n'); ?>
@@ -63,9 +63,7 @@ if ( ! defined('ABSPATH')) {
                 </div>
 
                 <a target="_blank"
-                   href="<?php echo get_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS) === 'connected'
-                        ? admin_url('admin.php?page=wcus_smarty_parcel#/upgrade')
-                        : 'https://kirillbdev.pro/wc-ukr-shipping-pro/?utm_source=plugin' ;?>"
+                   href="https://smartyparcel.com/app-pricing/"
                    class="wcus-btn wcus-btn--md wcus-btn--block wcus-pro-features__btn">
                     <?php echo wc_ukr_shipping_import_svg('star.svg'); ?>
                     <?php esc_html_e('Switch to paid plan', 'wc-ukr-shipping-i18n'); ?>

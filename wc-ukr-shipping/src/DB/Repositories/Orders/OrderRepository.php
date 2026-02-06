@@ -6,13 +6,18 @@ use kirillbdev\WCUSCore\Facades\DB;
 
 class OrderRepository implements OrderRepositoryInterface
 {
-    public function getOrdersWithTTN(int $offset, int $limit): array
+    public function getOrdersWithTTN(int $offset, int $limit, array $filters = []): array
     {
-        return DB::table(DB::posts() . ' as p')
+        $query = DB::table(DB::posts() . ' as p')
             ->leftJoin(DB::prefixedTable('wc_ukr_shipping_labels') . ' as l', 'p.ID = l.order_id')
             ->where('p.post_type', 'shop_order')
-            ->where('p.post_status', '!=', 'trash')
-            ->orderBy('p.ID', 'desc')
+            ->where('p.post_status', '!=', 'trash');
+
+        if (!empty($filters['carrier_slug'])) {
+            $query->where('l.carrier_slug', '=', $filters['carrier_slug']);
+        }
+
+        return $query->orderBy('p.ID', 'desc')
             ->skip($offset)
             ->limit($limit)
             ->get([
@@ -36,7 +41,8 @@ class OrderRepository implements OrderRepositoryInterface
             ->whereIn('meta_key', [
                 '_billing_last_name',
                 '_billing_first_name',
-                '_order_total'
+                '_order_total',
+                '_smartyparcel_label_id'
             ])
             ->get([
                 'meta_key',
@@ -54,12 +60,18 @@ class OrderRepository implements OrderRepositoryInterface
             ]);
     }
 
-    public function getCountOrderPages(int $limit): int
+    public function getCountOrderPages(int $limit, array $filters = []): int
     {
-        $pageCount = DB::table(DB::posts() . ' as p')
+        $query = DB::table(DB::posts() . ' as p')
+            ->leftJoin(DB::prefixedTable('wc_ukr_shipping_labels') . ' as l', 'p.ID = l.order_id')
             ->where('p.post_type', 'shop_order')
-            ->where('p.post_status', '!=', 'trash')
-            ->count('p.ID');
+            ->where('p.post_status', '!=', 'trash');
+
+        if (!empty($filters['carrier_slug'])) {
+            $query->where('l.carrier_slug', '=', $filters['carrier_slug']);
+        }
+
+        $pageCount = $query->count('p.ID');
 
         return ceil($pageCount / $limit);
     }

@@ -68,6 +68,11 @@ class WCUSHelper
         return $phone;
     }
 
+    public static function prepareApiString(string $str): string
+    {
+        return wp_unslash(str_replace("`", "'", $str));
+    }
+
     public static function prepareUIString($str)
     {
         return wp_unslash(wp_specialchars_decode($str, ENT_QUOTES));
@@ -85,7 +90,11 @@ class WCUSHelper
 
     public static function safeGetJsonOption(string $key, $default = []): array
     {
-        $option = json_decode(wc_ukr_shipping_get_option($key) ?? '', true);
+        $option = wc_ukr_shipping_get_option($key) ?? '';
+        if (is_array($option)) {
+            return $option;
+        }
+        $option = json_decode($option, true);
 
         return array_replace_recursive($default, empty($option) ? [] : $option);
     }

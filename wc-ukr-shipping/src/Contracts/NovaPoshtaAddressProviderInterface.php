@@ -3,7 +3,6 @@
 namespace kirillbdev\WCUkrShipping\Contracts;
 
 use kirillbdev\WCUkrShipping\Exceptions\NovaPoshtaAddressProviderException;
-use kirillbdev\WCUkrShipping\Model\NovaPoshta\Area;
 use kirillbdev\WCUkrShipping\Model\NovaPoshta\City;
 
 if ( ! defined('ABSPATH')) {
@@ -12,12 +11,6 @@ if ( ! defined('ABSPATH')) {
 
 interface NovaPoshtaAddressProviderInterface
 {
-    /**
-     * @return Area[]
-     * @throws NovaPoshtaAddressProviderException
-     */
-    public function getAreas(): array;
-
     /**
      * @return City[]
      * @throws NovaPoshtaAddressProviderException

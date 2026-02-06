@@ -44,15 +44,6 @@
                         </div>
                     </div>
 
-                    <?php
-                        HtmlHelper::switcherField(
-                            'wcus_legacy_pro_tracking',
-                            __('Enable legacy tracking compatibility', 'wc-ukr-shipping-i18n'),
-                            (int)wc_ukr_shipping_get_option('wcus_legacy_pro_tracking') === 1
-                        );
-                    ?>
-                    <div class="wcus-form-group__tooltip"><?php esc_html_e('If you have previously used our tracking service, enable this option to receive statuses for already added invoices.', 'wc-ukr-shipping-i18n'); ?></div>
-
                 </div>
             </div>
         </div>

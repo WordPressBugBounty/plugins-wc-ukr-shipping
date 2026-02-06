@@ -8,20 +8,29 @@ class ShippingLabelsRepository
 {
     public function findByOrderId(int $orderId): ?array
     {
-        $result = DB::table(DB::prefixedTable('wc_ukr_shipping_labels'))
+        $row = DB::table(DB::prefixedTable('wc_ukr_shipping_labels'))
             ->where('order_id', $orderId)
             ->first();
 
-        return $result !== null ? (array)$result : null;
+        return $this->hydrate($row);
     }
 
     public function findById(int $id): ?array
     {
-        $result = DB::table(DB::prefixedTable('wc_ukr_shipping_labels'))
+        $row = DB::table(DB::prefixedTable('wc_ukr_shipping_labels'))
             ->where('id', $id)
             ->first();
 
-        return $result !== null ? (array)$result : null;
+        return $this->hydrate($row);
+    }
+
+    public function findByTrackingNumber(string $trackingNumber): ?array
+    {
+        $row = DB::table(DB::prefixedTable('wc_ukr_shipping_labels'))
+            ->where('tracking_number', $trackingNumber)
+            ->first();
+
+        return $this->hydrate($row);
     }
 
     public function deleteById(int $id): void
@@ -39,20 +48,26 @@ class ShippingLabelsRepository
         string $labelId,
         string $carrierLabelId,
         string $trackingNumber,
-        string $carrierSlug
+        string $carrierSlug,
+        array $metadata = []
     ) {
         $now = date('Y-m-d H:i:s');
+        $values = [
+            'label_id' => $labelId,
+            'carrier_label_id' => $carrierLabelId,
+            'carrier_slug' => $carrierSlug,
+            'order_id' => $orderId,
+            'tracking_number' => $trackingNumber,
+            'tracking_active' => 0,
+            'created_at' => $now,
+            'updated_at' => $now,
+        ];
+        if (count($metadata) > 0) {
+            $values['metadata'] = json_encode($metadata);
+        }
+
         DB::table(DB::prefixedTable('wc_ukr_shipping_labels'))
-            ->insert([
-                'label_id' => $labelId,
-                'carrier_label_id' => $carrierLabelId,
-                'carrier_slug' => $carrierSlug,
-                'order_id' => $orderId,
-                'tracking_number' => $trackingNumber,
-                'tracking_active' => 0,
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
+            ->insert($values);
     }
 
     public function attach(int $orderId, string $trackingNumber, string $carrierSlug): void
@@ -83,5 +98,19 @@ class ShippingLabelsRepository
             [ '%d', '%s', '%s' ],
             [ '%d' ]
         );
+    }
+
+    private function hydrate($row): ?array
+    {
+        if ($row === null) {
+            return null;
+        }
+
+        $result = (array)$row;
+        if ($result['metadata']) {
+            $result['metadata'] = json_decode($result['metadata'], true);
+        }
+
+        return $result;
     }
 }

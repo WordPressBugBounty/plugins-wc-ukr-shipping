@@ -28,10 +28,8 @@
             <div class="wcus-settings__content">
                 <form id="wc-ukr-shipping-settings-form" action="/" method="POST">
                     <ul class="wcus-tabs">
-                        <li data-pane="wcus-pane-shipping" class="active"><?php esc_html_e('Shipping', 'wc-ukr-shipping-i18n'); ?></li>
-                        <li data-pane="wcus-pane-shipment"><?php esc_html_e('Shipping label', 'wc-ukr-shipping-i18n'); ?></li>
+                        <li data-pane="wcus-pane-shipment" class="active"><?php esc_html_e('Shipping label', 'wc-ukr-shipping-i18n'); ?></li>
                     </ul>
-                    <?php echo View::render('partial/settings_rozetka/shipping'); ?>
                     <?php echo View::render('partial/settings_rozetka/parcels', [
                         'carrierAccounts' => $carrierAccounts,
                     ]); ?>

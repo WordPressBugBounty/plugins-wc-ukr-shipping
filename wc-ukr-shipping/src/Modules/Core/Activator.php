@@ -6,6 +6,7 @@ use kirillbdev\WCUkrShipping\DB\Migrations\CreateAutomationActionsTable_20240923
 use kirillbdev\WCUkrShipping\DB\Migrations\CreateAutomationRulesTable_20240923215722;
 use kirillbdev\WCUkrShipping\DB\Migrations\CreateShippingLabelsTable_20250203230634;
 use kirillbdev\WCUkrShipping\DB\Migrations\UpdateShippingLabels_20250428213701;
+use kirillbdev\WCUkrShipping\DB\Migrations\UpdateShippingLabels_20251008164100;
 use kirillbdev\WCUkrShipping\DB\Migrations\UpdateShippingLabelsTable_20250408020301;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 use kirillbdev\WCUSCore\DB\Migrator;
@@ -36,6 +37,7 @@ class Activator implements ModuleInterface
             $this->migrator->addMigration(new CreateAutomationActionsTable_20240923215754());
             $this->migrator->addMigration(new CreateAutomationRulesTable_20240923215722());
             $this->migrator->addMigration(new UpdateShippingLabels_20250428213701());
+            $this->migrator->addMigration(new UpdateShippingLabels_20251008164100());
             $this->migrator->run();
         } catch (MigrateException $e) {
             // do nothing yet

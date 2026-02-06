@@ -2,6 +2,7 @@
 
 namespace kirillbdev\WCUkrShipping\DB\Mappers;
 
+use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 
 if ( ! defined('ABSPATH')) {
@@ -10,6 +11,13 @@ if ( ! defined('ABSPATH')) {
 
 class OrderListMapper
 {
+    private ShippingLabelsRepository $labelsRepository;
+
+    public function __construct(ShippingLabelsRepository $labelsRepository)
+    {
+        $this->labelsRepository = $labelsRepository;
+    }
+
     /**
      * @param array $data
      * @return array
@@ -19,6 +27,22 @@ class OrderListMapper
         $orders = [];
 
         foreach ($data as $item) {
+            // Try label if additionally attached
+            // todo: should be refactored
+            $externalLabelId = $this->getExternalLabelId($item);
+            if (!empty($externalLabelId)) {
+                $label = $this->labelsRepository->findById((int)$externalLabelId);
+                if ($label !== null) {
+                    $item['label_id'] = $label['label_id'];
+                    $item['carrier_slug'] = $label['carrier_slug'];
+                    $item['label_db_id'] = (int)$label['id'];
+                    $item['tracking_number'] = (int)$label['tracking_number'];
+                    $item['tracking_status'] = $label['tracking_status'];
+                    $item['carrier_status_code'] = (int)$label['carrier_status_code'];
+                    $item['carrier_status'] = (int)$label['carrier_status'];
+                }
+            }
+
             $order = [
                 'id' => (int)$item['id'],
                 'selected' => false,
@@ -41,8 +65,8 @@ class OrderListMapper
                 $order[ $this->mapKey($info['meta_key']) ] = $this->mapValue($info['meta_key'], $info['meta_value']);
             }
 
+            $order['label_downloads'] = [];
             if (!empty($order['label_id'])) {
-                $order['label_downloads'] = [];
                 foreach (WCUSHelper::getLabelDownloadFormats($order['label_carrier_slug'] ?? '') as $format => $name) {
                     $order['label_downloads'][] = [
                         'name' => $name,
@@ -88,5 +112,16 @@ class OrderListMapper
             default:
                 return $value;
         }
+    }
+
+    private function getExternalLabelId(array $item)
+    {
+        foreach ($item['info'] as $info) {
+            if ($info['meta_key'] == '_smartyparcel_label_id') {
+                return $info['meta_value'];
+            }
+        }
+
+        return null;
     }
 }

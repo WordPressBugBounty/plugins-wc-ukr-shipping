@@ -25,15 +25,20 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
         $shipTo = [
             'name' => sprintf(
                 '%s %s%s',
-                $recipient['first_name'],
-                $recipient['last_name'],
+                WCUSHelper::prepareApiString($recipient['first_name']),
+                WCUSHelper::prepareApiString($recipient['last_name']),
                 $recipient['middle_name']
-                    ? ' ' . $recipient['middle_name']
+                    ? ' ' . WCUSHelper::prepareApiString($recipient['middle_name'])
                     : '',
             ),
             'phone' => WCUSHelper::preparePhone($recipient['phone']),
-            'pudo_point_id' => $recipient['warehouse']['value'],
         ];
+        if (($recipient['delivery_type'] ?? '') === 'door') {
+            $shipTo = array_merge($shipTo, $recipient['ship_to']);
+            unset($shipTo['address_full']);
+        } else {
+            $shipTo['pudo_point_id'] = $recipient['warehouse']['value'];
+        }
 
         // Sender
         $shipFrom = [
@@ -45,10 +50,10 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
         if ($sender['type'] === 'individual') {
             $shipFrom['name'] = sprintf(
                 '%s %s%s',
-                $sender['first_name'],
-                $sender['last_name'],
+                WCUSHelper::prepareApiString($sender['first_name']),
+                WCUSHelper::prepareApiString($sender['last_name']),
                 $sender['middle_name']
-                    ? ' ' . $sender['middle_name']
+                    ? ' ' . WCUSHelper::prepareApiString($sender['middle_name'])
                     : '',
             );
         } else {

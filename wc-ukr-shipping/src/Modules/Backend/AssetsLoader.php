@@ -4,6 +4,7 @@ namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+use kirillbdev\WCUkrShipping\Services\SmartyParcel\ManifestService;
 use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 use kirillbdev\WCUkrShipping\Traits\StateInitiatorTrait;
@@ -17,15 +18,18 @@ class AssetsLoader implements ModuleInterface
 {
     use StateInitiatorTrait;
 
-    private $translateService;
+    private TranslateService $translateService;
     private SmartyParcelService $smartyParcelService;
+    private ManifestService $manifestService;
 
     public function __construct(
         TranslateService $translateService,
-        SmartyParcelService $smartyParcelService
+        SmartyParcelService $smartyParcelService,
+        ManifestService $manifestService
     ) {
         $this->translateService = $translateService;
         $this->smartyParcelService = $smartyParcelService;
+        $this->manifestService = $manifestService;
     }
 
     public function init()
@@ -63,6 +67,18 @@ class AssetsLoader implements ModuleInterface
             );
         }
 
+        $manifest = $this->manifestService->getManifest();
+        if (isset($manifest['static']['elements-sdk'])) {
+            wp_enqueue_script(
+                'smartyparcel_elements_sdk_js',
+                $manifest['static']['elements-sdk']['href'],
+                [],
+                $manifest['static']['elements-sdk']['version'],
+                true
+            );
+        }
+
+        // Common admin scripts
         wp_enqueue_script(
             'wcus_ttn_widget_js',
             WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/ttn-widget.min.js',
@@ -133,8 +149,6 @@ class AssetsLoader implements ModuleInterface
     private function injectGlobals($scriptId): void
     {
         $translator = $this->translateService;
-        $translates = $translator->getTranslates();
-
         $globals = [
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'homeUrl' => home_url(),
@@ -144,12 +158,6 @@ class AssetsLoader implements ModuleInterface
             'disableDefaultBillingFields' => apply_filters('wc_ukr_shipping_prevent_disable_default_fields', false) === false ?
                 'true' :
                 'false',
-            'i10n' => [
-                'placeholder_area' => $translates['placeholder_area'],
-                'placeholder_city' => $translates['placeholder_city'],
-                'placeholder_warehouse' => $translates['placeholder_warehouse'],
-                'not_found' => $translates['not_found'],
-            ],
             'orderStatuses' => wcus_is_woocommerce_active() ? wc_get_order_statuses() : [],
             'assets' => [
                 'nova_poshta_icon_url' => WC_UKR_SHIPPING_PLUGIN_URL . 'image/nova-poshta-icon.png',
@@ -186,7 +194,7 @@ class AssetsLoader implements ModuleInterface
             'isConnected' => SmartyParcelHelper::isConnected(),
             'connectUrl' => $connectUrl,
             'account' => null,
-            'autoTracking' => (int)wc_ukr_shipping_get_option('wcus_sp_auto_tracking'),
+            'dashboardUrl' =>  admin_url('admin.php?page=wcus_smarty_parcel'),
             'upgradePlanUrl' => admin_url('admin.php?page=wcus_smarty_parcel#/upgrade'),
         ];
 

@@ -7,8 +7,12 @@ if (!defined('ABSPATH')) {
 // Shipping methods
 define('WCUS_SHIPPING_METHOD_NOVA_POSHTA', 'nova_poshta_shipping');
 define('WCUS_SHIPPING_METHOD_UKRPOSHTA', 'wcus_ukrposhta_shipping');
+define('WCUS_SHIPPING_METHOD_UKRPOSHTA_ADDRESS', 'wcus_ukrposhta_address_shipping');
 define('WCUS_SHIPPING_METHOD_NOVA_POST', 'wcus_nova_post_shipping');
 define('WCUS_SHIPPING_METHOD_ROZETKA', 'wcus_rozetka_delivery_shipping');
+define('WCUS_SHIPPING_METHOD_MEEST', 'wcus_meest_shipping');
+define('WCUS_SHIPPING_METHOD_MEEST_ADDRESS', 'wcus_meest_address_shipping');
+define('WCUS_SHIPPING_METHOD_NOVA_GLOBAL_ADDRESS', 'wcus_nova_global_address');
 
 // Warehouse Type
 define('WCUS_WAREHOUSE_TYPE_REGULAR', 1);

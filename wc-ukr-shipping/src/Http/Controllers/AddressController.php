@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Http\Controllers;
 
+use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
+use kirillbdev\WCUkrShipping\Component\Carriers\Meest\Shipping\MeestPUDOProvider;
 use kirillbdev\WCUkrShipping\Component\Carriers\NovaPost\Shipping\NovaPostPUDOProvider;
 use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Shipping\RozetkaDeliveryPUDOProvider;
 use kirillbdev\WCUkrShipping\Component\Shipping\NovaPoshtaPUDOProvider;
+use kirillbdev\WCUkrShipping\Component\Shipping\SmartyParcelPUDOProvider;
 use kirillbdev\WCUkrShipping\Component\Shipping\UkrposhtaPUDOProvider;
 use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
 use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
+use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUSCore\Http\Controller;
 use kirillbdev\WCUSCore\Http\Request;
 
@@ -22,18 +27,28 @@ class AddressController extends Controller
 {
     public function searchCities(Request $request)
     {
-        if (  ! $request->get('query')) {
+        // todo: move query check logic to concrete provider
+        if (  ! $request->get('query') && $request->get('carrier') !== CarrierSlug::MEEST) {
             return $this->jsonResponse([
                 'success' => true,
                 'data' => []
             ]);
         }
-        $provider = $this->getPUDOProvider($request->get('carrier'));
+        $provider = $this->getPUDOProvider(
+            $request->get('carrier'),
+            $request->get('lang', '')
+        );
+
+        /**
+         * Enable third-party code to override PUDO cities query
+         * @since 1.17.5
+         */
+        $query = apply_filters('wcus_pudo_cities_query', $request->get('query'), $request->get('carrier'));
 
         return $this->jsonResponse([
             'success' => true,
             'data' => $this->mapCities(
-                $provider->searchCitiesByQuery($request->get('query')),
+                $provider->searchCitiesByQuery($query),
                 $request->get('lang', '')
             )
         ]);
@@ -51,11 +66,21 @@ class AddressController extends Controller
             ]);
         }
 
-        $provider = $this->getPUDOProvider($request->get('carrier'));
+        $provider = $this->getPUDOProvider(
+            $request->get('carrier'),
+            $request->get('lang', '')
+        );
+
+        /**
+         * Enable third-party code to override pickup points query
+         * @since 1.17.5
+         */
+        $query = apply_filters('wcus_pudo_points_query', $request->get('query', ''), $request->get('carrier'));
+
         try {
             $result = $provider->searchPUDOByQuery(
                 $request->get('city_ref'),
-                $request->get('query', ''),
+                $query,
                 (int)$request->get('page'),
                 $request->get('types', [
                     PUDO::PUDO_TYPE_WAREHOUSE,
@@ -83,13 +108,14 @@ class AddressController extends Controller
         }
 
         $items = $this->mapWarehouses($result['data'], $request->get('lang', ''));
-        $offset = ((int)$request->get('page') - 1) * 20 + count($items);
 
         return $this->jsonResponse([
             'success' => true,
             'data' => [
                 'items' => $items,
-                'more' => $offset < $result['total'],
+                'more' => $request->get('carrier') === 'nova_poshta'
+                    ? count($items) >= 20
+                    : false,
             ]
         ]);
     }
@@ -125,17 +151,34 @@ class AddressController extends Controller
         }, $warehouses);
     }
 
-    private function getPUDOProvider(string $carrier): PUDOProviderInterface
+    private function getPUDOProvider(string $carrier, string $lang): PUDOProviderInterface
     {
+        $useLocator = (int)wc_ukr_shipping_get_option('wcus_use_smartyparcel_locator') === 1;
+        $locatorSupportedCarriers = [
+          CarrierSlug::NOVA_POSHTA,
+          CarrierSlug::UKRPOSHTA,
+          CarrierSlug::ROZETKA_DELIVERY,
+          CarrierSlug::NOVA_POST,
+        ];
+        if ($useLocator && SmartyParcelHelper::isConnected() && in_array($carrier, $locatorSupportedCarriers, true)) {
+            return new SmartyParcelPUDOProvider(
+                $carrier,
+                $lang,
+                wcus_container()->make(SmartyParcelWPApi::class)
+            );
+        }
+
         switch ($carrier) {
-            case 'nova_poshta':
+            case CarrierSlug::NOVA_POSHTA:
                 return wcus_container()->make(NovaPoshtaPUDOProvider::class);
-            case 'ukrposhta':
+            case CarrierSlug::UKRPOSHTA:
                 return wcus_container()->make(UkrposhtaPUDOProvider::class);
-            case 'nova_post':
+            case CarrierSlug::NOVA_POST:
                 return wcus_container()->make(NovaPostPUDOProvider::class);
-            case 'rozetka_delivery':
+            case CarrierSlug::ROZETKA_DELIVERY:
                 return wcus_container()->make(RozetkaDeliveryPUDOProvider::class);
+            case CarrierSlug::MEEST:
+                return wcus_container()->make(MeestPUDOProvider::class);
         }
 
         throw new \Exception('Wrong carrier ' . $carrier);

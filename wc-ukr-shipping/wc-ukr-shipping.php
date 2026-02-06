@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name: WC Ukraine Shipping
- * Plugin URI: https://kirillbdev.pro/wc-ukr-shipping-pro/
- * Description: Integration of Nova Poshta and Ukrposhta delivery services for WooCommerce
- * Version: 1.17.1
+ * Plugin URI: https://smartyparcel.com
+ * Description: Multi-carrier shipping solution for WooCommerce
+ * Version: 1.21.1
  * Author: kirillbdev
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Requires PHP: 7.4
- * Tested up to: 6.8
- * WC tested up to: 10.2
+ * Tested up to: 6.9
+ * WC tested up to: 10.4
 */
 
 if ( ! defined('ABSPATH')) {
