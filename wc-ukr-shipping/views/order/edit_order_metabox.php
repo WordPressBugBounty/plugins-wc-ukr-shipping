@@ -38,6 +38,9 @@
                  data-label-id="<?php echo esc_attr($shipping_label['label_id']); ?>"></div>
         <?php } ?>
     <?php } else { ?>
+        <?php if (isset($automationError)) { ?>
+            <div class="wcus-mb-1" style="color: #fd3939;"><?php echo esc_html($automationError); ?></div>
+        <?php } ?>
         <div style="text-align: center; padding: 16px;">
             <div class="wcus-mb-1">
                 <a href="<?php echo esc_attr(admin_url('admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order_id)); ?>"

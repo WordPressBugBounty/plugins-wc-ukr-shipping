@@ -36,8 +36,8 @@ class AddOrderNoteAction implements ActionInterface
                 '{{carrier_edd}}',
             ],
             [
-                $context->getLabel()['tracking_number'],
-                $context->getLabel()['carrier_status'],
+                $context->getLabel()['tracking_number'] ?? '',
+                $context->getLabel()['carrier_status'] ?? '',
                 $order->getOrigin()->get_id(),
                 $order->getOrigin()->get_billing_first_name(),
                 $order->getOrigin()->get_billing_last_name(),

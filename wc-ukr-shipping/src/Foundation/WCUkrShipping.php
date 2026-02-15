@@ -38,13 +38,17 @@ final class WCUkrShipping extends Kernel
             \kirillbdev\WCUkrShipping\Modules\Core\Localization::class,
             \kirillbdev\WCUkrShipping\Modules\Core\PluginInfo::class,
             \kirillbdev\WCUkrShipping\Modules\Core\Router::class,
+
             // Legacy
             \kirillbdev\WCUkrShipping\Modules\WcusLegacyCompatibility::class,
+
             // Backend
             \kirillbdev\WCUkrShipping\Modules\Backend\OptionsPage::class,
             \kirillbdev\WCUkrShipping\Modules\Backend\AssetsLoader::class,
             \kirillbdev\WCUkrShipping\Modules\Backend\ShippingItemDrawer::class,
             \kirillbdev\WCUkrShipping\Modules\Backend\Orders::class,
+            \kirillbdev\WCUkrShipping\Modules\Backend\Automation::class,
+
             // Frontned
             \kirillbdev\WCUkrShipping\Modules\Frontend\AssetsLoader::class,
             \kirillbdev\WCUkrShipping\Modules\Frontend\Address::class,

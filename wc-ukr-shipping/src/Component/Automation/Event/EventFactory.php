@@ -25,6 +25,8 @@ class EventFactory
                     $rule['event_data']['carrierSlug'] ?? 'nova_poshta',
                     $rule['event_data']['newStatus']
                 );
+            case AutomationService::EVENT_ORDER_STATUS_CHANGED:
+                return new OrderStatusChangedEvent($rule['event_data']['newStatus']);
             case AutomationService::EVENT_LABEL_CREATED:
             case AutomationService::EVENT_LABEL_ATTACHED:
             case AutomationService::EVENT_LABEL_VOIDED:

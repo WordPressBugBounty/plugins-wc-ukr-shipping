@@ -178,6 +178,12 @@ class Orders implements ModuleInterface
         }
         $data['download_formats'] = WCUSHelper::getLabelDownloadFormats($data['carrier']);
 
+        if ($order->get_meta('_wcus_automation_error')) {
+            $data['automationError'] = $order->get_meta('_wcus_automation_error');
+            $order->delete_meta_data('_wcus_automation_error');
+            $order->save_meta_data();
+        }
+
         echo View::render('order/edit_order_metabox', $data);
     }
 

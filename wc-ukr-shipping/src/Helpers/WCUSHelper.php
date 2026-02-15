@@ -27,7 +27,9 @@ class WCUSHelper
     public static function hasChosenShippingMethodInstance(\WC_Shipping_Method $instance): bool
     {
         try {
-            $methods = WC()->session->get( 'chosen_shipping_methods', []);
+            $methods = isset($_POST['shipping_method']) && is_array($_POST['shipping_method'])
+                ? $_POST['shipping_method']
+                : WC()->session->get( 'chosen_shipping_methods', []);
 
             return in_array($instance->id . ':' . $instance->instance_id, $methods, true);
         } catch (\Throwable $e) {

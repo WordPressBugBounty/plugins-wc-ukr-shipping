@@ -5,7 +5,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: нова пошта, укрпошта, rozetka delivery, nova post, shipping
 Requires PHP: 7.4
 Tested up to: 6.9
-Stable tag: 1.21.1
+Stable tag: 1.21.2
 
 Connect Nova Poshta, Ukrposhta, Meest or international delivery services with your store. Create labels, track orders and calculate rates in one place.
 
@@ -38,6 +38,7 @@ https://www.youtube.com/watch?v=NYKgP3cw1WY
 * Shipments tracking
 * Bulk label creation
 * Bulk label printing
+* Automatic label creation based on various conditions
 * Support many functions includes COD and Payment control
 * Advanced shipment analytics
 * Integration with popular plugins for localization: WPML and Polylang
@@ -72,7 +73,6 @@ SmartyParcel has additional premium features that help you to optimize your dail
 * Automatic Email notifications
 * Automatic SMS notifications
 * Easy integration with custom platforms via our REST Api
-* White Label Integration for Enterprises
 * Premium support
 
 [Switch to Premium Plans](https://smartyparcel.com/?utm_source=wporg#pricing)
@@ -109,6 +109,12 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 Unfortunately plugin doesn't support checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.21.2 / (15.02.2026) =
+* [Nova Poshta] Added multiple sender addresses support.
+* [Automation] Added new event - Order status changed.
+* [Automation] Added new action - Automatic label creation. Now supports only for Nova Poshta.
+* Checked compatibility with latest WordPress and WooCommerce versions.
 
 = Version 1.21.1 / (29.01.2026) =
 * UI / UX upgrade.

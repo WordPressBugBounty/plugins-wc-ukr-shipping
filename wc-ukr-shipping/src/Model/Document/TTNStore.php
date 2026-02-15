@@ -3,6 +3,7 @@
 namespace kirillbdev\WCUkrShipping\Model\Document;
 
 use kirillbdev\WCUkrShipping\Address\Provider\AddressProviderInterface;
+use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 use kirillbdev\WCUkrShipping\Factories\ProductFactory;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Includes\Address\RepositoryCityFinder;
@@ -50,6 +51,7 @@ class TTNStore
 
     private ProductDimensionService $productDimensionService;
     private SmartyParcelService $smartyParcelService;
+    private SmartyParcelWPApi $smartyParcelApi;
 
     public function __construct(int $orderId)
     {
@@ -64,6 +66,7 @@ class TTNStore
         $factory = new ProductFactory();
         $this->productDimensionService = wcus_container()->make(ProductDimensionService::class);
         $this->smartyParcelService = wcus_container()->make(SmartyParcelService::class);
+        $this->smartyParcelApi = wcus_container()->make(SmartyParcelWPApi::class);
 
         foreach ($this->order->get_items() as $item) {
             /** @var \WC_Order_Item_Product $item */
@@ -214,6 +217,27 @@ class TTNStore
 
         $this->data['sender']['house'] = '';
         $this->data['sender']['flat'] = '';
+
+        // V2 address flow
+        $this->data['sender']['ship_from_source'] = 'plugin';
+        try {
+            $this->data['sender']['addresses'] = $this->smartyParcelApi->sendRequest(
+                '/v1/addresses',
+                null,
+                [
+                    'carrier_slug' => 'nova_poshta',
+                ]
+            )['addresses'] ?? [];
+        } catch (\Exception $e) {
+            $this->data['sender']['addresses'] = [];
+        }
+        $this->data['sender']['selected_address_id'] = '';
+        foreach ($this->data['sender']['addresses'] as $address) {
+            if ($address['is_default']) {
+                $this->data['sender']['selected_address_id'] = $address['id'];
+                break;
+            }
+        }
     }
 
     private function collectRecipient(): void

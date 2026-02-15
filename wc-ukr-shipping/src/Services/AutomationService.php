@@ -19,6 +19,7 @@ class AutomationService
     public const EVENT_LABEL_VOIDED = 'label_voided';
     public const EVENT_SP_TRACKING_STATUS_CHANGED = 'sp_tracking_status_changed';
     public const EVENT_SP_CARRIER_STATUS_CHANGED = 'sp_carrier_status_changed';
+    public const EVENT_ORDER_STATUS_CHANGED = 'order_status_changed';
 
     private AutomationRulesRepository $rulesRepository;
     private RuleExecutor $ruleExecutor;

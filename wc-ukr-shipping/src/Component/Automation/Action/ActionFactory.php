@@ -26,6 +26,8 @@ class ActionFactory
                     $action['action_data']['message'],
                     $action['action_data']['type'] ?? 'admin',
                 );
+            case 'create_label':
+                return new CreateLabelAction();
             default:
                 throw new \LogicException("Invalid action '{$action['name']}'");
         }
