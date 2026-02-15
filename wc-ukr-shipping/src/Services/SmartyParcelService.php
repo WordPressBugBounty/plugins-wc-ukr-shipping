@@ -258,4 +258,9 @@ class SmartyParcelService
         $apiKey = get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
         $this->api->disconnectApplication($apiKey);
     }
+
+    public function getLabelByOrderId(int $orderId): ?array
+    {
+        return $this->labelsRepository->findByOrderId($orderId);
+    }
 }

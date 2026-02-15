@@ -25,6 +25,6 @@ class OrderStatusChangedEvent implements EventInterface
             $this->newStatus = substr($this->newStatus, 3);
         }
 
-        return $context->getOrder()->has_status($this->newStatus);
+        return is_admin() && $context->getOrder()->has_status($this->newStatus);
     }
 }

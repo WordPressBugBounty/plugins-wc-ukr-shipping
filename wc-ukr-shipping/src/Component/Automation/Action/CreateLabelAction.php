@@ -31,6 +31,9 @@ class CreateLabelAction implements ActionInterface
         if ($shippingMethod === null || $shippingMethod->get_method_id() !== WCUS_SHIPPING_METHOD_NOVA_POSHTA) {
             return;
         }
+        if ($this->smartyParcelService->getLabelByOrderId($order->get_id()) !== null) {
+            return;
+        }
 
         try {
             $this->smartyParcelService->createLabel(
