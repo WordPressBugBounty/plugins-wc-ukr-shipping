@@ -255,9 +255,12 @@ class OptionsPage implements ModuleInterface
             return;
         }
         // Check UkrPoshta Intl flow
-        if ($shippingMethod !== null && $shippingMethod->get_method_id() === WCUS_SHIPPING_METHOD_UKRPOSHTA_ADDRESS) {
-            if ($order->get_billing_country() !== 'UA') {
-                $this->processPurchaseLabelV2($order, $shippingMethod);
+        if (
+            ($shippingMethod !== null && $shippingMethod->get_method_id() === WCUS_SHIPPING_METHOD_UKRPOSHTA_ADDRESS)
+            || ($_GET['carrier'] ?? null) === 'ukrposhta'
+        ) {
+            if ($order->get_billing_country() !== 'UA' || $order->get_shipping_country() !== 'UA') {
+                $this->processPurchaseLabelV2($order, $shippingMethod, $_GET['carrier'] ?? null);
                 return;
             }
         }
@@ -322,7 +325,7 @@ class OptionsPage implements ModuleInterface
         }
     }
 
-    public function processPurchaseLabelV2(\WC_Order $order, \WC_Order_Item_Shipping $orderShipping): void
+    public function processPurchaseLabelV2(\WC_Order $order, \WC_Order_Item_Shipping $orderShipping, ?string $carrierSlug = null): void
     {
         wp_enqueue_script(
         'smartyparcel_labels_js',
@@ -332,7 +335,12 @@ class OptionsPage implements ModuleInterface
             true
         );
 
-        $carrier = SmartyParcelHelper::getCarrierFromShippingMethod($orderShipping->get_method_id());
+        if ($carrierSlug !== null) {
+            $carrier = $carrierSlug;
+        } else {
+            $carrier = SmartyParcelHelper::getCarrierFromShippingMethod($orderShipping->get_method_id());
+        }
+
         if ($carrier === null) {
             esc_html_e('Unable to detect carrier for order', 'wc-ukr-shipping-i18n');
             return;
