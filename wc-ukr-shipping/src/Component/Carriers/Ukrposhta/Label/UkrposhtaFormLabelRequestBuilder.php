@@ -32,6 +32,7 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
                     : '',
             ),
             'phone' => WCUSHelper::preparePhone($recipient['phone']),
+            'country_code' => 'UA',
         ];
         if (($recipient['delivery_type'] ?? '') === 'door') {
             $shipTo = array_merge($shipTo, $recipient['ship_to']);
@@ -45,6 +46,7 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
             'phone' => WCUSHelper::preparePhone($sender['phone']),
             'email' => $sender['email'],
             'pudo_point_id' => $sender['warehouse']['value'],
+            'country_code' => 'UA',
         ];
 
         if ($sender['type'] === 'individual') {

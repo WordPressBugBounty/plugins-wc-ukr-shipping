@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Component\Automation\Action;
 
 use kirillbdev\WCUkrShipping\Component\Automation\Context;
-use kirillbdev\WCUkrShipping\Component\SmartyParcel\OrderLabelRequestBuilder;
-use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
-use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 
@@ -28,35 +25,19 @@ class CreateLabelAction implements ActionInterface
     {
         $order = $context->getOrder();
         $shippingMethod = WCUSHelper::getOrderShippingMethod($order);
-        if ($shippingMethod === null || $shippingMethod->get_method_id() !== WCUS_SHIPPING_METHOD_NOVA_POSHTA) {
+        $allowedMethods = [
+            WCUS_SHIPPING_METHOD_NOVA_POSHTA,
+            WCUS_SHIPPING_METHOD_UKRPOSHTA,
+            WCUS_SHIPPING_METHOD_ROZETKA,
+        ];
+        if ($shippingMethod === null || !in_array($shippingMethod->get_method_id(), $allowedMethods)) {
             return;
         }
         if ($this->smartyParcelService->getLabelByOrderId($order->get_id()) !== null) {
             return;
         }
 
-        try {
-            $this->smartyParcelService->createLabel(
-                CarrierSlug::NOVA_POSHTA,
-                $order->get_id(),
-                new OrderLabelRequestBuilder($order)
-            );
-        } catch (SmartyParcelErrorException $e) {
-            $order->add_meta_data(
-                '_wcus_automation_error',
-                sprintf(
-                    '[Automation] Error creating label: Source: SmartyParcel | Error: [%d] %s',
-                    $e->getCode(),
-                    $e->getMessage()
-                )
-            );
-            $order->save_meta_data();
-        } catch (\Throwable $e) {
-            $order->add_meta_data(
-                '_wcus_automation_error',
-                sprintf('[Automation] Error creating label: Source: Internal | Error: %s', $e->getMessage())
-            );
-            $order->save_meta_data();
-        }
+        // Schedule async action
+        wp_schedule_single_event(time(), 'wcus_smartyparcel_auto_create_label', [$order->get_id()]);
     }
 }

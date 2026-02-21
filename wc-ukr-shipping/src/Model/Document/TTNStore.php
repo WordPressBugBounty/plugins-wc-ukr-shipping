@@ -219,7 +219,9 @@ class TTNStore
         $this->data['sender']['flat'] = '';
 
         // V2 address flow
-        $this->data['sender']['ship_from_source'] = 'plugin';
+        $this->data['sender']['ship_from_source'] = (int)wc_ukr_shipping_get_option('wcus_ttn_use_smartyparcel_addresses') === 1
+            ? 'smarty_parcel'
+            : 'plugin';
         try {
             $this->data['sender']['addresses'] = $this->smartyParcelApi->sendRequest(
                 '/v1/addresses',

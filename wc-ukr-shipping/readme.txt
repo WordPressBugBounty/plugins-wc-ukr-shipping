@@ -5,7 +5,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: нова пошта, укрпошта, rozetka delivery, nova post, shipping
 Requires PHP: 7.4
 Tested up to: 6.9
-Stable tag: 1.21.3
+Stable tag: 1.21.4
 
 Connect Nova Poshta, Ukrposhta, Meest or international delivery services with your store. Create labels, track orders and calculate rates in one place.
 
@@ -43,14 +43,14 @@ https://www.youtube.com/watch?v=NYKgP3cw1WY
 * Advanced shipment analytics
 * Integration with popular plugins for localization: WPML and Polylang
 
-== Carriers ==
+== Supported Carriers ==
 * Nova Poshta
 * Ukrposhta
 * Rozetka Delivery
 * Nova Post (EU, International)
 * Nova Global
 * Meest (Ukraine, International)
-* DHL API (tracking only yet)
+* DHL (tracking only yet)
 
 == Pickup points (SmartyParcel Locator for WooCommerce) ==
 * Nova Poshta
@@ -109,6 +109,11 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 Unfortunately plugin doesn't support checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.21.4 / (21.02.2026) =
+* [UkrPoshta] Added ability to create international shipping labels.
+* [Automation] Added auto-creating label feature for UkrPoshta and Rozetka Delivery.
+* Label auto creation now work asynchronously (wp cron).
 
 = Version 1.21.3 / (16.02.2026) =
 * Improved automation logic.
@@ -256,61 +261,3 @@ Unfortunately plugin doesn't support checkout blocks yet.
 * [Fixed] Ukrposhta batch label creation.
 * Carrier account management was removed from plugin and moved to cloud account panel.
 * Checked compatibility with latest WordPress and WooCommerce versions.
-
-= Version 1.15.11 / (19.06.2025) =
-* [Ukrposhta] Fixed sending incorrect service type.
-
-= Version 1.15.10 / (19.06.2025) =
-* Fixed translates for middle name field.
-* Added escaping in translates section.
-
-= Version 1.15.9 / (18.06.2025) =
-* [Ukrposhta] Removed trailing slash when search for some settlements.
-* [Ukrposhta] Added COD payer, added ability to set up default service options.
-* Added option for inject additional fields in checkout.
-* Restored wcus_ttn_form_additional filter.
-* Checked compatibility with latest Wordpress and WooCommerce versions.
-
-= Version 1.15.8 / (13.06.2025) =
-* [Hotfix] Empty zones behavior
-* Added CSS versioning for checkout.
-
-= Version 1.15.6 / (13.06.2025) =
-* [Hotfix] Array unique case in checkout.
-
-= Version 1.15.5 / (12.06.2025) =
-* [Nova Poshta] Added ability to create label with global params.
-* [Nova Poshta] Added usage of default description option on bulk label creation.
-* [Nova Poshta] Fixed label creation for poshtomats on bulk label creation.
-* [Ukrposhta] Fixed spread operator backward compatibility with PHP 7.4.
-* [Ukrposhta] Added new option - default payer.
-* Added ability to create labels for any orders.
-* Fixed critical error in some cases on Order list and Edit checkout pages.
-* [Tracking] Improved signature comparing.
-* Checkout improvements.
-
-= Version 1.15.4 / (02.06.2025) =
-* [Ukrposhta] Ability to create labels from private entrepreneur.
-* [Ukrposhta] Ability to create labels with COD.
-* [Ukrposhta] Added default sender city and warehouse options.
-* [Ukrposhta] Now supports cloud tracking API.
-* [Ukrposhta] Added automation rules (carrier status changed event etc.).
-* Added new hook wcus_shipping_label_created.
-* Fixed internal server error for Ukrposhta shipping method in checkout.
-
-= Version 1.15.3 / (28.05.2025) =
-* Restored previous city format (Sales Drive compatibility).
-* [Tracking] Status notifications now work via webhooks.
-* [Tools] Added skipping duplicated ttn on sync with WC Ukraine Shipping PRO (legacy plugin).
-
-= Version 1.15.2 / (27.05.2025) =
-* [Hotfix] Internal server error on checkout when Ukrposhta sender city not selected.
-
-= Version 1.15.1 / (24.05.2025) =
-* Fixed a critical error for some cases on the order edit page.
-
-= Version 1.15.0 / (24.05.2025) =
-* Added Ukrposhta integration (select warehouse, create TTN, calculate rates).
-* Legacy checkout UI was fully removed.
-* Improved Nova Poshta cities search.
-* Architecture improvements.

@@ -75,6 +75,7 @@ class UkrposhtaBatchLabelRequestBuilder implements LabelRequestBuilderInterface
         $data = [
             'phone' => WCUSHelper::preparePhone($sender['phone']),
             'email' => $sender['email'],
+            'country_code' => 'UA',
             'pudo_point_id' => $sender['warehouse']['value'],
         ];
 
@@ -129,6 +130,7 @@ class UkrposhtaBatchLabelRequestBuilder implements LabelRequestBuilderInterface
                     : '',
             ),
             'phone' => WCUSHelper::preparePhone($recipient['phone']),
+            'country_code' => 'UA',
             'pudo_point_id' => $recipient['warehouse_id'],
         ];
     }

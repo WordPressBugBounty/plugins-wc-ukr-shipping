@@ -254,6 +254,13 @@ class OptionsPage implements ModuleInterface
             $this->processPurchaseLabelV2($order, $shippingMethod);
             return;
         }
+        // Check UkrPoshta Intl flow
+        if ($shippingMethod !== null && $shippingMethod->get_method_id() === WCUS_SHIPPING_METHOD_UKRPOSHTA_ADDRESS) {
+            if ($order->get_billing_country() !== 'UA') {
+                $this->processPurchaseLabelV2($order, $shippingMethod);
+                return;
+            }
+        }
 
         wp_enqueue_script(
             'smarty_parcel_elements_js',

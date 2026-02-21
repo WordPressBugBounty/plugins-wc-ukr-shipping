@@ -89,14 +89,6 @@ class BaseOrderCollector
                 ];
             }
 
-            // tmp debug
-            $lineItem['dimensions'] = [
-                'width' => (int)wc_ukr_shipping_get_option('wcus_ttn_width_default'),
-                'height' => (int)wc_ukr_shipping_get_option('wcus_ttn_height_default'),
-                'length' => (int)wc_ukr_shipping_get_option('wcus_ttn_length_default'),
-                'unit' => get_option('woocommerce_dimension_unit'),
-            ];
-
             $lineItems[] = $lineItem;
         }
         $data['lineItems'] = $lineItems;

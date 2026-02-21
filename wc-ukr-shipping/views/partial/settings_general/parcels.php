@@ -14,6 +14,12 @@
     </div>
 
     <?php
+        HtmlHelper::switcherField(
+            'wcus[ttn_use_smartyparcel_addresses]',
+            __('Use SmartyParcel addresses as default', 'wc-ukr-shipping-i18n'),
+            (int)wc_ukr_shipping_get_option('wcus_ttn_use_smartyparcel_addresses') === 1
+        );
+
         HtmlHelper::selectField(
             'wcus[cod_payment_id]',
             __('COD method', 'wc-ukr-shipping-i18n'),
