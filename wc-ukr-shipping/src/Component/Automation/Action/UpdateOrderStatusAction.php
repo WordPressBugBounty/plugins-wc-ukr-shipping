@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Component\Automation\Action;
 
 use kirillbdev\WCUkrShipping\Component\Automation\Context;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -21,6 +22,6 @@ class UpdateOrderStatusAction implements ActionInterface
 
     public function execute(Context $context): void
     {
-        $context->getOrder()->update_status($this->newStatus);
+        $context->getOrder()->update_status(WCUSHelper::removeOrderStatusPrefix($this->newStatus));
     }
 }

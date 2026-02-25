@@ -27,4 +27,11 @@ class RozetkaOrderCollector extends BaseOrderCollector
 
         return $data;
     }
+
+    protected function collectDefaults(): array
+    {
+        return array_merge(parent::collectDefaults(), [
+            'paidBy' => wc_ukr_shipping_get_option('wcus_rozetka_ttn_default_payer'),
+        ]);
+    }
 }

@@ -108,6 +108,14 @@ class WCUSHelper
             : 'billing';
     }
 
+    public static function removeOrderStatusPrefix(string $status): string
+    {
+        if (strpos($status, 'wc-') === 0) {
+            $status = substr($status, 3);
+        }
+        return $status;
+    }
+
     public static function getDefaultCities()
     {
         return [

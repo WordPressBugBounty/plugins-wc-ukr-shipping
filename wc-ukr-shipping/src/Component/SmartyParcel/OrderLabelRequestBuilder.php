@@ -160,7 +160,7 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
                 $labelRequest['service_options']['cod'] = [
                     'payment_method' => 'cash_equivalent',
                     'value' => [
-                        'amount' => apply_filters('wcus_ttn_form_cod_cost', $this->getOrderCost($order), $order),
+                        'amount' => apply_filters('wcus_ttn_form_payment_control_cost', $this->getOrderCost($order), $order),
                         'currency' => 'UAH',
                     ],
                 ];
@@ -168,7 +168,7 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
                 $labelRequest['service_options']['cod'] = [
                     'payment_method' => 'cash',
                     'value' => [
-                        'amount' => apply_filters('wcus_ttn_form_payment_control_cost', $this->getOrderCost($order), $order),
+                        'amount' => apply_filters('wcus_ttn_form_cod_cost', $this->getOrderCost($order), $order),
                         'currency' => 'UAH',
                     ],
                     'options' => [

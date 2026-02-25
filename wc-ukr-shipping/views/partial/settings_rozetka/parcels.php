@@ -27,6 +27,16 @@
             $ukrPoshtaAccounts,
             wc_ukr_shipping_get_option('wcus_rozetka_default_carrier')
         );
+
+        HtmlHelper::selectField(
+            'wcus[rozetka_ttn_default_payer]',
+            __('Delivery payer', 'wc-ukr-shipping-i18n'),
+            [
+                'sender' => __('Sender', 'wc-ukr-shipping-i18n'),
+                'recipient' => __('Recipient', 'wc-ukr-shipping-i18n'),
+            ],
+            wc_ukr_shipping_get_option('wcus_rozetka_ttn_default_payer')
+        );
     ?>
 
 </div>

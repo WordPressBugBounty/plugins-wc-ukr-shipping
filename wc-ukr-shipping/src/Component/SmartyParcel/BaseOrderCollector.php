@@ -56,6 +56,7 @@ class BaseOrderCollector
             'shippingMethod' => $this->order->get_shipping_method(),
             'paymentMethod' => $this->order->get_payment_method(),
             'sourcePlatform' => 'woocommerce',
+            'total' => $this->getOrderTotal(),
             'subTotal' => (float)$this->order->get_subtotal(),
             'totalFee' => (float)$this->order->get_total_fees(),
             'totalTax' => (float)$this->order->get_total_tax(''),
@@ -124,7 +125,7 @@ class BaseOrderCollector
         ];
     }
 
-    protected function getDeclaredPrice(): float
+    protected function getOrderTotal(): float
     {
         return $this->order->get_subtotal() + (float)$this->order->get_total_fees() + (float)$this->order->get_total_tax('') - $this->order->get_total_discount();
     }
@@ -134,7 +135,7 @@ class BaseOrderCollector
         $codPaymentId = wc_ukr_shipping_get_option('wcus_cod_payment_id');
         if ($codPaymentId && $codPaymentId === $this->order->get_payment_method()) {
             return [
-                'amount' => $this->getDeclaredPrice(),
+                'amount' => $this->getOrderTotal(),
                 'currency' => get_woocommerce_currency(),
             ];
         }
@@ -155,7 +156,7 @@ class BaseOrderCollector
                 'length' => (int)wc_ukr_shipping_get_option('wcus_ttn_length_default'),
                 'unit' => get_option('woocommerce_dimension_unit'),
             ],
-            'parcelDescription' => wc_ukr_shipping_get_option('wcus_ttn_description'),
+            'description' => wc_ukr_shipping_get_option('wcus_ttn_description') ?: 'Order #' . $this->order->get_id(),
         ];
     }
 }

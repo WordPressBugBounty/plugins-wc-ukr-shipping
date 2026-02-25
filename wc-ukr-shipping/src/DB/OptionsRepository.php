@@ -73,6 +73,7 @@ class OptionsRepository
             // Rozetka delivery
             'wcus_rozetka_fixed_cost' => 0,
             'wcus_rozetka_cost_view_only' => 0,
+            'wcus_rozetka_ttn_default_payer' => 'recipient',
 
             // SmartyParcel
             'wcus_use_smartyparcel_locator' => 0,

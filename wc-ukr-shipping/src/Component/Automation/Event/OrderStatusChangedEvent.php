@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Component\Automation\Event;
 
 use kirillbdev\WCUkrShipping\Component\Automation\Context;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -23,9 +24,7 @@ class OrderStatusChangedEvent implements EventInterface
 
     public function canProcess(Context $context): bool
     {
-        if (strpos($this->newStatus, 'wc-') === 0) {
-            $this->newStatus = substr($this->newStatus, 3);
-        }
+        $this->newStatus = WCUSHelper::removeOrderStatusPrefix($this->newStatus);
 
         $shouldCheck = true;
         if ($this->adminOnly && !is_admin()) {
