@@ -27,6 +27,7 @@ final class SmartyParcelWPApi
         '/v1/lookup/company' => 'GET',
         '/v1/rates/estimate' => 'POST',
         '/v1/addresses' => 'GET',
+        '/v1/orders' => 'POST',
     ];
 
     private const PUBLIC_ROUTES = [

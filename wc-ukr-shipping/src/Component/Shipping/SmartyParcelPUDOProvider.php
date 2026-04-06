@@ -8,6 +8,7 @@ use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
 use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
+use kirillbdev\WCUkrShipping\Dto\Shipping\SearchPUDORequestDTO;
 
 class SmartyParcelPUDOProvider implements PUDOProviderInterface
 {
@@ -40,38 +41,44 @@ class SmartyParcelPUDOProvider implements PUDOProviderInterface
         throw new \RuntimeException('Not implemented');
     }
 
-    public function searchPUDOByQuery(string $cityId, string $query, int $page, array $types = []): array
+    public function searchPUDOByQuery(SearchPUDORequestDTO $request): array
     {
         $mappedTypes = [];
-        if (in_array(PUDO::PUDO_TYPE_WAREHOUSE, $types, true)) {
+        if (in_array(PUDO::PUDO_TYPE_WAREHOUSE, $request->types, true)) {
             $mappedTypes[] = 'warehouse';
             $mappedTypes[] = 'pudo';
         }
-        if (in_array(PUDO::PUDO_TYPE_LOCKER, $types, true)) {
+        if (in_array(PUDO::PUDO_TYPE_LOCKER, $request->types, true)) {
             $mappedTypes[] = 'parcel_locker';
         }
 
         $params = [
             'carrier_slug' => $this->carrierSlug,
             'language' => $this->lang,
-            'page' => $page,
+            'page' => $request->page,
             'limit' => 20,
             'types' => $mappedTypes,
         ];
-        if (!empty($query)) {
-            $params['query'] = $query;
+        if (!empty($request->query)) {
+            $params['query'] = $request->query;
+        }
+        if (isset($request->weight) && $request->weight > 0) {
+            $params['weight'] = [
+                'value' => (float)$request->weight,
+                'unit' => 'kg',
+            ];
         }
         if ($this->carrierSlug === 'nova_post') {
-            $params['country_code'] = $cityId;
+            $params['country_code'] = $request->cityId;
         } else {
-            $params['carrier_city_id'] = $cityId;
+            $params['carrier_city_id'] = $request->cityId;
         }
         $response = $this->api->sendRequest('/v1/locator/pudo-points', null, $params);
 
-        $data = array_map(function (array $item) use ($cityId) {
+        $data = array_map(function (array $item) use ($request) {
             return new PUDO(
                 $item['carrier_pudo_id'],
-                $cityId,
+                $request->cityId,
                 $item['name'],
                 $item['name'],
                 $item['type'] === 'parcel_locker'

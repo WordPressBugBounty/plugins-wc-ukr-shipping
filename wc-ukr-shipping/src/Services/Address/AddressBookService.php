@@ -5,13 +5,9 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Services\Address;
 
 use kirillbdev\WCUkrShipping\Contracts\NovaPoshtaAddressProviderInterface;
-use kirillbdev\WCUkrShipping\DB\Repositories\AreaRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\CityRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\WarehouseRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\WarehouseSyncRepository;
-use kirillbdev\WCUkrShipping\Exceptions\NovaPoshtaAddressProviderException;
-use kirillbdev\WCUkrShipping\Model\NovaPoshta\City;
-use kirillbdev\WCUkrShipping\Model\NovaPoshta\Warehouse;
 
 if ( ! defined('ABSPATH')) {
     exit;

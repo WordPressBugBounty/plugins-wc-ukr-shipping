@@ -7,6 +7,7 @@ namespace kirillbdev\WCUkrShipping\Component\Shipping;
 use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
 use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
+use kirillbdev\WCUkrShipping\Dto\Shipping\SearchPUDORequestDTO;
 use kirillbdev\WCUkrShipping\Http\WpHttpClient;
 
 /**
@@ -66,7 +67,7 @@ class UkrposhtaPUDOProvider implements PUDOProviderInterface
         throw new \RuntimeException('Not implemented');
     }
 
-    public function searchPUDOByQuery(string $cityId, string $query, int $page, array $types = []): array
+    public function searchPUDOByQuery(SearchPUDORequestDTO $request): array
     {
         $bearer = wc_ukr_shipping_get_option('wcus_ukrposhta_bearer_ecom');
         if (empty($bearer)) {
@@ -74,7 +75,7 @@ class UkrposhtaPUDOProvider implements PUDOProviderInterface
         }
 
         $response = $this->httpClient->get(
-            self::API_URL . sprintf('/address-classifier-ws/get_postoffices_by_postcode_cityid_cityvpzid?city_id=%s', $cityId),
+            self::API_URL . sprintf('/address-classifier-ws/get_postoffices_by_postcode_cityid_cityvpzid?city_id=%s', $request->cityId),
             [
                 'Authorization' => 'Bearer ' . $bearer,
                 'Accept' => 'application/json',
@@ -90,7 +91,7 @@ class UkrposhtaPUDOProvider implements PUDOProviderInterface
             return [];
         }
 
-        $data = array_map(function (array $warehouse) use ($cityId) {
+        $data = array_map(function (array $warehouse) use ($request) {
              $name = sprintf(
                  '%s, %s',
                  $warehouse['POSTOFFICE_UA'],
@@ -99,7 +100,7 @@ class UkrposhtaPUDOProvider implements PUDOProviderInterface
 
             return new PUDO(
                 $warehouse['POSTCODE'],
-                $cityId,
+                $request->cityId,
                 $name,
                 $name,
                 PUDO::PUDO_TYPE_WAREHOUSE

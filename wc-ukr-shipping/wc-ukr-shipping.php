@@ -3,13 +3,13 @@
  * Plugin Name: WC Ukraine Shipping
  * Plugin URI: https://smartyparcel.com
  * Description: Multi-carrier shipping solution for WooCommerce
- * Version: 1.21.6
+ * Version: 1.21.7
  * Author: kirillbdev
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Requires PHP: 7.4
  * Tested up to: 6.9
- * WC tested up to: 10.5
+ * WC tested up to: 10.6
 */
 
 if ( ! defined('ABSPATH')) {

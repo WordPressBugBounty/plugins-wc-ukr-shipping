@@ -14,6 +14,7 @@ use kirillbdev\WCUkrShipping\Component\Shipping\UkrposhtaPUDOProvider;
 use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
 use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
+use kirillbdev\WCUkrShipping\Dto\Shipping\SearchPUDORequestDTO;
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUSCore\Http\Controller;
@@ -77,15 +78,33 @@ class AddressController extends Controller
          */
         $query = apply_filters('wcus_pudo_points_query', $request->get('query', ''), $request->get('carrier'));
 
-        try {
-            $result = $provider->searchPUDOByQuery(
-                $request->get('city_ref'),
-                $query,
-                (int)$request->get('page'),
-                $request->get('types', [
+        /**
+         * Enable third-party code to override request data
+         * @since 1.21.7
+         */
+        $requestData = apply_filters(
+            'wcus_pudo_points_request',
+            [
+                'cityId' => $request->get('city_ref'),
+                'query' => $query,
+                'page' => (int)$request->get('page'),
+                'types' => $request->get('types', [
                     PUDO::PUDO_TYPE_WAREHOUSE,
                     PUDO::PUDO_TYPE_LOCKER,
-                ])
+                ]),
+            ],
+            $request->get('carrier')
+        );
+
+        try {
+            $result = $provider->searchPUDOByQuery(
+                new SearchPUDORequestDTO(
+                    $requestData['cityId'],
+                    $requestData['query'],
+                    $requestData['types'],
+                    isset($requestData['weight']) ? (float)$requestData['weight'] : null,
+                    $requestData['page']
+                )
             );
         } catch (\Throwable $e) {
             return $this->jsonResponse([

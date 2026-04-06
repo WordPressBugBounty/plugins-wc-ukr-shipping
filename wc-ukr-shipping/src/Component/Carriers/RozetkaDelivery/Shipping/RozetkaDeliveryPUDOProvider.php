@@ -7,6 +7,7 @@ namespace kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Shipping;
 use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
 use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
+use kirillbdev\WCUkrShipping\Dto\Shipping\SearchPUDORequestDTO;
 use kirillbdev\WCUkrShipping\Http\WpHttpClient;
 
 /**
@@ -56,16 +57,16 @@ class RozetkaDeliveryPUDOProvider implements PUDOProviderInterface
         throw new \RuntimeException('Not implemented');
     }
 
-    public function searchPUDOByQuery(string $cityId, string $query, int $page, array $types = []): array
+    public function searchPUDOByQuery(SearchPUDORequestDTO $request): array
     {
         $url = sprintf(
             '%s/department?city_id=%s&page=%d&limit=20&can_receive_tracks=true',
             self::API_URL,
-            rawurlencode($cityId),
-            $page
+            rawurlencode($request->cityId),
+            $request->page
         );
-        if (!empty($query)) {
-            $url .= '&name=' . rawurlencode($query);
+        if (!empty($request->query)) {
+            $url .= '&name=' . rawurlencode($request->query);
         }
 
         $response = $this->httpClient->get($url, [
@@ -81,12 +82,12 @@ class RozetkaDeliveryPUDOProvider implements PUDOProviderInterface
             return [];
         }
 
-        $result = array_map(function (array $warehouse) use ($cityId) {
+        $result = array_map(function (array $warehouse) use ($request) {
             $name = ltrim(substr($warehouse['name'], strpos($warehouse['name'], ',') + 1));
 
             return new PUDO(
                 (string)$warehouse['id'],
-                $cityId,
+                $request->cityId,
                 $name,
                 $name,
                 PUDO::PUDO_TYPE_WAREHOUSE

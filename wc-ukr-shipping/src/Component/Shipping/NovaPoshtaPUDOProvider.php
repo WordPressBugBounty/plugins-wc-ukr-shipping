@@ -9,6 +9,7 @@ use kirillbdev\WCUkrShipping\DB\Repositories\CityRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\WarehouseRepository;
 use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
+use kirillbdev\WCUkrShipping\Dto\Shipping\SearchPUDORequestDTO;
 
 /**
  * todo Remove by SmartyParcel Locator in future
@@ -43,18 +44,27 @@ class NovaPoshtaPUDOProvider implements PUDOProviderInterface
         return new City($result->ref, $result->description, $result->description_ru);
     }
 
-    public function searchPUDOByQuery(string $cityId, string $query, int $page, array $types = []): array
+    public function searchPUDOByQuery(SearchPUDORequestDTO $request): array
     {
         $mappedTypes = [];
-        if (in_array(PUDO::PUDO_TYPE_WAREHOUSE, $types, true)) {
+        if (in_array(PUDO::PUDO_TYPE_WAREHOUSE, $request->types, true)) {
             $mappedTypes[] = WCUS_WAREHOUSE_TYPE_REGULAR;
             $mappedTypes[] = WCUS_WAREHOUSE_TYPE_CARGO;
         }
-        if (in_array(PUDO::PUDO_TYPE_LOCKER, $types, true)) {
+        if (in_array(PUDO::PUDO_TYPE_LOCKER, $request->types, true)) {
             $mappedTypes[] = WCUS_WAREHOUSE_TYPE_POSHTOMAT;
         }
 
-        $total = $this->warehouseRepository->countByQuery($query, $cityId, $mappedTypes);
+        $warehouses = $this->warehouseRepository->searchByQuery(
+            $request->query,
+            $request->cityId,
+            $request->page,
+            20,
+            $mappedTypes,
+            $request->weight
+        );
+        $total = $this->warehouseRepository->countByQuery($request->query, $request->cityId, $mappedTypes);
+
         $data = array_map(function (array $row) {
             return new PUDO(
                 $row['ref'],
@@ -65,7 +75,7 @@ class NovaPoshtaPUDOProvider implements PUDOProviderInterface
                     ? PUDO::PUDO_TYPE_LOCKER
                     : PUDO::PUDO_TYPE_WAREHOUSE
             );
-        }, $this->warehouseRepository->searchByQuery($query, $cityId, $page, 20, $mappedTypes));
+        }, $warehouses);
 
         return [
             'data' => $data,

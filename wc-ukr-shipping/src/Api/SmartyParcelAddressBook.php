@@ -44,7 +44,9 @@ final class SmartyParcelAddressBook implements NovaPoshtaAddressProviderInterfac
                     $data['description_ru'],
                     $data['description'],
                     (int)$data['warehouse_number'],
-                    $this->mapWarehouseType($data['warehouse_type'])
+                    $this->mapWarehouseType($data['warehouse_type']),
+                    (int)$data['max_weight_allowed'],
+                    (int)$data['place_max_weight_allowed'],
                 );
             }, $response['data']);
         } catch (\Exception $e) {

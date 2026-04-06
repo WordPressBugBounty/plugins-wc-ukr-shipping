@@ -7,6 +7,7 @@ namespace kirillbdev\WCUkrShipping\Component\Carriers\NovaPost\Shipping;
 use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
 use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
+use kirillbdev\WCUkrShipping\Dto\Shipping\SearchPUDORequestDTO;
 use kirillbdev\WCUkrShipping\Http\WpHttpClient;
 
 /**
@@ -32,7 +33,7 @@ class NovaPostPUDOProvider implements PUDOProviderInterface
         throw new \RuntimeException('Not implemented');
     }
 
-    public function searchPUDOByQuery(string $cityId, string $query, int $page, array $types = []): array
+    public function searchPUDOByQuery(SearchPUDORequestDTO $request): array
     {
         $apiKey = wc_ukr_shipping_get_option('wcus_nova_post_api_key');
         if (!$apiKey) {
@@ -54,9 +55,13 @@ class NovaPostPUDOProvider implements PUDOProviderInterface
         }
 
         // Step 2: get warehouses
-        $url = sprintf('%s/divisions?countryCodes[]=%s&limit=100&page=1', self::API_URL, rawurlencode($cityId));
-        if (!empty($query)) {
-            $url .= '&textSearch=' . rawurlencode($query);
+        $url = sprintf(
+            '%s/divisions?countryCodes[]=%s&limit=100&page=1',
+            self::API_URL,
+            rawurlencode($request->cityId)
+        );
+        if (!empty($request->query)) {
+            $url .= '&textSearch=' . rawurlencode($request->query);
         }
         $response = $this->httpClient->get($url, [
             'Authorization' => $data['jwt']
@@ -71,10 +76,10 @@ class NovaPostPUDOProvider implements PUDOProviderInterface
             return [];
         }
 
-        $result = array_map(function (array $warehouse) use ($cityId) {
+        $result = array_map(function (array $warehouse) use ($request) {
             return new PUDO(
                 (string)$warehouse['id'],
-                $cityId,
+                $request->cityId,
                 $warehouse['address'],
                 $warehouse['address'],
                 PUDO::PUDO_TYPE_WAREHOUSE,

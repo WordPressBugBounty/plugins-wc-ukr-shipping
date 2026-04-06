@@ -7,6 +7,7 @@ namespace kirillbdev\WCUkrShipping\Component\Carriers\Meest\Shipping;
 use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
 use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
+use kirillbdev\WCUkrShipping\Dto\Shipping\SearchPUDORequestDTO;
 use kirillbdev\WCUkrShipping\Http\WpHttpClient;
 
 class MeestPUDOProvider implements PUDOProviderInterface
@@ -71,7 +72,7 @@ class MeestPUDOProvider implements PUDOProviderInterface
         throw new \RuntimeException('Not implemented');
     }
 
-    public function searchPUDOByQuery(string $cityId, string $query, int $page, array $types = []): array
+    public function searchPUDOByQuery(SearchPUDORequestDTO $request): array
     {
         $apiToken = wc_ukr_shipping_get_option('wcus_meest_api_token');
         if (!$apiToken) {
@@ -82,8 +83,8 @@ class MeestPUDOProvider implements PUDOProviderInterface
             self::API_URL . '/branchSearch',
             json_encode([
                 'filters' => [
-                    'branchDescr' => '%' . $query . '%',
-                    'cityID' => $cityId,
+                    'branchDescr' => '%' . $request->query . '%',
+                    'cityID' => $request->cityId,
                 ]
             ]),
             [
@@ -102,10 +103,10 @@ class MeestPUDOProvider implements PUDOProviderInterface
             return [];
         }
 
-        $result = array_map(function (array $branch) use ($cityId) {
+        $result = array_map(function (array $branch) use ($request) {
             return new PUDO(
                 (string)$branch['branchID'],
-                $cityId,
+                $request->cityId,
                 $branch['ShortName'],
                 $branch['ShortName'],
                 PUDO::PUDO_TYPE_WAREHOUSE

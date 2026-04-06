@@ -12,35 +12,14 @@ class Warehouse
     public const TYPE_CARGO = 2;
     public const TYPE_POSHTOMAT = 3;
 
-    /**
-     * @var string
-     */
-    private $ref;
-
-    /**
-     * @var string
-     */
-    private $cityRef;
-
-    /**
-     * @var string
-     */
-    private $nameUa;
-
-    /**
-     * @var string
-     */
-    private $nameRu;
-
-    /**
-     * @var int
-     */
-    private $number;
-
-    /**
-     * @var int
-     */
-    private $type;
+    private string $ref;
+    private string $cityRef;
+    private string $nameUa;
+    private string $nameRu;
+    private int $number;
+    private int $type;
+    private int $totalMaxWeight;
+    private int $placeMaxWeight;
 
     public function __construct(
         string $ref,
@@ -48,7 +27,9 @@ class Warehouse
         string $nameRu,
         string $nameUa,
         int $number,
-        int $type
+        int $type,
+        int $totalMaxWeight,
+        int $placeMaxWeight
     ) {
         $this->ref = $ref;
         $this->cityRef = $cityRef;
@@ -56,6 +37,8 @@ class Warehouse
         $this->nameUa = $nameUa;
         $this->number = $number;
         $this->type = $type;
+        $this->totalMaxWeight = $totalMaxWeight;
+        $this->placeMaxWeight = $placeMaxWeight;
     }
 
     public function getRef(): string
@@ -86,5 +69,15 @@ class Warehouse
     public function getType(): int
     {
         return $this->type;
+    }
+
+    public function getTotalMaxWeight(): int
+    {
+        return $this->totalMaxWeight;
+    }
+
+    public function getPlaceMaxWeight(): int
+    {
+        return $this->placeMaxWeight;
     }
 }

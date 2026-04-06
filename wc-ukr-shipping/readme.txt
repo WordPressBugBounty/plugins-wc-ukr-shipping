@@ -5,7 +5,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: нова пошта, укрпошта, rozetka delivery, nova post, shipping
 Requires PHP: 7.4
 Tested up to: 6.9
-Stable tag: 1.21.6
+Stable tag: 1.21.7
 
 Connect Nova Poshta, Ukrposhta, Meest or international delivery services with your store. Create labels, track orders and calculate rates in one place.
 
@@ -109,6 +109,11 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 Unfortunately plugin doesn't support checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.21.7 / (06.04.2026) =
+* Added max weight columns to Nova Poshta warehouses table.
+* Added new filter - wcus_pudo_points_request. Allows overriding search warehouses request.
+* Added basic order sync with SmartyParcel.
 
 = Version 1.21.6 / (26.02.2026) =
 * [Rozetka Delivery] New option - Default shipping payer.

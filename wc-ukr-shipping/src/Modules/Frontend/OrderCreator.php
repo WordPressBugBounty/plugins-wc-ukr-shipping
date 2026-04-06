@@ -37,6 +37,9 @@ class OrderCreator implements ModuleInterface
         if ($handler !== null) {
             $handler->saveShippingData($order, $_POST);
         }
+
+        // Schedule async sync action
+        wp_schedule_single_event(time(), 'wcus_smartyparcel_sync_order', [$order->get_id()]);
     }
 
     /**

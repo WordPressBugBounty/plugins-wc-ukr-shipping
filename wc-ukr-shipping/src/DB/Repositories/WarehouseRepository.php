@@ -2,7 +2,7 @@
 
 namespace kirillbdev\WCUkrShipping\DB\Repositories;
 
-use kirillbdev\WCUkrShipping\Model\Address\Warehouse;
+use kirillbdev\WCUkrShipping\Model\NovaPoshta\Warehouse;
 use kirillbdev\WCUSCore\Facades\DB;
 
 if ( ! defined('ABSPATH')) {
@@ -22,8 +22,14 @@ class WarehouseRepository
             ->first();
     }
 
-    public function searchByQuery($query, $cityRef, $page = 1, $limit = 30, array $types = [])
-    {
+    public function searchByQuery(
+        $query,
+        $cityRef,
+        $page = 1,
+        $limit = 30,
+        array $types = [],
+        ?float $weight = null
+    ) {
         $q = DB::table(DB::prefixedTable('wc_ukr_shipping_np_warehouses'))
             ->where('city_ref', $cityRef);
 
@@ -37,6 +43,13 @@ class WarehouseRepository
 
         if (count($types) > 0) {
             $q->whereIn('warehouse_type', $types);
+        }
+
+        if ($weight !== null) {
+            $q->whereRaw('(`total_max_weight_allowed`>= %d or `place_max_weight_allowed` >= %d)', [
+                (int)ceil($weight),
+                (int)ceil($weight),
+            ]);
         }
 
         $q->orderBy('`number`');
@@ -90,14 +103,17 @@ class WarehouseRepository
         global $wpdb;
         $insertValues = [];
 
+        /** @var Warehouse $warehouse */
         foreach ($warehouses as $warehouse) {
             $values = esc_sql([
                 $warehouse->getRef(),
                 $warehouse->getNameUa(),
                 $warehouse->getNameRu(),
                 $warehouse->getCityRef(),
+                $warehouse->getTotalMaxWeight(),
+                $warehouse->getPlaceMaxWeight(),
                 $warehouse->getNumber(),
-                $warehouse->getType(),
+                $warehouse->getType()
             ]);
             $values = array_map(function (string $value) {
                 return "'$value'";
@@ -107,7 +123,7 @@ class WarehouseRepository
 
         $wpdb->query(
             "INSERT INTO `{$wpdb->prefix}wc_ukr_shipping_np_warehouses`
-                    (`ref`, `description`, `description_ru`, `city_ref`, `number`, `warehouse_type`)
+                    (`ref`, `description`, `description_ru`, `city_ref`, `total_max_weight_allowed`, `place_max_weight_allowed`, `number`, `warehouse_type`)
                 VALUES " . implode(',', $insertValues) . " 
                 ON DUPLICATE KEY UPDATE
                     `description` = VALUES(`description`),

@@ -6,6 +6,7 @@ namespace kirillbdev\WCUkrShipping\Contracts\Shipping;
 
 use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
+use kirillbdev\WCUkrShipping\Dto\Shipping\SearchPUDORequestDTO;
 
 interface PUDOProviderInterface
 {
@@ -17,19 +18,7 @@ interface PUDOProviderInterface
 
     public function searchCityById(string $id): ?City;
 
-    /**
-     * @param string $cityId
-     * @param string $query
-     * @param int $page
-     * @param array $types
-     * @return array
-     */
-    public function searchPUDOByQuery(
-        string $cityId,
-        string $query,
-        int $page,
-        array $types = []
-    ): array;
+    public function searchPUDOByQuery(SearchPUDORequestDTO $request): array;
 
     public function searchPUDOById(string $id): ?PUDO;
 }
