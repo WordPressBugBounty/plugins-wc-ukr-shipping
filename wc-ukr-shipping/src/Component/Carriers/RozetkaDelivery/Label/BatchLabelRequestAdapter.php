@@ -20,7 +20,7 @@ class BatchLabelRequestAdapter implements LabelRequestBuilderInterface
         $data = $this->collector->collect();
 
         return [
-            'carrier_account_id' => $data['carrier_account_id'],
+            'carrier_slug' => $data['carrier_slug'],
             'billing' => $data['billing'],
             'shipment' => $data['shipment'],
             'service_options' => $data['service_options'] ?? [],

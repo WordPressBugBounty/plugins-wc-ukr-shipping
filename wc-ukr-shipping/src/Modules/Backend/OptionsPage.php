@@ -72,7 +72,6 @@ class OptionsPage implements ModuleInterface
             new Route('wcus_smartyparcel_connect', SmartyParcelController::class, 'connect'),
             new Route('wcus_smartyparcel_disconnect', SmartyParcelController::class, 'disconnect'),
             new Route('wcus_smarty_parcel_create_label', SmartyParcelController::class, 'createShippingLabel'),
-            new Route('wcus_smartyparcel_purchase_label', SmartyParcelController::class, 'purchaseLabel'),
             new Route('wcus_smarty_parcel_create_label_batch', SmartyParcelController::class, 'createLabelBatch'),
             new Route('wcus_smarty_parcel_void_label', SmartyParcelController::class, 'voidLabel'),
             new Route('wcus_attach_label', SmartyParcelController::class, 'attachShippingLabel'),
@@ -281,17 +280,10 @@ class OptionsPage implements ModuleInterface
             true
         );
 
-        $carrier = null;
         if (isset($_GET['carrier'])) {
             $carrier = $_GET['carrier'];
-        } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_NOVA_POSHTA)) {
-            $carrier = 'nova_poshta';
-        } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_UKRPOSHTA)) {
-            $carrier = 'ukrposhta';
-        } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_UKRPOSHTA_ADDRESS)) {
-            $carrier = 'ukrposhta';
-        } elseif ($order->has_shipping_method(WCUS_SHIPPING_METHOD_ROZETKA)) {
-            $carrier = 'rozetka_delivery';
+        } else {
+            $carrier = SmartyParcelHelper::getOrderCarrierSlug($order);
         }
 
         $store = null;
@@ -302,8 +294,6 @@ class OptionsPage implements ModuleInterface
             case 'ukrposhta':
                 $store = new SingleLabelDataCollector($order);
                 break;
-            case 'rozetka_delivery':
-                $store = new PurchaseLabelDataCollector($order);
         }
 
         if ($store === null) {

@@ -13,21 +13,6 @@
         <a href="https://smartyparcel.com/docs/wcus-smarty-parcel-connect/" target="_blank"><?php esc_html_e('Documentation', 'wc-ukr-shipping-i18n'); ?></a>
     </div>
 
-    <div class="wcus-form-group">
-        <label for="wcus_nova_poshta_default_carrier"><?php esc_html_e('Default carrier account', 'wc-ukr-shipping-i18n'); ?></label>
-        <select id="wcus_nova_poshta_default_carrier" name="wcus[nova_poshta_default_carrier]" class="wcus-form-control">
-            <?php foreach ($carrierAccounts as $account) { ?>
-                <?php if (($account['carrier_slug'] ?? '') === 'nova_poshta') { ?>
-                    <option value="<?php echo esc_attr($account['id']); ?>" <?php echo get_option('wcus_nova_poshta_default_carrier') === $account['id'] ? 'selected' : ''; ?>>
-                        <?php echo esc_html($account['name']); ?>
-                    </option>
-                <?php } ?>
-            <?php } ?>
-        </select>
-    </div>
-
-    <div id="wcus-settings-ttn-sender"></div>
-
     <?php $payer = wc_ukr_shipping_get_option('wc_ukr_shipping_np_ttn_payer_default'); ?>
     <div class="wcus-form-group">
         <label for="wc_ukr_shipping_np_ttn_payer_default"><?php esc_html_e('Delivery payer', 'wc-ukr-shipping-i18n'); ?></label>

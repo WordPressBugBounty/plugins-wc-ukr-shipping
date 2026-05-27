@@ -28,7 +28,6 @@ final class RateShipmentDTO
      * @var OrderProduct[]
      */
     public array $products;
-    public ?string $shipFromCarrierCityId;
     public ?string $shipToCity;
     public ?string $shipToPostalCode;
 
@@ -45,7 +44,6 @@ final class RateShipmentDTO
         ?string $shipToPUDOPointId = null,
         ?string $serviceType = null,
         array $products = [],
-        ?string $shipFromCarrierCityId = null,
         ?string $shipToCity = null,
         ?string $shipToPostalCode = null
     ) {
@@ -61,7 +59,6 @@ final class RateShipmentDTO
         $this->shipToPUDOPointId = $shipToPUDOPointId;
         $this->serviceType = $serviceType;
         $this->products = $products;
-        $this->shipFromCarrierCityId = $shipFromCarrierCityId;
         $this->shipToCity = $shipToCity;
         $this->shipToPostalCode = $shipToPostalCode;
     }

@@ -73,7 +73,6 @@ class CheckoutRateShipmentFactory
             $this->getShipToPUDOPointId(),
             $this->getServiceType(),
             $products,
-            $this->getShipFromCarrierCityId(),
             $this->getShipToCity(),
             $this->getShipToPostalCode()
         );
@@ -90,11 +89,6 @@ class CheckoutRateShipmentFactory
     }
 
     protected function getShipToCarrierCityId(): ?string
-    {
-        return null;
-    }
-
-    protected function getShipFromCarrierCityId(): ?string
     {
         return null;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label;
 
+use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 use kirillbdev\WCUkrShipping\Factories\ProductFactory;
 use kirillbdev\WCUkrShipping\Foundation\UkrPoshtaShipping;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
@@ -18,6 +19,7 @@ class SingleLabelDataCollector
     private array $orderProducts;
     private ProductDimensionService $productDimensionService;
     private SmartyParcelService $smartyParcelService;
+    private SmartyParcelWPApi $smartyParcelApi;
 
     public function __construct(\WC_Order $order)
     {
@@ -28,6 +30,7 @@ class SingleLabelDataCollector
         $factory = new ProductFactory();
         $this->productDimensionService = wcus_container()->make(ProductDimensionService::class);
         $this->smartyParcelService = wcus_container()->make(SmartyParcelService::class);
+        $this->smartyParcelApi = wcus_container()->make(SmartyParcelWPApi::class);
 
         foreach ($this->order->get_items() as $item) {
             /** @var \WC_Order_Item_Product $item */
@@ -87,26 +90,30 @@ class SingleLabelDataCollector
         }
 
         $this->data['carrier_accounts'] = $accounts;
-        $sender = WCUSHelper::safeGetJsonOption('wcus_ukrposhta_ttn_sender', [
-            'type' => 'individual',
-            'first_name' => '',
-            'last_name' => '',
-            'middle_name' => '',
-            'company_name' => '',
-            'phone' => '',
-            'email' => '',
-            'tin' => '',
-            'iban' => '',
-        ]);
+        $this->data['sender'] = [
+            'carrier_account_id' => $defaultAcc,
+        ];
 
-        $this->data['sender'] = array_merge(
-            $sender,
-            [
-                'carrier_account_id' => $defaultAcc,
-                'city' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_city'),
-                'warehouse' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_warehouse'),
-            ]
-        );
+        // V2 address flow
+        try {
+            $this->data['sender']['addresses'] = $this->smartyParcelApi->sendRequest(
+                '/v1/addresses',
+                null,
+                [
+                    'carrier_slug' => 'ukrposhta',
+                ]
+            )['addresses'] ?? [];
+        } catch (\Exception $e) {
+            $this->data['sender']['addresses'] = [];
+        }
+
+        $this->data['sender']['selected_address_id'] = '';
+        foreach ($this->data['sender']['addresses'] as $address) {
+            if ($address['is_default']) {
+                $this->data['sender']['selected_address_id'] = $address['id'];
+                break;
+            }
+        }
     }
 
     private function collectRecipient(): void

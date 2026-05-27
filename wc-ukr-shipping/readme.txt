@@ -2,10 +2,10 @@
 Contributors: kirillbdev
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Tags: нова пошта, укрпошта, rozetka delivery, nova post, shipping
+Tags: нова пошта, укрпошта, nova post, meest, shipping
 Requires PHP: 7.4
-Tested up to: 6.9
-Stable tag: 1.21.7
+Tested up to: 7.0
+Stable tag: 1.21.8
 
 Connect Nova Poshta, Ukrposhta, Meest or international delivery services with your store. Create labels, track orders and calculate rates in one place.
 
@@ -109,6 +109,12 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 Unfortunately plugin doesn't support checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.21.8 / (27.05.2026) =
+* Plugin is now using only SmartyParcel addresses to create shipments.
+* Improved SmartyParcel admin elements.
+* [Rates] Fixed bug with incorrect calculation when combine poshtomats option is active.
+* Checked compatibility with latest WordPress and WooCommerce versions.
 
 = Version 1.21.7 / (06.04.2026) =
 * Added max weight columns to Nova Poshta warehouses table.

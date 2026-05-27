@@ -58,11 +58,6 @@ class RatesApiV2Calculator implements RatesCalculatorInterface
                 ],
             ];
 
-            if (!empty($rateShipmentDTO->shipFromCarrierCityId)) {
-                $payload['ship_from']['country_code'] = 'UA';
-                $payload['ship_from']['carrier_city_id'] = $rateShipmentDTO->shipFromCarrierCityId;
-            }
-
             if ($rateShipmentDTO->serviceType !== null) {
                 $payload['service_type'] = $rateShipmentDTO->serviceType;
             }

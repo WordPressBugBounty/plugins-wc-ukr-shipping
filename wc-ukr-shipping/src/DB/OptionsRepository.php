@@ -46,7 +46,6 @@ class OptionsRepository
             'wcus_ttn_width_default' => 10,
             'wcus_ttn_height_default' => 10,
             'wcus_ttn_length_default' => 10,
-            'wcus_ttn_use_smartyparcel_addresses' => 0,
 
             // Nova Poshta
             'wc_ukr_shipping_address_shipping' => 1,

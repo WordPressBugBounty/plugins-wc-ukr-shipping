@@ -8,6 +8,9 @@ use kirillbdev\WCUkrShipping\Component\SmartyParcel\AbstractShipmentCollector;
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 
+/**
+ * @deprecated
+ */
 class PurchaseLabelDataCollector extends AbstractShipmentCollector
 {
     public function __construct(\WC_Order $order)

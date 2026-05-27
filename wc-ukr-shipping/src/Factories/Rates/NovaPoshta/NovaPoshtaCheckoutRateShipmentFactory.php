@@ -25,13 +25,12 @@ class NovaPoshtaCheckoutRateShipmentFactory extends CheckoutRateShipmentFactory
         return $this->get("wcus_np_{$this->fieldGroup}_city");
     }
 
-    protected function getShipFromCarrierCityId(): ?string
-    {
-        return (string)wc_ukr_shipping_get_option('wc_ukr_shipping_np_sender_city');
-    }
-
     protected function getDeliveryType(): string
     {
+        if ($this->get("wcus_{$this->fieldGroup}_warehouse_type")) {
+            return $this->get("wcus_{$this->fieldGroup}_warehouse_type") === 'warehouse' ? 'w2w' : 'w2l';
+        }
+
         switch ($this->get('shipping_type')) {
             case 'doors':
                 return 'w2d';

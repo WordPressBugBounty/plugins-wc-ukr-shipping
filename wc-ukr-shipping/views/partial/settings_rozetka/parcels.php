@@ -14,20 +14,6 @@
     </div>
 
     <?php
-        $ukrPoshtaAccounts = [];
-        foreach ($carrierAccounts as $account) {
-            if (($account['carrier_slug'] ?? '') === 'rozetka_delivery') {
-                $ukrPoshtaAccounts[$account['id']] = $account['name'];;
-            }
-        }
-
-        HtmlHelper::selectField(
-            'wcus[rozetka_default_carrier]',
-            __('Default carrier account', 'wc-ukr-shipping-i18n'),
-            $ukrPoshtaAccounts,
-            wc_ukr_shipping_get_option('wcus_rozetka_default_carrier')
-        );
-
         HtmlHelper::selectField(
             'wcus[rozetka_ttn_default_payer]',
             __('Delivery payer', 'wc-ukr-shipping-i18n'),

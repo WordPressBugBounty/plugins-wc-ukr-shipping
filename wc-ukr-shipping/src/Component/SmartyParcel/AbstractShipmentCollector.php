@@ -9,6 +9,9 @@ use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
 use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 
+/**
+ * @deprecated
+ */
 abstract class AbstractShipmentCollector
 {
     protected array $data = [];
@@ -38,7 +41,7 @@ abstract class AbstractShipmentCollector
 
     public function collect(): array
     {
-        $this->data['carrier'] = $this->carrierSlug;
+        $this->data['carrier_slug'] = $this->carrierSlug;
         $this->data['order_id'] = $this->order->get_id();
         $this->collectCarrierAccounts();
         $this->collectBilling();
@@ -48,7 +51,6 @@ abstract class AbstractShipmentCollector
         return $this->data;
     }
 
-    abstract protected function collectShipFrom(): array;
     abstract protected function collectShipToAAddress(): array;
 
     protected function collectBilling(): void
@@ -65,7 +67,6 @@ abstract class AbstractShipmentCollector
             'external_order_id' => (string)$this->order->get_id(),
             'ship_date' => date('Y-m-d'),
             'parcels' => $this->collectParcels(),
-            'ship_from' => $this->collectShipFrom(),
         ];
 
         $recipient = $this->getRecipientInfo();

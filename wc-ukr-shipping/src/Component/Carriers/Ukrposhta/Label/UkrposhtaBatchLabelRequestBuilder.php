@@ -7,6 +7,7 @@ namespace kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label;
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\LabelRequestBuilderInterface;
 use kirillbdev\WCUkrShipping\Factories\ProductFactory;
 use kirillbdev\WCUkrShipping\Foundation\UkrPoshtaShipping;
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
 
@@ -21,16 +22,16 @@ class UkrposhtaBatchLabelRequestBuilder implements LabelRequestBuilderInterface
 
     public function build(): array
     {
-        $carrierAccount = wc_ukr_shipping_get_option('wcus_ukrposhta_default_carrier');
-        if (empty($carrierAccount)) {
-            throw new \Exception('Internal Error. Default carrier account not set');
+        $carrierSlug = SmartyParcelHelper::getOrderCarrierSlug($this->order);
+        if ($carrierSlug === null) {
+            throw new \LogicException('Unable to detect order carrier.');
         }
 
         $orderShipping = WCUSHelper::getOrderShippingMethod($this->order);
         $shippingMethod = new UkrPoshtaShipping((int)$orderShipping->get_instance_id());
 
         $labelRequest = [
-            'carrier_account_id' => $carrierAccount,
+            'carrier_slug' => $carrierSlug,
             'service_type' => 'ukrposhta_' . strtolower($shippingMethod->get_option('service_type')),
             'billing' => [
                 'paid_by' => wc_ukr_shipping_get_option('wcus_ukrposhta_ttn_default_payer'),
@@ -42,7 +43,6 @@ class UkrposhtaBatchLabelRequestBuilder implements LabelRequestBuilderInterface
             ]
         ];
 
-        $labelRequest['shipment']['ship_from'] = $this->buildSender();
         $labelRequest['shipment']['ship_to'] = $this->buildRecipient($orderShipping);
         $labelRequest['shipment']['parcels'] = $this->buildParcels();
         $labelRequest['service_options'] = [
@@ -54,52 +54,6 @@ class UkrposhtaBatchLabelRequestBuilder implements LabelRequestBuilderInterface
         $labelRequest = $this->buildCOD($labelRequest);
 
         return $labelRequest;
-    }
-
-    private function buildSender(): array
-    {
-        $sender = WCUSHelper::safeGetJsonOption('wcus_ukrposhta_ttn_sender', [
-            'type' => 'individual',
-            'first_name' => '',
-            'last_name' => '',
-            'middle_name' => '',
-            'company_name' => '',
-            'phone' => '',
-            'email' => '',
-            'tin' => '',
-            'iban' => '',
-            'city' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_city'),
-            'warehouse' => WCUSHelper::getSelectNextOption('wcus_ukrposhta_sender_warehouse'),
-        ]);
-
-        $data = [
-            'phone' => WCUSHelper::preparePhone($sender['phone']),
-            'email' => $sender['email'],
-            'country_code' => 'UA',
-            'pudo_point_id' => $sender['warehouse']['value'],
-        ];
-
-        if ($sender['type'] === 'individual') {
-            $data['name'] = sprintf(
-                '%s %s%s',
-                $sender['first_name'],
-                $sender['last_name'],
-                $sender['middle_name']
-                    ? ' ' . $sender['middle_name']
-                    : '',
-            );
-        } else {
-            $data['name'] = $sender['company_name'];
-            $data['tax_ids'] = [
-                [
-                    'type' => 'tin',
-                    'number' => $sender['tin'],
-                    'country' => 'UA',
-                ]
-            ];
-        }
-
-        return $data;
     }
 
     private function buildRecipient(\WC_Order_Item_Shipping $orderShipping): array

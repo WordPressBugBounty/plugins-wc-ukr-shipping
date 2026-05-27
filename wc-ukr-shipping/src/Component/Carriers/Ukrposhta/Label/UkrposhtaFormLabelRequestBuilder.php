@@ -41,34 +41,6 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
             $shipTo['pudo_point_id'] = $recipient['warehouse']['value'];
         }
 
-        // Sender
-        $shipFrom = [
-            'phone' => WCUSHelper::preparePhone($sender['phone']),
-            'email' => $sender['email'],
-            'pudo_point_id' => $sender['warehouse']['value'],
-            'country_code' => 'UA',
-        ];
-
-        if ($sender['type'] === 'individual') {
-            $shipFrom['name'] = sprintf(
-                '%s %s%s',
-                WCUSHelper::prepareApiString($sender['first_name']),
-                WCUSHelper::prepareApiString($sender['last_name']),
-                $sender['middle_name']
-                    ? ' ' . WCUSHelper::prepareApiString($sender['middle_name'])
-                    : '',
-            );
-        } else {
-            $shipFrom['name'] = $sender['company_name'];
-            $shipFrom['tax_ids'] = [
-                [
-                    'type' => 'tin',
-                    'number' => $sender['tin'],
-                    'country' => 'UA',
-                ]
-            ];
-        }
-
         $labelRequest = [
             'carrier_account_id' => $request->get('sender')['carrier_account_id'],
             'service_type' => $request->get('common')['service_type'],
@@ -78,7 +50,7 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
             ],
             'shipment' => [
                 'ship_date' => date('Y-m-d'),
-                'ship_from' => $shipFrom,
+                'ship_from_address_id' => $request->get('sender')['selected_address_id'],
                 'ship_to' => $shipTo,
             ]
         ];

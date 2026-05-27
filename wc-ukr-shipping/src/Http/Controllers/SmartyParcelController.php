@@ -11,7 +11,6 @@ use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\UkrposhtaBatchLa
 use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\UkrposhtaFormLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\FormLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\OrderLabelRequestBuilder;
-use kirillbdev\WCUkrShipping\Component\SmartyParcel\ProxyLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
 use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
@@ -133,57 +132,6 @@ class SmartyParcelController extends Controller
             foreach ($formats as $format => $Name) {
                 $downloads[] = [
                     'format' => $Name,
-                    'url' => admin_url('admin.php?page=wc_ukr_shipping_print_label&label_id=' . $response->id . '&format=' . $format),
-                ];
-            }
-
-            return $this->jsonResponse([
-                'success' => true,
-                'data' => [
-                    'id' => $response->id,
-                    'tracking_number' => $response->trackingNumber,
-                    'shipment_cost' => $response->shipmentCost,
-                    'estimated_delivery_date' => $response->estimatedDeliveryDate !== null
-                        ? $response->estimatedDeliveryDate->format('Y-m-d')
-                        : null,
-                    'order_url' => get_admin_url( null, 'post.php?post=' . $response->orderId . '&action=edit'),
-                    'downloads' => $downloads,
-                ]
-            ]);
-        } catch (SmartyParcelErrorException $e) {
-            return $this->jsonResponse([
-                'success' => false,
-                'error' => [
-                    'code' => $e->getCode(),
-                    'message' => $e->getMessage(),
-                    'details' => $e->getDetails(),
-                ],
-            ]);
-        } catch (\Throwable $e) {
-            return $this->jsonResponse([
-                'success' => false,
-                'error' => [
-                    'code' => 0,
-                    'message' => $e->getMessage(),
-                ],
-            ]);
-        }
-    }
-
-    public function purchaseLabel(Request $request): ResponseInterface
-    {
-        try {
-            $response = $this->smartyParcelService->createLabel(
-                'rozetka_delivery',
-                (int)$request->get('order_id'),
-                new ProxyLabelRequestBuilder($request->get('request'))
-            );
-
-            $formats = WCUSHelper::getLabelDownloadFormats('rozetka_delivery');
-            $downloads = [];
-            foreach ($formats as $format => $name) {
-                $downloads[] = [
-                    'format' => $name,
                     'url' => admin_url('admin.php?page=wc_ukr_shipping_print_label&label_id=' . $response->id . '&format=' . $format),
                 ];
             }

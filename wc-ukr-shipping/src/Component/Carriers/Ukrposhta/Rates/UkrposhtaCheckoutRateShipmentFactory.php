@@ -34,12 +34,6 @@ class UkrposhtaCheckoutRateShipmentFactory extends CheckoutRateShipmentFactory
         return $this->get("wcus_ukrposhta_{$this->fieldGroup}_city", '');
     }
 
-    protected function getShipFromCarrierCityId(): ?string
-    {
-        $city = WCUSHelper::safeGetJsonOption('wcus_ukrposhta_sender_city');
-        return $city['value'] ?? '';
-    }
-
     protected function getShipToPostalCode(): ?string
     {
         return $this->deliveryType === 'door'

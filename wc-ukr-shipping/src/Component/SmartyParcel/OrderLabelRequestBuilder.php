@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Component\SmartyParcel;
 
 use kirillbdev\WCUkrShipping\Factories\ProductFactory;
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
 
@@ -21,12 +22,13 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
 
     public function build(): array
     {
-        $carrierAccount = get_option('wcus_nova_poshta_default_carrier');
-        if (empty($carrierAccount)) {
-            throw new \LogicException('Internal Error. Default carrier account not set');
+        $order = $this->order;
+
+        $carrierSlug = SmartyParcelHelper::getOrderCarrierSlug($order);
+        if ($carrierSlug === null) {
+            throw new \LogicException('Unable to detect order carrier.');
         }
 
-        $order = $this->order;
         $shipTo = [
             'name' => trim(sprintf(
                 '%s %s',
@@ -59,9 +61,6 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
             $shipTo['address_3'] = $orderShipping->get_meta('wcus_flat');
         }
 
-        $shipFrom['carrier_city_id'] = wc_ukr_shipping_get_option('wc_ukr_shipping_np_sender_city');
-        $shipFrom['carrier_warehouse_id'] = wc_ukr_shipping_get_option('wc_ukr_shipping_np_sender_warehouse');
-
         $payerType = apply_filters(
             'wcus_ttn_form_payer_type',
             wc_ukr_shipping_get_option('wc_ukr_shipping_np_ttn_payer_default'),
@@ -86,7 +85,7 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
         }
 
         $labelRequest = [
-            'carrier_account_id' => $carrierAccount,
+            'carrier_slug' => $carrierSlug,
             'billing' => [
                 'paid_by' => strtolower($payerType),
                 'payment_method' => $paymentMethod === 'NonCash'
@@ -95,7 +94,6 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
             ],
             'shipment' => [
                 'ship_date' => $date->format('Y-m-d'),
-                'ship_from' => $shipFrom,
                 'ship_to' => $shipTo,
             ]
         ];
