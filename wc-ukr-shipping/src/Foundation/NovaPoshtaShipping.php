@@ -108,6 +108,14 @@ class NovaPoshtaShipping extends AbstractShippingMethod
                 'desc_tip' => true,
                 'class' => 'j-wcus-shipping-option-cod',
             ],
+            'send_dimensions' => [
+                'label' => __('Send dimensions when calculating shipping cost', 'wc-ukr-shipping-i18n'),
+                'type' => 'checkbox',
+                'description' => __('If checked and function supported by carrier, the product dimensions will be send to rates api.', 'wc-ukr-shipping-i18n'),
+                'default' =>  'no',
+                'desc_tip' => true,
+                'class' => 'j-wcus-shipping-option-cod',
+            ],
             'add_cost_to_order' => [
                 'label' => __('Include shipping cost to order total', 'wc-ukr-shipping-i18n'),
                 'type' => 'checkbox',
@@ -152,6 +160,6 @@ class NovaPoshtaShipping extends AbstractShippingMethod
 
     protected function getCheckoutRateShipmentFactory(): CheckoutRateShipmentFactory
     {
-        return new NovaPoshtaCheckoutRateShipmentFactory();
+        return new NovaPoshtaCheckoutRateShipmentFactory($this->get_option('send_dimensions') === 'yes');
     }
 }

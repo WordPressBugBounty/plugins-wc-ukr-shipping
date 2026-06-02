@@ -9,11 +9,9 @@ use kirillbdev\WCUkrShipping\Factories\Rates\CheckoutRateShipmentFactory;
 
 class NovaPoshtaCheckoutRateShipmentFactory extends CheckoutRateShipmentFactory
 {
-    protected bool $useDimensions = false;
-
-    public function __construct()
+    public function __construct(bool $useDimensions)
     {
-        parent::__construct(CarrierSlug::NOVA_POSHTA);
+        parent::__construct(CarrierSlug::NOVA_POSHTA, $useDimensions);
     }
 
     protected function getShipToCarrierCityId(): ?string

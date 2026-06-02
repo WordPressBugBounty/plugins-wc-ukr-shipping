@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: WC Ukraine Shipping
+ * Plugin Name: WC Ukraine Shipping / SmartyParcel
  * Plugin URI: https://smartyparcel.com
- * Description: Multi-carrier shipping solution for WooCommerce
- * Version: 1.21.8
+ * Description: Multi-carrier shipping solution for WooCommerce.
+ * Version: 1.21.9
  * Author: kirillbdev
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html

@@ -6,17 +6,15 @@ namespace kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Rates;
 
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
 use kirillbdev\WCUkrShipping\Factories\Rates\CheckoutRateShipmentFactory;
-use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 
 class UkrposhtaCheckoutRateShipmentFactory extends CheckoutRateShipmentFactory
 {
-    protected bool $useDimensions = false;
     private string $serviceType;
     private string $deliveryType;
 
-    public function __construct(string $serviceType, string $deliveryType)
+    public function __construct(string $serviceType, string $deliveryType, bool $useDimensions)
     {
-        parent::__construct(CarrierSlug::UKRPOSHTA);
+        parent::__construct(CarrierSlug::UKRPOSHTA, $useDimensions);
         $this->serviceType = $serviceType;
         $this->deliveryType = $deliveryType;
     }

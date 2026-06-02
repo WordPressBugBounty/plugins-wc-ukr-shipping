@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2026-02-21T21:56:40+02:00\n"
+"POT-Creation-Date: 2026-06-02T22:54:48+03:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Domain: wc-ukr-shipping-i18n\n"
 
 #. Plugin Name of the plugin
@@ -90,8 +90,8 @@ msgid "Created At"
 msgstr "Дата создания"
 
 #: src/Component/ListTable/AutomationListTable.php:92
+#: src/Modules/Backend/OptionsPage.php:151
 #: src/Modules/Backend/OptionsPage.php:152
-#: src/Modules/Backend/OptionsPage.php:153
 msgid "Edit"
 msgstr "Редактировать"
 
@@ -205,42 +205,42 @@ msgstr ""
 
 #: src/Foundation/MeestAddressShipping.php:85
 #: src/Foundation/MeestShipping.php:85 src/Foundation/NovaGlobalAddress.php:77
-#: src/Foundation/NovaPoshtaShipping.php:112
+#: src/Foundation/NovaPoshtaShipping.php:120
 #: src/Foundation/NovaPostShipping.php:77
 #: src/Foundation/RozetkaDeliveryShipping.php:74
-#: src/Foundation/UkrPoshtaAddressShipping.php:103
-#: src/Foundation/UkrPoshtaShipping.php:103
+#: src/Foundation/UkrPoshtaAddressShipping.php:111
+#: src/Foundation/UkrPoshtaShipping.php:111
 msgid "Include shipping cost to order total"
 msgstr "Включать стоимость доставки в общую сумму заказа"
 
 #: src/Foundation/MeestAddressShipping.php:87
 #: src/Foundation/MeestShipping.php:87 src/Foundation/NovaGlobalAddress.php:79
-#: src/Foundation/NovaPoshtaShipping.php:114
+#: src/Foundation/NovaPoshtaShipping.php:122
 #: src/Foundation/NovaPostShipping.php:79
 #: src/Foundation/RozetkaDeliveryShipping.php:76
-#: src/Foundation/UkrPoshtaAddressShipping.php:105
-#: src/Foundation/UkrPoshtaShipping.php:105
+#: src/Foundation/UkrPoshtaAddressShipping.php:113
+#: src/Foundation/UkrPoshtaShipping.php:113
 msgid "If checked, the shipping cost will be added to the order total."
 msgstr ""
 "Если включено, стоимость доставки будет добавлена ​​к общей сумме заказа."
 
 #: src/Foundation/MeestAddressShipping.php:92
 #: src/Foundation/MeestShipping.php:92 src/Foundation/NovaGlobalAddress.php:84
-#: src/Foundation/NovaPoshtaShipping.php:119
+#: src/Foundation/NovaPoshtaShipping.php:127
 #: src/Foundation/NovaPostShipping.php:84
 #: src/Foundation/RozetkaDeliveryShipping.php:81
-#: src/Foundation/UkrPoshtaAddressShipping.php:110
-#: src/Foundation/UkrPoshtaShipping.php:110
+#: src/Foundation/UkrPoshtaAddressShipping.php:118
+#: src/Foundation/UkrPoshtaShipping.php:118
 msgid "Enable free shipping rule"
 msgstr "Включить правило бесплатной доставки"
 
 #: src/Foundation/MeestAddressShipping.php:94
 #: src/Foundation/MeestShipping.php:94 src/Foundation/NovaGlobalAddress.php:86
-#: src/Foundation/NovaPoshtaShipping.php:121
+#: src/Foundation/NovaPoshtaShipping.php:129
 #: src/Foundation/NovaPostShipping.php:86
 #: src/Foundation/RozetkaDeliveryShipping.php:83
-#: src/Foundation/UkrPoshtaAddressShipping.php:112
-#: src/Foundation/UkrPoshtaShipping.php:112
+#: src/Foundation/UkrPoshtaAddressShipping.php:120
+#: src/Foundation/UkrPoshtaShipping.php:120
 msgid "If checked, free shipping would be available based on order amount."
 msgstr ""
 "Если эта опция включена, будет доступна бесплатная доставка в зависимости от "
@@ -248,32 +248,32 @@ msgstr ""
 
 #: src/Foundation/MeestAddressShipping.php:99
 #: src/Foundation/MeestShipping.php:99 src/Foundation/NovaGlobalAddress.php:91
-#: src/Foundation/NovaPoshtaShipping.php:126
+#: src/Foundation/NovaPoshtaShipping.php:134
 #: src/Foundation/NovaPostShipping.php:91
 #: src/Foundation/RozetkaDeliveryShipping.php:88
-#: src/Foundation/UkrPoshtaAddressShipping.php:117
-#: src/Foundation/UkrPoshtaShipping.php:117
+#: src/Foundation/UkrPoshtaAddressShipping.php:125
+#: src/Foundation/UkrPoshtaShipping.php:125
 msgid "Minimum amount for free shipping"
 msgstr "Минимальная сумма для бесплатной доставки"
 
 #: src/Foundation/MeestAddressShipping.php:106
 #: src/Foundation/MeestShipping.php:106 src/Foundation/NovaGlobalAddress.php:98
-#: src/Foundation/NovaPoshtaShipping.php:133
+#: src/Foundation/NovaPoshtaShipping.php:141
 #: src/Foundation/NovaPostShipping.php:98
 #: src/Foundation/RozetkaDeliveryShipping.php:95
-#: src/Foundation/UkrPoshtaAddressShipping.php:124
-#: src/Foundation/UkrPoshtaShipping.php:124
+#: src/Foundation/UkrPoshtaAddressShipping.php:132
+#: src/Foundation/UkrPoshtaShipping.php:132
 msgid "Free shipping method name"
 msgstr "Название метода бесплатной доставки"
 
 #: src/Foundation/MeestAddressShipping.php:108
 #: src/Foundation/MeestShipping.php:108
 #: src/Foundation/NovaGlobalAddress.php:100
-#: src/Foundation/NovaPoshtaShipping.php:135
+#: src/Foundation/NovaPoshtaShipping.php:143
 #: src/Foundation/NovaPostShipping.php:100
 #: src/Foundation/RozetkaDeliveryShipping.php:97
-#: src/Foundation/UkrPoshtaAddressShipping.php:126
-#: src/Foundation/UkrPoshtaShipping.php:126
+#: src/Foundation/UkrPoshtaAddressShipping.php:134
+#: src/Foundation/UkrPoshtaShipping.php:134
 msgid "Free shipping"
 msgstr "Бесплатная доставка"
 
@@ -318,6 +318,22 @@ msgstr ""
 msgid "Combine poshtomats and warehouses"
 msgstr "Объединить почтоматы и отделения"
 
+#: src/Foundation/NovaPoshtaShipping.php:112
+#: src/Foundation/UkrPoshtaAddressShipping.php:103
+#: src/Foundation/UkrPoshtaShipping.php:103
+msgid "Send dimensions when calculating shipping cost"
+msgstr "Учитывать габариты при расчете стоимости"
+
+#: src/Foundation/NovaPoshtaShipping.php:114
+#: src/Foundation/UkrPoshtaAddressShipping.php:105
+#: src/Foundation/UkrPoshtaShipping.php:105
+msgid ""
+"If checked and function supported by carrier, the product dimensions will be "
+"send to rates api."
+msgstr ""
+"Если включено и поддерживается перевозчиком, габариты посылки будут "
+"отправляться в запросе на расчет ставок."
+
 #: src/Foundation/NovaPostShipping.php:19
 #: src/Foundation/NovaPostShipping.php:54
 msgid "Nova Post"
@@ -360,110 +376,110 @@ msgid "Settings saved successfully!"
 msgstr "Настройки успешно сохранены!"
 
 # Options page
-#: src/Modules/Backend/OptionsPage.php:93 views/settings_general.php:19
+#: src/Modules/Backend/OptionsPage.php:92 views/settings_general.php:19
 #: views/settings_nova_poshta.php:19 views/settings_rozetka.php:19
 #: views/settings_ukrposhta.php:19
 msgid "Settings"
 msgstr "Настройки"
 
+#: src/Modules/Backend/OptionsPage.php:103
 #: src/Modules/Backend/OptionsPage.php:104
-#: src/Modules/Backend/OptionsPage.php:105
 msgid "Smarty Parcel"
 msgstr ""
 
+#: src/Modules/Backend/OptionsPage.php:112
 #: src/Modules/Backend/OptionsPage.php:113
-#: src/Modules/Backend/OptionsPage.php:114
 msgid "Create TTN"
 msgstr "Создать ТТН"
 
-#: src/Modules/Backend/OptionsPage.php:122
-#: src/Modules/Backend/OptionsPage.php:123 views/orders.php:4
+#: src/Modules/Backend/OptionsPage.php:121
+#: src/Modules/Backend/OptionsPage.php:122 views/orders.php:4
 msgid "Orders"
 msgstr "Заказы"
 
+#: src/Modules/Backend/OptionsPage.php:130
 #: src/Modules/Backend/OptionsPage.php:131
-#: src/Modules/Backend/OptionsPage.php:132
 msgid "Automation"
 msgstr "Автоматизация"
 
-#: src/Modules/Backend/OptionsPage.php:143
-#: src/Modules/Backend/OptionsPage.php:144 views/order/ttn_widget.php:29
+#: src/Modules/Backend/OptionsPage.php:142
+#: src/Modules/Backend/OptionsPage.php:143 views/order/ttn_widget.php:29
 msgid "Create"
 msgstr "Создать"
 
-#: src/Modules/Backend/OptionsPage.php:161
-#: src/Modules/Backend/OptionsPage.php:162 views/tools.php:14
+#: src/Modules/Backend/OptionsPage.php:160
+#: src/Modules/Backend/OptionsPage.php:161 views/tools.php:14
 msgid "Tools"
 msgstr "Инструменты"
 
 # Warehouse loader
-#: src/Modules/Backend/OptionsPage.php:173
+#: src/Modules/Backend/OptionsPage.php:172
 msgid "Warehouses data of Nova Poshta"
 msgstr "Данные отделений Новой Почты"
 
-#: src/Modules/Backend/OptionsPage.php:174
+#: src/Modules/Backend/OptionsPage.php:173
 msgid "Last update date:"
 msgstr "Дата последнего обновления:"
 
-#: src/Modules/Backend/OptionsPage.php:175
+#: src/Modules/Backend/OptionsPage.php:174
 msgid "Status:"
 msgstr "Статус:"
 
-#: src/Modules/Backend/OptionsPage.php:176
+#: src/Modules/Backend/OptionsPage.php:175
 msgid "Not completed"
 msgstr "Не завершено"
 
-#: src/Modules/Backend/OptionsPage.php:177
+#: src/Modules/Backend/OptionsPage.php:176
 msgid "Completed"
 msgstr "Завершено"
 
-#: src/Modules/Backend/OptionsPage.php:178
+#: src/Modules/Backend/OptionsPage.php:177
 msgid "Unknown"
 msgstr "Неизвестный"
 
-#: src/Modules/Backend/OptionsPage.php:179
+#: src/Modules/Backend/OptionsPage.php:178
 msgid "Update warehouses"
 msgstr "Обновить отделения"
 
-#: src/Modules/Backend/OptionsPage.php:180
+#: src/Modules/Backend/OptionsPage.php:179
 msgid "Continue update"
 msgstr "Продолжить обновление"
 
-#: src/Modules/Backend/OptionsPage.php:181
+#: src/Modules/Backend/OptionsPage.php:180
 msgid "Load areas..."
 msgstr "Загрузка областей..."
 
-#: src/Modules/Backend/OptionsPage.php:182
+#: src/Modules/Backend/OptionsPage.php:181
 msgid "Load cities..."
 msgstr "Загрузка городов..."
 
-#: src/Modules/Backend/OptionsPage.php:183
+#: src/Modules/Backend/OptionsPage.php:182
 msgid "Load warehouses..."
 msgstr "Загрузка отделений..."
 
-#: src/Modules/Backend/OptionsPage.php:184
+#: src/Modules/Backend/OptionsPage.php:183
 msgid "Warehouses db updated successfully"
 msgstr "Данные отделений успешно обновлены"
 
-#: src/Modules/Backend/OptionsPage.php:187
+#: src/Modules/Backend/OptionsPage.php:186
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 "Вы уверены, что хотите перезапустить миграции? Это действие не может быть "
 "отменено."
 
-#: src/Modules/Backend/OptionsPage.php:337
+#: src/Modules/Backend/OptionsPage.php:335
 msgid "Unable to detect carrier for order"
 msgstr "Не удалось определить перевозчика для заказа"
 
-#: src/Modules/Backend/OptionsPage.php:375
+#: src/Modules/Backend/OptionsPage.php:373
 msgid "Add rule"
 msgstr "Добавить правило"
 
-#: src/Modules/Backend/OptionsPage.php:393
+#: src/Modules/Backend/OptionsPage.php:391
 msgid "Rule not found"
 msgstr "Правило не найдено"
 
-#: src/Modules/Backend/OptionsPage.php:402
+#: src/Modules/Backend/OptionsPage.php:400
 msgid "Rule saved successfully"
 msgstr "Правило успешно сохранено"
 
@@ -729,34 +745,30 @@ msgstr ""
 "сервису Smarty Parcel"
 
 #: views/partial/settings_general/parcels.php:19
-msgid "Use SmartyParcel addresses as default"
-msgstr "Использовать адреса SmartyParcel по-умолчанию"
-
-#: views/partial/settings_general/parcels.php:25
 msgid "COD method"
 msgstr "Метод наложенного платежа"
 
-#: views/partial/settings_general/parcels.php:32
+#: views/partial/settings_general/parcels.php:26
 msgid "Default description"
 msgstr "Описание по-умолчанию"
 
-#: views/partial/settings_general/parcels.php:41
+#: views/partial/settings_general/parcels.php:35
 msgid "Default weight"
 msgstr "Вес по-умолчанию"
 
-#: views/partial/settings_general/parcels.php:47
+#: views/partial/settings_general/parcels.php:41
 msgid "Default dimensions"
 msgstr "Габариты по-умолчанию"
 
-#: views/partial/settings_general/parcels.php:52
+#: views/partial/settings_general/parcels.php:46
 msgid "Width (cm)"
 msgstr "Ширина (см)"
 
-#: views/partial/settings_general/parcels.php:62
+#: views/partial/settings_general/parcels.php:56
 msgid "Height (cm)"
 msgstr "Высота (см)"
 
-#: views/partial/settings_general/parcels.php:72
+#: views/partial/settings_general/parcels.php:66
 msgid "Length (cm)"
 msgstr "Длина (см)"
 
@@ -810,46 +822,43 @@ msgstr ""
 "Если включено, плагин будет использовать API онлайн-справочника как для "
 "адресной доставки, так и для доставки на отделение"
 
-#: views/partial/settings_nova_poshta/parcels.php:17
-#: views/partial/settings_rozetka/parcels.php:26
-#: views/partial/settings_ukrposhta/parcels.php:26
-msgid "Default carrier account"
-msgstr "Аккаунт перевозчика по-умолчанию"
-
-#: views/partial/settings_nova_poshta/parcels.php:33
-#: views/partial/settings_ukrposhta/parcels.php:37
+#: views/partial/settings_nova_poshta/parcels.php:18
+#: views/partial/settings_rozetka/parcels.php:19
+#: views/partial/settings_ukrposhta/parcels.php:19
 msgid "Delivery payer"
 msgstr "Плательщик за доставку"
 
-#: views/partial/settings_nova_poshta/parcels.php:37
-#: views/partial/settings_ukrposhta/parcels.php:39
-#: views/partial/settings_ukrposhta/parcels.php:71
+#: views/partial/settings_nova_poshta/parcels.php:22
+#: views/partial/settings_rozetka/parcels.php:21
+#: views/partial/settings_ukrposhta/parcels.php:21
+#: views/partial/settings_ukrposhta/parcels.php:53
 msgid "Sender"
 msgstr "Отправитель"
 
-#: views/partial/settings_nova_poshta/parcels.php:38
-#: views/partial/settings_ukrposhta/parcels.php:40
-#: views/partial/settings_ukrposhta/parcels.php:72
+#: views/partial/settings_nova_poshta/parcels.php:23
+#: views/partial/settings_rozetka/parcels.php:22
+#: views/partial/settings_ukrposhta/parcels.php:22
+#: views/partial/settings_ukrposhta/parcels.php:54
 msgid "Recipient"
 msgstr "Получатель"
 
-#: views/partial/settings_nova_poshta/parcels.php:44
+#: views/partial/settings_nova_poshta/parcels.php:29
 msgid "Payment method"
 msgstr "Способ оплаты"
 
-#: views/partial/settings_nova_poshta/parcels.php:48
+#: views/partial/settings_nova_poshta/parcels.php:33
 msgid "Cash"
 msgstr "Наличный расчет"
 
-#: views/partial/settings_nova_poshta/parcels.php:49
+#: views/partial/settings_nova_poshta/parcels.php:34
 msgid "NonCash"
 msgstr "Безналичный расчет"
 
-#: views/partial/settings_nova_poshta/parcels.php:56
+#: views/partial/settings_nova_poshta/parcels.php:41
 msgid "Payment control"
 msgstr "Контроль оплаты"
 
-#: views/partial/settings_nova_poshta/parcels.php:62
+#: views/partial/settings_nova_poshta/parcels.php:47
 msgid "Global params as default"
 msgstr "Глобальные параметры по-умолчанию"
 
@@ -861,27 +870,27 @@ msgstr "Общие настройки"
 msgid "Rozetka delivery"
 msgstr ""
 
-#: views/partial/settings_ukrposhta/parcels.php:47
+#: views/partial/settings_ukrposhta/parcels.php:29
 msgid "On fail receive"
 msgstr "В случае невручения"
 
-#: views/partial/settings_ukrposhta/parcels.php:49
+#: views/partial/settings_ukrposhta/parcels.php:31
 msgid "Return"
 msgstr "Вернуть отправителю"
 
-#: views/partial/settings_ukrposhta/parcels.php:50
+#: views/partial/settings_ukrposhta/parcels.php:32
 msgid "Process as refusal"
 msgstr "Уничтожить отправление"
 
-#: views/partial/settings_ukrposhta/parcels.php:57
+#: views/partial/settings_ukrposhta/parcels.php:39
 msgid "Check on delivery"
 msgstr "Осмотр при вручении"
 
-#: views/partial/settings_ukrposhta/parcels.php:63
+#: views/partial/settings_ukrposhta/parcels.php:45
 msgid "SMS notification"
 msgstr "SMS сообщение о прибытии посылки"
 
-#: views/partial/settings_ukrposhta/parcels.php:69
+#: views/partial/settings_ukrposhta/parcels.php:51
 msgid "COD payer"
 msgstr "Плательщик за услугу обратной доставки"
 
@@ -936,6 +945,12 @@ msgstr "Создать для Укрпочты"
 #: views/ttn/ttn_forbidden.php:20
 msgid "Read more"
 msgstr "Подробнее"
+
+#~ msgid "Use SmartyParcel addresses as default"
+#~ msgstr "Использовать адреса SmartyParcel по-умолчанию"
+
+#~ msgid "Default carrier account"
+#~ msgstr "Аккаунт перевозчика по-умолчанию"
 
 #~ msgid "Unable to detect order shipping method or carrier"
 #~ msgstr "Не удалось определить способ доставки заказа или перевозчика."

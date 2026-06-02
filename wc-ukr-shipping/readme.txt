@@ -2,12 +2,12 @@
 Contributors: kirillbdev
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Tags: нова пошта, укрпошта, nova post, meest, shipping
+Tags: нова пошта, укрпошта, nova post, meest, dhl
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 1.21.8
+Stable tag: 1.21.9
 
-Connect Nova Poshta, Ukrposhta, Meest or international delivery services with your store. Create labels, track orders and calculate rates in one place.
+Connect Nova Post, Ukrposhta, Meest, DHL and other delivery services with your store. Create labels, track orders and calculate rates in one place.
 
 == Description ==
 
@@ -49,7 +49,7 @@ https://www.youtube.com/watch?v=NYKgP3cw1WY
 * Rozetka Delivery
 * Nova Post (EU, International)
 * Nova Global
-* Meest (Ukraine, International)
+* Meest (UA, International)
 * DHL (tracking only yet)
 
 == Pickup points (SmartyParcel Locator for WooCommerce) ==
@@ -109,6 +109,10 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 Unfortunately plugin doesn't support checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.21.9 / (02.06.2026) =
+* [Nova Poshta] Added new option "Use dimensions for rates calculation"
+* [UkrPoshta] Added new option "Use dimensions for rates calculation"
 
 = Version 1.21.8 / (27.05.2026) =
 * Plugin is now using only SmartyParcel addresses to create shipments.

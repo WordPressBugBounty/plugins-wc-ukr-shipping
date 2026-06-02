@@ -14,13 +14,14 @@ class CheckoutRateShipmentFactory
     protected string $carrierSlug;
     protected array $data;
     protected string $fieldGroup;
-    protected bool $useDimensions = true;
+    protected bool $useDimensions;
 
     private ProductDimensionService $productDimensionService;
 
-    public function __construct(string $carrierSlug)
+    public function __construct(string $carrierSlug, bool $useDimensions = true)
     {
         $this->carrierSlug = $carrierSlug;
+        $this->useDimensions = $useDimensions;
         $this->productDimensionService = wcus_container()->make(ProductDimensionService::class);
 
         if ($_GET['wc-ajax'] === 'update_order_review') {
