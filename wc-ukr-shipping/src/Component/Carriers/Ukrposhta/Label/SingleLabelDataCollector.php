@@ -84,9 +84,12 @@ class SingleLabelDataCollector
     private function collectSender(): void
     {
         $accounts = $this->smartyParcelService->getCarrierAccounts('ukrposhta');
-        $defaultAcc = wc_ukr_shipping_get_option('wcus_ukrposhta_default_carrier');
-        if (empty($defaultAcc)) {
-            $defaultAcc = $accounts[0]['id'] ?? '';
+        $defaultAcc = $accounts[0]['id'] ?? '';
+        foreach ($accounts as $account) {
+            if ($account['is_default']) {
+                $defaultAcc = $account['id'];
+                break;
+            }
         }
 
         $this->data['carrier_accounts'] = $accounts;

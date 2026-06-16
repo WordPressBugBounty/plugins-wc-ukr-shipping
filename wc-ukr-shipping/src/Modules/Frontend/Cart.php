@@ -17,7 +17,7 @@ class Cart implements ModuleInterface
      */
     public function init()
     {
-        add_filter('woocommerce_shipping_rate_cost', [ $this, 'shippingCost' ], 15, 2);
+        //add_filter('woocommerce_shipping_rate_cost', [ $this, 'shippingCost' ], 15, 2);
     }
 
     /**
@@ -25,6 +25,7 @@ class Cart implements ModuleInterface
      * @param \WC_Shipping_Rate $rate
      *
      * @return float|int
+     * todo: refactor
      */
     public function shippingCost($cost, $rate)
     {

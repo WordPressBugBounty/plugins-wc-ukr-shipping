@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
-"POT-Creation-Date: 2026-06-02T22:54:48+03:00\n"
+"POT-Creation-Date: 2026-06-16T12:38:00+03:00\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,15 +16,17 @@ msgstr ""
 "X-Domain: wc-ukr-shipping-i18n\n"
 
 #. Plugin Name of the plugin
-msgid "WC Ukraine Shipping"
-msgstr ""
+#, fuzzy
+#| msgid "Migrate from WC Ukraine Shipping PRO"
+msgid "WC Ukraine Shipping / SmartyParcel"
+msgstr "Миграция с WC Ukraine Shipping PRO"
 
 #. Plugin URI of the plugin
 msgid "https://smartyparcel.com"
 msgstr ""
 
 #. Description of the plugin
-msgid "Multi-carrier shipping solution for WooCommerce"
+msgid "Multi-carrier shipping solution for WooCommerce."
 msgstr ""
 
 #. Author of the plugin
@@ -494,6 +496,41 @@ msgstr "Создание накладной недоступно для этог
 #: src/Modules/Backend/Orders.php:203
 msgid "Edit shipping address"
 msgstr "Редактировать адрес доставки"
+
+#: src/Modules/Backend/ShippingItemDrawer.php:45
+#: src/Modules/Backend/ShippingItemDrawer.php:51
+#: src/Modules/Backend/ShippingItemDrawer.php:54
+msgid "City"
+msgstr "Город"
+
+#: src/Modules/Backend/ShippingItemDrawer.php:46
+msgid "Warehouse / Poshtomat"
+msgstr "Отделение / Почтомат"
+
+#: src/Modules/Backend/ShippingItemDrawer.php:47
+msgid "Settlement"
+msgstr "Населенный пункт"
+
+#: src/Modules/Backend/ShippingItemDrawer.php:48
+msgid "Street"
+msgstr "Улица"
+
+#: src/Modules/Backend/ShippingItemDrawer.php:49
+msgid "House number"
+msgstr "Номер дома"
+
+#: src/Modules/Backend/ShippingItemDrawer.php:50
+msgid "Flat"
+msgstr "Квартира"
+
+#: src/Modules/Backend/ShippingItemDrawer.php:52
+#: src/Modules/Backend/ShippingItemDrawer.php:55
+msgid "Warehouse"
+msgstr "Отделение"
+
+#: src/Modules/Backend/ShippingItemDrawer.php:53
+msgid "Service type"
+msgstr "Тип сервиса"
 
 #: src/Modules/Frontend/Account.php:31 views/settings_nova_poshta.php:32
 #: views/settings_rozetka.php:31 views/settings_ukrposhta.php:31
@@ -1053,17 +1090,8 @@ msgstr "Подробнее"
 #~ msgid "Enter value for search"
 #~ msgstr "Введите значение для поиска"
 
-#~ msgid "Settlement"
-#~ msgstr "Населенный пункт"
-
-#~ msgid "Street"
-#~ msgstr "Улица"
-
 #~ msgid "House"
 #~ msgstr "Дом"
-
-#~ msgid "Flat"
-#~ msgstr "Квартира"
 
 #~ msgid "to doors"
 #~ msgstr "до дверей"
