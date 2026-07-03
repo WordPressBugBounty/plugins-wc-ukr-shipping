@@ -69,7 +69,6 @@ class OptionsPage implements ModuleInterface
             new Route('wcus_load_warehouses', AddressBookController::class, 'loadWarehouses'),
 
             new Route('wcus_smartyparcel_api', SmartyParcelController::class, 'sendApiRequest'),
-            new Route('wcus_smartyparcel_connect', SmartyParcelController::class, 'connect'),
             new Route('wcus_smartyparcel_disconnect', SmartyParcelController::class, 'disconnect'),
             new Route('wcus_smarty_parcel_create_label', SmartyParcelController::class, 'createShippingLabel'),
             new Route('wcus_smarty_parcel_create_label_batch', SmartyParcelController::class, 'createLabelBatch'),

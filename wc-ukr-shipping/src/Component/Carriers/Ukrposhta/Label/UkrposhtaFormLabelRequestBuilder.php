@@ -55,6 +55,11 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
             ]
         ];
 
+        $order = wc_get_order((int)$request->get('ttn')['order_id']);
+        if ($order && $order->get_meta('_smartyparcel_order_id')) {
+            $labelRequest['order_id'] = $order->get_meta('_smartyparcel_order_id');
+        }
+
         // Parcels
         $parcels = [];
         foreach ($request->get('common')['parcels'] as $index => $item) {
@@ -89,17 +94,13 @@ class UkrposhtaFormLabelRequestBuilder implements LabelRequestBuilderInterface
         // COD
         if ($request->get('cod')['active'] !== 'false') {
             $labelRequest['service_options']['cod'] = [
-                'payment_method' => 'cash',
+                'payment_method' => 'cash_equivalent',
                 'paid_by' => $request->get('cod')['paid_by'],
                 'value' => [
                     'amount' => (float)$request->get('cod')['amount'],
                     'currency' => 'UAH',
                 ]
             ];
-            if ($sender['type'] === 'private_entrepreneur') {
-                $labelRequest['service_options']['cod']['payment_method'] = 'cash_equivalent';
-                $labelRequest['service_options']['cod']['recipient_iban'] = $sender['iban'];
-            }
         }
 
         return $labelRequest;

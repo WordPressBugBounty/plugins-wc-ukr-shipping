@@ -169,6 +169,7 @@ class AssetsLoader implements ModuleInterface
             'rozetkaDelivery' => [
                 'defaultCities' => WCUSHelper::getRozetkaDefaultCities(),
             ],
+            'feedBackAllowed' => get_transient('wcus_last_feedback') ? 0 : 1,
         ];
         $globals = $this->initSmartyParcelGlobals($globals);
 

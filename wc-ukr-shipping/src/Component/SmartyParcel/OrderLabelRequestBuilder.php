@@ -98,6 +98,10 @@ class OrderLabelRequestBuilder implements LabelRequestBuilderInterface
             ]
         ];
 
+        if ($order->get_meta('_smartyparcel_order_id')) {
+            $labelRequest['order_id'] = $order->get_meta('_smartyparcel_order_id');
+        }
+
         $factory = new ProductFactory();
         $orderProducts = [];
         foreach ($this->order->get_items() as $item) {

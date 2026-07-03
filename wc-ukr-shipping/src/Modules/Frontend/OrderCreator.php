@@ -23,12 +23,13 @@ class OrderCreator implements ModuleInterface
 {
     public function init(): void
     {
-        if (is_admin()) {
-            return;
-        }
-
+        add_action('woocommerce_thankyou', [ $this, 'handleSyncOrder' ]);
         add_action('woocommerce_checkout_create_order', [ $this, 'createOrder' ]);
         add_action('woocommerce_checkout_create_order_shipping_item', [ $this, 'saveOrderShipping' ]);
+
+        if (is_admin()) {
+            add_action('woocommerce_new_order', [ $this, 'handleSyncOrder' ]);
+        }
     }
 
     public function createOrder(\WC_Order $order): void
@@ -37,9 +38,11 @@ class OrderCreator implements ModuleInterface
         if ($handler !== null) {
             $handler->saveShippingData($order, $_POST);
         }
+    }
 
-        // Schedule async sync action
-        wp_schedule_single_event(time(), 'wcus_smartyparcel_sync_order', [$order->get_id()]);
+    public function handleSyncOrder(int $orderId): void
+    {
+        wp_schedule_single_event(time(), 'wcus_smartyparcel_sync_order', [$orderId]);
     }
 
     /**

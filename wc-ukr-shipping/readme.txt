@@ -5,7 +5,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: нова пошта, укрпошта, nova post, meest, dhl
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 1.21.10
+Stable tag: 1.21.11
 
 Connect Nova Post, Ukrposhta, Meest, DHL and other delivery services with your store. Create labels, track orders and calculate rates in one place.
 
@@ -110,6 +110,11 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 Unfortunately plugin doesn't support checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.21.11 / (03.07.2026) =
+* Added sync orders endpoint (pull model).
+* Added additional data to label requests.
+* Checked compatibility with latest WordPress and WooCommerce versions.
 
 = Version 1.21.10 / (16.06.2026) =
 * [Labels] Fixed loading default carrier account.

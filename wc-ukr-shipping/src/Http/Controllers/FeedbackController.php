@@ -32,6 +32,9 @@ class FeedbackController extends Controller
             // safe
         }
 
+        // Cache 1 hour
+        set_transient('wcus_last_feedback', time(), 3600);
+
         return $this->jsonResponse([
             'success' => true
         ]);

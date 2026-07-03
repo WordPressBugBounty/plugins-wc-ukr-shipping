@@ -43,6 +43,10 @@ class UkrposhtaBatchLabelRequestBuilder implements LabelRequestBuilderInterface
             ]
         ];
 
+        if ($this->order->get_meta('_smartyparcel_order_id')) {
+            $labelRequest['order_id'] = $this->order->get_meta('_smartyparcel_order_id');
+        }
+
         $labelRequest['shipment']['ship_to'] = $this->buildRecipient($orderShipping);
         $labelRequest['shipment']['parcels'] = $this->buildParcels();
         $labelRequest['service_options'] = [

@@ -108,7 +108,7 @@ final class SmartyParcelWPApi
             $payload = $result;
         }
 
-        if ($code === 200) {
+        if (in_array($code, [200, 201])) {
             return $payload;
         }
 

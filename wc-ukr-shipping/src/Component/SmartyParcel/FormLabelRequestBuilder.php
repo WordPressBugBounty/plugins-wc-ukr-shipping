@@ -32,6 +32,11 @@ class FormLabelRequestBuilder implements LabelRequestBuilderInterface
             ]
         ];
 
+        $order = wc_get_order((int)$request->get('ttn')['order_id']);
+        if ($order && $order->get_meta('_smartyparcel_order_id')) {
+            $labelRequest['order_id'] = $order->get_meta('_smartyparcel_order_id');
+        }
+
         $shipTo = [
             'name' => sprintf(
                 '%s %s%s',
@@ -74,26 +79,7 @@ class FormLabelRequestBuilder implements LabelRequestBuilderInterface
             ];
         }
         $labelRequest['shipment']['ship_to'] = $shipTo;
-
-        $shipFrom = [];
-        if ($request->get('sender')['ship_from_source'] === 'plugin') {
-            // Use plugin address data
-            if ($request->get('sender')['service_type'] === 'Warehouse') {
-                $shipFrom['carrier_city_id'] = $request->get('sender')['city_ref'];
-                $shipFrom['carrier_warehouse_id'] = $request->get('sender')['warehouse_ref'];
-            } else {
-                $shipFrom['country_code'] = 'UA';
-                $shipFrom['city'] = WCUSHelper::prepareApiString($request->get('sender')['settlement_name']);
-                $shipFrom['state'] = WCUSHelper::prepareApiString($request->get('sender')['settlement_area']);
-                $shipFrom['district'] = WCUSHelper::prepareApiString($request->get('sender')['settlement_region']);
-                $shipFrom['address_1'] = WCUSHelper::prepareApiString($request->get('sender')['street_name']);
-                $shipFrom['address_2'] = $request->get('sender')['house'];
-                $shipFrom['address_3'] = $request->get('sender')['flat'];
-            }
-            $labelRequest['shipment']['ship_from'] = $shipFrom;
-        } elseif ($request->get('sender')['ship_from_source'] === 'smarty_parcel') {
-            $labelRequest['shipment']['ship_from_address_id'] = $request->get('sender')['selected_address_id'];
-        }
+        $labelRequest['shipment']['ship_from_address_id'] = $request->get('sender')['selected_address_id'];
 
         // Parcels
         $parcels = [];
