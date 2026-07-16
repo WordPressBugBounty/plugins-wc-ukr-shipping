@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Component\SmartyParcel;
 
 use kirillbdev\WCUkrShipping\Factories\ProductFactory;
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
 
@@ -117,7 +118,10 @@ class BaseOrderCollector
             'address1' => $this->order->get_shipping_address_1(),
             'address2' => $this->order->get_shipping_address_2(),
             'postalCode' => $this->order->get_shipping_postcode(),
-            'state' => $this->order->get_shipping_state(),
+            'state' => SmartyParcelHelper::getOrderStateName(
+                $this->order->get_shipping_country(),
+                $this->order->get_shipping_state()
+            ),
             'phone' => $maybeDifferentAddress && $this->order->get_meta('wcus_shipping_phone')
                 ? $this->order->get_meta('wcus_shipping_phone')
                 : $this->order->get_billing_phone(),

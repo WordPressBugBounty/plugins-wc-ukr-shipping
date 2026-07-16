@@ -2,10 +2,10 @@
 Contributors: kirillbdev
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Tags: нова пошта, укрпошта, nova post, meest, dhl
+Tags: shipping, tracking, nova post, meest, dhl
 Requires PHP: 7.4
 Tested up to: 7.0
-Stable tag: 1.21.11
+Stable tag: 1.21.12
 
 Connect Nova Post, Ukrposhta, Meest, DHL and other delivery services with your store. Create labels, track orders and calculate rates in one place.
 
@@ -43,23 +43,28 @@ https://www.youtube.com/watch?v=NYKgP3cw1WY
 * Advanced shipment analytics
 * Integration with popular plugins for localization: WPML and Polylang
 
-== Supported Carriers ==
-* Nova Poshta
+== Carriers (Full cycle logistics) ==
+* Nova Poshta (Ukraine)
 * Ukrposhta
 * Rozetka Delivery
 * Nova Post (EU, International)
 * Nova Global
-* Meest (UA, International)
+* Meest
+
+== Carriers ([Tracking](https://smartyparcel.com/track/)) ==
 * DHL Express
 * DHL API
+* DPD
+* PostNord
 
 == Pickup points (SmartyParcel Locator for WooCommerce) ==
 * Nova Poshta
-* Ukrposhta
+* UkrPoshta
 * Rozetka Delivery
 * Nova Post (EU, International)
-
-SmartyParcel **guarantees** access to its Locator API for all WooCommerce stores for free!
+* DHL (paid plans)
+* DPD (paid plans)
+* PostNord (paid plans)
 
 == Premium features ==
 
@@ -75,8 +80,6 @@ SmartyParcel has additional premium features that help you to optimize your dail
 * Automatic SMS notifications
 * Easy integration with custom platforms via our REST Api
 * Premium support
-
-[Switch to Premium Plans](https://smartyparcel.com/?utm_source=wporg#pricing)
 
 == Installation ==
 
@@ -110,6 +113,12 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 Unfortunately plugin doesn't support checkout blocks yet.
 
 == Changelog ==
+
+= Version 1.21.12 / (16.07.2026) =
+* Added DPD tracking.
+* Added PostNord tracking.
+* Replaced sending full state name instead of code on label creation.
+* Improve Dashboard and billing UI.
 
 = Version 1.21.11 / (03.07.2026) =
 * Added sync orders endpoint (pull model).

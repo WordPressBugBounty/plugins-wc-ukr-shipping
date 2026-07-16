@@ -59,4 +59,14 @@ final class SmartyParcelHelper
 
         return null;
     }
+
+    public static function getOrderStateName(string $countryCode, string $stateCode): string
+    {
+        $states = WC()->countries->get_states($countryCode);
+        if (empty($states) || !is_array($states)) {
+            return $stateCode;
+        }
+
+        return $states[$stateCode] ?? $stateCode;
+    }
 }
