@@ -105,15 +105,21 @@ class OrdersController extends Controller
             $shippingCost = $this->calculationService->calculateRates($dto, $shippingInstance);
 
             if ($shippingCost !== null) {
-                $shippingMethod->set_total($shippingCost);
+                if ($shippingInstance->isCostViewOnly()) {
+                    // Keep the cost out of the order totals, store it as a meta for display only
+                    $shippingMethod->set_total(0);
+                    $shippingMethod->set_taxes([]);
+                    $shippingMethod->update_meta_data(
+                        WCUS_SHIPPING_META_VIEW_COST,
+                        (string)wc_format_decimal($shippingCost)
+                    );
+                } else {
+                    $shippingMethod->set_total($shippingCost);
+                    $shippingMethod->delete_meta_data(WCUS_SHIPPING_META_VIEW_COST);
+                }
+
                 $shippingMethod->save();
                 $order->calculate_totals();
-
-                if ($shippingInstance->get_option('add_cost_to_order') === 'no') {
-                    $order->set_shipping_total(0);
-                    $order->set_total((float)$order->get_total() - $shippingCost);
-                    $order->save();
-                }
             }
         return $this->jsonResponse([
             'success' => true,

@@ -18,23 +18,23 @@
     <?php
         HtmlHelper::textField(
             'wcus[ukrposhta_bearer_ecom]',
-            __('Bearer eCom token of Ukrposhta', 'wc-ukr-shipping-i18n'),
+            __('Bearer eCom token of Ukrposhta', 'wc-ukr-shipping'),
             wc_ukr_shipping_get_option('wcus_ukrposhta_bearer_ecom'),
-            __('Bearer eCom token is required to search for warehouses across Ukraine.', 'wc-ukr-shipping-i18n')
+            __('Bearer eCom token is required to search for warehouses across Ukraine.', 'wc-ukr-shipping')
         );
 
         HtmlHelper::textField(
             'wcus[nova_post_api_key]',
-            __('API Key of Nova Post', 'wc-ukr-shipping-i18n'),
+            __('API Key of Nova Post', 'wc-ukr-shipping'),
             wc_ukr_shipping_get_option('wcus_nova_post_api_key'),
-            __('API key is required to search for warehouses and PUDO across Europe', 'wc-ukr-shipping-i18n')
+            __('API key is required to search for warehouses and PUDO across Europe', 'wc-ukr-shipping')
         );
 
         HtmlHelper::textField(
             'wcus[meest_api_token]',
-            __('API Token of Meest Post', 'wc-ukr-shipping-i18n'),
+            __('API Token of Meest Post', 'wc-ukr-shipping'),
             wc_ukr_shipping_get_option('wcus_meest_api_token'),
-            __('API token is required to search for warehouses and PUDO of Meest Post', 'wc-ukr-shipping-i18n')
+            __('API token is required to search for warehouses and PUDO of Meest Post', 'wc-ukr-shipping')
         );
     ?>
 

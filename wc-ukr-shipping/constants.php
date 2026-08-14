@@ -14,6 +14,9 @@ define('WCUS_SHIPPING_METHOD_MEEST', 'wcus_meest_shipping');
 define('WCUS_SHIPPING_METHOD_MEEST_ADDRESS', 'wcus_meest_address_shipping');
 define('WCUS_SHIPPING_METHOD_NOVA_GLOBAL_ADDRESS', 'wcus_nova_global_address');
 
+// Shipping item meta
+define('WCUS_SHIPPING_META_VIEW_COST', 'wcus_view_cost');
+
 // Warehouse Type
 define('WCUS_WAREHOUSE_TYPE_REGULAR', 1);
 define('WCUS_WAREHOUSE_TYPE_CARGO', 2);

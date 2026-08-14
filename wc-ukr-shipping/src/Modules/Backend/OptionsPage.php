@@ -73,6 +73,7 @@ class OptionsPage implements ModuleInterface
             new Route('wcus_smarty_parcel_create_label', SmartyParcelController::class, 'createShippingLabel'),
             new Route('wcus_smarty_parcel_create_label_batch', SmartyParcelController::class, 'createLabelBatch'),
             new Route('wcus_smarty_parcel_void_label', SmartyParcelController::class, 'voidLabel'),
+            new Route('wcus_tracking_form_init', SmartyParcelController::class, 'initTrackingForm'),
             new Route('wcus_attach_label', SmartyParcelController::class, 'attachShippingLabel'),
             new Route('wcus_automation_save_rule', AutomationController::class, 'saveRule'),
 
@@ -88,7 +89,7 @@ class OptionsPage implements ModuleInterface
         State::add('orders', OrdersState::class);
 
         add_menu_page(
-            __('Settings', 'wc-ukr-shipping-i18n'),
+            __('Settings', 'wc-ukr-shipping'),
             'WC Ukr Shipping',
             'manage_options',
             'wc_ukr_shipping_options',
@@ -99,8 +100,8 @@ class OptionsPage implements ModuleInterface
 
         add_submenu_page(
             'wc_ukr_shipping_options',
-            __('Smarty Parcel', 'wc-ukr-shipping-i18n'),
-            __('Smarty Parcel', 'wc-ukr-shipping-i18n'),
+            __('Smarty Parcel', 'wc-ukr-shipping'),
+            __('Smarty Parcel', 'wc-ukr-shipping'),
             'manage_options',
             'wcus_smarty_parcel',
             [$this, 'smartyParcelHtml']
@@ -108,8 +109,8 @@ class OptionsPage implements ModuleInterface
 
         add_submenu_page(
             '',
-            __('Create TTN', 'wc-ukr-shipping-i18n'),
-            __('Create TTN', 'wc-ukr-shipping-i18n'),
+            __('Create TTN', 'wc-ukr-shipping'),
+            __('Create TTN', 'wc-ukr-shipping'),
             'manage_woocommerce',
             'wc_ukr_shipping_ttn',
             [$this, 'ttnHtml']
@@ -117,8 +118,8 @@ class OptionsPage implements ModuleInterface
 
         add_submenu_page(
             'wc_ukr_shipping_options',
-            __('Orders', 'wc-ukr-shipping-i18n'),
-            __('Orders', 'wc-ukr-shipping-i18n'),
+            __('Orders', 'wc-ukr-shipping'),
+            __('Orders', 'wc-ukr-shipping'),
             'manage_woocommerce',
             'wc_ukr_shipping_ttn_list',
             [$this, 'orderListHtml']
@@ -126,8 +127,8 @@ class OptionsPage implements ModuleInterface
 
         $automationPage = add_submenu_page(
             'wc_ukr_shipping_options',
-            __('Automation', 'wc-ukr-shipping-i18n'),
-            __('Automation', 'wc-ukr-shipping-i18n'),
+            __('Automation', 'wc-ukr-shipping'),
+            __('Automation', 'wc-ukr-shipping'),
             'manage_woocommerce',
             'wcus_automation',
             [$this, 'automationHtml']
@@ -138,8 +139,8 @@ class OptionsPage implements ModuleInterface
 
         add_submenu_page(
             '',
-            __('Create', 'wc-ukr-shipping-i18n'),
-            __('Create', 'wc-ukr-shipping-i18n'),
+            __('Create', 'wc-ukr-shipping'),
+            __('Create', 'wc-ukr-shipping'),
             'manage_woocommerce',
             'wcus_automation_rule_create',
             [$this, 'automationRuleFormHtml']
@@ -147,8 +148,8 @@ class OptionsPage implements ModuleInterface
 
         add_submenu_page(
             '',
-            __('Edit', 'wc-ukr-shipping-i18n'),
-            __('Edit', 'wc-ukr-shipping-i18n'),
+            __('Edit', 'wc-ukr-shipping'),
+            __('Edit', 'wc-ukr-shipping'),
             'manage_woocommerce',
             'wcus_automation_rule_edit',
             [$this, 'automationRuleFormHtml']
@@ -156,8 +157,8 @@ class OptionsPage implements ModuleInterface
 
         add_submenu_page(
             'wc_ukr_shipping_options',
-            __('Tools', 'wc-ukr-shipping-i18n'),
-            __('Tools', 'wc-ukr-shipping-i18n'),
+            __('Tools', 'wc-ukr-shipping'),
+            __('Tools', 'wc-ukr-shipping'),
             'manage_options',
             'wc_ukr_shipping_tools',
             [$this, 'toolsHtml']
@@ -168,21 +169,21 @@ class OptionsPage implements ModuleInterface
     {
         return array_merge($i18n, [
             'warehouse_loader' => [
-                'title' => __('Warehouses data of Nova Poshta', 'wc-ukr-shipping-i18n'),
-                'last_update' => __('Last update date:', 'wc-ukr-shipping-i18n'),
-                'status' => __('Status:', 'wc-ukr-shipping-i18n'),
-                'status_not_completed' => __('Not completed', 'wc-ukr-shipping-i18n'),
-                'status_completed' => __('Completed', 'wc-ukr-shipping-i18n'),
-                'status_unknown' => __('Unknown', 'wc-ukr-shipping-i18n'),
-                'update' => __('Update warehouses', 'wc-ukr-shipping-i18n'),
-                'continue' => __('Continue update', 'wc-ukr-shipping-i18n'),
-                'load_areas' => __('Load areas...', 'wc-ukr-shipping-i18n'),
-                'load_cities' => __('Load cities...', 'wc-ukr-shipping-i18n'),
-                'load_warehouses' => __('Load warehouses...', 'wc-ukr-shipping-i18n'),
-                'success_updated' => __('Warehouses db updated successfully', 'wc-ukr-shipping-i18n'),
+                'title' => __('Warehouses data of Nova Poshta', 'wc-ukr-shipping'),
+                'last_update' => __('Last update date:', 'wc-ukr-shipping'),
+                'status' => __('Status:', 'wc-ukr-shipping'),
+                'status_not_completed' => __('Not completed', 'wc-ukr-shipping'),
+                'status_completed' => __('Completed', 'wc-ukr-shipping'),
+                'status_unknown' => __('Unknown', 'wc-ukr-shipping'),
+                'update' => __('Update warehouses', 'wc-ukr-shipping'),
+                'continue' => __('Continue update', 'wc-ukr-shipping'),
+                'load_areas' => __('Load areas...', 'wc-ukr-shipping'),
+                'load_cities' => __('Load cities...', 'wc-ukr-shipping'),
+                'load_warehouses' => __('Load warehouses...', 'wc-ukr-shipping'),
+                'success_updated' => __('Warehouses db updated successfully', 'wc-ukr-shipping'),
             ],
             'smarty_parcel' => [],
-            'text_confirm_re_run_migrations' => __('Are you sure to restart migrations? This action cannot be canceled.', 'wc-ukr-shipping-i18n'),
+            'text_confirm_re_run_migrations' => __('Are you sure to restart migrations? This action cannot be canceled.', 'wc-ukr-shipping'),
         ]);
     }
 
@@ -331,7 +332,7 @@ class OptionsPage implements ModuleInterface
         }
 
         if ($carrier === null) {
-            esc_html_e('Unable to detect carrier for order', 'wc-ukr-shipping-i18n');
+            esc_html_e('Unable to detect carrier for order', 'wc-ukr-shipping');
             return;
         }
 
@@ -369,7 +370,7 @@ class OptionsPage implements ModuleInterface
         <div class="wrap">
             <h1 class="wp-heading-inline"><?php echo esc_html(get_admin_page_title()); ?></h1>
             <a href="<?php echo esc_attr(admin_url('admin.php?page=wcus_automation_rule_create')); ?>"
-               class="page-title-action"><?php esc_html_e('Add rule', 'wc-ukr-shipping-i18n'); ?></a>
+               class="page-title-action"><?php esc_html_e('Add rule', 'wc-ukr-shipping'); ?></a>
             <hr class="wp-header-end">
             <form action="" method="POST">
                 <?php $this->table->display(); ?>
@@ -387,7 +388,7 @@ class OptionsPage implements ModuleInterface
             if ($model === null) {
                 echo sprintf(
                     '<div class="notice notice-error">%s</div>',
-                    esc_html(__('Rule not found', 'wc-ukr-shipping-i18n'))
+                    esc_html(__('Rule not found', 'wc-ukr-shipping'))
                 );
                 return;
             }
@@ -396,7 +397,7 @@ class OptionsPage implements ModuleInterface
         echo View::render('automation', [
             'model' => $model,
             'successMsg' => isset($_GET['success']) && $_GET['success'] === '1'
-                ? __('Rule saved successfully', 'wc-ukr-shipping-i18n')
+                ? __('Rule saved successfully', 'wc-ukr-shipping')
                 : null,
         ]);
     }

@@ -24,6 +24,35 @@ class WCUSHelper
         return array_shift($shippingMethods);
     }
 
+    /**
+     * Shipping cost calculated for view only (not included to the order total).
+     *
+     * @param \WC_Shipping_Rate $rate
+     */
+    public static function getRateViewCost($rate): ?float
+    {
+        $meta = $rate->get_meta_data();
+
+        return isset($meta[WCUS_SHIPPING_META_VIEW_COST]) && (float)$meta[WCUS_SHIPPING_META_VIEW_COST] > 0
+            ? (float)$meta[WCUS_SHIPPING_META_VIEW_COST]
+            : null;
+    }
+
+    /**
+     * @param \WC_Order $order
+     */
+    public static function getOrderViewShippingCost($order): ?float
+    {
+        $shippingMethod = self::getOrderShippingMethod($order);
+        if ($shippingMethod === null) {
+            return null;
+        }
+
+        $cost = (float)$shippingMethod->get_meta(WCUS_SHIPPING_META_VIEW_COST);
+
+        return $cost > 0 ? $cost : null;
+    }
+
     public static function hasChosenShippingMethodInstance(\WC_Shipping_Method $instance): bool
     {
         try {

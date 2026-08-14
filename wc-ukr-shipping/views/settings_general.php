@@ -16,11 +16,11 @@
             <div class="wcus-settings__header">
                 <div class="wcus-card-icon"><?php echo wc_ukr_shipping_import_svg('settings.svg') ?></div>
                 <h1 class="wcus-settings__title">
-                    <?php esc_html_e('Settings', 'wc-ukr-shipping-i18n'); ?>
+                    <?php esc_html_e('Settings', 'wc-ukr-shipping'); ?>
                 </h1>
                 <div class="wcus-settings__head-buttons">
                     <button type="submit" form="wc-ukr-shipping-settings-form" class="wcus-settings__submit wcus-btn wcus-btn--primary wcus-btn--md">
-                        <?php esc_html_e('Save', 'wc-ukr-shipping-i18n'); ?>
+                        <?php esc_html_e('Save', 'wc-ukr-shipping'); ?>
                     </button>
                 </div>
                 <div id="wcus-settings-success-msg" class="wcus-settings__success wcus-message wcus-message--success"></div>
@@ -28,10 +28,10 @@
             <div class="wcus-settings__content">
                 <form id="wc-ukr-shipping-settings-form" action="/" method="POST">
                     <ul class="wcus-tabs">
-                        <li data-pane="wcus-pane-carriers" class="active"><?php esc_html_e('Carriers', 'wc-ukr-shipping-i18n'); ?></li>
-                        <li data-pane="wcus-pane-pickup-points"><?php esc_html_e('Pickup points', 'wc-ukr-shipping-i18n'); ?></li>
-                        <li data-pane="wcus-pane-checkout"><?php esc_html_e('Checkout', 'wc-ukr-shipping-i18n'); ?></li>
-                        <li data-pane="wcus-pane-parcels"><?php esc_html_e('Shipping Label', 'wc-ukr-shipping-i18n'); ?></li>
+                        <li data-pane="wcus-pane-carriers" class="active"><?php esc_html_e('Carriers', 'wc-ukr-shipping'); ?></li>
+                        <li data-pane="wcus-pane-pickup-points"><?php esc_html_e('Pickup points', 'wc-ukr-shipping'); ?></li>
+                        <li data-pane="wcus-pane-checkout"><?php esc_html_e('Checkout', 'wc-ukr-shipping'); ?></li>
+                        <li data-pane="wcus-pane-parcels"><?php esc_html_e('Shipping Label', 'wc-ukr-shipping'); ?></li>
                     </ul>
                     <?php echo View::render('partial/settings_general/carriers'); ?>
                     <?php echo View::render('partial/settings_general/pickup_points'); ?>

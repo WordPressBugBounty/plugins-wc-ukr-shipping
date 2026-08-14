@@ -14,6 +14,7 @@ final class SmartyParcelWPApi
     private const ROUTE_METHOD_MAP = [
         '/v1/account' => 'GET',
         '/v1/dashboard/overview' => 'GET',
+        '/v1/carriers/list' => 'GET',
         '/v1/carriers' => 'GET',
         '/v1/billing/plans' => 'GET',
         '/v1/locator/cities' => 'GET',

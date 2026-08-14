@@ -1,15 +1,17 @@
 <?php
 /**
- * Plugin Name: WC Ukraine Shipping / SmartyParcel
+ * Plugin Name: SmartyParcel (formerly WC Ukr Shipping)
  * Plugin URI: https://smartyparcel.com
- * Description: Multi-carrier shipping solution for WooCommerce.
- * Version: 1.21.12
+ * Description: Multi-carrier order tracking and shipping solution for WooCommerce.
+ * Version: 1.21.13
  * Author: kirillbdev
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
- * Requires PHP: 7.4
+ * Text Domain: wc-ukr-shipping
+ * Domain Path: /lang
+ * Requires PHP: 8.0
  * Tested up to: 7.0
- * WC tested up to: 10.9
+ * WC tested up to: 11.0
 */
 
 if ( ! defined('ABSPATH')) {
@@ -21,7 +23,7 @@ define('WC_UKR_SHIPPING_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('WC_UKR_SHIPPING_PLUGIN_ENTRY', __FILE__);
 define('WC_UKR_SHIPPING_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
-define('WCUS_TRANSLATE_DOMAIN', 'wc-ukr-shipping-i18n');
+define('WCUS_TRANSLATE_DOMAIN', 'wc-ukr-shipping');
 define('WCUS_MIGRATOR_HISTORY_KEY', 'wcus_migrations_history');
 
 define('WCUS_TRANSLATE_TYPE_PLUGIN', 0);

@@ -1,98 +1,92 @@
-=== WC Ukraine Shipping - Integration of Nova Poshta and Ukrposhta for WooCommerce ===
+=== SmartyParcel (formerly WC Ukr Shipping) - All-in-One Order tracking and multi-carrier Shipping solution for WooCommerce ===
 Contributors: kirillbdev
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Tags: shipping, tracking, nova post, meest, dhl
-Requires PHP: 7.4
+Tags: order tracking, shipment tracking, shipping, shipping rates
+Requires PHP: 8.0
 Tested up to: 7.0
-Stable tag: 1.21.12
+Stable tag: 1.21.13
 
-Connect Nova Post, Ukrposhta, Meest, DHL and other delivery services with your store. Create labels, track orders and calculate rates in one place.
+Free Plan Available. The most complete Order tracking, Shipping labels, and rates multi-carrier solution for WooCommerce.
 
 == Description ==
 
-Connect Nova Poshta, Ukrposhta, Meest, Nova Global and many other delivery services with your store. Create labels, track orders and calculate rates in one place.
+**SmartyParcel** is the ultimate multi-carrier logistics, shipping automation, and order tracking platform designed specifically for WooCommerce stores.
+
+Manage local and international logistics in a single dashboard: connect regional leaders (Nova Poshta, Ukrposhta, Meest, DHL, PostNord, and others), auto-generate shipping labels (TTN), offer dynamic pickup points and live rates on checkout, and track packages across 1,000+ delivery services worldwide.
 
 [Documentation](https://smartyparcel.com/docs/knowledge-base-woocommerce/)
-[Product Overview](https://smartyparcel.com/?utm_source=wporg)
-
-== Installation and setup tutorial ==
-
-https://www.youtube.com/watch?v=NYKgP3cw1WY
 
 == Features ==
 
-* Simple and intuitive setup
-* Ability to select Nova Poshta warehouse, doors or poshtomat on checkout page
-* Ability to separate delivery types by different shipping methods (ex. create "to warehouse" and "to doors" as separated shipping methods)
-* Ability to select Ukrposhta warehouse on the checkout page
-* Ability to select Rozetka Delivery warehouse on the checkout page
-* Ability to select Nova Post (Europe) warehouse on the checkout page
-* Ability to select Meest Post warehouse on the checkout page
-* Ability to set up fixed shipping cost
-* Ability to calculate cost without adding it to order total
-* Ability to create Nova Poshta TTN (warehouse-warehouse, warehouse-doors, warehouse-poshtomat)
-* Ability to print Nova Poshta labels (A4, marking 85x85, marking 100x100 zebra)
-* Ability to create Ukrposhta TTN (warehouse-warehouse)
-* Ability to print Ukrposhta labels (100x100, 100x100 (A4), 100x100 (A5))
-* Shipments tracking
-* Bulk label creation
-* Bulk label printing
-* Automatic label creation based on various conditions
-* Support many functions includes COD and Payment control
-* Advanced shipment analytics
-* Integration with popular plugins for localization: WPML and Polylang
+### 📦 Seamless Shipping & Checkout Experience
+* **SmartyParcel Locator:** Pickup point / parcel locker and warehouse selection at checkout for Nova Poshta, Ukrposhta, Rozetka Delivery, Nova Post (EU), Meest, DHL, DPD, and PostNord.
+* **Flexible Shipping Methods:** Separate shipping types into distinct checkout methods (e.g., separate options for "To Doors / Courier" vs. "To Branch / Locker").
+* **Live & Dynamic Rates:** Calculate live real-time carrier rates at checkout or configure custom shipping rules.
+* **Multilingual Ready:** Full compatibility with WPML, Polylang, and multi-currency stores.
 
-== Carriers (Full cycle logistics) ==
+### 🏷️ Shipping Labels & Automation
+* **Multi-Carrier Label Creation:** Generate official domestic and international shipping labels, waybills (TTN), and return documents directly inside WooCommerce order management.
+* **Versatile Printing Formats:** Download and print shipping documents in industry-standard thermal and desktop formats.
+* **1-Click Bulk Operations:** Generate, update, and print dozens or hundreds of shipping labels in bulk to streamline high-volume fulfillment routines.
+* **Rule-Based Automation:** Automatically trigger document generation on order status updates, payment completion, or custom triggers.
+* Cash on Delivery (COD) & Custom Declaration Controls.
+
+### 🌐 Universal Order Tracking (1,000+ Carriers)
+* Real-time automated status synchronization for local and global shipments.
+* Built-in support for DHL Express, DPD, PostNord, FedEx, UPS, GLS, InPost, and over a thousand other couriers.
+* Native customer notifications via automated webhooks, email, or SMS.
+
+== Carriers (Labels & Live-Rates) ==
 * Nova Poshta (Ukraine)
 * Ukrposhta
 * Rozetka Delivery
 * Nova Post (EU, International)
 * Nova Global
 * Meest
-
-== Carriers ([Tracking](https://smartyparcel.com/track/)) ==
-* DHL Express
-* DHL API
-* DPD
-* PostNord
+* DHL (contact support)
+* DPD (contact support)
+* PostNord (contact support)
 
 == Pickup points (SmartyParcel Locator for WooCommerce) ==
 * Nova Poshta
 * UkrPoshta
 * Rozetka Delivery
 * Nova Post (EU, International)
-* DHL (paid plans)
-* DPD (paid plans)
-* PostNord (paid plans)
+* Meest
+* DHL (contact support)
+* DPD (contact support)
+* PostNord (contact support)
 
-== Premium features ==
+== Order Tracking (partial list of supported carriers) ==
 
-SmartyParcel has additional premium features that help you to optimize your daily shipping routine.
+1. **North America**
+• ABF • AmazonMws • APC postal logistics • Aramex • Asendia • Associated Global Systems • AxleHire • CANADA-POST • Canpar • CDL Last Mile Solutions • Deliv • DHL Active Tracing • DHL Express • DHL Express (Piece ID) • DHL Global Forwarding • DHL Global Mail • DHL GM International • Dicom • Doorman • Estafeta • Estes • FedEx • FedEx Mailview • FedEx SameDay City • FedEx SmartPost • Globegistics • GSO • IMEX • INTERNATIONAL-BRIDGE • LaserShip • Loomis Express • LSO • Newgistics • Norco • OnTrac • OnTrac DirectPost • ORANGE-DS • Pilot • Postmates • Purolator • R+L Carriers • RR Donnelley • Seko • SPEEDEE • SprintShip • TForce • UDS • UPS • UPS Freight • UPS i-parcel • UPS Mail Innovations • USPS • Cuba Post • Serpost • Blivia Post
 
-* More shipment limits
-* More carrier account limits
-* Display real-time carrier rates in checkout (Smarty Parcel Rates API)
-* Branded tracking page
-* Shipping costs calculation based on order total
-* Shipping costs calculation based on shipment weight
-* Automatic Email notifications
-* Automatic SMS notifications
-* Easy integration with custom platforms via our REST Api
-* Premium support
+2. **UK & Ireland**
+• ARROWXL • Asendia UK • Asendia UK Premium • DPD Interlink Express Reference • DPD UK • Fastway Ireland • FedEx UK • Hermesworld • INTERLINK-EXPRESS • myHermes UK • Network4 • Parcelforce • UK RoyalMail • WN-DIRECT • Yodel • AnPost • 13ten • Collect+ • Whistl • Wiseloads • Nightline • DX Delivery • Deltec Courier • Tuffnells • DPD UK • TNT UK • Skynet Worldwide Express UK • Jersey Post • Bluecare Express • Palletways • UBX Express • DPD Ireland
+
+3. **Europe**
+• Asendia Germany • Chronopost • Chronopost France • COLIS-PRIVE • Colissimo • Deutsche Post • DHL 2-Mann-Handling • DHL Benelux • DHL Freight • DHL Germany • DHL Netherlands • DHL Parcel NL • DHL Parcel Spain • DHL Poland Domestic • DHL Spain Domestic • Direct Link • DPD • GLS • GLS Czech Republic • GLS Italy • GLS Netherlands • Hermes Germany • Hermes Italy • LA-POSTE • LATVIJAS-PASTS • Liefery • NOVA-POSHTA • Post NL International • Post NL3S • Posten • PostNL • PostNord • Ukrposhta • Swiss Post • Netherlands Post • Bpost • Magyar Posta • TNT France • TNT Italy • Ukraine EMS • Romania Post • Ukraine Post • Russia Post • Turkey Post • TNT Click • Czech Post • ACS Courier • Envialia • Andorra Post
+
+4. **Asia & China**
+• Asendia HK • Asendia HK premium service • Bluedart • Delhivery • DHL Ecommerce Asia • DHL Hong Kong • Ecom Express • HONG-KONG POST • India Post International • INDIA-POST • JPPOST • KURONEKO-YAMATO • Ninja Van • POS-MALAYSIA • Singapore Post • Taiwan Post • Cainiao • CHINA-POST • EC Firstclass • EMS • FLYT-EXPRESS • NANJING-WOYUAN • Yanwen • Yun Express • Korea Post • iMile • Syria Post • RaidereX • RZY Express • Sagawa Global • Thailand Post • Bombino Express • V-Express • Srilanka Post • Chunghwa Post • Airpak Express • Yemen Express • JT Express TH • Bee Express • Vietnam Post • TCS Express • Armenia Post • XPost
+
+5. **Australia & New Zealand**
+• AUSTRALIA-POST • Fastway • Fastway New Zealand • Star Track Courier • Star Track Express • StarTrack • Toll IPEC • Toll Priority • Australia EMS • New Zealand Post • Flyway Express • EFS Post • Auspost • Fastway Australia • Courier Post • EFS Post • ADSOne • Beebird Logistics • FTD Express • Fastgo • UBI Smart Parcel • Cnpex
 
 == Installation ==
 
 = Minimum Requirements =
 
-* PHP 7.4 or greater is recommended
+* PHP 8.0 or greater is recommended
 * MySQL 5.7 or greater is recommended
 
 = Automatic installation =
 
-Automatic installation is the easiest option as WordPress handles the file transfers itself and you don’t need to leave your web browser. To do an automatic install of plugin, log in to your WordPress dashboard, navigate to the Plugins menu and click Add New.
+Automatic installation is the easiest option as WordPress handles the file transfers itself and you don’t need to leave your web browser. To do an automatic install of plugin, log in to your WordPress dashboard, navigate to the Plugins menu, and click Add New.
 
-In the search field type “WC Ukr Shipping” and click Search Plugins. Once you’ve found it you can view details about it such as the point release, rating and description. Most importantly of course, you can install it by simply clicking “Install Now”.
+In the search field type “WC Ukr Shipping” and click Search Plugins. Once you’ve found it you can view details about it such as the point release, rating, and description. Most importantly of course, you can install it by simply clicking “Install Now”.
 
 = Manual installation =
 
@@ -108,11 +102,31 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 
 == FAQ ==
 
-= Does plugin supports WooCommerce checkout blocks? =
+= Is there a free plan available for SmartyParcel? =
 
-Unfortunately plugin doesn't support checkout blocks yet.
+Yes, absolutely! We offer a lifetime Free Plan that allows you to get started without any upfront commitments or credit card required. The free tier includes access to essential multi-carrier features, basic order tracking, shipping label creation, and checkout pickup point selection. It is ideal for testing the integration or running early-stage stores. As your order volume and automation needs grow, you can easily upgrade to one of our premium plans.
+
+= Can I use SmartyParcel solely for order tracking? =
+
+Yes, absolutely. If you already manage your shipping labels through other tools or carriers directly, you can use SmartyParcel exclusively as a centralized tracking engine. You get real-time status updates, automated status syncing in WooCommerce, and customer notifications. We offer flexible, standalone tracking pricing plans tailored specifically for this use case.
+
+= Can I use SmartyParcel solely for checkout pickup point selection and live rate calculations? =
+
+Yes, absolutely. You can use SmartyParcel strictly to enhance your WooCommerce checkout experience with our interactive pickup point locator and real-time shipping rate calculations without generating labels through the platform. We offer dedicated pricing options and modular settings suited for stores that only need checkout and rate computation features.
+
+= Does the plugin support WooCommerce checkout blocks? =
+
+Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.21.13 / (14.08.2026) =
+* Increased php version requirement to 8.0.
+* Restored text-domain localization.
+* Improved Add Tracking widget (added more carriers).
+* Fixed cost-view-only option issue for rates calculation.
+* Fixed patchstack vulnerability issue.
+* Checked compatibility with the latest WordPress and WooCommerce versions.
 
 = Version 1.21.12 / (16.07.2026) =
 * Added DPD tracking.
