@@ -3,7 +3,6 @@
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use kirillbdev\WCUkrShipping\Component\Carriers\Meest\Label\MeestOrderCollector;
-use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Label\PurchaseLabelDataCollector;
 use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Label\RozetkaOrderCollector;
 use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\SingleLabelDataCollector;
 use kirillbdev\WCUkrShipping\Component\ListTable\AutomationListTable;
@@ -12,18 +11,18 @@ use kirillbdev\WCUkrShipping\DB\Repositories\AutomationRulesRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\LegacyTtnRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
-use kirillbdev\WCUkrShipping\Foundation\NovaGlobalAddress;
 use kirillbdev\WCUkrShipping\Foundation\State;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Http\Controllers\AddressBookController;
 use kirillbdev\WCUkrShipping\Http\Controllers\AutomationController;
+use kirillbdev\WCUkrShipping\Http\Controllers\CarriersController;
 use kirillbdev\WCUkrShipping\Http\Controllers\OptionsController;
 use kirillbdev\WCUkrShipping\Http\Controllers\SmartyParcelController;
 use kirillbdev\WCUkrShipping\Http\Controllers\ToolsController;
+use kirillbdev\WCUkrShipping\Http\Middleware\CheckManageWooPermission;
 use kirillbdev\WCUkrShipping\Model\Document\TTNStore;
-use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
-use kirillbdev\WCUkrShipping\States\OptionsPageState;
+use kirillbdev\WCUkrShipping\Services\CarrierService;
 use kirillbdev\WCUkrShipping\States\OrdersState;
 use kirillbdev\WCUkrShipping\States\WarehouseLoaderState;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
@@ -36,22 +35,22 @@ if ( ! defined('ABSPATH')) {
 
 class OptionsPage implements ModuleInterface
 {
-    private SmartyParcelService $smartyParcelService;
     private ShippingLabelsRepository $shippingLabelsRepository;
     private AutomationRulesRepository $automationRulesRepository;
     private LegacyTtnRepository $legacyTtnRepository;
+    private CarrierService $carrierService;
     private AutomationListTable $table;
 
     public function __construct(
-        SmartyParcelService $smartyParcelService,
         ShippingLabelsRepository $shippingLabelsRepository,
         AutomationRulesRepository $automationRulesRepository,
-        LegacyTtnRepository $legacyTtnRepository
+        LegacyTtnRepository $legacyTtnRepository,
+        CarrierService $carrierService
     ) {
-        $this->smartyParcelService = $smartyParcelService;
         $this->shippingLabelsRepository = $shippingLabelsRepository;
         $this->automationRulesRepository = $automationRulesRepository;
         $this->legacyTtnRepository = $legacyTtnRepository;
+        $this->carrierService = $carrierService;
     }
 
     public function init()
@@ -63,7 +62,33 @@ class OptionsPage implements ModuleInterface
     public function routes()
     {
         return [
-            new Route('wcus_save_options', OptionsController::class, 'save'),
+            new Route(
+                'wcus_save_options',
+                OptionsController::class,
+                'save',
+                ['middleware' => [CheckManageWooPermission::class]]
+            ),
+
+            // Carriers
+            new Route(
+                'wcus_toggle_carrier',
+                CarriersController::class,
+                'toggle',
+                ['middleware' => [CheckManageWooPermission::class]]
+            ),
+            new Route(
+                'wcus_get_carrier_options',
+                CarriersController::class,
+                'getOptions',
+                ['middleware' => [CheckManageWooPermission::class]]
+            ),
+            new Route(
+                'wcus_save_carrier_options',
+                CarriersController::class,
+                'saveOptions',
+                ['middleware' => [CheckManageWooPermission::class]]
+            ),
+
             new Route('wcus_load_areas', AddressBookController::class, 'loadAreas'),
             new Route('wcus_load_cities', AddressBookController::class, 'loadCities'),
             new Route('wcus_load_warehouses', AddressBookController::class, 'loadWarehouses'),
@@ -85,26 +110,34 @@ class OptionsPage implements ModuleInterface
     public function registerOptionsPage()
     {
         State::add('warehouse_loader', WarehouseLoaderState::class);
-        State::add('options', OptionsPageState::class);
         State::add('orders', OrdersState::class);
 
         add_menu_page(
-            __('Settings', 'wc-ukr-shipping'),
-            'WC Ukr Shipping',
+            __('Dashboard', 'wc-ukr-shipping'),
+            'SmartyParcel',
             'manage_options',
-            'wc_ukr_shipping_options',
-            [$this, 'html'],
+            'wcus_smarty_parcel',
+            [$this, 'smartyParcelHtml'],
             WC_UKR_SHIPPING_PLUGIN_URL . 'image/menu-icon.png',
             56.15
         );
 
         add_submenu_page(
-            'wc_ukr_shipping_options',
-            __('Smarty Parcel', 'wc-ukr-shipping'),
-            __('Smarty Parcel', 'wc-ukr-shipping'),
+            'wcus_smarty_parcel',
+            __('Dashboard', 'wc-ukr-shipping'),
+            __('Dashboard', 'wc-ukr-shipping'),
             'manage_options',
             'wcus_smarty_parcel',
             [$this, 'smartyParcelHtml']
+        );
+
+        add_submenu_page(
+            'wcus_smarty_parcel',
+            __('Settings', 'wc-ukr-shipping'),
+            __('Settings', 'wc-ukr-shipping'),
+            'manage_options',
+            'wcus_settings',
+            [$this, 'html']
         );
 
         add_submenu_page(
@@ -117,7 +150,7 @@ class OptionsPage implements ModuleInterface
         );
 
         add_submenu_page(
-            'wc_ukr_shipping_options',
+            'wcus_smarty_parcel',
             __('Orders', 'wc-ukr-shipping'),
             __('Orders', 'wc-ukr-shipping'),
             'manage_woocommerce',
@@ -126,7 +159,7 @@ class OptionsPage implements ModuleInterface
         );
 
         $automationPage = add_submenu_page(
-            'wc_ukr_shipping_options',
+            'wcus_smarty_parcel',
             __('Automation', 'wc-ukr-shipping'),
             __('Automation', 'wc-ukr-shipping'),
             'manage_woocommerce',
@@ -156,7 +189,7 @@ class OptionsPage implements ModuleInterface
         );
 
         add_submenu_page(
-            'wc_ukr_shipping_options',
+            'wcus_smarty_parcel',
             __('Tools', 'wc-ukr-shipping'),
             __('Tools', 'wc-ukr-shipping'),
             'manage_options',
@@ -187,35 +220,11 @@ class OptionsPage implements ModuleInterface
         ]);
     }
 
-    public function html()
+    public function html(): void
     {
-        $data = [];
-        $gateways = wcus_is_woocommerce_active() ? wc()->payment_gateways()->payment_gateways() : [];
-        $paymentMethods = [];
-        foreach ($gateways as $id => $gateway) {
-            $paymentMethods[$id] = $gateway->get_title();
-        }
-        $data['payment_methods'] = $paymentMethods;
-        $data['cod_payment_id'] = wc_ukr_shipping_get_option('wcus_cod_payment_id');
-        $data['payment_control_default'] = (int)wc_ukr_shipping_get_option('wcus_ttn_pay_control_default');
-        $data['carrierAccounts'] = $this->smartyParcelService->getCarrierAccounts();
-
-        $section = $_GET['section'] ?? null;
-        switch ($section) {
-            case 'nova_poshta':
-                $view = 'settings_nova_poshta';
-                break;
-            case 'ukrposhta':
-                $view = 'settings_ukrposhta';
-                break;
-            case 'rozetka':
-                $view = 'settings_rozetka';
-                break;
-            default:
-                $view = 'settings_general';
-        }
-
-        echo View::render($view, $data);
+        echo View::render('settings_general', [
+            'carriers' => $this->carrierService->getCarrierList(),
+        ]);
     }
 
     public function smartyParcelHtml()

@@ -5,9 +5,6 @@ namespace kirillbdev\WCUkrShipping\Http\Controllers;
 use kirillbdev\WCUkrShipping\Api\SmartyParcelApi;
 use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 use kirillbdev\WCUkrShipping\Component\Automation\Context;
-use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Label\BatchLabelRequestAdapter;
-use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Label\PurchaseLabelDataCollector;
-use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\UkrposhtaBatchLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\UkrposhtaFormLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\FormLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\OrderLabelRequestBuilder;
@@ -270,27 +267,22 @@ class SmartyParcelController extends Controller
                 throw new \Exception('Unable to get order shipping method');
             }
 
-            switch ($shippingMethod->get_method_id()) {
-                case WC_UKR_SHIPPING_NP_SHIPPING_NAME:
-                    $carrier = CarrierSlug::NOVA_POSHTA;
-                    $builder = new OrderLabelRequestBuilder($order);
-                    break;
-                case WCUS_SHIPPING_METHOD_UKRPOSHTA:
-                    $carrier = CarrierSlug::UKRPOSHTA;
-                    $builder = new UkrposhtaBatchLabelRequestBuilder($order);
-                    break;
-                case WCUS_SHIPPING_METHOD_ROZETKA:
-                    $carrier = CarrierSlug::ROZETKA_DELIVERY;
-                    $builder = new BatchLabelRequestAdapter(new PurchaseLabelDataCollector($order));
-                    break;
-                default:
-                    throw new \Exception('Carrier not supported for bulk operations yet');
+            $carrier = SmartyParcelHelper::getOrderCarrierSlug($order);
+            $supportedCarriers = [
+                CarrierSlug::NOVA_POSHTA,
+                CarrierSlug::UKRPOSHTA,
+                CarrierSlug::ROZETKA_DELIVERY,
+                CarrierSlug::MEEST,
+            ];
+
+            if (!in_array($carrier, $supportedCarriers, true)) {
+                throw new \Exception('Carrier not supported for bulk operations yet');
             }
 
             $response = $this->smartyParcelService->createLabel(
                 $carrier,
                 $order->get_id(),
-                $builder
+                new OrderLabelRequestBuilder($order)
             );
 
             $downloads = [];

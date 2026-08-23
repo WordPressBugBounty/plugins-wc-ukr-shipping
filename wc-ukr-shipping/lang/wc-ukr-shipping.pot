@@ -2,20 +2,20 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: WC Ukraine Shipping / SmartyParcel 1.21.12\n"
+"Project-Id-Version: SmartyParcel (formerly WC Ukr Shipping) 1.22.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-12T21:06:00+03:00\n"
+"POT-Creation-Date: 2026-08-23T02:25:46+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-ukr-shipping\n"
 
 #. Plugin Name of the plugin
-msgid "WC Ukraine Shipping / SmartyParcel"
+msgid "SmartyParcel (formerly WC Ukr Shipping)"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -23,11 +23,138 @@ msgid "https://smartyparcel.com"
 msgstr ""
 
 #. Description of the plugin
-msgid "Multi-carrier shipping solution for WooCommerce."
+msgid "Multi-carrier order tracking and shipping solution for WooCommerce."
 msgstr ""
 
 #. Author of the plugin
 msgid "kirillbdev"
+msgstr ""
+
+#: lang/frontend.php:1
+#: views/order/edit_order_metabox.php:52
+msgid "Add tracking number"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Add tracking number for order"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Cancel"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Carrier"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Carrier settings"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Internal server error"
+msgstr ""
+
+#: lang/frontend.php:1
+#: src/Http/Controllers/CarriersController.php:97
+msgid "Invalid carrier"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "No carriers available for your account"
+msgstr ""
+
+#: lang/frontend.php:1
+#: views/automation.php:17
+#: views/settings_general.php:35
+#: views/tools.php:17
+msgid "Save"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Tracking number"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Tracking number has invalid format"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Unable to change carrier status"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Unable to load carrier settings"
+msgstr ""
+
+#: lang/frontend.php:1
+msgid "Unable to save carrier settings"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:63
+#: src/Component/Carriers/CarrierCatalog.php:103
+#: src/Component/Carriers/CarrierCatalog.php:134
+#: src/Component/Carriers/CarrierCatalog.php:167
+#: src/Services/CarrierService.php:148
+msgid "Pickup points"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:67
+#: views/settings_general.php:31
+msgid "Checkout"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:70
+msgid "Display language of cities and departments"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:72
+msgid "Ukrainian"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:73
+msgid "Russian"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:79
+msgid "Use Nova Poshta online directory for search settlements"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:80
+msgid "If enabled, the plugin will use online directory api for both warehouse and address delivery"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:83
+#: src/Modules/Frontend/Account.php:31
+msgid "Shipping label"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:86
+msgid "Global params as default"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:106
+msgid "Bearer eCom token of Ukrposhta"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:107
+msgid "Bearer eCom token is required to search for warehouses across Ukraine."
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:137
+msgid "API Key of Nova Post"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:138
+msgid "API key is required to search for warehouses and PUDO across Europe"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:170
+msgid "API Token of Meest Post"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:171
+msgid "API token is required to search for warehouses and PUDO of Meest Post"
 msgstr ""
 
 #: src/Component/ListTable/AutomationListTable.php:56
@@ -53,8 +180,8 @@ msgid "Created At"
 msgstr ""
 
 #: src/Component/ListTable/AutomationListTable.php:92
-#: src/Modules/Backend/OptionsPage.php:150
-#: src/Modules/Backend/OptionsPage.php:151
+#: src/Modules/Backend/OptionsPage.php:184
+#: src/Modules/Backend/OptionsPage.php:185
 msgid "Edit"
 msgstr ""
 
@@ -308,7 +435,6 @@ msgstr ""
 #: src/Foundation/UkrPoshtaAddressShipping.php:60
 #: src/Foundation/UkrPoshtaShipping.php:19
 #: src/Foundation/UkrPoshtaShipping.php:60
-#: views/partial/settings_top.php:20
 msgid "Ukrposhta"
 msgstr ""
 
@@ -327,6 +453,20 @@ msgstr ""
 msgid "EXPRESS"
 msgstr ""
 
+#: src/Http/Controllers/CarriersController.php:41
+msgid "Carrier enabled"
+msgstr ""
+
+#: src/Http/Controllers/CarriersController.php:42
+msgid "Carrier disabled"
+msgstr ""
+
+#: src/Http/Controllers/CarriersController.php:80
+#: src/Http/Controllers/OptionsController.php:31
+#: views/tools.php:26
+msgid "Settings saved successfully!"
+msgstr ""
+
 #: src/Http/Controllers/MigrationController.php:28
 msgid "Migrations were successfully applied"
 msgstr ""
@@ -335,117 +475,116 @@ msgstr ""
 msgid "Unable to apply migrations"
 msgstr ""
 
-#: src/Http/Controllers/OptionsController.php:31
-#: views/tools.php:26
-msgid "Settings saved successfully!"
+#: src/Http/Middleware/CheckManageWooPermission.php:17
+msgid "You do not have permission to access this action."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:91
-#: views/settings_general.php:19
-#: views/settings_nova_poshta.php:19
-#: views/settings_rozetka.php:19
-#: views/settings_ukrposhta.php:19
+#: src/Modules/Backend/OptionsPage.php:116
+#: src/Modules/Backend/OptionsPage.php:127
+#: src/Modules/Backend/OptionsPage.php:128
+msgid "Dashboard"
+msgstr ""
+
+#: src/Modules/Backend/OptionsPage.php:136
+#: src/Modules/Backend/OptionsPage.php:137
+#: src/Modules/Core/PluginInfo.php:39
+#: views/partial/settings_general/carriers.php:42
 msgid "Settings"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:102
-#: src/Modules/Backend/OptionsPage.php:103
-msgid "Smarty Parcel"
-msgstr ""
-
-#: src/Modules/Backend/OptionsPage.php:111
-#: src/Modules/Backend/OptionsPage.php:112
+#: src/Modules/Backend/OptionsPage.php:145
+#: src/Modules/Backend/OptionsPage.php:146
 msgid "Create TTN"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:120
-#: src/Modules/Backend/OptionsPage.php:121
+#: src/Modules/Backend/OptionsPage.php:154
+#: src/Modules/Backend/OptionsPage.php:155
 #: views/orders.php:4
 msgid "Orders"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:129
-#: src/Modules/Backend/OptionsPage.php:130
+#: src/Modules/Backend/OptionsPage.php:163
+#: src/Modules/Backend/OptionsPage.php:164
 msgid "Automation"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:141
-#: src/Modules/Backend/OptionsPage.php:142
+#: src/Modules/Backend/OptionsPage.php:175
+#: src/Modules/Backend/OptionsPage.php:176
 #: views/order/ttn_widget.php:29
 msgid "Create"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:159
-#: src/Modules/Backend/OptionsPage.php:160
+#: src/Modules/Backend/OptionsPage.php:193
+#: src/Modules/Backend/OptionsPage.php:194
 #: views/tools.php:14
 msgid "Tools"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:171
+#: src/Modules/Backend/OptionsPage.php:205
 msgid "Warehouses data of Nova Poshta"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:172
+#: src/Modules/Backend/OptionsPage.php:206
 msgid "Last update date:"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:173
+#: src/Modules/Backend/OptionsPage.php:207
 msgid "Status:"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:174
+#: src/Modules/Backend/OptionsPage.php:208
 msgid "Not completed"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:175
+#: src/Modules/Backend/OptionsPage.php:209
 msgid "Completed"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:176
+#: src/Modules/Backend/OptionsPage.php:210
 msgid "Unknown"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:177
+#: src/Modules/Backend/OptionsPage.php:211
 msgid "Update warehouses"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:178
+#: src/Modules/Backend/OptionsPage.php:212
 msgid "Continue update"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:179
+#: src/Modules/Backend/OptionsPage.php:213
 msgid "Load areas..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:180
+#: src/Modules/Backend/OptionsPage.php:214
 msgid "Load cities..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:181
+#: src/Modules/Backend/OptionsPage.php:215
 msgid "Load warehouses..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:182
+#: src/Modules/Backend/OptionsPage.php:216
 msgid "Warehouses db updated successfully"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:185
+#: src/Modules/Backend/OptionsPage.php:219
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:334
+#: src/Modules/Backend/OptionsPage.php:344
 msgid "Unable to detect carrier for order"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:372
+#: src/Modules/Backend/OptionsPage.php:382
 msgid "Add rule"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:390
+#: src/Modules/Backend/OptionsPage.php:400
 msgid "Rule not found"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:399
+#: src/Modules/Backend/OptionsPage.php:409
 msgid "Rule saved successfully"
 msgstr ""
 
@@ -461,46 +600,43 @@ msgstr ""
 msgid "Edit shipping address"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:45
-#: src/Modules/Backend/ShippingItemDrawer.php:51
-#: src/Modules/Backend/ShippingItemDrawer.php:54
+#: src/Modules/Backend/ShippingItemDrawer.php:46
+#: src/Modules/Backend/ShippingItemDrawer.php:52
+#: src/Modules/Backend/ShippingItemDrawer.php:55
 msgid "City"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:46
+#: src/Modules/Backend/ShippingItemDrawer.php:47
 msgid "Warehouse / Poshtomat"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:47
+#: src/Modules/Backend/ShippingItemDrawer.php:48
 msgid "Settlement"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:48
+#: src/Modules/Backend/ShippingItemDrawer.php:49
 msgid "Street"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:49
+#: src/Modules/Backend/ShippingItemDrawer.php:50
 msgid "House number"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:50
+#: src/Modules/Backend/ShippingItemDrawer.php:51
 msgid "Flat"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:52
-#: src/Modules/Backend/ShippingItemDrawer.php:55
+#: src/Modules/Backend/ShippingItemDrawer.php:53
+#: src/Modules/Backend/ShippingItemDrawer.php:56
 msgid "Warehouse"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:53
+#: src/Modules/Backend/ShippingItemDrawer.php:54
 msgid "Service type"
 msgstr ""
 
-#: src/Modules/Frontend/Account.php:31
-#: views/settings_nova_poshta.php:32
-#: views/settings_rozetka.php:31
-#: views/settings_ukrposhta.php:31
-msgid "Shipping label"
+#: src/Modules/Backend/ShippingItemDrawer.php:57
+msgid "Calculated shipping cost in checkout"
 msgstr ""
 
 #: src/Modules/Frontend/AssetsLoader.php:98
@@ -572,33 +708,37 @@ msgstr ""
 msgid "Something went wrong"
 msgstr ""
 
-#: src/Modules/Frontend/Checkout.php:86
+#: src/Modules/Frontend/Checkout.php:70
 msgid "Middle Name"
+msgstr ""
+
+#: src/Services/CarrierService.php:149
+msgid "Address delivery"
+msgstr ""
+
+#: src/Services/CarrierService.php:150
+msgid "Rates calculation"
+msgstr ""
+
+#: src/Services/CarrierService.php:151
+msgid "Shipping labels"
+msgstr ""
+
+#: src/Services/CarrierService.php:152
+#: views/partial/settings_general/carriers.php:66
+msgid "Tracking"
 msgstr ""
 
 #: views/automation.php:14
 msgid "Rule constructor"
 msgstr ""
 
-#: views/automation.php:17
-#: views/settings_general.php:23
-#: views/settings_nova_poshta.php:23
-#: views/settings_rozetka.php:23
-#: views/settings_ukrposhta.php:23
-#: views/tools.php:17
-msgid "Save"
-msgstr ""
-
 #: views/order/edit_order_metabox.php:48
 msgid "Create shipping label"
 msgstr ""
 
-#: views/order/edit_order_metabox.php:52
-msgid "Attach shipping label"
-msgstr ""
-
 #: views/order/ttn_widget.php:32
-msgid "Attach"
+msgid "Add tracking"
 msgstr ""
 
 #: views/partial/locator_message.php:13
@@ -618,280 +758,99 @@ msgid "Need help?"
 msgstr ""
 
 #: views/partial/pro_promotion.php:20
-#: views/partial/settings_general/parcels.php:13
-#: views/partial/settings_nova_poshta/parcels.php:13
-#: views/partial/settings_rozetka/parcels.php:13
-#: views/partial/settings_ukrposhta/parcels.php:13
 msgid "Documentation"
 msgstr ""
 
-#: views/partial/pro_promotion.php:27
-msgid "Open support chat"
-msgstr ""
-
-#: views/partial/pro_promotion.php:39
+#: views/partial/pro_promotion.php:32
 msgid "Unlock more features with paid plans"
 msgstr ""
 
-#: views/partial/pro_promotion.php:43
+#: views/partial/pro_promotion.php:36
 msgid "More shipments limit"
 msgstr ""
 
-#: views/partial/pro_promotion.php:46
+#: views/partial/pro_promotion.php:39
 msgid "More carrier accounts"
 msgstr ""
 
-#: views/partial/pro_promotion.php:49
+#: views/partial/pro_promotion.php:42
 msgid "Automatic calculation of shipping costs."
 msgstr ""
 
-#: views/partial/pro_promotion.php:52
+#: views/partial/pro_promotion.php:45
 msgid "Shipping calculation based on order total"
 msgstr ""
 
-#: views/partial/pro_promotion.php:55
+#: views/partial/pro_promotion.php:48
 msgid "Possibility of mass generation of TTN in one click"
 msgstr ""
 
-#: views/partial/pro_promotion.php:58
+#: views/partial/pro_promotion.php:51
 msgid "Extended parcels analytics"
 msgstr ""
 
-#: views/partial/pro_promotion.php:61
+#: views/partial/pro_promotion.php:54
 msgid "Premium support"
 msgstr ""
 
-#: views/partial/pro_promotion.php:69
+#: views/partial/pro_promotion.php:62
 msgid "Switch to paid plan"
 msgstr ""
 
+#: views/partial/settings_general/carriers.php:12
+msgid "Enable the carriers you want to integrate with your store."
+msgstr ""
+
 #: views/partial/settings_general/carriers.php:15
-msgid "On this page, you can enable the carriers you want to integrate with your store."
+msgid "List of supported carriers and features"
 msgstr ""
 
-#: views/partial/settings_general/carriers.php:16
-msgid "List of supported carriers"
+#: views/partial/settings_general/carriers.php:32
+msgid "Features:"
 msgstr ""
 
-#: views/partial/settings_general/checkout.php:14
-msgid "Load translates from"
+#: views/partial/settings_general/carriers.php:64
+msgid "1000+ other carriers"
 msgstr ""
 
-#: views/partial/settings_general/checkout.php:16
-msgid "Plugin settings"
+#: views/partial/settings_general/carriers.php:69
+msgid "Shipments sent with any other carrier can be tracked by their tracking number."
 msgstr ""
 
-#: views/partial/settings_general/checkout.php:17
-msgid "Wordpress localization files"
-msgstr ""
-
-#: views/partial/settings_general/checkout.php:20
-msgid "If you are using language plugins such as WPML or Polylang - select \"Wordpress localization files\" option"
-msgstr ""
-
-#: views/partial/settings_general/checkout.php:25
+#: views/partial/settings_general/checkout.php:15
 msgid "Shipping block position on checkout page"
 msgstr ""
 
-#: views/partial/settings_general/checkout.php:27
+#: views/partial/settings_general/checkout.php:17
 msgid "Default section"
 msgstr ""
 
-#: views/partial/settings_general/checkout.php:28
+#: views/partial/settings_general/checkout.php:18
 msgid "Additional section"
 msgstr ""
 
-#: views/partial/settings_general/checkout.php:35
+#: views/partial/settings_general/checkout.php:25
 msgid "Color of spinner in frontend"
 msgstr ""
 
-#: views/partial/settings_general/checkout.php:42
+#: views/partial/settings_general/checkout.php:32
 msgid "Save last customer address"
 msgstr ""
 
-#: views/partial/settings_general/checkout.php:48
+#: views/partial/settings_general/checkout.php:38
 msgid "Inject additional shipping fields"
 msgstr ""
 
-#: views/partial/settings_general/checkout.php:54
+#: views/partial/settings_general/checkout.php:44
 msgid "Use currency conversion on rates estimation"
 msgstr ""
 
-#: views/partial/settings_general/checkout.php:56
+#: views/partial/settings_general/checkout.php:46
 msgid "Carriers often return shipping costs in the destination currency. If this option is enabled, SmartyParcel will convert the shipping cost to the store’s selected currency using average worldwide exchange rates."
 msgstr ""
 
-#: views/partial/settings_general/parcels.php:12
-#: views/partial/settings_nova_poshta/parcels.php:12
-#: views/partial/settings_rozetka/parcels.php:12
-#: views/partial/settings_ukrposhta/parcels.php:12
-#: views/ttn/ttn_forbidden.php:15
-msgid "The plugin must be connected to the Smarty Parcel service to use the functionality of creating a TTN"
-msgstr ""
-
-#: views/partial/settings_general/parcels.php:19
-msgid "COD method"
-msgstr ""
-
-#: views/partial/settings_general/parcels.php:26
-msgid "Default description"
-msgstr ""
-
-#: views/partial/settings_general/parcels.php:35
-msgid "Default weight"
-msgstr ""
-
-#: views/partial/settings_general/parcels.php:41
-msgid "Default dimensions"
-msgstr ""
-
-#: views/partial/settings_general/parcels.php:46
-msgid "Width (cm)"
-msgstr ""
-
-#: views/partial/settings_general/parcels.php:56
-msgid "Height (cm)"
-msgstr ""
-
-#: views/partial/settings_general/parcels.php:66
-msgid "Length (cm)"
-msgstr ""
-
-#: views/partial/settings_general/pickup_points.php:21
-msgid "Bearer eCom token of Ukrposhta"
-msgstr ""
-
-#: views/partial/settings_general/pickup_points.php:23
-msgid "Bearer eCom token is required to search for warehouses across Ukraine."
-msgstr ""
-
-#: views/partial/settings_general/pickup_points.php:28
-msgid "API Key of Nova Post"
-msgstr ""
-
-#: views/partial/settings_general/pickup_points.php:30
-msgid "API key is required to search for warehouses and PUDO across Europe"
-msgstr ""
-
-#: views/partial/settings_general/pickup_points.php:35
-msgid "API Token of Meest Post"
-msgstr ""
-
-#: views/partial/settings_general/pickup_points.php:37
-msgid "API token is required to search for warehouses and PUDO of Meest Post"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/checkout.php:13
-msgid "Display language of cities and departments"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/checkout.php:17
-msgid "Russian"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/checkout.php:18
-msgid "Ukrainian"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/checkout.php:25
-msgid "Use Nova Poshta online directory for search settlements"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/checkout.php:27
-msgid "If enabled, the plugin will use online directory api for both warehouse and address delivery"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/parcels.php:18
-#: views/partial/settings_rozetka/parcels.php:19
-#: views/partial/settings_ukrposhta/parcels.php:19
-msgid "Delivery payer"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/parcels.php:22
-#: views/partial/settings_rozetka/parcels.php:21
-#: views/partial/settings_ukrposhta/parcels.php:21
-#: views/partial/settings_ukrposhta/parcels.php:53
-msgid "Sender"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/parcels.php:23
-#: views/partial/settings_rozetka/parcels.php:22
-#: views/partial/settings_ukrposhta/parcels.php:22
-#: views/partial/settings_ukrposhta/parcels.php:54
-msgid "Recipient"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/parcels.php:29
-msgid "Payment method"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/parcels.php:33
-msgid "Cash"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/parcels.php:34
-msgid "NonCash"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/parcels.php:41
-msgid "Payment control"
-msgstr ""
-
-#: views/partial/settings_nova_poshta/parcels.php:47
-msgid "Global params as default"
-msgstr ""
-
-#: views/partial/settings_top.php:12
-msgid "General settings"
-msgstr ""
-
-#: views/partial/settings_top.php:16
-msgid "Nova Poshta"
-msgstr ""
-
-#: views/partial/settings_top.php:24
-msgid "Rozetka delivery"
-msgstr ""
-
-#: views/partial/settings_ukrposhta/parcels.php:29
-msgid "On fail receive"
-msgstr ""
-
-#: views/partial/settings_ukrposhta/parcels.php:31
-msgid "Return"
-msgstr ""
-
-#: views/partial/settings_ukrposhta/parcels.php:32
-msgid "Process as refusal"
-msgstr ""
-
-#: views/partial/settings_ukrposhta/parcels.php:39
-msgid "Check on delivery"
-msgstr ""
-
-#: views/partial/settings_ukrposhta/parcels.php:45
-msgid "SMS notification"
-msgstr ""
-
-#: views/partial/settings_ukrposhta/parcels.php:51
-msgid "COD payer"
-msgstr ""
-
-#: views/settings_general.php:31
+#: views/settings_general.php:19
 msgid "Carriers"
-msgstr ""
-
-#: views/settings_general.php:32
-msgid "Pickup points"
-msgstr ""
-
-#: views/settings_general.php:33
-#: views/settings_nova_poshta.php:31
-msgid "Checkout"
-msgstr ""
-
-#: views/settings_general.php:34
-msgid "Shipping Label"
 msgstr ""
 
 #: views/tools.php:30
@@ -925,6 +884,10 @@ msgstr ""
 
 #: views/ttn/ttn_custom.php:27
 msgid "Create for Ukrposhta"
+msgstr ""
+
+#: views/ttn/ttn_forbidden.php:15
+msgid "The plugin must be connected to the Smarty Parcel service to use the functionality of creating a TTN"
 msgstr ""
 
 #: views/ttn/ttn_forbidden.php:20

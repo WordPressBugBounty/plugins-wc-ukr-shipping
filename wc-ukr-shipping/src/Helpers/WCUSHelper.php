@@ -496,4 +496,23 @@ class WCUSHelper
 
         return $validFormats[$carrierSlug] ?? [];
     }
+
+    /**
+     * Payment method id that is treated as cash on delivery.
+     *
+     * @return string
+     */
+    public static function getCodPaymentMethod(): string
+    {
+        return (string)apply_filters('wcus_cod_payment_method', WCUS_DEFAULT_COD_PAYMENT_METHOD);
+    }
+
+    /**
+     * @param string $paymentMethod
+     * @return bool
+     */
+    public static function isCodPaymentMethod(string $paymentMethod): bool
+    {
+        return $paymentMethod !== '' && $paymentMethod === self::getCodPaymentMethod();
+    }
 }

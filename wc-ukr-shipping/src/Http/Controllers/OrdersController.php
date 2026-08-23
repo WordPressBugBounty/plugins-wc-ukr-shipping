@@ -9,6 +9,7 @@ use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
 use kirillbdev\WCUkrShipping\Foundation\NovaPoshtaShipping;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
 use kirillbdev\WCUkrShipping\Services\CalculationService;
 use kirillbdev\WCUkrShipping\Services\OrderService;
 use kirillbdev\WCUSCore\Http\Contracts\ResponseInterface;
@@ -23,13 +24,16 @@ class OrdersController extends Controller
 {
     private OrderService $orderService;
     private CalculationService $calculationService;
+    private ProductDimensionService $productDimensionService;
 
     public function __construct(
         OrderService $orderService,
-        CalculationService $calculationService
+        CalculationService $calculationService,
+        ProductDimensionService $productDimensionService
     ) {
         $this->orderService = $orderService;
         $this->calculationService = $calculationService;
+        $this->productDimensionService = $productDimensionService;
     }
 
     public function getOrders(Request $request): ResponseInterface
@@ -89,7 +93,7 @@ class OrdersController extends Controller
                 CarrierSlug::NOVA_POSHTA,
                 'UA',
                 $order->get_subtotal(),
-                (float)wc_ukr_shipping_get_option('wcus_ttn_weight_default'),
+                $this->productDimensionService->getDefaultWeight(),
                 $order->get_payment_method(),
                 $request->get('address')['type'] === 'pudo' ? 'w2w' : 'w2d',
                 true,

@@ -30,6 +30,13 @@ final class SmartyParcelWPApi
         '/v1/addresses' => 'GET',
         '/v1/orders' => 'POST',
         '/v1/checkout/link' => 'POST',
+
+        // Label
+        '/v1/labels' => 'POST',
+        '/v1/labels/prepare' => 'POST',
+
+        // Legacy route for migration settings
+        '/v1/legacy/settings/migrate' => 'POST',
     ];
 
     private const PUBLIC_ROUTES = [

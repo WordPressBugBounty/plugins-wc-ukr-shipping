@@ -1,41 +1,41 @@
-=== SmartyParcel (formerly WC Ukr Shipping) - All-in-One Order tracking and multi-carrier Shipping solution for WooCommerce ===
+=== SmartyParcel - Multi-Carrier Shipping, Order Tracking & Live Rates for WooCommerce ===
 Contributors: kirillbdev
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Tags: order tracking, shipment tracking, shipping, shipping rates
+Tags: order tracking, shipping, shipping rates, fulfillment
 Requires PHP: 8.0
-Tested up to: 7.0
-Stable tag: 1.21.13
+Tested up to: 7.1
+Stable tag: 1.22.0
 
-Free Plan Available. The most complete Order tracking, Shipping labels, and rates multi-carrier solution for WooCommerce.
+Pickup points and live rates at checkout, one-click shipping labels, and order tracking for 1,000+ carriers. Free plan available.
 
 == Description ==
 
-**SmartyParcel** is the ultimate multi-carrier logistics, shipping automation, and order tracking platform designed specifically for WooCommerce stores.
+**SmartyParcel** (formerly WC Ukr Shipping) is a full-cycle shipping plugin for WooCommerce: pickup points and live rates at checkout, shipping labels in one click, and automatic order tracking — all inside your WooCommerce admin.
 
-Manage local and international logistics in a single dashboard: connect regional leaders (Nova Poshta, Ukrposhta, Meest, DHL, PostNord, and others), auto-generate shipping labels (TTN), offer dynamic pickup points and live rates on checkout, and track packages across 1,000+ delivery services worldwide.
+Connect regional and international carriers you already work with — Nova Post (Нова Пошта), Ukrposhta (Укрпошта), Rozetka Delivery, Nova Global, Meest, DHL, DPD, and PostNord and others. Print shipping labels one by one or in bulk, let customers choose pickup points or parcel lockers at checkout, and keep every parcel tracked across 1,000+ carriers worldwide.
 
 [Documentation](https://smartyparcel.com/docs/knowledge-base-woocommerce/)
 
 == Features ==
 
 ### 📦 Seamless Shipping & Checkout Experience
-* **SmartyParcel Locator:** Pickup point / parcel locker and warehouse selection at checkout for Nova Poshta, Ukrposhta, Rozetka Delivery, Nova Post (EU), Meest, DHL, DPD, and PostNord.
+* **SmartyParcel Locator:** Pickup point / parcel locker and warehouse selection at checkout for Nova Post (Нова Пошта), Ukrposhta (Укрпошта), Rozetka Delivery, Meest, DHL, DPD, and PostNord.
 * **Flexible Shipping Methods:** Separate shipping types into distinct checkout methods (e.g., separate options for "To Doors / Courier" vs. "To Branch / Locker").
 * **Live & Dynamic Rates:** Calculate live real-time carrier rates at checkout or configure custom shipping rules.
 * **Multilingual Ready:** Full compatibility with WPML, Polylang, and multi-currency stores.
 
 ### 🏷️ Shipping Labels & Automation
-* **Multi-Carrier Label Creation:** Generate official domestic and international shipping labels, waybills (TTN), and return documents directly inside WooCommerce order management.
-* **Versatile Printing Formats:** Download and print shipping documents in industry-standard thermal and desktop formats.
+* **Multi-Carrier Label Creation:** Generate official domestic and international shipping labels directly inside WooCommerce order management.
 * **1-Click Bulk Operations:** Generate, update, and print dozens or hundreds of shipping labels in bulk to streamline high-volume fulfillment routines.
 * **Rule-Based Automation:** Automatically trigger document generation on order status updates, payment completion, or custom triggers.
+* Dynamic shipping rules allow you to create custom scenarios for label generation with different conditions.
 * Cash on Delivery (COD) & Custom Declaration Controls.
 
 ### 🌐 Universal Order Tracking (1,000+ Carriers)
 * Real-time automated status synchronization for local and global shipments.
 * Built-in support for DHL Express, DPD, PostNord, FedEx, UPS, GLS, InPost, and over a thousand other couriers.
-* Native customer notifications via automated webhooks, email, or SMS.
+* Automated customer notifications via email and SMS.
 
 == Carriers (Labels & Live-Rates) ==
 * Nova Poshta (Ukraine)
@@ -54,9 +54,9 @@ Manage local and international logistics in a single dashboard: connect regional
 * Rozetka Delivery
 * Nova Post (EU, International)
 * Meest
-* DHL (contact support)
-* DPD (contact support)
-* PostNord (contact support)
+* DHL (soon)
+* DPD (soon)
+* PostNord (soon)
 
 == Order Tracking (partial list of supported carriers) ==
 
@@ -86,7 +86,7 @@ Manage local and international logistics in a single dashboard: connect regional
 
 Automatic installation is the easiest option as WordPress handles the file transfers itself and you don’t need to leave your web browser. To do an automatic install of plugin, log in to your WordPress dashboard, navigate to the Plugins menu, and click Add New.
 
-In the search field type “WC Ukr Shipping” and click Search Plugins. Once you’ve found it you can view details about it such as the point release, rating, and description. Most importantly of course, you can install it by simply clicking “Install Now”.
+In the search field type “SmartyParcel” and click Search Plugins. Once you’ve found it you can view details about it such as the point release, rating, and description. Most importantly of course, you can install it by simply clicking “Install Now”.
 
 = Manual installation =
 
@@ -119,6 +119,12 @@ Yes, absolutely. You can use SmartyParcel strictly to enhance your WooCommerce c
 Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.22.0 / (23.08.2026) =
+* Improved and refactored options UI.
+* Legacy plugin settings are now migrated to platform shipping rules.
+* Improved bulk label creation.
+* Fixed checkout js issue.
 
 = Version 1.21.13 / (14.08.2026) =
 * Increased php version requirement to 8.0.
@@ -248,73 +254,4 @@ Unfortunately, the plugin doesn't support checkout blocks yet, but we are workin
 * Added integration with Nova Global (labels, tracking, address delivery).
 * [Nova Poshta] Restored ability to create shipments shipped to companies.
 * Switched some plugin widgets in admin panel to SmartyParcel Elements.
-* Checked compatibility with latest WordPress and WooCommerce versions.
-
-= Version 1.17.8 / (11.11.2025) =
-* [Nova Poshta] Added new option "Global params as default".
-
-= Version 1.17.7 / (06.11.2025) =
-* Fixed error in batch modal for fresh labels.
-* Improved UX in SmartyParcel onboarding element.
-
-= Version 1.17.5 / (06.11.2025) =
-* Implemented labels batches feature: ability to print multiple labels at a time (only for Nova Poshta yet).
-* Added option to use Nova Poshta online directory API for search settlements.
-* [PUDO] Added pre-query filters (to override query string before search pickup points and settlements).
-* [Ukrposhta] Fixed internal error after creating labels without estimated delivery date.
-* [Checkout] Improved validation error messages for Nova Poshta.
-
-= Version 1.17.4 / (14.10.2025) =
-* Added the ability to manually control the SmartyParcel Locator feature.
-
-= Version 1.17.3 / (13.10.2025) =
-* Improved usage strategy for SmartyParcel Locator API.
-
-= Version 1.17.2 / (11.10.2025) =
-* Now plugin supports SmartyParcel Locator - unified API for search pickup points across different carriers.
-* [Automation] Added shortcode for carrier estimated delivery.
-* Tracking is now an integral part of the shipment creation process.
-* Added ability to attach exist shipping label for many orders.
-* [Checkout] Fixed load more option issue.
-* Fixed conflict with other plugins that used vue-router.
-* Fixed several issues with additional slashes on label creation.
-
-= Version 1.17.1 / (30.09.2025) =
-* [Checkout] Improved logic and usability of fields.
-* Checked compatibility with latest WordPress and WooCommerce versions.
-
-= Version 1.17.0 / (12.09.2025) =
-* [SmartyParcel] Added integration with Rozetka Delivery (labels, stickers).
-* [SmartyParcel] Improved dashboard UI.
-* Added ability to print labels from orders management pge.
-* Improved translates at checkout page when "Combine poshtomats" option is active.
-* Added compatibility with Divi at checkout page.
-
-= Version 1.16.5 / (19.08.2025) =
-* Fixed fatal error on plugin setting page when store not connected to SmartyParcel.
-
-= Version 1.16.4 / (19.08.2025) =
-* [SmartyParcel] Improved connection flow and UI/UX. Added more analytics.
-* Checked compatibility with latest WordPress and WooCommerce versions.
-
-= Version 1.16.3 / (11.08.2025) =
-* Added new option "Combine poshtomats and warehouses" for Nova Poshta.
-* Added ability to change shipping method name for Ukrposhta and NovaPost (EU).
-* Fixed blank screen when edit checkout in some cases.
-* Checked compatibility with latest WordPress and WooCommerce versions.
-
-= Version 1.16.2 / (08.07.2025) =
-* Code quality improvements.
-
-= Version 1.16.1 / (02.07.2025) =
-* Fixed PHP 8.2 deprecation notice.
-* Code quality improvements.
-
-= Version 1.16.0 / (01.07.2025) =
-* [New] Rozetka Delivery shipping method.
-* [New] Nova Post (EU) shipping method.
-* Added ability to attach exist label to order.
-* Added displaying tracking number at my account page (orders).
-* [Fixed] Ukrposhta batch label creation.
-* Carrier account management was removed from plugin and moved to cloud account panel.
 * Checked compatibility with latest WordPress and WooCommerce versions.
