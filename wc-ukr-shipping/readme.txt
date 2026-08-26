@@ -5,7 +5,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: order tracking, shipping, shipping rates, fulfillment
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.22.0
+Stable tag: 1.22.1
 
 Pickup points and live rates at checkout, one-click shipping labels, and order tracking for 1,000+ carriers. Free plan available.
 
@@ -98,7 +98,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 == External services ==
 
-This plugin uses SmartyParcel API to provide advanced logistic functions (like create labels, tracking etc.) and also external API to collect user feedbacks ([Privacy Policy](https://smartyparcel.com/privacy/)).
+This plugin uses SmartyParcel API to provide advanced logistic functions (like create labels, tracking etc.) and also external API to collect user feedbacks and installation telemetry, which includes the store URL and the WordPress administrator email address ([Privacy Policy](https://smartyparcel.com/privacy/)).
 
 == FAQ ==
 
@@ -119,6 +119,10 @@ Yes, absolutely. You can use SmartyParcel strictly to enhance your WooCommerce c
 Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.22.1 / (26.08.2026) =
+* Improved telemetry data.
+* Improved translations for a feedback form.
 
 = Version 1.22.0 / (23.08.2026) =
 * Improved and refactored options UI.

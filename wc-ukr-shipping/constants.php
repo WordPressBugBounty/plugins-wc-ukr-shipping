@@ -36,3 +36,4 @@ define('WCUS_OPTION_LOADER_LAST_SYNC', 'wcus_loader_last_sync');
 define('WCUS_OPTION_SMARTY_PARCEL_API_KEY', 'wcus_smartyparcel_api_key');
 define('WCUS_OPTION_SMARTY_PARCEL_USER_STATUS', 'wcus_smartyparcel_user_status');
 define('WCUS_OPTION_SMARTY_PARCEL_CARRIERS', 'wcus_smartyparcel_carriers');
+define('WCUS_OPTION_INSTALLATION_ID', 'wcus_app_installation_id');
