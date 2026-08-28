@@ -2,22 +2,22 @@
 
 namespace kirillbdev\WCUkrShipping\Foundation;
 
+use kirillbdev\WCUkrShipping\Component\Carriers\Meest\Rates\MeestCheckoutRateShipmentFactory;
 use kirillbdev\WCUkrShipping\Factories\Rates\CheckoutRateShipmentFactory;
-use kirillbdev\WCUkrShipping\Factories\Rates\NovaPost\NovaPostCheckoutRateShipmentFactory;
 
 if ( ! defined('ABSPATH')) {
     exit;
 }
 
-class NovaPostShipping extends AbstractShippingMethod
+class PostNordShipping extends AbstractShippingMethod
 {
     public function __construct($instance_id = 0)
     {
         parent::__construct($instance_id);
 
-        $this->id = WCUS_SHIPPING_METHOD_NOVA_POST;
-        $this->method_title = __('Nova Post', 'wc-ukr-shipping');
-        $this->method_description = 'Nova Post by SmartyParcel';
+        $this->id = WCUS_SHIPPING_METHOD_POST_NORD;
+        $this->method_title = __('PostNord Service Point', 'wc-ukr-shipping');
+        $this->method_description = 'PostNord Service Point delivery by SmartyParcel';
 
         $this->supports = [
             'shipping-zones',
@@ -51,7 +51,19 @@ class NovaPostShipping extends AbstractShippingMethod
                 'title' => __('Name', 'woocommerce' ),
                 'type' => 'text',
                 'description' => '',
-                'default' => __('Nova Post', 'wc-ukr-shipping'),
+                'default' => __('PostNord Service Point', 'wc-ukr-shipping'),
+            ],
+            'pudo_types' => [
+                'title' => __('Service Point types', 'wc-ukr-shipping'),
+                'type' => 'multiselect',
+                'options' => [
+                    'pudo' => __('PUDO (Pickup points)', 'wc-ukr-shipping'),
+                    'parcel_locker'  => __('Parcel Box', 'wc-ukr-shipping'),
+                ],
+                'default' => ['pudo'],
+                'desc_tip' => true,
+                'description' => __('You can choose which types of delivery will be processed by this shipping method or create several shipping methods with concrete delivery types separately.', 'wc-ukr-shipping'),
+                'sanitize_callback' => [$this, 'sanitizeDeliveryMethods'],
             ],
             'cost_calculation_type' => [
                 'title' => __('Type of shipping cost calculation', 'wc-ukr-shipping'),
@@ -68,16 +80,24 @@ class NovaPostShipping extends AbstractShippingMethod
             'fixed_cost' => [
                 'title' => __('Fixed shipping cost', 'wc-ukr-shipping'),
                 'type' => 'text',
-                'default' =>  wc_ukr_shipping_get_option('wcus_nova_post_fixed_cost'),
+                'default' =>  100,
                 'desc_tip' => true,
                 'class' => 'j-wcus-shipping-fixed-cost',
                 'sanitize_callback' => [$this, 'sanitizePrice'],
+            ],
+            'include_cod' => [
+                'label' => __('Include COD when calculating shipping cost', 'wc-ukr-shipping'),
+                'type' => 'checkbox',
+                'description' => __('If checked and function supported by carrier, the COD service will be included in shipping cost.', 'wc-ukr-shipping'),
+                'default' =>  'yes',
+                'desc_tip' => true,
+                'class' => 'j-wcus-shipping-option-cod',
             ],
             'add_cost_to_order' => [
                 'label' => __('Include shipping cost to order total', 'wc-ukr-shipping'),
                 'type' => 'checkbox',
                 'description' => __('If checked, the shipping cost will be added to the order total.', 'wc-ukr-shipping'),
-                'default' =>  (int)wc_ukr_shipping_get_option('wcus_nova_post_cost_view_only') === 1 ? 'no' : 'yes',
+                'default' =>  'yes',
                 'desc_tip' => true,
             ],
             'enable_free_shipping' => [
@@ -104,6 +124,6 @@ class NovaPostShipping extends AbstractShippingMethod
 
     protected function getCheckoutRateShipmentFactory(): CheckoutRateShipmentFactory
     {
-        return new NovaPostCheckoutRateShipmentFactory();
+        return new MeestCheckoutRateShipmentFactory('warehouse');
     }
 }
