@@ -5,9 +5,9 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: order tracking, shipping, shipping rates, fulfillment
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.22.2
+Stable tag: 1.22.3
 
-Pickup points and live rates at checkout, one-click shipping labels, and order tracking for 1,000+ carriers. Free plan available.
+Pickup points and live rates at checkout, one-click shipping labels, and shipment tracking for 1,000+ carriers. Free plan available.
 
 == Description ==
 
@@ -15,7 +15,10 @@ Pickup points and live rates at checkout, one-click shipping labels, and order t
 
 Connect regional and international carriers you already work with — Nova Post (Нова Пошта), Ukrposhta (Укрпошта), Rozetka Delivery, Nova Global, Meest, DHL, DPD, and PostNord and others. Print shipping labels one by one or in bulk, let customers choose pickup points or parcel lockers at checkout, and keep every parcel tracked across 1,000+ carriers worldwide.
 
+[Product Overview](https://smartyparcel.com/?utm_source=wporg)
 [Documentation](https://smartyparcel.com/docs/knowledge-base-woocommerce/)
+
+https://youtu.be/6GRS_C8s1mE?si=jbhUsSI7I7X2IgSr
 
 == Features ==
 
@@ -120,6 +123,9 @@ Unfortunately, the plugin doesn't support checkout blocks yet, but we are workin
 
 == Changelog ==
 
+= Version 1.22.3 / (01.09.2026) =
+* Improved order sync mechanism.
+
 = Version 1.22.2 / (28.08.2026) =
 * Added PostNord Service Point delivery shipping method.
 * Added PostNord Address delivery shipping method.
@@ -216,51 +222,3 @@ Unfortunately, the plugin doesn't support checkout blocks yet, but we are workin
 * [Rozetka Delivery] Migrated shipping options to the shipping method's settings page.
 * Fixed warehouse clear bug for Nova Poshta in checkout.
 * Improved weight and dimensions conversion when calculating rates.
-
-= Version 1.19.0 / (17.12.2025) =
-* Added currency conversion option. If enabled, the SmartyParcel Rates API will convert shipping costs to store's selected currency.
-* [Nova Post] Migrated shipping options to shipping method's settings page.
-* [Nova Post] Implemented supporting of SmartyParcel Rates API.
-* [Nova Post] Added ability to set up "Free shipping" rule, based on order total.
-* [Nova Global] Implemented supporting of SmartyParcel Rates API.
-* [Nova Global] Added ability to set up "Free shipping" rule, based on order total.
-
-= Version 1.18.9 / (12.12.2025) =
-* [Checkout] Improved state pre-initialization.
-
-= Version 1.18.7 / (12.12.2025) =
-* [Checkout] Added state pre-initialization before mounting component.
-* Replaced shipping method detection function on shipping calculation to support backward compatibility.
-
-= Version 1.18.6 / (11.12.2025) =
-* Removed strict checking of delivery type at shipping cost calculation.
-* Added more option defaults.
-
-= Version 1.18.5 / (11.12.2025) =
-* Hotfix: Shipping recalculation when changing delivery type.
-
-= Version 1.18.4 / (11.12.2025) =
-* [Nova Poshta] Migrated other shipping options to shipping method's settings page.
-* [Nova Poshta] Fixed bug with total calculation for address delivery.
-* Checked compatibility with latest WordPress and WooCommerce versions.
-
-= Version 1.18.3 / (03.12.2025) =
-* [Nova Poshta] Removed legacy translates option group.
-* [Nova Poshta] Migrated delivery cost options to shipping method's settings page. We will continue migrating other options that are directly related to shipping to the shipping method settings in the future.
-* Checked compatibility with latest WordPress and WooCommerce versions.
-
-= Version 1.18.2 / (25.11.2025) =
-* Restored ability to update order shipping address in admin (Nova Poshta only yet).
-* Fixed fatal error on shipment creation form for orders without shipping method.
-
-= Version 1.18.1 / (19.11.2025) =
-* [Ukrposhta] Added bulk label printing.
-* [Automation] Added order note type option.
-* [Orders] Added filter by carrier (only for created shipments).
-* Fixed issue with SmartyParcel Elements and Redis Object Cache plugin (negative lifetime of transient option).
-
-= Version 1.18.0 / (17.11.2025) =
-* Added integration with Nova Global (labels, tracking, address delivery).
-* [Nova Poshta] Restored ability to create shipments shipped to companies.
-* Switched some plugin widgets in admin panel to SmartyParcel Elements.
-* Checked compatibility with latest WordPress and WooCommerce versions.

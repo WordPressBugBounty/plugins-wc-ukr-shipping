@@ -36,7 +36,9 @@ class OrderResource
             'discount_total' => $order->get_total_discount(),
             'subtotal' => $order->get_subtotal(),
             'shipping_carrier' => $carrierSlug,
-            'shipping_service_type' => $this->getCarrierServiceType($orderShipping, $carrierSlug),
+            'shipping_service_type' => $orderShipping
+                ? $this->getCarrierServiceType($orderShipping, $carrierSlug)
+                : null,
             'shipping_method_id' => $orderShipping ? $orderShipping->get_method_id() : null,
             'shipping_method_name' => $orderShipping ? $orderShipping->get_method_title() : null,
             'payment_method_id' => $order->get_payment_method(),
