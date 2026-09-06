@@ -16,6 +16,7 @@ use kirillbdev\WCUkrShipping\Component\Carriers\NovaPost\Order\CheckoutOrderHand
 use kirillbdev\WCUkrShipping\Component\Carriers\NovaPost\Order\CheckoutOrderShippingHandler as NovaPostCheckoutOrderShippingHandler;
 use kirillbdev\WCUkrShipping\Component\Carriers\Meest\Order\CheckoutOrderHandler as MeestCheckoutOrderHandler;
 use kirillbdev\WCUkrShipping\Component\Carriers\PostNord\Order\CheckoutOrderHandler as PostNordCheckoutOrderHandler;
+use kirillbdev\WCUkrShipping\Component\Carriers\InPost\Order\CheckoutOrderHandler as InPostCheckoutOrderHandler;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -96,6 +97,8 @@ class OrderCreator implements ModuleInterface
                 return new MeestCheckoutOrderHandler();
             case $order->has_shipping_method(WCUS_SHIPPING_METHOD_POST_NORD):
                 return new PostNordCheckoutOrderHandler();
+            case $order->has_shipping_method(WCUS_SHIPPING_METHOD_INPOST):
+                return new InPostCheckoutOrderHandler();
             default:
                 return null;
         }

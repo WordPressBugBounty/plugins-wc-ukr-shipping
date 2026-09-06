@@ -19,7 +19,7 @@ class BaseOrderCollector
     protected string $carrierSlug;
     protected array $data = [];
     protected \WC_Order $order;
-    protected \WC_Order_Item_Shipping $orderShipping;
+    protected ?\WC_Order_Item_Shipping $orderShipping;
     protected ProductDimensionService $productDimensionService;
     protected ProductFactory $productFactory;
     protected SmartyParcelWPApi $smartyParcelApi;

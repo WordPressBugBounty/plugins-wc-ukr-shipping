@@ -3,7 +3,7 @@
  * Plugin Name: SmartyParcel (formerly WC Ukr Shipping)
  * Plugin URI: https://smartyparcel.com
  * Description: Multi-carrier order tracking and shipping solution for WooCommerce.
- * Version: 1.22.3
+ * Version: 1.22.4
  * Author: kirillbdev
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -11,7 +11,7 @@
  * Domain Path: /lang
  * Requires PHP: 8.0
  * Tested up to: 7.1
- * WC tested up to: 11.0
+ * WC tested up to: 11.1
 */
 
 if ( ! defined('ABSPATH')) {

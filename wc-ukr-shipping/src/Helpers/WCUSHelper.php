@@ -11,7 +11,7 @@ class WCUSHelper
     /**
      * @param \WC_Order $order
      *
-     * @return \WC_Order_Item_Shipping
+     * @return \WC_Order_Item_Shipping|null
      */
     public static function getOrderShippingMethod($order)
     {

@@ -324,7 +324,7 @@ class OptionsPage implements ModuleInterface
         }
     }
 
-    public function processPurchaseLabelV2(\WC_Order $order, \WC_Order_Item_Shipping $orderShipping, ?string $carrierSlug = null): void
+    public function processPurchaseLabelV2(\WC_Order $order, ?\WC_Order_Item_Shipping $orderShipping, ?string $carrierSlug = null): void
     {
         wp_enqueue_script(
         'smartyparcel_labels_js',
@@ -336,7 +336,7 @@ class OptionsPage implements ModuleInterface
 
         if ($carrierSlug !== null) {
             $carrier = $carrierSlug;
-        } else {
+        } elseif ($orderShipping !== null) {
             $carrier = SmartyParcelHelper::getCarrierFromShippingMethod($orderShipping->get_method_id());
         }
 

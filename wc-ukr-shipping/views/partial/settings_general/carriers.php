@@ -8,12 +8,19 @@
 
 <div class="wcus-message wcus-message--info wcus-mb-3">
     <div style="font-size: 14px; line-height: 1.4;">
-        <div class="wcus-mb-2">
+        <div class="wcus-mb-1">
             <?php esc_html_e('Enable the carriers you want to integrate with your store.', 'wc-ukr-shipping'); ?>
         </div>
-        <a target="_blank" href="https://smartyparcel.com/supported-carriers/">
-            <?php esc_html_e('List of supported carriers and features', 'wc-ukr-shipping'); ?>
-        </a>
+        <div class="wcus-mb-1">
+            <a target="_blank" href="https://smartyparcel.com/supported-carriers/">
+                <?php esc_html_e('List of supported carriers and features', 'wc-ukr-shipping'); ?>
+            </a>
+        </div>
+        <div>
+            <a target="_blank" href="https://smartyparcel.com/supported-pickup-points/">
+                <?php esc_html_e('List of supported Pickup Points', 'wc-ukr-shipping'); ?>
+            </a>
+        </div>
     </div>
 </div>
 

@@ -4,6 +4,8 @@ namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
 use kirillbdev\WCUkrShipping\Component\Block\ShippingBlockIntegration;
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
+use kirillbdev\WCUkrShipping\Foundation\InPostAddressShipping;
+use kirillbdev\WCUkrShipping\Foundation\InPostShipping;
 use kirillbdev\WCUkrShipping\Foundation\NovaGlobalAddress;
 use kirillbdev\WCUkrShipping\Foundation\NovaPoshtaShipping;
 use kirillbdev\WCUkrShipping\Foundation\NovaPostShipping;
@@ -74,6 +76,10 @@ class ShippingMethod implements ModuleInterface
             $methods[WCUS_SHIPPING_METHOD_POST_NORD] = PostNordShipping::class;
             $methods[WCUS_SHIPPING_METHOD_POST_NORD_ADDRESS] = PostNordAddressShipping::class;
         }
+        if (in_array(CarrierSlug::INPOST, $activeCarriers)) {
+            $methods[WCUS_SHIPPING_METHOD_INPOST] = InPostShipping::class;
+            $methods[WCUS_SHIPPING_METHOD_INPOST_ADDRESS] = InPostAddressShipping::class;
+        }
 
         return $methods;
     }
@@ -98,6 +104,8 @@ class ShippingMethod implements ModuleInterface
             WCUS_SHIPPING_METHOD_NOVA_GLOBAL_ADDRESS,
             WCUS_SHIPPING_METHOD_POST_NORD,
             WCUS_SHIPPING_METHOD_POST_NORD_ADDRESS,
+            WCUS_SHIPPING_METHOD_INPOST,
+            WCUS_SHIPPING_METHOD_INPOST_ADDRESS,
         ];
         foreach ($packages as $key => &$package) {
             if (isset($chosenMethods[$key])

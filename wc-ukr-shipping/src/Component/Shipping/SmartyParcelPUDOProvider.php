@@ -73,6 +73,7 @@ class SmartyParcelPUDOProvider implements PUDOProviderInterface
         $intlCarriers = [
             CarrierSlug::NOVA_POST,
             CarrierSlug::POST_NORD,
+            CarrierSlug::INPOST,
         ];
         if (in_array($this->carrierSlug, $intlCarriers, true)) {
             $params['country_code'] = $request->cityId;

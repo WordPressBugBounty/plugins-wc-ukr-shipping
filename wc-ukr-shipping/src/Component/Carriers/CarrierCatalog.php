@@ -49,7 +49,7 @@ final class CarrierCatalog
         $definitions = [
             new CarrierDefinition(
                 CarrierSlug::NOVA_POSHTA,
-                'Nova Poshta (Ukraine)',
+                'Nova Poshta',
                 'nova-poshta-icon.png',
                 [
                     CarrierFeature::PICKUP_POINTS,
@@ -89,6 +89,28 @@ final class CarrierCatalog
                 ]
             ),
             new CarrierDefinition(
+                CarrierSlug::POST_NORD,
+                'PostNord',
+                'postnord-icon.png',
+                [
+                    CarrierFeature::PICKUP_POINTS,
+                    CarrierFeature::ADDRESS_DELIVERY,
+                    CarrierFeature::TRACKING,
+                ],
+                requireStoreConnection: true
+            ),
+            new CarrierDefinition(
+                CarrierSlug::INPOST,
+                'InPost',
+                'inpost-icon.png',
+                [
+                    CarrierFeature::PICKUP_POINTS,
+                    CarrierFeature::ADDRESS_DELIVERY,
+                    CarrierFeature::TRACKING,
+                ],
+                requireStoreConnection: true
+            ),
+            new CarrierDefinition(
                 CarrierSlug::UKRPOSHTA,
                 'Ukrposhta',
                 'ukrposhta-icon.png',
@@ -111,7 +133,7 @@ final class CarrierCatalog
             ),
             new CarrierDefinition(
                 CarrierSlug::ROZETKA_DELIVERY,
-                'Rozetka Delivery (Ukraine)',
+                'Rozetka Delivery',
                 'rozetka-icon.png',
                 [
                     CarrierFeature::PICKUP_POINTS,
@@ -172,17 +194,6 @@ final class CarrierCatalog
                         ),
                     ]),
                 ]
-            ),
-            new CarrierDefinition(
-                CarrierSlug::POST_NORD,
-                'PostNord',
-                'postnord-icon.png',
-                [
-                    CarrierFeature::PICKUP_POINTS,
-                    CarrierFeature::ADDRESS_DELIVERY,
-                    CarrierFeature::TRACKING,
-                ],
-                requireStoreConnection: true
             ),
         ];
 

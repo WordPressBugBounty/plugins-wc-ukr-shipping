@@ -95,7 +95,7 @@ class AssetsLoader implements ModuleInterface
         $globals['ukrposhta']['defaultCities'] = WCUSHelper::getUkrposhtaDefaultCities();
         $globals['rozetkaDelivery']['defaultCities'] = WCUSHelper::getRozetkaDefaultCities();
         $globals['i18n'] = [
-            'fields_title' => __('Select shipping address', 'wc-ukr-shipping'),
+            'fields_title' => __('Select service point', 'wc-ukr-shipping'),
             'shipping_type_warehouse' => __('To warehouse', 'wc-ukr-shipping'),
             'shipping_type_doors' => __('By courier', 'wc-ukr-shipping'),
             'shipping_type_poshtomat' => __('To poshtomat', 'wc-ukr-shipping'),
@@ -103,7 +103,7 @@ class AssetsLoader implements ModuleInterface
             'ui' => [
                 'city_placeholder' => __('Select locality', 'wc-ukr-shipping'),
                 'warehouse_placeholder' => __('Select warehouse', 'wc-ukr-shipping'),
-                'pudo_placeholder' => __('Select Service Point', 'wc-ukr-shipping'),
+                'pudo_placeholder' => __('Select service point', 'wc-ukr-shipping'),
                 'poshtomat_placeholder' => __('Select poshtomat', 'wc-ukr-shipping'),
                 'warehouse_poshtomat_placeholder' => __('Select warehouse or poshtomat', 'wc-ukr-shipping'),
                 'custom_address_placeholder' => __('Enter address', 'wc-ukr-shipping'),
@@ -161,6 +161,8 @@ class AssetsLoader implements ModuleInterface
             WCUS_SHIPPING_METHOD_MEEST_ADDRESS,
             WCUS_SHIPPING_METHOD_POST_NORD,
             WCUS_SHIPPING_METHOD_POST_NORD_ADDRESS,
+            WCUS_SHIPPING_METHOD_INPOST,
+            WCUS_SHIPPING_METHOD_INPOST_ADDRESS,
         ];
 
         // Get active shipping methods for zones

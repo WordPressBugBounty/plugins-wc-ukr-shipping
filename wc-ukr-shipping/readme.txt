@@ -2,12 +2,12 @@
 Contributors: kirillbdev
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Tags: order tracking, shipping, shipping rates, fulfillment
+Tags:  shipping, shipment tracking, live rates, shipping label, fulfillment
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.22.3
+Stable tag: 1.22.4
 
-Pickup points and live rates at checkout, one-click shipping labels, and shipment tracking for 1,000+ carriers. Free plan available.
+Pickup points selection with live rates at checkout, one-click shipping labels, and shipment tracking for WooCommerce.
 
 == Description ==
 
@@ -23,8 +23,8 @@ https://youtu.be/6GRS_C8s1mE?si=jbhUsSI7I7X2IgSr
 == Features ==
 
 ### 📦 Seamless Shipping & Checkout Experience
-* **SmartyParcel Locator:** Pickup point / parcel locker and warehouse selection at checkout for Nova Post (Нова Пошта), Ukrposhta (Укрпошта), Rozetka Delivery, Meest, DHL, DPD, and PostNord (Posten Norden).
-* **Flexible Shipping Methods:** Separate shipping types into distinct checkout methods (e.g., separate options for "To Doors / Courier" vs. "To Branch / Locker").
+* **Pickup Points and Parcel Lockers** selection at checkout for Nova Post (Нова Пошта), InPost Poland, Ukrposhta (Укрпошта), Rozetka Delivery, Meest, DHL, DPD, and PostNord (Posten Norden).
+* **Flexible Shipping Methods:** Separate shipping types into distinct checkout methods (e.g., separate options for "To Doors / Courier" vs. "To Pickup Point / Parcel Locker").
 * **Live & Dynamic Rates:** Calculate live real-time carrier rates at checkout or configure custom shipping rules.
 * **Multilingual Ready:** Full compatibility with WPML, Polylang, and multi-currency stores.
 
@@ -40,26 +40,27 @@ https://youtu.be/6GRS_C8s1mE?si=jbhUsSI7I7X2IgSr
 * Built-in support for DHL Express, DPD, PostNord, FedEx, UPS, GLS, InPost, and over a thousand other couriers.
 * Automated customer notifications via email and SMS.
 
-== Carriers (Labels & Live-Rates) ==
-* Nova Poshta (Ukraine)
-* Ukrposhta
-* Rozetka Delivery
-* Nova Post (EU, International)
-* Nova Global
-* Meest
-* DHL (contact support)
-* DPD (contact support)
-* PostNord (contact support)
-
-== Pickup points (SmartyParcel Locator for WooCommerce) ==
+== Pickup Points / Parcel Lockers selection ==
 * Nova Poshta
 * UkrPoshta
 * Rozetka Delivery
 * Nova Post (EU, International)
 * Meest
 * PostNord (Posten Norden)
+* InPost Poland
 * DHL (soon)
 * DPD (soon)
+
+== Creating Shipping Labels and calculating Live-Rates ==
+* Nova Poshta (Ukraine)
+* Ukrposhta
+* Rozetka Delivery
+* Nova Post (EU, International)
+* Nova Global
+* Meest
+* DHL (soon)
+* DPD (soon)
+* PostNord (soon)
 
 == Order Tracking (partial list of supported carriers) ==
 
@@ -122,6 +123,11 @@ Yes, absolutely. You can use SmartyParcel strictly to enhance your WooCommerce c
 Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.22.4 / (07.09.2026) =
+* Added InPost Service Point delivery shipping method.
+* Added InPost Address delivery shipping method.
+* Implemented Pickup Points selection for InPost (Poland).
 
 = Version 1.22.3 / (01.09.2026) =
 * Improved order sync mechanism.

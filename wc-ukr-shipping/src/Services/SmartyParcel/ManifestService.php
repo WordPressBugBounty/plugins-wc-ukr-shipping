@@ -8,7 +8,7 @@ use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 
 final class ManifestService
 {
-    private const CACHE_TTL = 10800; // 3 hours
+    private const CACHE_TTL = 86400; // 24 hours
 
     private SmartyParcelWPApi $api;
 

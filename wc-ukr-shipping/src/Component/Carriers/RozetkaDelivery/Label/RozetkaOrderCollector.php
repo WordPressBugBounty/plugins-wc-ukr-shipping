@@ -17,9 +17,9 @@ class RozetkaOrderCollector extends BaseOrderCollector
     protected function collectShipTo(): array
     {
         $data = parent::collectShipTo();
-        $data['pudoPointId'] = $this->orderShipping->get_meta('wcus_rozetka_warehouse_id');
-        $data['address1'] = $this->orderShipping->get_meta('wcus_rozetka_warehouse_name');
-        $data['city'] = $this->orderShipping->get_meta('wcus_rozetka_city_name');
+        $data['pudoPointId'] = $this->orderShipping?->get_meta('wcus_rozetka_warehouse_id');
+        $data['address1'] = $this->orderShipping?->get_meta('wcus_rozetka_warehouse_name');
+        $data['city'] = $this->orderShipping?->get_meta('wcus_rozetka_city_name');
         unset($data['state']);
         unset($data['district']);
         unset($data['address2']);

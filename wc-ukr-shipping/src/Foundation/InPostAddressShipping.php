@@ -9,15 +9,15 @@ if ( ! defined('ABSPATH')) {
     exit;
 }
 
-class PostNordShipping extends AbstractShippingMethod
+class InPostAddressShipping extends AbstractShippingMethod
 {
     public function __construct($instance_id = 0)
     {
         parent::__construct($instance_id);
 
-        $this->id = WCUS_SHIPPING_METHOD_POST_NORD;
-        $this->method_title = __('PostNord Service Points', 'wc-ukr-shipping');
-        $this->method_description = 'PostNord Service Points delivery by SmartyParcel';
+        $this->id = WCUS_SHIPPING_METHOD_INPOST_ADDRESS;
+        $this->method_title = __('InPost Address Delivery', 'wc-ukr-shipping');
+        $this->method_description = 'InPost Address Delivery by SmartyParcel';
 
         $this->supports = [
             'shipping-zones',
@@ -51,19 +51,7 @@ class PostNordShipping extends AbstractShippingMethod
                 'title' => __('Name', 'woocommerce' ),
                 'type' => 'text',
                 'description' => '',
-                'default' => __('PostNord Service Points', 'wc-ukr-shipping'),
-            ],
-            'pudo_types' => [
-                'title' => __('Service Point types', 'wc-ukr-shipping'),
-                'type' => 'multiselect',
-                'options' => [
-                    'pudo' => __('PUDO (Pickup points)', 'wc-ukr-shipping'),
-                    'parcel_locker'  => __('Parcel Box', 'wc-ukr-shipping'),
-                ],
-                'default' => ['pudo'],
-                'desc_tip' => true,
-                'description' => __('You can choose which types of delivery will be processed by this shipping method or create several shipping methods with concrete delivery types separately.', 'wc-ukr-shipping'),
-                'sanitize_callback' => [$this, 'sanitizeDeliveryMethods'],
+                'default' => __('PostNord Address', 'wc-ukr-shipping'),
             ],
             'cost_calculation_type' => [
                 'title' => __('Type of shipping cost calculation', 'wc-ukr-shipping'),

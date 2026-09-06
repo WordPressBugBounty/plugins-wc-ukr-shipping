@@ -127,12 +127,17 @@ class AddressController extends Controller
         }
 
         $items = $this->mapWarehouses($result['data'], $request->get('lang', ''));
+        $listSupportedCarriers = [
+            CarrierSlug::INPOST,
+            CarrierSlug::POST_NORD,
+            CarrierSlug::NOVA_POSHTA,
+        ];
 
         return $this->jsonResponse([
             'success' => true,
             'data' => [
                 'items' => $items,
-                'more' => $request->get('carrier') === 'nova_poshta'
+                'more' => in_array($request->get('carrier'), $listSupportedCarriers, true)
                     ? count($items) >= 20
                     : false,
             ]
@@ -179,6 +184,7 @@ class AddressController extends Controller
           CarrierSlug::ROZETKA_DELIVERY,
           CarrierSlug::NOVA_POST,
           CarrierSlug::POST_NORD,
+          CarrierSlug::INPOST,
         ];
 
         if (
