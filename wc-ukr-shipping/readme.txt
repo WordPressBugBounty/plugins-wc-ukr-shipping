@@ -5,7 +5,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags:  shipping, shipment tracking, live rates, shipping label, fulfillment
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.22.4
+Stable tag: 1.22.5
 
 Pickup points selection with live rates at checkout, one-click shipping labels, and shipment tracking for WooCommerce.
 
@@ -123,6 +123,9 @@ Yes, absolutely. You can use SmartyParcel strictly to enhance your WooCommerce c
 Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.22.5 / (07.09.2026) =
+* Restored default value for the active carriers option.
 
 = Version 1.22.4 / (07.09.2026) =
 * Added InPost Service Point delivery shipping method.

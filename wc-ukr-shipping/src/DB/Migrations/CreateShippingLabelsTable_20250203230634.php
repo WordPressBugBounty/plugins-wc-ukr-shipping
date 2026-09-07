@@ -35,5 +35,8 @@ class CreateShippingLabelsTable_20250203230634 extends Migration
                 UNIQUE KEY `u_label` (`label_id`)
             ) ENGINE=InnoDB $collate
         ");
+
+        // Force set active carriers option for new users
+        update_option('wcus_active_carriers', json_encode([]));
     }
 }

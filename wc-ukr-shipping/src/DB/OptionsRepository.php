@@ -28,7 +28,13 @@ class OptionsRepository
             'wcus_combine_poshtomats' => 0,
 
             // Global
-            'wcus_active_carriers' => [],
+            'wcus_active_carriers' => [
+                CarrierSlug::NOVA_POSHTA,
+                CarrierSlug::UKRPOSHTA,
+                CarrierSlug::ROZETKA_DELIVERY,
+                CarrierSlug::NOVA_POST,
+                CarrierSlug::NOVA_GLOBAL,
+            ],
             'wcus_rates_convert_currency' => 0,
 
             // Nova Poshta
