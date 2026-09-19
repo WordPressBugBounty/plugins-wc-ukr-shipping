@@ -11,9 +11,11 @@ use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Shipping\Rozetka
 use kirillbdev\WCUkrShipping\Component\Shipping\NovaPoshtaPUDOProvider;
 use kirillbdev\WCUkrShipping\Component\Shipping\SmartyParcelPUDOProvider;
 use kirillbdev\WCUkrShipping\Component\Shipping\UkrposhtaPUDOProvider;
+use kirillbdev\WCUkrShipping\Contracts\Shipping\GeoPUDOProviderInterface;
 use kirillbdev\WCUkrShipping\Contracts\Shipping\PUDOProviderInterface;
 use kirillbdev\WCUkrShipping\Dto\Shipping\City;
 use kirillbdev\WCUkrShipping\Dto\Shipping\PUDO;
+use kirillbdev\WCUkrShipping\Dto\Shipping\SearchPUDOByGeoRequestDTO;
 use kirillbdev\WCUkrShipping\Dto\Shipping\SearchPUDORequestDTO;
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
@@ -26,6 +28,15 @@ if ( ! defined('ABSPATH')) {
 
 class AddressController extends Controller
 {
+    private const LOCATOR_SUPPORTED_CARRIERS = [
+        CarrierSlug::NOVA_POSHTA,
+        CarrierSlug::UKRPOSHTA,
+        CarrierSlug::ROZETKA_DELIVERY,
+        CarrierSlug::NOVA_POST,
+        CarrierSlug::POST_NORD,
+        CarrierSlug::INPOST,
+    ];
+
     public function searchCities(Request $request)
     {
         // todo: move query check logic to concrete provider
@@ -144,6 +155,82 @@ class AddressController extends Controller
         ]);
     }
 
+    public function searchPudoByGeo(Request $request)
+    {
+        $lat = $request->get('lat');
+        $lng = $request->get('lng');
+        $radius = (float)$request->get('radius');
+        $countryCode = strtoupper((string)$request->get('country_code', ''));
+
+        if ( ! is_numeric($lat) || ! is_numeric($lng) || $radius <= 0 || $countryCode === '') {
+            return $this->jsonResponse([
+                'success' => true,
+                'data' => [
+                    'items' => []
+                ]
+            ]);
+        }
+
+        $provider = $this->getGeoPUDOProvider(
+            $request->get('carrier'),
+            $request->get('lang', '')
+        );
+        if ($provider === null) {
+            return $this->jsonResponse([
+                'success' => true,
+                'data' => [
+                    'items' => []
+                ]
+            ]);
+        }
+
+        /**
+         * Enable third-party code to override geo pickup points request data
+         * @since 1.22.0
+         */
+        $requestData = apply_filters(
+            'wcus_pudo_points_geo_request',
+            [
+                'lat' => (float)$lat,
+                'lng' => (float)$lng,
+                'radius' => $radius,
+                'countryCode' => $countryCode,
+                'types' => $request->get('types', [
+                    PUDO::PUDO_TYPE_WAREHOUSE,
+                    PUDO::PUDO_TYPE_LOCKER,
+                ]),
+            ],
+            $request->get('carrier')
+        );
+
+        try {
+            $points = $provider->searchPUDOByGeo(
+                new SearchPUDOByGeoRequestDTO(
+                    (float)$requestData['lat'],
+                    (float)$requestData['lng'],
+                    (float)$requestData['radius'],
+                    $requestData['countryCode'],
+                    $requestData['types'],
+                    isset($requestData['weight']) ? (float)$requestData['weight'] : null
+                )
+            );
+        } catch (\Throwable $e) {
+            return $this->jsonResponse([
+                'success' => true,
+                'data' => [
+                    'items' => []
+                ]
+            ]);
+        }
+
+        return $this->jsonResponse([
+            'success' => true,
+            'data' => [
+                'items' => $this->mapWarehouses($points, $request->get('lang', ''))
+            ]
+        ]);
+    }
+
     /**
      * @param City[] $cities
      * @param string $locale
@@ -170,32 +257,47 @@ class AddressController extends Controller
             return [
                 'value' => $item->id,
                 'name' => $locale === 'ru' ? $item->nameRu : $item->nameUa,
+                'type' => $item->type,
+                'city_id' => $item->cityId,
                 'meta' => $item->meta,
             ];
         }, $warehouses);
     }
 
-    private function getPUDOProvider(string $carrier, string $lang): PUDOProviderInterface
+    /**
+     * Geo search is backed by the SmartyParcel Locator only - locally stored
+     * carrier directories have no coordinates at all.
+     */
+    private function getGeoPUDOProvider(string $carrier, string $lang): ?GeoPUDOProviderInterface
+    {
+        $provider = $this->maybeLocatorProvider($carrier, $lang);
+
+        return $provider instanceof GeoPUDOProviderInterface ? $provider : null;
+    }
+
+    private function maybeLocatorProvider(string $carrier, string $lang): ?PUDOProviderInterface
     {
         $useLocator = (int)wc_ukr_shipping_get_option('wcus_use_smartyparcel_locator') === 1;
-        $locatorSupportedCarriers = [
-          CarrierSlug::NOVA_POSHTA,
-          CarrierSlug::UKRPOSHTA,
-          CarrierSlug::ROZETKA_DELIVERY,
-          CarrierSlug::NOVA_POST,
-          CarrierSlug::POST_NORD,
-          CarrierSlug::INPOST,
-        ];
 
         if (
             $useLocator && SmartyParcelHelper::isConnected()
-            && in_array($carrier, $locatorSupportedCarriers, true)
+            && in_array($carrier, self::LOCATOR_SUPPORTED_CARRIERS, true)
         ) {
             return new SmartyParcelPUDOProvider(
                 $carrier,
                 $lang,
                 wcus_container()->make(SmartyParcelWPApi::class)
             );
+        }
+
+        return null;
+    }
+
+    private function getPUDOProvider(string $carrier, string $lang): PUDOProviderInterface
+    {
+        $locatorProvider = $this->maybeLocatorProvider($carrier, $lang);
+        if ($locatorProvider !== null) {
+            return $locatorProvider;
         }
 
         switch ($carrier) {

@@ -36,6 +36,7 @@ class OptionsRepository
                 CarrierSlug::NOVA_GLOBAL,
             ],
             'wcus_rates_convert_currency' => 0,
+            'wcus_google_maps_api_key' => '',
 
             // Nova Poshta
             'wc_ukr_shipping_address_shipping' => 1,

@@ -34,6 +34,7 @@ class ShippingMethod implements ModuleInterface
         add_filter('woocommerce_cart_shipping_packages', [$this, 'calculatePackageRateHash']);
         add_filter('woocommerce_cart_shipping_method_full_label', [$this, 'appendViewCostToRateLabel'], 10, 2);
         add_filter('woocommerce_order_shipping_to_display', [$this, 'displayOrderViewCost'], 10, 2);
+        add_filter('woocommerce_get_order_item_totals', [$this, 'preventEmailFreeShippingLabel'], 10, 2);
 
         // test
         add_action( 'woocommerce_blocks_loaded', function () {
@@ -93,20 +94,7 @@ class ShippingMethod implements ModuleInterface
         }
 
         $chosenMethods = wc_get_chosen_shipping_method_ids();
-        $supportedMethods = [
-            WC_UKR_SHIPPING_NP_SHIPPING_NAME,
-            WCUS_SHIPPING_METHOD_UKRPOSHTA,
-            WCUS_SHIPPING_METHOD_UKRPOSHTA_ADDRESS,
-            WCUS_SHIPPING_METHOD_NOVA_POST,
-            WCUS_SHIPPING_METHOD_ROZETKA,
-            WCUS_SHIPPING_METHOD_MEEST,
-            WCUS_SHIPPING_METHOD_MEEST_ADDRESS,
-            WCUS_SHIPPING_METHOD_NOVA_GLOBAL_ADDRESS,
-            WCUS_SHIPPING_METHOD_POST_NORD,
-            WCUS_SHIPPING_METHOD_POST_NORD_ADDRESS,
-            WCUS_SHIPPING_METHOD_INPOST,
-            WCUS_SHIPPING_METHOD_INPOST_ADDRESS,
-        ];
+        $supportedMethods = WCUSHelper::getPluginShippingMethodIds();
         foreach ($packages as $key => &$package) {
             if (isset($chosenMethods[$key])
                 && in_array($chosenMethods[$key], $supportedMethods, true)) {
@@ -149,5 +137,27 @@ class ShippingMethod implements ModuleInterface
         return $viewCost === null
             ? $shipping
             : wc_price($viewCost, ['currency' => $order->get_currency()]) . ' (' . $shipping . ')';
+    }
+
+    /**
+     * Since WooCommerce 11.1 emails replace the shipping value with "Free!" when it equals the method name
+     * (zero shipping total), so make the value differ from the method name for plugin shipping methods.
+     *
+     * @param array $totalRows
+     * @param \WC_Order $order
+     */
+    public function preventEmailFreeShippingLabel($totalRows, $order): array
+    {
+        if (
+            !isset($totalRows['shipping']['value'], $totalRows['shipping']['meta'])
+            || $totalRows['shipping']['value'] !== $totalRows['shipping']['meta']
+            || !WCUSHelper::orderHasPluginShippingMethod($order)
+        ) {
+            return $totalRows;
+        }
+
+        $totalRows['shipping']['value'] = '<span class="wcus-shipping-method">' . $totalRows['shipping']['value'] . '</span>';
+
+        return $totalRows;
     }
 }

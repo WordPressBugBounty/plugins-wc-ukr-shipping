@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: SmartyParcel (formerly WC Ukr Shipping)
+ * Plugin Name: SmartyParcel - Multi-Carrier Shipping, Pickup Points & Labels
  * Plugin URI: https://smartyparcel.com
- * Description: Multi-carrier order tracking and shipping solution for WooCommerce.
- * Version: 1.22.5
+ * Description: Pickup points at checkout, bulk shipping labels and tracking for InPost, PostNord, GLS, DHL, Nova Post, Nova Poshta, Ukrposhta and Meest.
+ * Version: 1.23.0
  * Author: kirillbdev
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html

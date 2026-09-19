@@ -15,9 +15,7 @@ class UkrposhtaCheckoutValidator implements CheckoutValidatorInterface
 
     private function validateWarehouseShipping(string $type, array $data): void
     {
-        if (empty($data['wcus_ukrposhta_' . $type . '_city'])
-            || empty($data['wcus_ukrposhta_' . $type . '_warehouse'])
-        ) {
+        if (empty($data['wcus_ukrposhta_' . $type . '_warehouse'])) {
             wc_add_notice(
                 __('Select Ukrposhta warehouse', 'wc-ukr-shipping'),
                 'error'

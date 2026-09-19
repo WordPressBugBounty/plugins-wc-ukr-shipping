@@ -140,16 +140,6 @@ class AssetsLoader implements ModuleInterface
             );
         }
 
-        if (get_current_screen() !== null && get_current_screen()->id === 'smartyparcel_page_wc_ukr_shipping_tools') {
-            wp_enqueue_script(
-                'wcus_tools_js',
-                WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/tools.min.js',
-                ['jquery'],
-                filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/tools.min.js'),
-                true
-            );
-        }
-
         $this->injectGlobals('jquery');
         $this->injectTranslates('jquery');
     }

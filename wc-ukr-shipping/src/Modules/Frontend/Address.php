@@ -26,6 +26,9 @@ class Address implements ModuleInterface
             new Route('wcus_search_warehouses', AddressController::class,'searchWarehouses', [
                 'public' => true
             ]),
+            new Route('wcus_search_pudo_by_geo', AddressController::class,'searchPudoByGeo', [
+                'public' => true
+            ]),
         ];
     }
 }

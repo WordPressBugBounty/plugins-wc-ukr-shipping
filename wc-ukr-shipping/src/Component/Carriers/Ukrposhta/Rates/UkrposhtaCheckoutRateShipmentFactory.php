@@ -24,12 +24,32 @@ class UkrposhtaCheckoutRateShipmentFactory extends CheckoutRateShipmentFactory
         if ($this->deliveryType === 'door') {
             return !empty($this->get('ship_to')['postal_code'] ?? null);
         }
-        return !empty($this->getShipToCarrierCityId());
+
+        // A point picked on the map leaves the city ref empty - Ukrposhta
+        // returns none on geo lookups - so the point alone has to be enough
+        return !empty($this->getShipToPUDOPointId())
+            || !empty($this->getShipToCarrierCityId());
     }
 
     protected function getShipToCarrierCityId(): ?string
     {
         return $this->get("wcus_ukrposhta_{$this->fieldGroup}_city", '');
+    }
+
+    /**
+     * Preferred over the city ref by the calculator, and the only thing left
+     * once a point comes from the map. A city chosen without a warehouse still
+     * falls back to the ref, so rates keep appearing as early as they did.
+     */
+    protected function getShipToPUDOPointId(): ?string
+    {
+        if ($this->deliveryType === 'door') {
+            return null;
+        }
+
+        $warehouse = (string)$this->get("wcus_ukrposhta_{$this->fieldGroup}_warehouse", '');
+
+        return $warehouse === '' ? null : $warehouse;
     }
 
     protected function getShipToPostalCode(): ?string

@@ -50,8 +50,8 @@ class FormLabelRequestBuilder implements LabelRequestBuilderInterface
             'email' => $request->get('recipient')['email'] ?? null,
         ];
         if ($request->get('recipient')['service_type'] === 'Warehouse') {
-            $shipTo['carrier_city_id'] = $request->get('recipient')['city_ref'];
-            $shipTo['carrier_warehouse_id'] = $request->get('recipient')['warehouse_ref'];
+            $shipTo['country_code'] = 'UA';
+            $shipTo['pudo_point_id'] = $request->get('recipient')['warehouse_ref'];
         } else {
             $shipTo['country_code'] = 'UA';
             $shipTo['city'] = WCUSHelper::prepareApiString($request->get('recipient')['settlement_name']);

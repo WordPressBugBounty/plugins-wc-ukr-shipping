@@ -88,6 +88,8 @@ class AssetsLoader implements ModuleInterface
                 'address_shipping_enable' => (int)wc_ukr_shipping_get_option('wc_ukr_shipping_address_shipping'),
                 'useOnlineDirectory' => (int)wc_ukr_shipping_get_option('wcus_np_use_online_directory') === 1,
                 'combinePoshtomats' => (int)wc_ukr_shipping_get_option('wcus_combine_poshtomats') === 1,
+                'locatorEnabled' => (int)wc_ukr_shipping_get_option('wcus_use_smartyparcel_locator') === 1,
+                'googleMapsApiKey' => (string)wc_ukr_shipping_get_option('wcus_google_maps_api_key'),
             ]
         ];
 
@@ -118,6 +120,14 @@ class AssetsLoader implements ModuleInterface
                 'house_placeholder' => __('Enter house', 'wc-ukr-shipping'),
                 'flat_placeholder' => __('Enter flat number', 'wc-ukr-shipping'),
                 'text_internal_error' => __('Something went wrong', 'wc-ukr-shipping'),
+                'map_open' => __('Select on map', 'wc-ukr-shipping'),
+                'map_title' => __('Select pickup point on map', 'wc-ukr-shipping'),
+                'map_search' => __('Search location', 'wc-ukr-shipping'),
+                'map_close' => __('Close', 'wc-ukr-shipping'),
+                'map_zoom_in' => __('Zoom in the map to load pickup points', 'wc-ukr-shipping'),
+                'map_nothing_found' => __('No pickup points in this area', 'wc-ukr-shipping'),
+                'map_select_point' => __('Select', 'wc-ukr-shipping'),
+                'map_load_error' => __('Unable to load the map', 'wc-ukr-shipping'),
             ]
         ];
 

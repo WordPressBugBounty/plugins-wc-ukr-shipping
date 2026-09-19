@@ -19,6 +19,12 @@ if ( ! defined('ABSPATH')) {
                 <?php echo wc_ukr_shipping_import_svg('docs.svg'); ?>
                 <?php esc_html_e('Documentation', 'wc-ukr-shipping'); ?>
             </a>
+            <a target="_blank"
+               href="https://smartyparcel.com/contacts/"
+               class="wcus-btn wcus-btn--docs wcus-btn--md wcus-btn--block">
+                <?php echo wc_ukr_shipping_import_svg('support.svg'); ?>
+                <?php esc_html_e('Contact support', 'wc-ukr-shipping'); ?>
+            </a>
         </div>
     </div>
 

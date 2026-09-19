@@ -10,6 +10,15 @@
 <?php echo View::render('partial/locator_message'); ?>
 
 <?php
+    HtmlHelper::textField(
+        'wcus[google_maps_api_key]',
+        __('Google Maps API key', 'wc-ukr-shipping'),
+        wc_ukr_shipping_get_option('wcus_google_maps_api_key'),
+        __('Adds a "Select on map" button to the checkout pickup point fields. Works only when the SmartyParcel Locator API is enabled.', 'wc-ukr-shipping')
+    );
+?>
+
+<?php
     HtmlHelper::selectField(
         'wc_ukr_shipping[np_block_pos]',
         __('Shipping block position on checkout page', 'wc-ukr-shipping'),
@@ -38,7 +47,9 @@
         __('Inject additional shipping fields', 'wc-ukr-shipping'),
         (int)wc_ukr_shipping_get_option('wcus_inject_additional_fields') === 1
     );
+?>
 
+<?php
     HtmlHelper::switcherField(
         'wcus[rates_convert_currency]',
         __('Use currency conversion on rates estimation', 'wc-ukr-shipping'),
