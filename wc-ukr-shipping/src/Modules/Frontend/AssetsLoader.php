@@ -162,18 +162,7 @@ class AssetsLoader implements ModuleInterface
 
     private function collectShippingMethods(array $globals): array
     {
-        $ownShippingMethods = [
-            WC_UKR_SHIPPING_NP_SHIPPING_NAME,
-            WCUS_SHIPPING_METHOD_UKRPOSHTA,
-            WCUS_SHIPPING_METHOD_NOVA_POST,
-            WCUS_SHIPPING_METHOD_ROZETKA,
-            WCUS_SHIPPING_METHOD_MEEST,
-            WCUS_SHIPPING_METHOD_MEEST_ADDRESS,
-            WCUS_SHIPPING_METHOD_POST_NORD,
-            WCUS_SHIPPING_METHOD_POST_NORD_ADDRESS,
-            WCUS_SHIPPING_METHOD_INPOST,
-            WCUS_SHIPPING_METHOD_INPOST_ADDRESS,
-        ];
+        $ownShippingMethods = WCUSHelper::getPluginShippingMethodIds();
 
         // Get active shipping methods for zones
         $zones = \WC_Shipping_Zones::get_zones();

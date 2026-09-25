@@ -63,6 +63,7 @@ class WCUSHelper
             WCUS_SHIPPING_METHOD_UKRPOSHTA,
             WCUS_SHIPPING_METHOD_UKRPOSHTA_ADDRESS,
             WCUS_SHIPPING_METHOD_NOVA_POST,
+            WCUS_SHIPPING_METHOD_NOVA_POST_ADDRESS,
             WCUS_SHIPPING_METHOD_ROZETKA,
             WCUS_SHIPPING_METHOD_MEEST,
             WCUS_SHIPPING_METHOD_MEEST_ADDRESS,
@@ -71,6 +72,8 @@ class WCUSHelper
             WCUS_SHIPPING_METHOD_POST_NORD_ADDRESS,
             WCUS_SHIPPING_METHOD_INPOST,
             WCUS_SHIPPING_METHOD_INPOST_ADDRESS,
+            WCUS_SHIPPING_METHOD_GLS,
+            WCUS_SHIPPING_METHOD_GLS_ADDRESS,
         ];
     }
 
@@ -160,6 +163,20 @@ class WCUSHelper
         $option = json_decode($option, true);
 
         return array_replace_recursive($default, empty($option) ? [] : $option);
+    }
+
+    public static function getCheckoutPostData(): array
+    {
+        $action = $_GET['wc-ajax'] ?? '';
+        if ($action === 'update_order_review') {
+            parse_str(wp_unslash($_POST['post_data'] ?? ''), $data);
+            return wc_clean($data);
+        }
+        if ($action === 'checkout') {
+            return wc_clean(wp_unslash($_POST));
+        }
+
+        return [];
     }
 
     public static function getCheckoutFieldGroup(array $postData): string

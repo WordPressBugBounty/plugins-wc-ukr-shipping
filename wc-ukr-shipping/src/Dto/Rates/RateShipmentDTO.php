@@ -28,8 +28,10 @@ final class RateShipmentDTO
      * @var OrderProduct[]
      */
     public array $products;
+
     public ?string $shipToCity;
     public ?string $shipToPostalCode;
+    public ?string $shipToAddress1;
 
     public function __construct(
         string $carrierSlug,
@@ -45,7 +47,8 @@ final class RateShipmentDTO
         ?string $serviceType = null,
         array $products = [],
         ?string $shipToCity = null,
-        ?string $shipToPostalCode = null
+        ?string $shipToPostalCode = null,
+        ?string $shipToAddress1 = null,
     ) {
         $this->carrierSlug = $carrierSlug;
         $this->shipToCountry = $shipToCountry;
@@ -61,5 +64,6 @@ final class RateShipmentDTO
         $this->products = $products;
         $this->shipToCity = $shipToCity;
         $this->shipToPostalCode = $shipToPostalCode;
+        $this->shipToAddress1 = $shipToAddress1;
     }
 }

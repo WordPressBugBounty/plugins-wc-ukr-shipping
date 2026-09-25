@@ -6,7 +6,6 @@ namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 use kirillbdev\WCUkrShipping\Component\Automation\Context;
-use kirillbdev\WCUkrShipping\Component\SmartyParcel\OrderLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
 use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
@@ -80,11 +79,7 @@ class Automation implements ModuleInterface
                 throw new \Exception('Carrier not supported for auto label operations yet');
             }
 
-            $this->smartyParcelService->createLabel(
-                $carrierSlug,
-                $order->get_id(),
-                new OrderLabelRequestBuilder($order)
-            );
+            $this->smartyParcelService->createLabelFromOrder($order);
         } catch (SmartyParcelErrorException $e) {
             $order->add_meta_data(
                 '_wcus_automation_error',

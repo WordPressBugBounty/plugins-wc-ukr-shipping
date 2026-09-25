@@ -68,7 +68,7 @@
         </div>
 
         <div class="wcus-carrier__info">
-            <div class="wcus-carrier__name"><?php esc_html_e('DHL, DPD, GLS, Fedex', 'wc-ukr-shipping'); ?></div>
+            <div class="wcus-carrier__name"><?php esc_html_e('DHL, DPD, Fedex', 'wc-ukr-shipping'); ?></div>
             <div class="wcus-carrier__features">
                 <span class="wcus-carrier__feature"><?php esc_html_e('Tracking', 'wc-ukr-shipping'); ?></span>
             </div>

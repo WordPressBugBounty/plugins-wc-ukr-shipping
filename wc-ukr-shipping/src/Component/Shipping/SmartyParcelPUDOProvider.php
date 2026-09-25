@@ -30,6 +30,7 @@ class SmartyParcelPUDOProvider implements PUDOProviderInterface, GeoPUDOProvider
         CarrierSlug::NOVA_POST,
         CarrierSlug::POST_NORD,
         CarrierSlug::INPOST,
+        CarrierSlug::GLS,
     ];
 
     private string $carrierSlug;

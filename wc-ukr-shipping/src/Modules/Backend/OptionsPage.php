@@ -231,6 +231,7 @@ class OptionsPage implements ModuleInterface
             WCUS_SHIPPING_METHOD_MEEST,
             WCUS_SHIPPING_METHOD_MEEST_ADDRESS,
             WCUS_SHIPPING_METHOD_NOVA_POST,
+            WCUS_SHIPPING_METHOD_NOVA_POST_ADDRESS,
         ];
         if ($shippingMethod !== null && in_array($shippingMethod->get_method_id(), $v2Methods, true)) {
             $this->processPurchaseLabelV2($order, $shippingMethod);

@@ -9,6 +9,7 @@ define('WCUS_SHIPPING_METHOD_NOVA_POSHTA', 'nova_poshta_shipping');
 define('WCUS_SHIPPING_METHOD_UKRPOSHTA', 'wcus_ukrposhta_shipping');
 define('WCUS_SHIPPING_METHOD_UKRPOSHTA_ADDRESS', 'wcus_ukrposhta_address_shipping');
 define('WCUS_SHIPPING_METHOD_NOVA_POST', 'wcus_nova_post_shipping');
+define('WCUS_SHIPPING_METHOD_NOVA_POST_ADDRESS', 'wcus_nova_post_address');
 define('WCUS_SHIPPING_METHOD_ROZETKA', 'wcus_rozetka_delivery_shipping');
 define('WCUS_SHIPPING_METHOD_MEEST', 'wcus_meest_shipping');
 define('WCUS_SHIPPING_METHOD_MEEST_ADDRESS', 'wcus_meest_address_shipping');
@@ -17,6 +18,8 @@ define('WCUS_SHIPPING_METHOD_POST_NORD', 'wcus_post_nord_shipping');
 define('WCUS_SHIPPING_METHOD_POST_NORD_ADDRESS', 'wcus_post_nord_address');
 define('WCUS_SHIPPING_METHOD_INPOST', 'wcus_inpost_shipping');
 define('WCUS_SHIPPING_METHOD_INPOST_ADDRESS', 'wcus_inpost_address_shipping');
+define('WCUS_SHIPPING_METHOD_GLS', 'wcus_gls_shipping');
+define('WCUS_SHIPPING_METHOD_GLS_ADDRESS', 'wcus_gls_address_shipping');
 
 // Shipping item meta
 define('WCUS_SHIPPING_META_VIEW_COST', 'wcus_view_cost');

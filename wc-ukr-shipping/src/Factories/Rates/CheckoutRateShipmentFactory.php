@@ -6,6 +6,7 @@ namespace kirillbdev\WCUkrShipping\Factories\Rates;
 
 use kirillbdev\WCUkrShipping\Dto\Rates\RateShipmentDTO;
 use kirillbdev\WCUkrShipping\Factories\ProductFactory;
+use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Model\OrderProduct;
 use kirillbdev\WCUkrShipping\Services\Calculation\ProductDimensionService;
 
@@ -24,37 +25,19 @@ class CheckoutRateShipmentFactory
         $this->useDimensions = $useDimensions;
         $this->productDimensionService = wcus_container()->make(ProductDimensionService::class);
 
-        if ($_GET['wc-ajax'] === 'update_order_review') {
-            parse_str(sanitize_text_field($_POST['post_data']), $data);
-        } elseif ($_GET['wc-ajax'] === 'checkout') {
-            $data = $_POST;
-        } else {
-            $data = [];
-        }
-        if (isset($data['ship_to_different_address']) && (int)$data['ship_to_different_address'] === 1) {
-            $data['ship_to'] = [
-                'country' => $_POST['s_country'] ?? '',
-                'city' => $_POST['s_city'] ?? null,
-                'state' => $_POST['s_state'] ?? null,
-                'address_1' => $_POST['s_address'] ?? null,
-                'address_2' => $_POST['s_address_2'] ?? null,
-                'postal_code' => $_POST['s_postcode'] ?? null,
-            ];
-        } else {
-            $data['ship_to'] = [
-                'country' => $_POST['country'] ?? '',
-                'city' => $_POST['city'] ?? null,
-                'state' => $_POST['state'] ?? null,
-                'address_1' => $_POST['address'] ?? null,
-                'address_2' => $_POST['address_2'] ?? null,
-                'postal_code' => $_POST['postcode'] ?? null,
-            ];
-        }
+        $data = WCUSHelper::getCheckoutPostData();
+        $this->fieldGroup = WCUSHelper::getCheckoutFieldGroup($data);
+
+        $data['ship_to'] = [
+            'country' => $data[$this->fieldGroup . '_country'] ?? '',
+            'city' => $data[$this->fieldGroup . '_city'] ?? null,
+            'state' => $data[$this->fieldGroup . '_state'] ?? null,
+            'address_1' => $data[$this->fieldGroup . '_address_1'] ?? null,
+            'address_2' => $data[$this->fieldGroup . '_address_2'] ?? null,
+            'postal_code' => $data[$this->fieldGroup . '_postcode'] ?? null,
+        ];
 
         $this->data = $data;
-        $this->fieldGroup = isset($data['ship_to_different_address']) && (int)$data['ship_to_different_address'] === 1
-            ? 'shipping'
-            : 'billing';
     }
 
     public function createRateShipment(): RateShipmentDTO
@@ -75,7 +58,8 @@ class CheckoutRateShipmentFactory
             $this->getServiceType(),
             $products,
             $this->getShipToCity(),
-            $this->getShipToPostalCode()
+            $this->getShipToPostalCode(),
+            $this->getShipToAddress1()
         );
     }
 
@@ -110,6 +94,11 @@ class CheckoutRateShipmentFactory
     }
 
     protected function getShipToPostalCode():?string
+    {
+        return null;
+    }
+
+    protected function getShipToAddress1():?string
     {
         return null;
     }

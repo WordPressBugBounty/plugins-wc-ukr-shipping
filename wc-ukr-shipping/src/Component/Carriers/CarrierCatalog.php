@@ -111,6 +111,17 @@ final class CarrierCatalog
                 requireStoreConnection: true
             ),
             new CarrierDefinition(
+                CarrierSlug::GLS,
+                'GLS',
+                'gls-icon.png',
+                [
+                    CarrierFeature::PICKUP_POINTS,
+                    CarrierFeature::ADDRESS_DELIVERY,
+                    CarrierFeature::TRACKING,
+                ],
+                requireStoreConnection: true
+            ),
+            new CarrierDefinition(
                 CarrierSlug::UKRPOSHTA,
                 'Ukrposhta',
                 'ukrposhta-icon.png',

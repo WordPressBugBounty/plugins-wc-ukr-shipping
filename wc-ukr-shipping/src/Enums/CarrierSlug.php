@@ -15,4 +15,5 @@ final class CarrierSlug
     public const DHL_API = 'dhl_api';
     public const POST_NORD = 'post_nord';
     public const INPOST = 'inpost';
+    public const GLS = 'gls';
 }

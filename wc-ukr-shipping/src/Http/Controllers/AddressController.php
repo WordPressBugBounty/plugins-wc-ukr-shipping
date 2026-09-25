@@ -35,6 +35,7 @@ class AddressController extends Controller
         CarrierSlug::NOVA_POST,
         CarrierSlug::POST_NORD,
         CarrierSlug::INPOST,
+        CarrierSlug::GLS,
     ];
 
     public function searchCities(Request $request)
@@ -140,6 +141,7 @@ class AddressController extends Controller
         $items = $this->mapWarehouses($result['data'], $request->get('lang', ''));
         $listSupportedCarriers = [
             CarrierSlug::INPOST,
+            CarrierSlug::GLS,
             CarrierSlug::POST_NORD,
             CarrierSlug::NOVA_POSHTA,
         ];

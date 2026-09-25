@@ -3,6 +3,7 @@
 namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
 use kirillbdev\WCUkrShipping\Component\Validation\CheckoutValidatorInterface;
+use kirillbdev\WCUkrShipping\Component\Validation\GLSCheckoutValidator;
 use kirillbdev\WCUkrShipping\Component\Validation\InPostCheckoutValidator;
 use kirillbdev\WCUkrShipping\Component\Validation\MeestCheckoutValidator;
 use kirillbdev\WCUkrShipping\Component\Validation\NovaPoshtaCheckoutValidator;
@@ -100,6 +101,8 @@ class CheckoutValidator implements ModuleInterface
             return new PostNordCheckoutValidator();
         } elseif (WCUSHelper::hasChosenShippingMethod(WCUS_SHIPPING_METHOD_INPOST)) {
             return new InPostCheckoutValidator();
+        } elseif (WCUSHelper::hasChosenShippingMethod(WCUS_SHIPPING_METHOD_GLS)) {
+            return new GLSCheckoutValidator();
         }
 
         return null;

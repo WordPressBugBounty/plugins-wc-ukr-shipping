@@ -28,6 +28,7 @@ final class SmartyParcelWPApi
         '/v1/rates/estimate' => 'POST',
         '/v1/addresses' => 'GET',
         '/v1/orders' => 'POST',
+        '/v1/orders/label' => 'POST',
         '/v1/checkout/link' => 'POST',
 
         // Label

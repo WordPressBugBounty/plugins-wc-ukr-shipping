@@ -49,6 +49,7 @@ final class SmartyParcelHelper
             case WCUS_SHIPPING_METHOD_ROZETKA:
                 return CarrierSlug::ROZETKA_DELIVERY;
             case WCUS_SHIPPING_METHOD_NOVA_POST:
+            case WCUS_SHIPPING_METHOD_NOVA_POST_ADDRESS:
                 return CarrierSlug::NOVA_POST;
             case WCUS_SHIPPING_METHOD_NOVA_GLOBAL_ADDRESS:
                 return CarrierSlug::NOVA_GLOBAL;

@@ -4,10 +4,13 @@ namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
 use kirillbdev\WCUkrShipping\Component\Block\ShippingBlockIntegration;
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
+use kirillbdev\WCUkrShipping\Foundation\GLSAddressShipping;
+use kirillbdev\WCUkrShipping\Foundation\GLSShipping;
 use kirillbdev\WCUkrShipping\Foundation\InPostAddressShipping;
 use kirillbdev\WCUkrShipping\Foundation\InPostShipping;
 use kirillbdev\WCUkrShipping\Foundation\NovaGlobalAddress;
 use kirillbdev\WCUkrShipping\Foundation\NovaPoshtaShipping;
+use kirillbdev\WCUkrShipping\Foundation\NovaPostAddressShipping;
 use kirillbdev\WCUkrShipping\Foundation\NovaPostShipping;
 use kirillbdev\WCUkrShipping\Foundation\PostNordAddressShipping;
 use kirillbdev\WCUkrShipping\Foundation\PostNordShipping;
@@ -21,8 +24,6 @@ use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 
 class ShippingMethod implements ModuleInterface
 {
-    private static ?string $cachedRateHash = null;
-
     /**
      * Boot function
      *
@@ -65,6 +66,7 @@ class ShippingMethod implements ModuleInterface
         }
         if (in_array(CarrierSlug::NOVA_POST, $activeCarriers)) {
             $methods[WCUS_SHIPPING_METHOD_NOVA_POST] = NovaPostShipping::class;
+            $methods[WCUS_SHIPPING_METHOD_NOVA_POST_ADDRESS] = NovaPostAddressShipping::class;
         }
         if (in_array(CarrierSlug::NOVA_GLOBAL, $activeCarriers)) {
             $methods[WCUS_SHIPPING_METHOD_NOVA_GLOBAL_ADDRESS] = NovaGlobalAddress::class;
@@ -80,6 +82,10 @@ class ShippingMethod implements ModuleInterface
         if (in_array(CarrierSlug::INPOST, $activeCarriers)) {
             $methods[WCUS_SHIPPING_METHOD_INPOST] = InPostShipping::class;
             $methods[WCUS_SHIPPING_METHOD_INPOST_ADDRESS] = InPostAddressShipping::class;
+        }
+        if (in_array(CarrierSlug::GLS, $activeCarriers)) {
+            $methods[WCUS_SHIPPING_METHOD_GLS] = GLSShipping::class;
+            $methods[WCUS_SHIPPING_METHOD_GLS_ADDRESS] = GLSAddressShipping::class;
         }
 
         return $methods;
@@ -98,17 +104,28 @@ class ShippingMethod implements ModuleInterface
         foreach ($packages as $key => &$package) {
             if (isset($chosenMethods[$key])
                 && in_array($chosenMethods[$key], $supportedMethods, true)) {
-                // todo: bad solution! provide array cache implementation instead
-                if (self::$cachedRateHash === null) {
-                    self::$cachedRateHash = md5(
-                        sprintf('%s_%f', $chosenMethods[$key], microtime(true))
-                    );
-                }
-                $package['wcus_rates_hash'] = self::$cachedRateHash;
+                $package['wcus_rates_hash'] = $this->getRatesHash($chosenMethods[$key]);
             }
         }
 
         return $packages;
+    }
+
+    private function getRatesHash(string $methodId): string
+    {
+        $data = WCUSHelper::getCheckoutPostData();
+        $fields = array_filter(
+            $data,
+            fn($key) => strpos((string)$key, 'wcus_') === 0,
+            ARRAY_FILTER_USE_KEY
+        );
+        ksort($fields);
+
+        return md5((string)wp_json_encode([
+            'method' => $methodId,
+            'payment_method' => $data['payment_method'] ?? '',
+            'fields' => $fields,
+        ]));
     }
 
     /**

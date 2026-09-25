@@ -7,7 +7,6 @@ use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 use kirillbdev\WCUkrShipping\Component\Automation\Context;
 use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\UkrposhtaFormLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\FormLabelRequestBuilder;
-use kirillbdev\WCUkrShipping\Component\SmartyParcel\OrderLabelRequestBuilder;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
 use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
@@ -279,11 +278,7 @@ class SmartyParcelController extends Controller
                 throw new \Exception('Carrier not supported for bulk operations yet');
             }
 
-            $response = $this->smartyParcelService->createLabel(
-                $carrier,
-                $order->get_id(),
-                new OrderLabelRequestBuilder($order)
-            );
+            $response = $this->smartyParcelService->createLabelFromOrder($order);
 
             $downloads = [];
             foreach (WCUSHelper::getLabelDownloadFormats($carrier) as $format => $name) {

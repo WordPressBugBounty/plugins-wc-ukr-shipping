@@ -1,69 +1,56 @@
-=== SmartyParcel – Multi-Carrier Shipping, Pickup Points & Labels for WooCommerce ===
+=== SmartyParcel – Shipping Automation & Order Tracking for GLS, InPost, Nova Post and more ===
 Contributors: kirillbdev
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Tags: shipping, pickup points, parcel locker, shipping label, inpost
+Tags: gls, postnord, meest, nova post, order tracking
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.23.0
+Stable tag: 1.23.1
 
-Pickup points, live rates and bulk shipping labels for InPost, PostNord, GLS, DHL, Nova Post, Nova Poshta, Ukrposhta and Meest in WooCommerce.
+The easiest way to automate shipping in WooCommerce: pickup points at checkout (list or map), one-click shipping labels and order tracking.
 
 == Description ==
 
-**SmartyParcel is a full-cycle shipping platform for WooCommerce.** One integration covers the entire delivery cycle: the customer picks a pickup point or parcel locker at checkout, the carrier returns a live shipping rate, you create the shipping label in one click, and every parcel is tracked back into the order — inside WooCommerce admin, without a carrier back office open in a second tab.
-
-Instead of installing a separate plugin for every courier, you enable the carriers your store actually ships with and run them from one place: one checkout experience, one label queue, one tracking history, one set of automation rules.
+SmartyParcel helps your WooCommerce store grow by taking shipping routine off your hands. Connect your carriers and automate shipping from checkout to delivery: pickup points at checkout, one-click shipping labels, order tracking and customer notifications — all from one platform. Trusted by 7,000+ WooCommerce stores.
 
 [Product Overview](https://smartyparcel.com/woocommerce-integration/?utm_source=wporg)
 [Supported carriers](https://smartyparcel.com/supported-carriers/?utm_source=wporg)
 [Documentation](https://smartyparcel.com/docs/knowledge-base-woocommerce/?utm_source=wporg)
 
-**Example: setting up PostNord pickup points in the WooCommerce checkout.**
+Example: setting up PostNord pickup points in the WooCommerce checkout.
 
 https://www.youtube.com/watch?v=UIfRYDeO9Lo
 
-= Supported carriers =
+= Features =
 
-Every carrier below is a native integration — a real API connection, not a generic tracking-number lookup.
-
-* **InPost (Poland)** — service point selection at checkout with map search, courier delivery to address, parcel tracking.
-* **PostNord (Sweden, Denmark, Norway, Finland)** — service points and parcel boxes at checkout with map search, delivery to address, parcel tracking.
-* **Nova Post (Europe and international)** — pickup points with map search, live rates, shipping labels, cash on delivery, tracking.
-* **Nova Poshta (Ukraine, Нова Пошта)** — pickup points and poshtomats with map search, courier delivery, live rates, single and bulk shipping labels, cash on delivery, payment control, tracking.
-* **Ukrposhta (Ukraine, Укрпошта)** — pickup points, delivery to address, live rates, domestic and international shipping labels, cash on delivery, tracking.
-* **Meest (international and Ukraine)** — pickup points, delivery to address, live rates, shipping labels, tracking.
-* **Nova Global (international)** — delivery to address, live rates, shipping labels, tracking.
-* **Rozetka Delivery (Ukraine)** — pickup points, shipping labels, tracking.
-* **DHL, DPD, GLS, FedEx** — automatic parcel tracking by tracking number, with status sync into WooCommerce orders.
-
-Label creation for InPost, PostNord, DHL and DPD is in active development. The [supported carriers page](https://smartyparcel.com/supported-carriers/?utm_source=wporg) always shows the current state of every integration.
-
-= Pickup points and parcel lockers at checkout =
-
-* Pickup point, parcel locker and service point selection built into the WooCommerce checkout — searchable list or interactive Google map.
-* Separate shipping methods per delivery type, so "Courier to address" and "To pickup point" are two distinct options in the WooCommerce shipping zone.
+* Pickup point selection built into the WooCommerce checkout — a searchable list, plus an optional Google map view.
+* Separate shipping methods per delivery type, so "To pickup point" and "Courier to address" are two distinct options in the WooCommerce shipping zone.
 * Points are loaded live from the carrier network, with opening hours, addresses and parcel size limits where the carrier provides them.
 * Works with WooCommerce shipping zones, so each country gets exactly the carriers you ship there with.
-
-= Shipping labels and bulk fulfillment =
-
-* Create domestic and international shipping labels from the WooCommerce order screen — the order data is already filled in.
-* Bulk label creation and printing: select dozens or hundreds of orders and process them in one run.
-* Cash on delivery, declared value, customs declaration fields and multiple sender addresses.
+* Create domestic and international shipping labels in a few clicks.
+* Bulk label creation and printing (paid plans).
 * Rule-based automation: create labels automatically on order status change, on payment, or on your own conditions.
+* Shipping rules: prepare shipments automatically by your criteria (for example, choose the carrier by parcel weight or add extra services and more).
+* Easy to ship from multiple sender addresses.
+* Provide carrier live-rates at checkout for your customers (paid plans).
+* Advanced order tracking with real-time status sync and customer notifications (Email and SMS).
 
-= Live shipping rates =
+= Pickup point selector at checkout (ParcelShops, Parcel Lockers, Service Points) =
 
-* Real-time rates pulled from the carrier for the customer's destination, cart weight and dimensions.
-* Or fixed and rule-based costs when you would rather control the price yourself.
-* Rates are cached and calculated per shipping method, so checkout stays fast.
+* GLS (Europe)
+* InPost (Poland only, for now)
+* PostNord
+* Nova Post
+* Nova Poshta (Ukraine)
+* Ukrposhta
+* Meest
+* Rozetka Delivery
 
-= Parcel tracking and customer notifications =
+No API keys or contracts required.
 
-* Tracking numbers are attached to the order automatically when a label is created, or added manually for shipments made elsewhere.
-* Automatic status synchronization keeps WooCommerce order statuses in line with the carrier.
-* Email and SMS notifications to the customer on status changes.
+= Supported carriers =
+
+GLS, InPost, Meest, Nova Post, Nova Poshta, PostNord, Nova Global, Rozetka Delivery, Ukrposhta and many more. We’re continuously integrating new carriers and features!
 
 = Compatibility =
 
@@ -100,19 +87,7 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 
 = Which carriers does SmartyParcel support? =
 
-SmartyParcel natively integrates InPost (Poland), PostNord (Sweden, Denmark, Norway, Finland), Nova Post (Europe), Nova Poshta, Ukrposhta and Rozetka Delivery (Ukraine), Meest and Nova Global. Parcels sent with DHL, DPD, GLS and FedEx are tracked by tracking number. Supported features differ per carrier and are listed on the supported carriers page.
-
-= Does SmartyParcel work with InPost in Poland? =
-
-Yes. InPost service points are selectable directly in the WooCommerce checkout, from a searchable list or on a map, and InPost parcels are tracked automatically with order status sync. InPost label creation is in development.
-
-= Does SmartyParcel work with PostNord in Sweden, Denmark, Norway and Finland? =
-
-Yes. PostNord service points and parcel boxes are selectable in the WooCommerce checkout, delivery to address is available as a separate shipping method, and PostNord parcels are tracked automatically. PostNord label creation is in development.
-
-= Can I track DHL, DPD, GLS and FedEx parcels in WooCommerce? =
-
-Yes. Add the tracking number to the WooCommerce order and SmartyParcel pulls carrier statuses automatically, syncs them with the order status and notifies the customer. This works for DHL, DPD, GLS and FedEx shipments created anywhere, including outside the plugin.
+SmartyParcel natively integrates GLS, InPost, PostNord, Nova Post, Nova Poshta, Ukrposhta, Rozetka Delivery, Meest and Nova Global.
 
 = How do customers choose a pickup point or parcel locker at checkout? =
 
@@ -120,35 +95,19 @@ The plugin adds a pickup point selector to the WooCommerce checkout for every en
 
 = Can customers select a pickup point on a map? =
 
-Yes. The pickup point selector has a Google Maps mode with search by city and street, currently available for Nova Poshta, InPost and PostNord. It requires a Google Maps API key, which is set in the plugin settings.
+Yes. Besides the searchable list, the pickup point selector has a Google Maps mode with search by city and street. It requires a Google Maps API key, which is set in the plugin settings.
 
 = Can I create and print shipping labels in bulk? =
 
-Yes. Select any number of WooCommerce orders and create and print their shipping labels in one run, instead of opening orders one by one. Labels can also be generated automatically by rules — on order status change, on payment, or on your own conditions.
+Yes, on paid plans. Select any number of WooCommerce orders and create and print their shipping labels in one run, instead of opening orders one by one. Labels can also be generated automatically by rules — on order status change, on payment, or on your own conditions.
 
-= Does SmartyParcel create Nova Poshta and Ukrposhta waybills (ТТН)? =
+= Does the plugin support cash on delivery (COD)? =
 
-Yes. Waybills (ТТН) for Nova Poshta and Ukrposhta are created straight from the WooCommerce order screen or in bulk, including international Ukrposhta shipments, with cash on delivery, declared value and customs data filled from the order.
-
-= Do I need my own carrier account or contract? =
-
-Yes — you connect your own carrier accounts and contracts in the SmartyParcel dashboard, so you keep your own carrier prices and delivery conditions. The number of carrier accounts you can connect depends on your plan.
-
-= Does the plugin support cash on delivery? =
-
-Yes. Cash on delivery is supported for Nova Poshta, Nova Post, Ukrposhta and Meest, including control of who pays the delivery and the COD fee, and the COD amount can be included in the shipping cost shown at checkout.
-
-= Is there a free plan available for SmartyParcel? =
-
-Yes — the plugin is free to install and the SmartyParcel account has a lifetime Free Plan, with no upfront commitment and no credit card required. Pickup point and parcel locker selection at checkout is free. Shipping labels work pay-as-you-go: the Free Plan covers a quota of 30 shipments per month, with a per-label fee on top of it. Live rates through the Rates API, higher volumes and automation are available on paid plans — see the [pricing page](https://smartyparcel.com/app-pricing/?utm_source=wporg).
+Yes. COD is supported for Nova Poshta, Ukrposhta, Meest and Rozetka Delivery. We are working on extending cash on delivery support to more carriers.
 
 = Can I use SmartyParcel solely for order tracking? =
 
-Yes. If you already create shipping labels in other tools or directly with carriers, SmartyParcel can run as a centralized tracking engine only: real-time status updates, automated status syncing in WooCommerce and customer notifications. We offer standalone tracking plans for this use case.
-
-= Can I use SmartyParcel solely for checkout pickup point selection and live rate calculations? =
-
-Yes. You can use SmartyParcel strictly to improve the WooCommerce checkout with the pickup point locator and real-time shipping rates, without creating labels through the platform. Dedicated pricing and modular settings are available for stores that only need checkout and rate calculation.
+Yes. If you already create shipping labels in other tools or directly with carriers, SmartyParcel can run as a centralized tracking engine only: real-time status updates, automated status syncing in WooCommerce and customer notifications.
 
 = Does the plugin support WooCommerce HPOS? =
 
@@ -163,6 +122,14 @@ Yes. The plugin is compatible with WPML and Polylang, and works in multi-currenc
 Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.23.1 / (25.09.2026) =
+* Added GLS Service Point delivery shipping method.
+* Added GLS Address delivery shipping method.
+* Added GLS to pickup point selection from Google Map.
+* Added Nova Post Address delivery shipping method.
+* Added rates calculation for Nova Post address delivery.
+* Changed api endpoint for batch and auto label creation.
 
 = Version 1.23.0 / (19.09.2026) =
 * Introduced Pickup point selection from Google Map. Supported carriers: Nova Poshta, InPost and PostNord. Requires SmartyParcel Locator API.

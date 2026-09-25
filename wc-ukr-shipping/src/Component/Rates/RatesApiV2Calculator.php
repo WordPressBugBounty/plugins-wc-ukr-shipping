@@ -37,6 +37,9 @@ class RatesApiV2Calculator implements RatesCalculatorInterface
             if ($rateShipmentDTO->shipToPostalCode !== null) {
                 $shipTo['postal_code'] = $rateShipmentDTO->shipToPostalCode;
             }
+            if ($rateShipmentDTO->shipToAddress1 !== null) {
+                $shipTo['address_1'] = $rateShipmentDTO->shipToAddress1;
+            }
 
             $payload = [
                 'carriers' => [

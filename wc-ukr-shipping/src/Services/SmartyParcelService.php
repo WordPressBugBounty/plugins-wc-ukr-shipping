@@ -5,24 +5,29 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Services;
 
 use kirillbdev\WCUkrShipping\Api\SmartyParcelApi;
+use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 use kirillbdev\WCUkrShipping\Component\Automation\Context;
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\LabelRequestBuilderInterface;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUkrShipping\Dto\SmartyParcel\Labels\CreateLabelResponseDto;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
+use kirillbdev\WCUkrShipping\Http\Resources\OrderResource;
 
 class SmartyParcelService
 {
     private SmartyParcelApi $api;
+    private SmartyParcelWPApi $wpApi;
     private ShippingLabelsRepository $labelsRepository;
     private AutomationService $automationService;
 
     public function __construct(
         SmartyParcelApi $api,
+        SmartyParcelWPApi $wpApi,
         ShippingLabelsRepository $labelsRepository,
         AutomationService $automationService
     ) {
         $this->api = $api;
+        $this->wpApi = $wpApi;
         $this->labelsRepository = $labelsRepository;
         $this->automationService = $automationService;
     }
@@ -155,6 +160,27 @@ class SmartyParcelService
         return new CreateLabelResponseDto(
             (int)$shippingLabel['id'],
             $orderId,
+            $response['id'],
+            $response['tracking_number'],
+            (float)$response['shipment_cost']['amount'],
+            empty($response['estimated_delivery_date'])
+                ? null
+                : new \DateTimeImmutable($response['estimated_delivery_date']),
+            $shippingLabel['tracking_status'] ?? ''
+        );
+    }
+
+    public function createLabelFromOrder(\WC_Order $order): CreateLabelResponseDto
+    {
+        $response = $this->wpApi->sendRequest('/v1/orders/label', [
+            'order' => (new OrderResource($order))->toArray(),
+        ]);
+        $this->saveLabelFromResponse($response, $order->get_id());
+        $shippingLabel = $this->labelsRepository->findByOrderId($order->get_id());
+
+        return new CreateLabelResponseDto(
+            (int)$shippingLabel['id'],
+            $order->get_id(),
             $response['id'],
             $response['tracking_number'],
             (float)$response['shipment_cost']['amount'],
