@@ -2,10 +2,10 @@
 Contributors: kirillbdev
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Tags: gls, postnord, meest, nova post, order tracking
+Tags: gls, inpost, meest, nova post, order tracking
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.23.1
+Stable tag: 1.23.2
 
 The easiest way to automate shipping in WooCommerce: pickup points at checkout (list or map), one-click shipping labels and order tracking.
 
@@ -50,7 +50,7 @@ No API keys or contracts required.
 
 = Supported carriers =
 
-GLS, InPost, Meest, Nova Post, Nova Poshta, PostNord, Nova Global, Rozetka Delivery, Ukrposhta and many more. We’re continuously integrating new carriers and features!
+GLS, InPost, Meest, Nova Post, Нова Пошта, PostNord, Nova Global, Rozetka Delivery, Ukrposhta and many more. We’re continuously integrating new carriers and features!
 
 = Compatibility =
 
@@ -87,7 +87,7 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 
 = Which carriers does SmartyParcel support? =
 
-SmartyParcel natively integrates GLS, InPost, PostNord, Nova Post, Nova Poshta, Ukrposhta, Rozetka Delivery, Meest and Nova Global.
+SmartyParcel natively integrates GLS, InPost, PostNord, Nova Post, Нова Пошта, Ukrposhta, Rozetka Delivery, Meest and Nova Global.
 
 = How do customers choose a pickup point or parcel locker at checkout? =
 
@@ -122,6 +122,9 @@ Yes. The plugin is compatible with WPML and Polylang, and works in multi-currenc
 Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.23.2 / (27.09.2026) =
+* Changed dimension ordering in label form (to L x W x H).
 
 = Version 1.23.1 / (25.09.2026) =
 * Added GLS Service Point delivery shipping method.

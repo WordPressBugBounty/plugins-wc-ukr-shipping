@@ -249,14 +249,6 @@ class OptionsPage implements ModuleInterface
         }
 
         wp_enqueue_script(
-            'smarty_parcel_elements_js',
-            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/smartyparcel/elements.min.js',
-            [ 'jquery' ],
-            filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/smartyparcel/elements.min.js'),
-            true
-        );
-
-        wp_enqueue_script(
             'wcus_ttn_form_js',
             WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/ttn-form.min.js',
             [ 'jquery' ],
