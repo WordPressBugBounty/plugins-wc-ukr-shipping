@@ -84,6 +84,25 @@ class OrderResource
         return $orderPayload;
     }
 
+    public function toElementsData(): array
+    {
+        return $this->camelizeKeys($this->toArray());
+    }
+
+    private function camelizeKeys(array $data): array
+    {
+        $result = [];
+        foreach ($data as $key => $value) {
+            if (is_string($key)) {
+                // address_1 -> address1, order_number -> orderNumber
+                $key = lcfirst(str_replace('_', '', ucwords($key, '_')));
+            }
+            $result[$key] = is_array($value) ? $this->camelizeKeys($value) : $value;
+        }
+
+        return $result;
+    }
+
     private function getPudoPointId(\WC_Order_Item_Shipping $orderShipping): ?string
     {
         switch ($orderShipping->get_method_id()) {
@@ -96,6 +115,9 @@ class OrderResource
             case WCUS_SHIPPING_METHOD_NOVA_POST:
                 return $orderShipping->get_meta('wcus_nova_post_warehouse_id');
             case WCUS_SHIPPING_METHOD_MEEST:
+            case WCUS_SHIPPING_METHOD_POST_NORD:
+            case WCUS_SHIPPING_METHOD_INPOST:
+            case WCUS_SHIPPING_METHOD_GLS:
                 return $orderShipping->get_meta('wcus_pudo_point_id');
         }
 

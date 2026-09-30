@@ -2,20 +2,20 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: SmartyParcel (formerly WC Ukr Shipping) 1.22.5\n"
+"Project-Id-Version: SmartyParcel - Shipping Automation & Order Tracking for GLS, InPost, Nova Post and more 1.23.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-19T18:44:45+03:00\n"
+"POT-Creation-Date: 2026-10-01T00:43:32+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-ukr-shipping\n"
 
 #. Plugin Name of the plugin
-msgid "SmartyParcel (formerly WC Ukr Shipping)"
+msgid "SmartyParcel - Shipping Automation & Order Tracking for GLS, InPost, Nova Post and more"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -23,7 +23,7 @@ msgid "https://smartyparcel.com"
 msgstr ""
 
 #. Description of the plugin
-msgid "Multi-carrier order tracking and shipping solution for WooCommerce."
+msgid "The easiest way to automate shipping in WooCommerce: pickup points at checkout (list or map), one-click shipping labels and order tracking."
 msgstr ""
 
 #. Author of the plugin
@@ -143,9 +143,9 @@ msgid "You are deactivating the SmartyParcel plugin."
 msgstr ""
 
 #: src/Component/Carriers/CarrierCatalog.php:63
-#: src/Component/Carriers/CarrierCatalog.php:125
-#: src/Component/Carriers/CarrierCatalog.php:156
-#: src/Component/Carriers/CarrierCatalog.php:189
+#: src/Component/Carriers/CarrierCatalog.php:136
+#: src/Component/Carriers/CarrierCatalog.php:167
+#: src/Component/Carriers/CarrierCatalog.php:200
 #: src/Services/CarrierService.php:148
 msgid "Pickup points"
 msgstr ""
@@ -184,27 +184,27 @@ msgstr ""
 msgid "Global params as default"
 msgstr ""
 
-#: src/Component/Carriers/CarrierCatalog.php:128
+#: src/Component/Carriers/CarrierCatalog.php:139
 msgid "Bearer eCom token of Ukrposhta"
 msgstr ""
 
-#: src/Component/Carriers/CarrierCatalog.php:129
+#: src/Component/Carriers/CarrierCatalog.php:140
 msgid "Bearer eCom token is required to search for warehouses across Ukraine."
 msgstr ""
 
-#: src/Component/Carriers/CarrierCatalog.php:159
+#: src/Component/Carriers/CarrierCatalog.php:170
 msgid "API Key of Nova Post"
 msgstr ""
 
-#: src/Component/Carriers/CarrierCatalog.php:160
+#: src/Component/Carriers/CarrierCatalog.php:171
 msgid "API key is required to search for warehouses and PUDO across Europe"
 msgstr ""
 
-#: src/Component/Carriers/CarrierCatalog.php:192
+#: src/Component/Carriers/CarrierCatalog.php:203
 msgid "API Token of Meest Post"
 msgstr ""
 
-#: src/Component/Carriers/CarrierCatalog.php:193
+#: src/Component/Carriers/CarrierCatalog.php:204
 msgid "API token is required to search for warehouses and PUDO of Meest Post"
 msgstr ""
 
@@ -231,8 +231,8 @@ msgid "Created At"
 msgstr ""
 
 #: src/Component/ListTable/AutomationListTable.php:92
-#: src/Modules/Backend/OptionsPage.php:167
-#: src/Modules/Backend/OptionsPage.php:168
+#: src/Modules/Backend/OptionsPage.php:163
+#: src/Modules/Backend/OptionsPage.php:164
 msgid "Edit"
 msgstr ""
 
@@ -246,6 +246,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
+#: src/Component/Validation/GLSCheckoutValidator.php:20
 #: src/Component/Validation/InPostCheckoutValidator.php:20
 #: src/Component/Validation/PostNordCheckoutValidator.php:20
 msgid "Please choice a Service Point"
@@ -275,22 +276,20 @@ msgstr ""
 msgid "Select Ukrposhta warehouse"
 msgstr ""
 
-#: src/Foundation/InPostAddressShipping.php:19
-msgid "InPost Address Delivery"
+#: src/Foundation/GLSAddressShipping.php:19
+#: src/Foundation/GLSAddressShipping.php:54
+msgid "GLS Address Delivery"
 msgstr ""
 
-#: src/Foundation/InPostAddressShipping.php:54
-#: src/Foundation/PostNordAddressShipping.php:19
-#: src/Foundation/PostNordAddressShipping.php:54
-msgid "PostNord Address"
-msgstr ""
-
+#: src/Foundation/GLSAddressShipping.php:57
+#: src/Foundation/GLSShipping.php:57
 #: src/Foundation/InPostAddressShipping.php:57
 #: src/Foundation/InPostShipping.php:57
 #: src/Foundation/MeestAddressShipping.php:57
 #: src/Foundation/MeestShipping.php:57
 #: src/Foundation/NovaGlobalAddress.php:57
 #: src/Foundation/NovaPoshtaShipping.php:84
+#: src/Foundation/NovaPostAddressShipping.php:57
 #: src/Foundation/NovaPostShipping.php:57
 #: src/Foundation/PostNordAddressShipping.php:57
 #: src/Foundation/PostNordShipping.php:69
@@ -300,12 +299,15 @@ msgstr ""
 msgid "Type of shipping cost calculation"
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:59
+#: src/Foundation/GLSShipping.php:59
 #: src/Foundation/InPostAddressShipping.php:59
 #: src/Foundation/InPostShipping.php:59
 #: src/Foundation/MeestAddressShipping.php:59
 #: src/Foundation/MeestShipping.php:59
 #: src/Foundation/NovaGlobalAddress.php:59
 #: src/Foundation/NovaPoshtaShipping.php:86
+#: src/Foundation/NovaPostAddressShipping.php:59
 #: src/Foundation/NovaPostShipping.php:59
 #: src/Foundation/PostNordAddressShipping.php:59
 #: src/Foundation/PostNordShipping.php:71
@@ -314,12 +316,15 @@ msgstr ""
 msgid "Access to the SmartyParcel Rates API is only available on paid plans"
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:63
+#: src/Foundation/GLSShipping.php:63
 #: src/Foundation/InPostAddressShipping.php:63
 #: src/Foundation/InPostShipping.php:63
 #: src/Foundation/MeestAddressShipping.php:63
 #: src/Foundation/MeestShipping.php:63
 #: src/Foundation/NovaGlobalAddress.php:63
 #: src/Foundation/NovaPoshtaShipping.php:90
+#: src/Foundation/NovaPostAddressShipping.php:63
 #: src/Foundation/NovaPostShipping.php:63
 #: src/Foundation/PostNordAddressShipping.php:63
 #: src/Foundation/PostNordShipping.php:75
@@ -329,12 +334,15 @@ msgstr ""
 msgid "Fixed"
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:64
+#: src/Foundation/GLSShipping.php:64
 #: src/Foundation/InPostAddressShipping.php:64
 #: src/Foundation/InPostShipping.php:64
 #: src/Foundation/MeestAddressShipping.php:64
 #: src/Foundation/MeestShipping.php:64
 #: src/Foundation/NovaGlobalAddress.php:64
 #: src/Foundation/NovaPoshtaShipping.php:91
+#: src/Foundation/NovaPostAddressShipping.php:64
 #: src/Foundation/NovaPostShipping.php:64
 #: src/Foundation/PostNordAddressShipping.php:64
 #: src/Foundation/PostNordShipping.php:76
@@ -343,12 +351,15 @@ msgstr ""
 msgid "SmartyParcel Rates API"
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:69
+#: src/Foundation/GLSShipping.php:69
 #: src/Foundation/InPostAddressShipping.php:69
 #: src/Foundation/InPostShipping.php:69
 #: src/Foundation/MeestAddressShipping.php:69
 #: src/Foundation/MeestShipping.php:69
 #: src/Foundation/NovaGlobalAddress.php:69
 #: src/Foundation/NovaPoshtaShipping.php:96
+#: src/Foundation/NovaPostAddressShipping.php:69
 #: src/Foundation/NovaPostShipping.php:69
 #: src/Foundation/PostNordAddressShipping.php:69
 #: src/Foundation/PostNordShipping.php:81
@@ -358,11 +369,14 @@ msgstr ""
 msgid "Fixed shipping cost"
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:77
+#: src/Foundation/GLSShipping.php:77
 #: src/Foundation/InPostAddressShipping.php:77
 #: src/Foundation/InPostShipping.php:77
 #: src/Foundation/MeestAddressShipping.php:77
 #: src/Foundation/MeestShipping.php:77
 #: src/Foundation/NovaPoshtaShipping.php:104
+#: src/Foundation/NovaPostAddressShipping.php:77
 #: src/Foundation/PostNordAddressShipping.php:77
 #: src/Foundation/PostNordShipping.php:89
 #: src/Foundation/UkrPoshtaAddressShipping.php:95
@@ -370,11 +384,14 @@ msgstr ""
 msgid "Include COD when calculating shipping cost"
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:79
+#: src/Foundation/GLSShipping.php:79
 #: src/Foundation/InPostAddressShipping.php:79
 #: src/Foundation/InPostShipping.php:79
 #: src/Foundation/MeestAddressShipping.php:79
 #: src/Foundation/MeestShipping.php:79
 #: src/Foundation/NovaPoshtaShipping.php:106
+#: src/Foundation/NovaPostAddressShipping.php:79
 #: src/Foundation/PostNordAddressShipping.php:79
 #: src/Foundation/PostNordShipping.php:91
 #: src/Foundation/UkrPoshtaAddressShipping.php:97
@@ -382,12 +399,15 @@ msgstr ""
 msgid "If checked and function supported by carrier, the COD service will be included in shipping cost."
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:85
+#: src/Foundation/GLSShipping.php:85
 #: src/Foundation/InPostAddressShipping.php:85
 #: src/Foundation/InPostShipping.php:85
 #: src/Foundation/MeestAddressShipping.php:85
 #: src/Foundation/MeestShipping.php:85
 #: src/Foundation/NovaGlobalAddress.php:77
 #: src/Foundation/NovaPoshtaShipping.php:120
+#: src/Foundation/NovaPostAddressShipping.php:85
 #: src/Foundation/NovaPostShipping.php:77
 #: src/Foundation/PostNordAddressShipping.php:85
 #: src/Foundation/PostNordShipping.php:97
@@ -397,12 +417,15 @@ msgstr ""
 msgid "Include shipping cost to order total"
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:87
+#: src/Foundation/GLSShipping.php:87
 #: src/Foundation/InPostAddressShipping.php:87
 #: src/Foundation/InPostShipping.php:87
 #: src/Foundation/MeestAddressShipping.php:87
 #: src/Foundation/MeestShipping.php:87
 #: src/Foundation/NovaGlobalAddress.php:79
 #: src/Foundation/NovaPoshtaShipping.php:122
+#: src/Foundation/NovaPostAddressShipping.php:87
 #: src/Foundation/NovaPostShipping.php:79
 #: src/Foundation/PostNordAddressShipping.php:87
 #: src/Foundation/PostNordShipping.php:99
@@ -412,12 +435,15 @@ msgstr ""
 msgid "If checked, the shipping cost will be added to the order total."
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:92
+#: src/Foundation/GLSShipping.php:92
 #: src/Foundation/InPostAddressShipping.php:92
 #: src/Foundation/InPostShipping.php:92
 #: src/Foundation/MeestAddressShipping.php:92
 #: src/Foundation/MeestShipping.php:92
 #: src/Foundation/NovaGlobalAddress.php:84
 #: src/Foundation/NovaPoshtaShipping.php:127
+#: src/Foundation/NovaPostAddressShipping.php:92
 #: src/Foundation/NovaPostShipping.php:84
 #: src/Foundation/PostNordAddressShipping.php:92
 #: src/Foundation/PostNordShipping.php:104
@@ -427,12 +453,15 @@ msgstr ""
 msgid "Enable free shipping rule"
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:94
+#: src/Foundation/GLSShipping.php:94
 #: src/Foundation/InPostAddressShipping.php:94
 #: src/Foundation/InPostShipping.php:94
 #: src/Foundation/MeestAddressShipping.php:94
 #: src/Foundation/MeestShipping.php:94
 #: src/Foundation/NovaGlobalAddress.php:86
 #: src/Foundation/NovaPoshtaShipping.php:129
+#: src/Foundation/NovaPostAddressShipping.php:94
 #: src/Foundation/NovaPostShipping.php:86
 #: src/Foundation/PostNordAddressShipping.php:94
 #: src/Foundation/PostNordShipping.php:106
@@ -442,12 +471,15 @@ msgstr ""
 msgid "If checked, free shipping would be available based on order amount."
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:99
+#: src/Foundation/GLSShipping.php:99
 #: src/Foundation/InPostAddressShipping.php:99
 #: src/Foundation/InPostShipping.php:99
 #: src/Foundation/MeestAddressShipping.php:99
 #: src/Foundation/MeestShipping.php:99
 #: src/Foundation/NovaGlobalAddress.php:91
 #: src/Foundation/NovaPoshtaShipping.php:134
+#: src/Foundation/NovaPostAddressShipping.php:99
 #: src/Foundation/NovaPostShipping.php:91
 #: src/Foundation/PostNordAddressShipping.php:99
 #: src/Foundation/PostNordShipping.php:111
@@ -457,12 +489,15 @@ msgstr ""
 msgid "Minimum amount for free shipping"
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:106
+#: src/Foundation/GLSShipping.php:106
 #: src/Foundation/InPostAddressShipping.php:106
 #: src/Foundation/InPostShipping.php:106
 #: src/Foundation/MeestAddressShipping.php:106
 #: src/Foundation/MeestShipping.php:106
 #: src/Foundation/NovaGlobalAddress.php:98
 #: src/Foundation/NovaPoshtaShipping.php:141
+#: src/Foundation/NovaPostAddressShipping.php:106
 #: src/Foundation/NovaPostShipping.php:98
 #: src/Foundation/PostNordAddressShipping.php:106
 #: src/Foundation/PostNordShipping.php:118
@@ -472,12 +507,15 @@ msgstr ""
 msgid "Free shipping method name"
 msgstr ""
 
+#: src/Foundation/GLSAddressShipping.php:108
+#: src/Foundation/GLSShipping.php:108
 #: src/Foundation/InPostAddressShipping.php:108
 #: src/Foundation/InPostShipping.php:108
 #: src/Foundation/MeestAddressShipping.php:108
 #: src/Foundation/MeestShipping.php:108
 #: src/Foundation/NovaGlobalAddress.php:100
 #: src/Foundation/NovaPoshtaShipping.php:143
+#: src/Foundation/NovaPostAddressShipping.php:108
 #: src/Foundation/NovaPostShipping.php:100
 #: src/Foundation/PostNordAddressShipping.php:108
 #: src/Foundation/PostNordShipping.php:120
@@ -485,6 +523,21 @@ msgstr ""
 #: src/Foundation/UkrPoshtaAddressShipping.php:134
 #: src/Foundation/UkrPoshtaShipping.php:134
 msgid "Free shipping"
+msgstr ""
+
+#: src/Foundation/GLSShipping.php:19
+#: src/Foundation/GLSShipping.php:54
+msgid "GLS Service Points"
+msgstr ""
+
+#: src/Foundation/InPostAddressShipping.php:19
+msgid "InPost Address Delivery"
+msgstr ""
+
+#: src/Foundation/InPostAddressShipping.php:54
+#: src/Foundation/PostNordAddressShipping.php:19
+#: src/Foundation/PostNordAddressShipping.php:54
+msgid "PostNord Address"
 msgstr ""
 
 #: src/Foundation/InPostShipping.php:19
@@ -544,6 +597,11 @@ msgstr ""
 #: src/Foundation/UkrPoshtaAddressShipping.php:105
 #: src/Foundation/UkrPoshtaShipping.php:105
 msgid "If checked and function supported by carrier, the product dimensions will be send to rates api."
+msgstr ""
+
+#: src/Foundation/NovaPostAddressShipping.php:19
+#: src/Foundation/NovaPostAddressShipping.php:54
+msgid "Nova Post Address"
 msgstr ""
 
 #: src/Foundation/NovaPostShipping.php:19
@@ -623,106 +681,102 @@ msgstr ""
 msgid "You do not have permission to access this action."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:99
-#: src/Modules/Backend/OptionsPage.php:110
-#: src/Modules/Backend/OptionsPage.php:111
+#: src/Modules/Backend/OptionsPage.php:95
+#: src/Modules/Backend/OptionsPage.php:106
+#: src/Modules/Backend/OptionsPage.php:107
 msgid "Dashboard"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:119
-#: src/Modules/Backend/OptionsPage.php:120
+#: src/Modules/Backend/OptionsPage.php:115
+#: src/Modules/Backend/OptionsPage.php:116
 #: src/Modules/Core/PluginInfo.php:39
 #: views/partial/settings_general/carriers.php:49
 msgid "Settings"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:128
-#: src/Modules/Backend/OptionsPage.php:129
+#: src/Modules/Backend/OptionsPage.php:124
+#: src/Modules/Backend/OptionsPage.php:125
 msgid "Create TTN"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:137
-#: src/Modules/Backend/OptionsPage.php:138
+#: src/Modules/Backend/OptionsPage.php:133
+#: src/Modules/Backend/OptionsPage.php:134
 #: views/orders.php:4
 msgid "Orders"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:146
-#: src/Modules/Backend/OptionsPage.php:147
+#: src/Modules/Backend/OptionsPage.php:142
+#: src/Modules/Backend/OptionsPage.php:143
 msgid "Automation"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:158
-#: src/Modules/Backend/OptionsPage.php:159
+#: src/Modules/Backend/OptionsPage.php:154
+#: src/Modules/Backend/OptionsPage.php:155
 #: views/order/ttn_widget.php:29
 msgid "Create"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:179
+#: src/Modules/Backend/OptionsPage.php:175
 msgid "Warehouses data of Nova Poshta"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:180
+#: src/Modules/Backend/OptionsPage.php:176
 msgid "Last update date:"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:181
+#: src/Modules/Backend/OptionsPage.php:177
 msgid "Status:"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:182
+#: src/Modules/Backend/OptionsPage.php:178
 msgid "Not completed"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:183
+#: src/Modules/Backend/OptionsPage.php:179
 msgid "Completed"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:184
+#: src/Modules/Backend/OptionsPage.php:180
 msgid "Unknown"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:185
+#: src/Modules/Backend/OptionsPage.php:181
 msgid "Update warehouses"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:186
+#: src/Modules/Backend/OptionsPage.php:182
 msgid "Continue update"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:187
+#: src/Modules/Backend/OptionsPage.php:183
 msgid "Load areas..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:188
+#: src/Modules/Backend/OptionsPage.php:184
 msgid "Load cities..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:189
+#: src/Modules/Backend/OptionsPage.php:185
 msgid "Load warehouses..."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:190
+#: src/Modules/Backend/OptionsPage.php:186
 msgid "Warehouses db updated successfully"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:193
+#: src/Modules/Backend/OptionsPage.php:189
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:318
-msgid "Unable to detect carrier for order"
-msgstr ""
-
-#: src/Modules/Backend/OptionsPage.php:356
+#: src/Modules/Backend/OptionsPage.php:296
 msgid "Add rule"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:374
+#: src/Modules/Backend/OptionsPage.php:314
 msgid "Rule not found"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:383
+#: src/Modules/Backend/OptionsPage.php:323
 msgid "Rule saved successfully"
 msgstr ""
 
@@ -883,11 +937,11 @@ msgstr ""
 msgid "Unable to load the map"
 msgstr ""
 
-#: src/Modules/Frontend/Checkout.php:70
+#: src/Modules/Frontend/Checkout.php:69
 msgid "Middle Name"
 msgstr ""
 
-#: src/Modules/Frontend/OrderCreator.php:81
+#: src/Modules/Frontend/OrderCreator.php:82
 msgid "Selected service point"
 msgstr ""
 
@@ -940,47 +994,51 @@ msgstr ""
 msgid "Documentation"
 msgstr ""
 
-#: views/partial/pro_promotion.php:32
+#: views/partial/pro_promotion.php:26
+msgid "Contact support"
+msgstr ""
+
+#: views/partial/pro_promotion.php:38
 msgid "Unlock more features with paid plans"
 msgstr ""
 
-#: views/partial/pro_promotion.php:36
+#: views/partial/pro_promotion.php:42
 msgid "More shipments limit"
 msgstr ""
 
-#: views/partial/pro_promotion.php:39
+#: views/partial/pro_promotion.php:45
 msgid "More own carrier accounts"
 msgstr ""
 
-#: views/partial/pro_promotion.php:42
+#: views/partial/pro_promotion.php:48
 msgid "Carrier live-rates"
 msgstr ""
 
-#: views/partial/pro_promotion.php:45
+#: views/partial/pro_promotion.php:51
 msgid "Batch labels generation"
 msgstr ""
 
-#: views/partial/pro_promotion.php:48
+#: views/partial/pro_promotion.php:54
 msgid "Batch labels printing"
 msgstr ""
 
-#: views/partial/pro_promotion.php:51
+#: views/partial/pro_promotion.php:57
 msgid "Dynamic shipping rules"
 msgstr ""
 
-#: views/partial/pro_promotion.php:54
+#: views/partial/pro_promotion.php:60
 msgid "Extended parcels analytics"
 msgstr ""
 
-#: views/partial/pro_promotion.php:57
+#: views/partial/pro_promotion.php:63
 msgid "SMS notifications"
 msgstr ""
 
-#: views/partial/pro_promotion.php:60
+#: views/partial/pro_promotion.php:66
 msgid "Premium support"
 msgstr ""
 
-#: views/partial/pro_promotion.php:67
+#: views/partial/pro_promotion.php:73
 msgid "Switch to paid plan"
 msgstr ""
 
@@ -1001,11 +1059,11 @@ msgid "Features:"
 msgstr ""
 
 #: views/partial/settings_general/carriers.php:71
-msgid "1000+ other carriers"
+msgid "DHL, DPD, Fedex"
 msgstr ""
 
 #: views/partial/settings_general/carriers.php:76
-msgid "Shipments sent with any other carrier can be tracked by their tracking number."
+msgid "Shipments sent with these carriers can be tracked by their tracking number."
 msgstr ""
 
 #: views/partial/settings_general/checkout.php:15
@@ -1013,7 +1071,7 @@ msgid "Google Maps API key"
 msgstr ""
 
 #: views/partial/settings_general/checkout.php:17
-msgid "Adds a \"Select on map\" button to the checkout pickup point fields. Works only when the SmartyParcel Locator API is enabled — locally stored carrier directories contain no coordinates."
+msgid "Adds a \"Select on map\" button to the checkout pickup point fields. Works only when the SmartyParcel Locator API is enabled."
 msgstr ""
 
 #: views/partial/settings_general/checkout.php:24
@@ -1052,21 +1110,8 @@ msgstr ""
 msgid "Carriers"
 msgstr ""
 
-#: views/ttn/ttn_custom.php:12
 #: views/ttn/ttn_forbidden.php:12
 msgid "New TTN"
-msgstr ""
-
-#: views/ttn/ttn_custom.php:16
-msgid "The order has non-standard shipping method"
-msgstr ""
-
-#: views/ttn/ttn_custom.php:22
-msgid "Create for Nova Poshta"
-msgstr ""
-
-#: views/ttn/ttn_custom.php:27
-msgid "Create for Ukrposhta"
 msgstr ""
 
 #: views/ttn/ttn_forbidden.php:15

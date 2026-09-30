@@ -5,7 +5,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: gls, inpost, meest, nova post, order tracking
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.23.2
+Stable tag: 1.23.3
 
 The easiest way to automate shipping in WooCommerce: pickup points at checkout (list or map), one-click shipping labels and order tracking.
 
@@ -122,6 +122,10 @@ Yes. The plugin is compatible with WPML and Polylang, and works in multi-currenc
 Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.23.3 / (01.10.2026) =
+* UkrPoshta label creation switched to the SmartyParcel elements sdk.
+* Removed legacy order collectors.
 
 = Version 1.23.2 / (27.09.2026) =
 * Changed dimension ordering in label form (to L x W x H).

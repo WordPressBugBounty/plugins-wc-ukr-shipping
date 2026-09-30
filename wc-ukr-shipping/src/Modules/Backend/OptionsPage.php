@@ -2,14 +2,9 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
-use kirillbdev\WCUkrShipping\Component\Carriers\Meest\Label\MeestOrderCollector;
-use kirillbdev\WCUkrShipping\Component\Carriers\RozetkaDelivery\Label\RozetkaOrderCollector;
-use kirillbdev\WCUkrShipping\Component\Carriers\Ukrposhta\Label\SingleLabelDataCollector;
 use kirillbdev\WCUkrShipping\Component\ListTable\AutomationListTable;
-use kirillbdev\WCUkrShipping\Component\SmartyParcel\BaseOrderCollector;
 use kirillbdev\WCUkrShipping\DB\Repositories\AutomationRulesRepository;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
-use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
 use kirillbdev\WCUkrShipping\Foundation\State;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
@@ -19,6 +14,7 @@ use kirillbdev\WCUkrShipping\Http\Controllers\CarriersController;
 use kirillbdev\WCUkrShipping\Http\Controllers\OptionsController;
 use kirillbdev\WCUkrShipping\Http\Controllers\SmartyParcelController;
 use kirillbdev\WCUkrShipping\Http\Middleware\CheckManageWooPermission;
+use kirillbdev\WCUkrShipping\Http\Resources\OrderResource;
 use kirillbdev\WCUkrShipping\Model\Document\TTNStore;
 use kirillbdev\WCUkrShipping\Services\CarrierService;
 use kirillbdev\WCUkrShipping\States\OrdersState;
@@ -225,27 +221,12 @@ class OptionsPage implements ModuleInterface
         $shippingMethod = WCUSHelper::getOrderShippingMethod($order);
 
         // Hardcoded yet: detect and process elements-sdk flow
-        $v2Methods = [
-            WCUS_SHIPPING_METHOD_NOVA_GLOBAL_ADDRESS,
-            WCUS_SHIPPING_METHOD_ROZETKA,
-            WCUS_SHIPPING_METHOD_MEEST,
-            WCUS_SHIPPING_METHOD_MEEST_ADDRESS,
-            WCUS_SHIPPING_METHOD_NOVA_POST,
-            WCUS_SHIPPING_METHOD_NOVA_POST_ADDRESS,
+        $legacyFormMethods = [
+            WCUS_SHIPPING_METHOD_NOVA_POSHTA,
         ];
-        if ($shippingMethod !== null && in_array($shippingMethod->get_method_id(), $v2Methods, true)) {
-            $this->processPurchaseLabelV2($order, $shippingMethod);
+        if ($shippingMethod === null || !in_array($shippingMethod->get_method_id(), $legacyFormMethods, true)) {
+            $this->processPurchaseLabelV2($order);
             return;
-        }
-        // Check UkrPoshta Intl flow
-        if (
-            ($shippingMethod !== null && $shippingMethod->get_method_id() === WCUS_SHIPPING_METHOD_UKRPOSHTA_ADDRESS)
-            || ($_GET['carrier'] ?? null) === 'ukrposhta'
-        ) {
-            if ($order->get_billing_country() !== 'UA' || $order->get_shipping_country() !== 'UA') {
-                $this->processPurchaseLabelV2($order, $shippingMethod, $_GET['carrier'] ?? null);
-                return;
-            }
         }
 
         wp_enqueue_script(
@@ -267,31 +248,17 @@ class OptionsPage implements ModuleInterface
             case 'nova_poshta':
                 $store = new TTNStore((int)$_GET['order_id']);
                 break;
-            case 'ukrposhta':
-                $store = new SingleLabelDataCollector($order);
-                break;
         }
 
         if ($store === null) {
-            echo View::render('ttn/ttn_custom', [
-                'shippingMethod' => $shippingMethod !== null ? $shippingMethod->get_name() : null,
-                'novaPoshtaFormUrl' => admin_url(
-                    'admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order->get_id() . '&carrier=nova_poshta'
-                ),
-                'ukrposhtaFormUrl' => admin_url(
-                    'admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order->get_id() . '&carrier=ukrposhta'
-                ),
-                'rozetkaFormUrl' => admin_url(
-                    'admin.php?page=wc_ukr_shipping_ttn&order_id=' . $order->get_id() . '&carrier=rozetka_delivery'
-                ),
-            ]);
+            echo 'Unable to init shipment form';
         } else {
             wp_localize_script('wcus_ttn_form_js', 'wcus_ttn_form_state', $store->collect());
             echo View::render('ttn/ttn');
         }
     }
 
-    public function processPurchaseLabelV2(\WC_Order $order, ?\WC_Order_Item_Shipping $orderShipping, ?string $carrierSlug = null): void
+    public function processPurchaseLabelV2(\WC_Order $order): void
     {
         wp_enqueue_script(
         'smartyparcel_labels_js',
@@ -301,29 +268,9 @@ class OptionsPage implements ModuleInterface
             true
         );
 
-        if ($carrierSlug !== null) {
-            $carrier = $carrierSlug;
-        } elseif ($orderShipping !== null) {
-            $carrier = SmartyParcelHelper::getCarrierFromShippingMethod($orderShipping->get_method_id());
-        }
+        $orderData = (new OrderResource($order))->toElementsData();
 
-        if ($carrier === null) {
-            esc_html_e('Unable to detect carrier for order', 'wc-ukr-shipping');
-            return;
-        }
-
-        switch ($carrier) {
-            case CarrierSlug::ROZETKA_DELIVERY:
-                $collector = new RozetkaOrderCollector($order);
-                break;
-            case CarrierSlug::MEEST:
-                $collector = new MeestOrderCollector($order);
-                break;
-            default:
-                $collector = new BaseOrderCollector($order, $carrier);
-        }
-
-        wp_localize_script('smartyparcel_labels_js', 'wcus_sp_label_data', $collector->collect());
+        wp_localize_script('smartyparcel_labels_js', 'wcus_sp_order_data', $orderData);
 
         echo View::render('ttn/ttn_v2');
     }
