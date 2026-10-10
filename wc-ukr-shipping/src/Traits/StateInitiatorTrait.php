@@ -16,7 +16,7 @@ trait StateInitiatorTrait
 
         ?>
         <script>
-          window.WCUS_APP_STATE = <?= json_encode(State::all()); ?>;
+          window.WCUS_APP_STATE = <?php echo wp_json_encode(State::all()); ?>;
         </script>
         <?php
     }

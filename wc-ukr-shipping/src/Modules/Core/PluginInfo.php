@@ -3,6 +3,7 @@
 namespace kirillbdev\WCUkrShipping\Modules\Core;
 
 use kirillbdev\WCUkrShipping\Http\Controllers\FeedbackController;
+use kirillbdev\WCUkrShipping\Http\Middleware\CheckManageWooPermission;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 use kirillbdev\WCUSCore\Http\Routing\Route;
 
@@ -25,7 +26,9 @@ class PluginInfo implements ModuleInterface
     public function routes()
     {
         return [
-            new Route('wcus_post_feedback', FeedbackController::class, 'store'),
+            new Route('wcus_post_feedback', FeedbackController::class, 'store', [
+                'middleware' => [CheckManageWooPermission::class],
+            ]),
         ];
     }
 

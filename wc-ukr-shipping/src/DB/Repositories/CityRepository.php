@@ -77,6 +77,7 @@ class CityRepository
             $insertValues[] = '(' . implode(',', $values) . ')';
         }
 
+        // phpcs:disable PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared -- values are escaped with esc_sql() above
         $wpdb->query(
             "INSERT INTO `{$wpdb->prefix}wc_ukr_shipping_np_cities` 
                     (`ref`, `description`, `description_ru`, `area_ref`)
@@ -86,5 +87,6 @@ class CityRepository
                     `description_ru` = VALUES(`description_ru`),
                     `area_ref` = VALUES(`area_ref`)"
         );
+        // phpcs:enable PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
     }
 }

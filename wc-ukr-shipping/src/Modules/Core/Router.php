@@ -22,8 +22,22 @@ class Router implements ModuleInterface
     {
         return [
             // SmartyParcel
-            new Route('wcus_smartyparcel_save_label', SmartyParcelController::class, 'saveLabel'),
-            new Route('wcus_smartyparcel_remove_label', SmartyParcelController::class, 'removeLabel'),
+            new Route(
+                'wcus_smartyparcel_save_label',
+                SmartyParcelController::class,
+                'saveLabel',
+                [
+                    'middleware' => [CheckManageWooPermission::class]
+                ]
+            ),
+            new Route(
+                'wcus_smartyparcel_remove_label',
+                SmartyParcelController::class,
+                'removeLabel',
+                [
+                    'middleware' => [CheckManageWooPermission::class]
+                ]
+            ),
             new Route(
                 'wcus_smartyparcel_register_installation',
                 InstallationController::class,
@@ -34,7 +48,14 @@ class Router implements ModuleInterface
             ),
 
             // Authx (embedded elements)
-            new Route('wcus_smartyparcel_jwt', JWTController::class, 'issueToken'),
+            new Route(
+                'wcus_smartyparcel_jwt',
+                JWTController::class,
+                'issueToken',
+                [
+                    'middleware' => [CheckManageWooPermission::class]
+                ]
+            ),
 
             // Orders
             new Route(

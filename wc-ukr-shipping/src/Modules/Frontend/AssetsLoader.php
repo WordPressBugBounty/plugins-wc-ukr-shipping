@@ -2,6 +2,7 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 use kirillbdev\WCUkrShipping\Traits\StateInitiatorTrait;
@@ -88,7 +89,7 @@ class AssetsLoader implements ModuleInterface
                 'address_shipping_enable' => (int)wc_ukr_shipping_get_option('wc_ukr_shipping_address_shipping'),
                 'useOnlineDirectory' => (int)wc_ukr_shipping_get_option('wcus_np_use_online_directory') === 1,
                 'combinePoshtomats' => (int)wc_ukr_shipping_get_option('wcus_combine_poshtomats') === 1,
-                'locatorEnabled' => (int)wc_ukr_shipping_get_option('wcus_use_smartyparcel_locator') === 1,
+                'locatorEnabled' => SmartyParcelHelper::isConnected(),
                 'googleMapsApiKey' => (string)wc_ukr_shipping_get_option('wcus_google_maps_api_key'),
             ]
         ];

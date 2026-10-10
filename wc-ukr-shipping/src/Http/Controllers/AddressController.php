@@ -28,16 +28,6 @@ if ( ! defined('ABSPATH')) {
 
 class AddressController extends Controller
 {
-    private const LOCATOR_SUPPORTED_CARRIERS = [
-        CarrierSlug::NOVA_POSHTA,
-        CarrierSlug::UKRPOSHTA,
-        CarrierSlug::ROZETKA_DELIVERY,
-        CarrierSlug::NOVA_POST,
-        CarrierSlug::POST_NORD,
-        CarrierSlug::INPOST,
-        CarrierSlug::GLS,
-    ];
-
     public function searchCities(Request $request)
     {
         // todo: move query check logic to concrete provider
@@ -145,6 +135,10 @@ class AddressController extends Controller
             CarrierSlug::POST_NORD,
             CarrierSlug::NOVA_POSHTA,
         ];
+        // Meest is paged only by the Locator, its legacy API returns the whole city at once
+        if ($provider instanceof SmartyParcelPUDOProvider) {
+            $listSupportedCarriers[] = CarrierSlug::MEEST;
+        }
 
         return $this->jsonResponse([
             'success' => true,
@@ -272,19 +266,18 @@ class AddressController extends Controller
      */
     private function getGeoPUDOProvider(string $carrier, string $lang): ?GeoPUDOProviderInterface
     {
-        $provider = $this->maybeLocatorProvider($carrier, $lang);
+        if ( ! SmartyParcelHelper::isConnected()) {
+            return null;
+        }
+
+        $provider = $this->getPUDOProvider($carrier, $lang);
 
         return $provider instanceof GeoPUDOProviderInterface ? $provider : null;
     }
 
-    private function maybeLocatorProvider(string $carrier, string $lang): ?PUDOProviderInterface
+    private function getPUDOProvider(string $carrier, string $lang): PUDOProviderInterface
     {
-        $useLocator = (int)wc_ukr_shipping_get_option('wcus_use_smartyparcel_locator') === 1;
-
-        if (
-            $useLocator && SmartyParcelHelper::isConnected()
-            && in_array($carrier, self::LOCATOR_SUPPORTED_CARRIERS, true)
-        ) {
+        if (SmartyParcelHelper::isConnected()) {
             return new SmartyParcelPUDOProvider(
                 $carrier,
                 $lang,
@@ -292,16 +285,8 @@ class AddressController extends Controller
             );
         }
 
-        return null;
-    }
-
-    private function getPUDOProvider(string $carrier, string $lang): PUDOProviderInterface
-    {
-        $locatorProvider = $this->maybeLocatorProvider($carrier, $lang);
-        if ($locatorProvider !== null) {
-            return $locatorProvider;
-        }
-
+        // Legacy providers of a store that is not connected yet: they read the local
+        // database or call the carrier with a previously saved API key
         switch ($carrier) {
             case CarrierSlug::NOVA_POSHTA:
                 return wcus_container()->make(NovaPoshtaPUDOProvider::class);

@@ -26,7 +26,7 @@ class HtmlHelper
 
         $html .= '</div>';
 
-        echo $html;
+        echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup is built from escaped parts above
     }
 
 	/**
@@ -70,7 +70,7 @@ class HtmlHelper
 
         $html .= '</select>';
 
-        echo $html;
+        echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- markup is built from escaped parts above
 	}
 
     public static function selectField(

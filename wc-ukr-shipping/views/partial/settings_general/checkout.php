@@ -4,17 +4,14 @@
     }
 
     use \kirillbdev\WCUkrShipping\Helpers\HtmlHelper;
-    use \kirillbdev\WCUSCore\Foundation\View;
 ?>
-
-<?php echo View::render('partial/locator_message'); ?>
 
 <?php
     HtmlHelper::textField(
         'wcus[google_maps_api_key]',
         __('Google Maps API key', 'wc-ukr-shipping'),
         wc_ukr_shipping_get_option('wcus_google_maps_api_key'),
-        __('Adds a "Select on map" button to the checkout pickup point fields. Works only when the SmartyParcel Locator API is enabled.', 'wc-ukr-shipping')
+        __('Adds a "Select on map" button to the checkout pickup point fields. Works only when the store is connected to SmartyParcel.', 'wc-ukr-shipping')
     );
 ?>
 
@@ -31,8 +28,8 @@
 ?>
 
 <div class="wcus-form-group">
-    <label for="wc_ukr_shipping_spinner_color"><?= __('Color of spinner in frontend', 'wc-ukr-shipping'); ?></label>
-    <input name="wc_ukr_shipping[spinner_color]" id="wc_ukr_shipping_spinner_color" type="text" value="<?= get_option('wc_ukr_shipping_spinner_color', '#dddddd'); ?>" />
+    <label for="wc_ukr_shipping_spinner_color"><?php esc_html_e('Color of spinner in frontend', 'wc-ukr-shipping'); ?></label>
+    <input name="wc_ukr_shipping[spinner_color]" id="wc_ukr_shipping_spinner_color" type="text" value="<?php echo esc_attr(get_option('wc_ukr_shipping_spinner_color', '#dddddd')); ?>" />
 </div>
 
 <?php

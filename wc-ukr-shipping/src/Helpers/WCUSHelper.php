@@ -564,4 +564,9 @@ class WCUSHelper
     {
         return $paymentMethod !== '' && $paymentMethod === self::getCodPaymentMethod();
     }
+
+    public static function currentUserCanManageStore(): bool
+    {
+        return current_user_can('manage_woocommerce') || current_user_can('manage_options');
+    }
 }

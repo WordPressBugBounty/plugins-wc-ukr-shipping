@@ -14,19 +14,19 @@
 
         <div class="wcus-settings wcus-settings--full">
             <div class="wcus-settings__header">
-                <div class="wcus-card-icon"><?php echo wc_ukr_shipping_import_svg('truck.svg') ?></div>
+                <div class="wcus-card-icon"><?php echo wc_ukr_shipping_import_svg('truck.svg'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG bundled with the plugin ?></div>
                 <h1 class="wcus-settings__title">
                     <?php esc_html_e('Carriers', 'wc-ukr-shipping'); ?>
                 </h1>
             </div>
             <div class="wcus-settings__content">
-                <?php echo View::render('partial/settings_general/carriers', ['carriers' => $carriers]); ?>
+                <?php echo View::render('partial/settings_general/carriers', ['carriers' => $carriers]); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output ?>
             </div>
         </div>
 
         <div id="wc-ukr-shipping-settings" class="wcus-settings wcus-settings--full">
             <div class="wcus-settings__header">
-                <div class="wcus-card-icon"><?php echo wc_ukr_shipping_import_svg('settings.svg') ?></div>
+                <div class="wcus-card-icon"><?php echo wc_ukr_shipping_import_svg('settings.svg'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG bundled with the plugin ?></div>
                 <h1 class="wcus-settings__title">
                     <?php esc_html_e('Checkout', 'wc-ukr-shipping'); ?>
                 </h1>
@@ -39,13 +39,13 @@
             </div>
             <div class="wcus-settings__content">
                 <form id="wc-ukr-shipping-settings-form" action="/" method="POST">
-                    <?php echo View::render('partial/settings_general/checkout'); ?>
+                    <?php echo View::render('partial/settings_general/checkout'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output ?>
                 </form>
             </div>
         </div>
 
     </div>
 
-    <?php echo View::render('partial/pro_promotion'); ?>
+    <?php echo View::render('partial/pro_promotion'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output ?>
 
 </div>

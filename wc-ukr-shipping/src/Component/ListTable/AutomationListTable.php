@@ -43,7 +43,7 @@ class AutomationListTable extends \WP_List_Table
         ]);
 
         $this->items = array_map(function (array $row) {
-            $row['active'] = __((int)$row['active'] ? 'Yes' : 'No');
+            $row['active'] = (int)$row['active'] ? __('Yes', 'wc-ukr-shipping') : __('No', 'wc-ukr-shipping');
 
             return (object)$row;
         }, $rules);

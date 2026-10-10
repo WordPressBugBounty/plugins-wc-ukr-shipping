@@ -81,7 +81,7 @@ class WcusLegacyCompatibility implements ModuleInterface
 
         // Compare signatures
         $signature = hash('sha256', $secret . base64_encode(json_encode($json, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)));
-        if ($signature !== $requestSignature) {
+        if (!hash_equals($signature, (string)$requestSignature)) {
             return new WP_REST_Response([
                 'success' => false,
                 'error' => 'Request not valid',

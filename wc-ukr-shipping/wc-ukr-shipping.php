@@ -3,7 +3,7 @@
  * Plugin Name: SmartyParcel - Shipping Automation & Order Tracking for GLS, InPost, Nova Post and more
  * Plugin URI: https://smartyparcel.com
  * Description: The easiest way to automate shipping in WooCommerce: pickup points at checkout (list or map), one-click shipping labels and order tracking.
- * Version: 1.23.3
+ * Version: 1.23.4
  * Author: kirillbdev
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -11,7 +11,7 @@
  * Domain Path: /lang
  * Requires PHP: 8.0
  * Tested up to: 7.1
- * WC tested up to: 11.1
+ * WC tested up to: 11.2
 */
 
 if ( ! defined('ABSPATH')) {

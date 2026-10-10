@@ -32,7 +32,11 @@ class CarriersController extends Controller
             return $this->carrierNotFound();
         }
 
-        if ($carrier->requireStoreConnection && !SmartyParcelHelper::isConnected()) {
+        $enabled = (int)$request->get('enabled') === 1;
+
+        // Any carrier can be enabled only by a store connected to SmartyParcel,
+        // disabling stays available for the carriers enabled before that
+        if ($enabled && !SmartyParcelHelper::isConnected()) {
             return $this->jsonResponse([
                 'success' => true,
                 'data' => [
@@ -41,7 +45,6 @@ class CarriersController extends Controller
             ]);
         }
 
-        $enabled = (int)$request->get('enabled') === 1;
         $this->carrierService->setActive($carrier, $enabled);
 
         return $this->jsonResponse([

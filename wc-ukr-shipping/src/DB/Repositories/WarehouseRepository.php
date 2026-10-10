@@ -121,6 +121,7 @@ class WarehouseRepository
             $insertValues[] = '(' . implode(',', $values) . ')';
         }
 
+        // phpcs:disable PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared -- values are escaped with esc_sql() above
         $wpdb->query(
             "INSERT INTO `{$wpdb->prefix}wc_ukr_shipping_np_warehouses`
                     (`ref`, `description`, `description_ru`, `city_ref`, `total_max_weight_allowed`, `place_max_weight_allowed`, `number`, `warehouse_type`)
@@ -132,5 +133,6 @@ class WarehouseRepository
                     `number` = VALUES(`number`),
                     `warehouse_type` = VALUES(`warehouse_type`)"
         );
+        // phpcs:enable PluginCheck.Security.DirectDB.UnescapedDBParameter, WordPress.DB.PreparedSQL.NotPrepared
     }
 }

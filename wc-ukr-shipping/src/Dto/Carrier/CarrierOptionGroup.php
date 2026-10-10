@@ -10,11 +10,6 @@ if ( ! defined('ABSPATH')) {
 
 final class CarrierOptionGroup
 {
-    /**
-     * Frontend widget rendered inside the group in addition to its fields.
-     */
-    public const WIDGET_NP_WAREHOUSE_LOADER = 'np_warehouse_loader';
-
     public string $title;
 
     /**
@@ -22,20 +17,17 @@ final class CarrierOptionGroup
      */
     public array $fields;
 
-    public ?string $widget;
-
     /**
      * @param CarrierOptionField[] $fields
      */
-    public function __construct(string $title, array $fields = [], ?string $widget = null)
+    public function __construct(string $title, array $fields = [])
     {
         $this->title = $title;
         $this->fields = $fields;
-        $this->widget = $widget;
     }
 
     public function isEmpty(): bool
     {
-        return $this->fields === [] && $this->widget === null;
+        return $this->fields === [];
     }
 }

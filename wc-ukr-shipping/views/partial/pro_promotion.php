@@ -7,7 +7,7 @@ if ( ! defined('ABSPATH')) {
 <div class="wcus-pro-features">
     <div class="wcus-card wcus-mb-2">
         <div class="wcus-card__header">
-            <div class="wcus-card-icon"><?php echo wc_ukr_shipping_import_svg('help.svg') ?></div>
+            <div class="wcus-card-icon"><?php echo wc_ukr_shipping_import_svg('help.svg'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG bundled with the plugin ?></div>
             <div class="wcus-card__title wcus-pro-features__title">
                 <?php esc_html_e('Need help?', 'wc-ukr-shipping'); ?>
             </div>
@@ -16,13 +16,13 @@ if ( ! defined('ABSPATH')) {
             <a target="_blank"
                href="https://smartyparcel.com/docs/knowledge-base-woocommerce/"
                class="wcus-btn wcus-btn--docs wcus-btn--md wcus-btn--block wcus-mb-1">
-                <?php echo wc_ukr_shipping_import_svg('docs.svg'); ?>
+                <?php echo wc_ukr_shipping_import_svg('docs.svg'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG bundled with the plugin ?>
                 <?php esc_html_e('Documentation', 'wc-ukr-shipping'); ?>
             </a>
             <a target="_blank"
                href="https://smartyparcel.com/contacts/"
                class="wcus-btn wcus-btn--docs wcus-btn--md wcus-btn--block">
-                <?php echo wc_ukr_shipping_import_svg('support.svg'); ?>
+                <?php echo wc_ukr_shipping_import_svg('support.svg'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG bundled with the plugin ?>
                 <?php esc_html_e('Contact support', 'wc-ukr-shipping'); ?>
             </a>
         </div>
@@ -69,7 +69,7 @@ if ( ! defined('ABSPATH')) {
 
                 <a href="<?php echo esc_url(admin_url('admin.php?page=wcus_smarty_parcel#/upgrade')); ?>"
                    class="wcus-btn wcus-btn--md wcus-btn--block wcus-pro-features__btn">
-                    <?php echo wc_ukr_shipping_import_svg('star.svg'); ?>
+                    <?php echo wc_ukr_shipping_import_svg('star.svg'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG bundled with the plugin ?>
                     <?php esc_html_e('Switch to paid plan', 'wc-ukr-shipping'); ?>
                 </a>
 

@@ -1,3 +1,9 @@
+<?php
+    if ( ! defined('ABSPATH')) {
+        exit;
+    }
+?>
+
 <div class="wcus-layout">
     <div class="wcus-settings wcus-settings--full" style="width: 100%;">
         <div class="wcus-settings__header">

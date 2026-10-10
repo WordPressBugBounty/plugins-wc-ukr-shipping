@@ -110,7 +110,6 @@ class CarrierService
             $groups[] = [
                 'title' => $group->title,
                 'fields' => $fields,
-                'widget' => $group->widget,
             ];
         }
 

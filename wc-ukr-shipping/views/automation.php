@@ -1,10 +1,14 @@
 <?php
+    if ( ! defined('ABSPATH')) {
+        exit;
+    }
+
     use kirillbdev\WCUkrShipping\Helpers\HtmlHelper;
 ?>
 
 <?php if (isset($successMsg)) { ?>
     <div id="wcus-automation-success" class="notice inline notice-success notice-alt" style="padding-top: 10px; padding-bottom: 10px;">
-        <?= $successMsg; ?>
+        <?php echo esc_html($successMsg); ?>
     </div>
 <?php } ?>
 
@@ -44,9 +48,9 @@
                 window.WcusAutomation.init({
                     event: {
                         type: '<?php echo esc_js($model->event_name); ?>',
-                        params: <?php echo $model->event_data; ?>
+                        params: <?php echo wp_json_encode(json_decode((string)$model->event_data)); ?>
                     },
-                    actions: <?php echo json_encode($model->actions); ?>
+                    actions: <?php echo wp_json_encode($model->actions); ?>
                 });
             <?php } else { ?>
                 window.WcusAutomation.init();

@@ -9,7 +9,7 @@ use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 use kirillbdev\WCUkrShipping\Http\Controllers\OrdersController;
-use kirillbdev\WCUkrShipping\Http\WpHttpClient;
+use kirillbdev\WCUkrShipping\Http\Middleware\CheckManageWooPermission;
 use kirillbdev\WCUSCore\Foundation\View;
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
@@ -48,7 +48,9 @@ class Orders implements ModuleInterface
     public function routes()
     {
         return [
-            new Route('wcus_orders_list', OrdersController::class, 'getOrders'),
+            new Route('wcus_orders_list', OrdersController::class, 'getOrders', [
+                'middleware' => [CheckManageWooPermission::class],
+            ]),
         ];
     }
 
@@ -77,6 +79,10 @@ class Orders implements ModuleInterface
             && isset($_GET['format']);
 
         if (!is_admin() || !$isPrintLabelPage) {
+            return;
+        }
+
+        if (!WCUSHelper::currentUserCanManageStore()) {
             return;
         }
 
@@ -117,6 +123,10 @@ class Orders implements ModuleInterface
                 && isset($_GET['batch_id']);
 
         if (!is_admin() || !$isCurrentRoute) {
+            return;
+        }
+
+        if (!WCUSHelper::currentUserCanManageStore()) {
             return;
         }
 
@@ -184,7 +194,7 @@ class Orders implements ModuleInterface
             $order->save_meta_data();
         }
 
-        echo View::render('order/edit_order_metabox', $data);
+        echo View::render('order/edit_order_metabox', $data); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output
     }
 
     /**
@@ -231,11 +241,13 @@ class Orders implements ModuleInterface
                 }
             }
 
+            // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output
             echo View::render('order/ttn_widget', [
                 'ttn' => $ttn,
                 'carrier' => $carrier,
                 'order' => $order,
             ]);
+            // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
         }
     }
 }

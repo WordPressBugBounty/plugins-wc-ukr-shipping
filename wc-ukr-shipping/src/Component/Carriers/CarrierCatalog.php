@@ -59,11 +59,6 @@ final class CarrierCatalog
                     CarrierFeature::TRACKING,
                 ],
                 [
-                    new CarrierOptionGroup(
-                        __('Pickup points', 'wc-ukr-shipping'),
-                        [],
-                        CarrierOptionGroup::WIDGET_NP_WAREHOUSE_LOADER
-                    ),
                     new CarrierOptionGroup(__('Checkout', 'wc-ukr-shipping'), [
                         CarrierOptionField::select(
                             'wc_ukr_shipping_np_lang',
@@ -96,8 +91,7 @@ final class CarrierCatalog
                     CarrierFeature::PICKUP_POINTS,
                     CarrierFeature::ADDRESS_DELIVERY,
                     CarrierFeature::TRACKING,
-                ],
-                requireStoreConnection: true
+                ]
             ),
             new CarrierDefinition(
                 CarrierSlug::INPOST,
@@ -107,8 +101,7 @@ final class CarrierCatalog
                     CarrierFeature::PICKUP_POINTS,
                     CarrierFeature::ADDRESS_DELIVERY,
                     CarrierFeature::TRACKING,
-                ],
-                requireStoreConnection: true
+                ]
             ),
             new CarrierDefinition(
                 CarrierSlug::GLS,
@@ -118,8 +111,7 @@ final class CarrierCatalog
                     CarrierFeature::PICKUP_POINTS,
                     CarrierFeature::ADDRESS_DELIVERY,
                     CarrierFeature::TRACKING,
-                ],
-                requireStoreConnection: true
+                ]
             ),
             new CarrierDefinition(
                 CarrierSlug::UKRPOSHTA,
@@ -131,15 +123,6 @@ final class CarrierCatalog
                     CarrierFeature::RATE_CALCULATION,
                     CarrierFeature::SHIPPING_LABELS,
                     CarrierFeature::TRACKING,
-                ],
-                [
-                    new CarrierOptionGroup(__('Pickup points', 'wc-ukr-shipping'), [
-                        CarrierOptionField::text(
-                            'wcus_ukrposhta_bearer_ecom',
-                            __('Bearer eCom token of Ukrposhta', 'wc-ukr-shipping'),
-                            __('Bearer eCom token is required to search for warehouses across Ukraine.', 'wc-ukr-shipping')
-                        ),
-                    ]),
                 ]
             ),
             new CarrierDefinition(
@@ -162,15 +145,6 @@ final class CarrierCatalog
                     CarrierFeature::RATE_CALCULATION,
                     CarrierFeature::SHIPPING_LABELS,
                     CarrierFeature::TRACKING,
-                ],
-                [
-                    new CarrierOptionGroup(__('Pickup points', 'wc-ukr-shipping'), [
-                        CarrierOptionField::text(
-                            'wcus_nova_post_api_key',
-                            __('API Key of Nova Post', 'wc-ukr-shipping'),
-                            __('API key is required to search for warehouses and PUDO across Europe', 'wc-ukr-shipping')
-                        ),
-                    ]),
                 ]
             ),
             new CarrierDefinition(
@@ -195,15 +169,6 @@ final class CarrierCatalog
                     CarrierFeature::RATE_CALCULATION,
                     CarrierFeature::SHIPPING_LABELS,
                     CarrierFeature::TRACKING,
-                ],
-                [
-                    new CarrierOptionGroup(__('Pickup points', 'wc-ukr-shipping'), [
-                        CarrierOptionField::text(
-                            'wcus_meest_api_token',
-                            __('API Token of Meest Post', 'wc-ukr-shipping'),
-                            __('API token is required to search for warehouses and PUDO of Meest Post', 'wc-ukr-shipping')
-                        ),
-                    ]),
                 ]
             ),
         ];

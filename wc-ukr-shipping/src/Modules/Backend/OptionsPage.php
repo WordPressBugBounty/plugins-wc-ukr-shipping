@@ -8,7 +8,6 @@ use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
 use kirillbdev\WCUkrShipping\Foundation\State;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
-use kirillbdev\WCUkrShipping\Http\Controllers\AddressBookController;
 use kirillbdev\WCUkrShipping\Http\Controllers\AutomationController;
 use kirillbdev\WCUkrShipping\Http\Controllers\CarriersController;
 use kirillbdev\WCUkrShipping\Http\Controllers\OptionsController;
@@ -18,7 +17,6 @@ use kirillbdev\WCUkrShipping\Http\Resources\OrderResource;
 use kirillbdev\WCUkrShipping\Model\Document\TTNStore;
 use kirillbdev\WCUkrShipping\Services\CarrierService;
 use kirillbdev\WCUkrShipping\States\OrdersState;
-use kirillbdev\WCUkrShipping\States\WarehouseLoaderState;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 use kirillbdev\WCUSCore\Foundation\View;
 use kirillbdev\WCUSCore\Http\Routing\Route;
@@ -60,10 +58,6 @@ class OptionsPage implements ModuleInterface
             'wcus_get_carrier_options' => [CarriersController::class, 'getOptions'],
             'wcus_save_carrier_options' => [CarriersController::class, 'saveOptions'],
 
-            'wcus_load_areas' => [AddressBookController::class, 'loadAreas'],
-            'wcus_load_cities' => [AddressBookController::class, 'loadCities'],
-            'wcus_load_warehouses' => [AddressBookController::class, 'loadWarehouses'],
-
             'wcus_smartyparcel_api' => [SmartyParcelController::class, 'sendApiRequest'],
             'wcus_smartyparcel_disconnect' => [SmartyParcelController::class, 'disconnect'],
             'wcus_smarty_parcel_create_label' => [SmartyParcelController::class, 'createShippingLabel'],
@@ -76,11 +70,9 @@ class OptionsPage implements ModuleInterface
 
         $routes = [];
         foreach ($map as $action => [$controller, $method]) {
-            $options = $action !== 'wcus_smartyparcel_api'
-                ? ['middleware' => [CheckManageWooPermission::class]]
-                : [];
-
-            $routes[] = new Route($action, $controller, $method, $options);
+            $routes[] = new Route($action, $controller, $method, [
+                'middleware' => [CheckManageWooPermission::class],
+            ]);
         }
 
         return $routes;
@@ -88,7 +80,6 @@ class OptionsPage implements ModuleInterface
 
     public function registerOptionsPage()
     {
-        State::add('warehouse_loader', WarehouseLoaderState::class);
         State::add('orders', OrdersState::class);
 
         add_menu_page(
@@ -171,20 +162,6 @@ class OptionsPage implements ModuleInterface
     public function registerTranslates($i18n): array
     {
         return array_merge($i18n, [
-            'warehouse_loader' => [
-                'title' => __('Warehouses data of Nova Poshta', 'wc-ukr-shipping'),
-                'last_update' => __('Last update date:', 'wc-ukr-shipping'),
-                'status' => __('Status:', 'wc-ukr-shipping'),
-                'status_not_completed' => __('Not completed', 'wc-ukr-shipping'),
-                'status_completed' => __('Completed', 'wc-ukr-shipping'),
-                'status_unknown' => __('Unknown', 'wc-ukr-shipping'),
-                'update' => __('Update warehouses', 'wc-ukr-shipping'),
-                'continue' => __('Continue update', 'wc-ukr-shipping'),
-                'load_areas' => __('Load areas...', 'wc-ukr-shipping'),
-                'load_cities' => __('Load cities...', 'wc-ukr-shipping'),
-                'load_warehouses' => __('Load warehouses...', 'wc-ukr-shipping'),
-                'success_updated' => __('Warehouses db updated successfully', 'wc-ukr-shipping'),
-            ],
             'smarty_parcel' => [],
             'text_confirm_re_run_migrations' => __('Are you sure to restart migrations? This action cannot be canceled.', 'wc-ukr-shipping'),
         ]);
@@ -192,20 +169,22 @@ class OptionsPage implements ModuleInterface
 
     public function html(): void
     {
+        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output
         echo View::render('settings_general', [
             'carriers' => $this->carrierService->getCarrierList(),
         ]);
+        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 
     public function smartyParcelHtml()
     {
-        echo View::render('smarty_parcel');
+        echo View::render('smarty_parcel'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output
     }
 
     public function ttnHtml(): void
     {
         if (!SmartyParcelHelper::isConnected()) {
-            echo View::render('ttn/ttn_forbidden');
+            echo View::render('ttn/ttn_forbidden'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output
             return;
         }
 
@@ -254,7 +233,7 @@ class OptionsPage implements ModuleInterface
             echo 'Unable to init shipment form';
         } else {
             wp_localize_script('wcus_ttn_form_js', 'wcus_ttn_form_state', $store->collect());
-            echo View::render('ttn/ttn');
+            echo View::render('ttn/ttn'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output
         }
     }
 
@@ -272,12 +251,12 @@ class OptionsPage implements ModuleInterface
 
         wp_localize_script('smartyparcel_labels_js', 'wcus_sp_order_data', $orderData);
 
-        echo View::render('ttn/ttn_v2');
+        echo View::render('ttn/ttn_v2'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output
     }
 
     public function orderListHtml(): void
     {
-        echo View::render('orders');
+        echo View::render('orders'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output
     }
 
     public function automationHtml()
@@ -317,11 +296,13 @@ class OptionsPage implements ModuleInterface
             }
         }
 
+        // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output
         echo View::render('automation', [
             'model' => $model,
             'successMsg' => isset($_GET['success']) && $_GET['success'] === '1'
                 ? __('Rule saved successfully', 'wc-ukr-shipping')
                 : null,
         ]);
+        // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 }

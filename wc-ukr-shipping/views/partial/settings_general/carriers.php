@@ -64,7 +64,7 @@
 
     <div class="wcus-carrier wcus-carrier--universal">
         <div class="wcus-carrier__icon wcus-carrier__icon--glyph">
-            <?php echo wc_ukr_shipping_import_svg('truck.svg'); ?>
+            <?php echo wc_ukr_shipping_import_svg('truck.svg'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG bundled with the plugin ?>
         </div>
 
         <div class="wcus-carrier__info">

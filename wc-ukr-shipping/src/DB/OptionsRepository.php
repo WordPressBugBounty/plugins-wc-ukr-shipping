@@ -58,9 +58,6 @@ class OptionsRepository
             // Rozetka delivery
             'wcus_rozetka_fixed_cost' => 0,
             'wcus_rozetka_cost_view_only' => 0,
-
-            // SmartyParcel
-            'wcus_use_smartyparcel_locator' => 0,
         ];
 
         return get_option($key, isset($defaults[$key]) ? $defaults[$key] : null);
