@@ -16,7 +16,7 @@
             <div class="wcus-settings__header">
                 <div class="wcus-card-icon"><?php echo wc_ukr_shipping_import_svg('truck.svg'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG bundled with the plugin ?></div>
                 <h1 class="wcus-settings__title">
-                    <?php esc_html_e('Carriers', 'wc-ukr-shipping'); ?>
+                    <?php esc_html_e('Shipping methods', 'wc-ukr-shipping'); ?>
                 </h1>
             </div>
             <div class="wcus-settings__content">
