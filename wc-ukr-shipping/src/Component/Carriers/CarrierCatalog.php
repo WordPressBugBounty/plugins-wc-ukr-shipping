@@ -80,6 +80,11 @@ final class CarrierCatalog
                             'wcus_ttn_global_params_default',
                             __('Global params as default', 'wc-ukr-shipping')
                         ),
+                        CarrierOptionField::switcher(
+                            'wcus_np_use_legacy_label_form',
+                            __('Use legacy shipping label form', 'wc-ukr-shipping'),
+                            __('If enabled, the plugin will use the old Nova Poshta shipping label form instead of the new one', 'wc-ukr-shipping')
+                        ),
                     ]),
                 ]
             ),
@@ -110,6 +115,17 @@ final class CarrierCatalog
                 [
                     CarrierFeature::PICKUP_POINTS,
                     CarrierFeature::ADDRESS_DELIVERY,
+                    CarrierFeature::TRACKING,
+                ]
+            ),
+            new CarrierDefinition(
+                CarrierSlug::DHL_EXPRESS,
+                'DHL Express',
+                'dhl-icon.png',
+                [
+                    CarrierFeature::ADDRESS_DELIVERY,
+                    CarrierFeature::RATE_CALCULATION,
+                    CarrierFeature::SHIPPING_LABELS,
                     CarrierFeature::TRACKING,
                 ]
             ),

@@ -20,9 +20,11 @@ define('WCUS_SHIPPING_METHOD_INPOST', 'wcus_inpost_shipping');
 define('WCUS_SHIPPING_METHOD_INPOST_ADDRESS', 'wcus_inpost_address_shipping');
 define('WCUS_SHIPPING_METHOD_GLS', 'wcus_gls_shipping');
 define('WCUS_SHIPPING_METHOD_GLS_ADDRESS', 'wcus_gls_address_shipping');
+define('WCUS_SHIPPING_METHOD_DHL_EXPRESS_ADDRESS', 'wcus_dhl_express_address');
 
 // Shipping item meta
 define('WCUS_SHIPPING_META_VIEW_COST', 'wcus_view_cost');
+define('WCUS_SHIPPING_META_SERVICE_TYPE', 'wcus_service_type');
 
 // Warehouse Type
 define('WCUS_WAREHOUSE_TYPE_REGULAR', 1);
@@ -43,3 +45,10 @@ define('WCUS_OPTION_SMARTY_PARCEL_API_KEY', 'wcus_smartyparcel_api_key');
 define('WCUS_OPTION_SMARTY_PARCEL_USER_STATUS', 'wcus_smartyparcel_user_status');
 define('WCUS_OPTION_SMARTY_PARCEL_CARRIERS', 'wcus_smartyparcel_carriers');
 define('WCUS_OPTION_INSTALLATION_ID', 'wcus_app_installation_id');
+
+// User meta
+define('WCUS_USER_META_SMARTY_PARCEL_ACCESS_KEY', 'wcus_smartyparcel_access_key');
+define('WCUS_USER_META_SMARTY_PARCEL_JWT', 'wcus_smartyparcel_jwt');
+
+// Docs
+define('WCUS_DOCS_ACCESS_KEYS_URL', 'https://smartyparcel.com/docs/elements-access-keys-in-woocommerce/');

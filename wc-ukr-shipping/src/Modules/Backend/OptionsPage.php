@@ -199,11 +199,10 @@ class OptionsPage implements ModuleInterface
         }
         $shippingMethod = WCUSHelper::getOrderShippingMethod($order);
 
-        // Hardcoded yet: detect and process elements-sdk flow
-        $legacyFormMethods = [
-            WCUS_SHIPPING_METHOD_NOVA_POSHTA,
-        ];
-        if ($shippingMethod === null || !in_array($shippingMethod->get_method_id(), $legacyFormMethods, true)) {
+        $useLegacyForm = $shippingMethod !== null
+            && $shippingMethod->get_method_id() === WCUS_SHIPPING_METHOD_NOVA_POSHTA
+            && (int)wc_ukr_shipping_get_option('wcus_np_use_legacy_label_form') === 1;
+        if (!$useLegacyForm) {
             $this->processPurchaseLabelV2($order);
             return;
         }
@@ -250,6 +249,17 @@ class OptionsPage implements ModuleInterface
         $orderData = (new OrderResource($order))->toElementsData();
 
         wp_localize_script('smartyparcel_labels_js', 'wcus_sp_order_data', $orderData);
+        wp_localize_script('smartyparcel_labels_js', 'wcus_sp_label_form', [
+            'carrierSettings' => [
+                'novaPoshta' => [
+                    'globalParams' => (bool)apply_filters(
+                        'wcus_ttn_form_global_params',
+                        (int)wc_ukr_shipping_get_option('wcus_ttn_global_params_default') === 1,
+                        $order
+                    ),
+                ],
+            ],
+        ]);
 
         echo View::render('ttn/ttn_v2'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output
     }

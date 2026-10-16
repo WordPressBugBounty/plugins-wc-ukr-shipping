@@ -4,6 +4,7 @@ namespace kirillbdev\WCUkrShipping\Modules\Frontend;
 
 use kirillbdev\WCUkrShipping\Component\Block\ShippingBlockIntegration;
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
+use kirillbdev\WCUkrShipping\Foundation\DhlExpressAddressShipping;
 use kirillbdev\WCUkrShipping\Foundation\GLSAddressShipping;
 use kirillbdev\WCUkrShipping\Foundation\GLSShipping;
 use kirillbdev\WCUkrShipping\Foundation\InPostAddressShipping;
@@ -86,6 +87,9 @@ class ShippingMethod implements ModuleInterface
         if (in_array(CarrierSlug::GLS, $activeCarriers)) {
             $methods[WCUS_SHIPPING_METHOD_GLS] = GLSShipping::class;
             $methods[WCUS_SHIPPING_METHOD_GLS_ADDRESS] = GLSAddressShipping::class;
+        }
+        if (in_array(CarrierSlug::DHL_EXPRESS, $activeCarriers)) {
+            $methods[WCUS_SHIPPING_METHOD_DHL_EXPRESS_ADDRESS] = DhlExpressAddressShipping::class;
         }
 
         return $methods;

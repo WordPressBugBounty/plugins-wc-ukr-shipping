@@ -43,6 +43,7 @@ class OptionsRepository
             'wcus_show_poshtomats' => 1,
             'wcus_np_use_online_directory' => 0,
             'wcus_ttn_global_params_default' => 0,
+            'wcus_np_use_legacy_label_form' => 0,
 
             // Ukrposhta
             'wcus_ukrposhta_service_type' => 'ukrposhta_standard',

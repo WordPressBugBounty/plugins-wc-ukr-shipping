@@ -4,62 +4,61 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Http\Controllers;
 
-use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
+use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\AccessKeyRequiredException;
+use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
+use kirillbdev\WCUkrShipping\Services\SmartyParcel\AccessService;
 use kirillbdev\WCUSCore\Http\Contracts\ResponseInterface;
 use kirillbdev\WCUSCore\Http\Controller;
 use kirillbdev\WCUSCore\Http\Request;
 
 class JWTController extends Controller
 {
-    private SmartyParcelWPApi $api;
+    private AccessService $accessService;
 
-    public function __construct(SmartyParcelWPApi $api)
+    public function __construct(AccessService $accessService)
     {
-        $this->api = $api;
+        $this->accessService = $accessService;
     }
 
     public function issueToken(Request $request): ResponseInterface
     {
         try {
-            $scope = [$this->getScopeByRole($request->get('role'))];
-            $cacheKey = sprintf('smartyparcel_jwt_%s', md5(implode(',', $scope)));
-
-            $cached = get_transient($cacheKey);
-            if ($cached) {
-                $cached = json_decode($cached, true);
-
-                if ((int)$cached['expires_at'] > time()) {
-                    return $this->jsonResponse([
-                        'success' => true,
-                        'data' => $cached,
-                    ]);
-                }
-            }
-
-            $response = $this->api->sendRequest('/v1/embedded/authx', [
-                'scope' => $scope,
-            ]);
-            set_transient($cacheKey, json_encode($response), (int)$response['expires_at'] - time());
-
             return $this->jsonResponse([
                 'success' => true,
-                'data' => $response,
+                'data' => $this->accessService->issueToken(get_current_user_id()),
+            ]);
+        } catch (AccessKeyRequiredException $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error' => [
+                    'code' => 'access_key_required',
+                    'message' => $e->getMessage(),
+                    'source' => 'internal',
+                    'details' => [
+                        'docs_url' => WCUS_DOCS_ACCESS_KEYS_URL,
+                        'docs_label' => __('Learn more', 'wc-ukr-shipping'),
+                    ],
+                ]
+            ]);
+        } catch (SmartyParcelErrorException $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error' => [
+                    'source' => 'smarty_parcel',
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage(),
+                    'details' => $e->getDetails(),
+                ]
             ]);
         } catch (\Throwable $e) {
             return $this->jsonResponse([
                 'success' => false,
-                'error' => $e->getMessage(),
+                'error' => [
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage(),
+                    'source' => 'internal'
+                ]
             ]);
-        }
-    }
-
-    private function getScopeByRole(string $role): string
-    {
-        switch ($role) {
-            case 'admin':
-                return '/platform';
-            default:
-                throw new \Exception('Unsupported role: ' . $role);
         }
     }
 }

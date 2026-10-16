@@ -56,6 +56,8 @@ final class SmartyParcelHelper
             case WCUS_SHIPPING_METHOD_MEEST:
             case WCUS_SHIPPING_METHOD_MEEST_ADDRESS:
                     return CarrierSlug::MEEST;
+            case WCUS_SHIPPING_METHOD_DHL_EXPRESS_ADDRESS:
+                return CarrierSlug::DHL_EXPRESS;
         }
 
         return null;

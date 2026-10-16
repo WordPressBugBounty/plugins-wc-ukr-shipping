@@ -5,15 +5,18 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Modules;
 
 use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
+use kirillbdev\WCUkrShipping\Services\SmartyParcel\AccessService;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 
 class SmartyParcel implements ModuleInterface
 {
     private SmartyParcelWPApi $api;
+    private AccessService $accessService;
 
-    public function __construct(SmartyParcelWPApi $api)
+    public function __construct(SmartyParcelWPApi $api, AccessService $accessService)
     {
         $this->api = $api;
+        $this->accessService = $accessService;
     }
 
     public function init()
@@ -41,6 +44,11 @@ class SmartyParcel implements ModuleInterface
 
                 update_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY, $response['api_key']);
                 update_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS, 'connected');
+
+                // Owner access key is issued on every (re)connect and belongs to the user who connected the store
+                if (!empty($response['access_key'])) {
+                    $this->accessService->saveAccessKey(get_current_user_id(), $response['access_key']);
+                }
             }
 
             wp_safe_redirect(admin_url('admin.php?page=wcus_smarty_parcel'));

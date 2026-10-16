@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace kirillbdev\WCUkrShipping\Http\Resources;
 
 use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
+use kirillbdev\WCUkrShipping\Foundation\DhlExpressAddressShipping;
 use kirillbdev\WCUkrShipping\Foundation\UkrPoshtaShipping;
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
@@ -126,6 +127,18 @@ class OrderResource
 
     private function getCarrierServiceType(\WC_Order_Item_Shipping $orderShipping, ?string $carrierSlug): ?string
     {
+        // Service saved to the order on checkout
+        $serviceType = (string)$orderShipping->get_meta(WCUS_SHIPPING_META_SERVICE_TYPE);
+        if ($serviceType !== '') {
+            return $serviceType;
+        }
+
+        if ($carrierSlug === CarrierSlug::DHL_EXPRESS) {
+            $shippingInstance = new DhlExpressAddressShipping((int)$orderShipping->get_instance_id());
+
+            return (string)$shippingInstance->get_option('service_type') ?: null;
+        }
+
         if ($carrierSlug !== CarrierSlug::UKRPOSHTA) {
             return null;
         }

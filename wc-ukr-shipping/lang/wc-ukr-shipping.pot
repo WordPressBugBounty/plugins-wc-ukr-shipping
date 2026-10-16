@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: SmartyParcel - Shipping Automation & Order Tracking for GLS, InPost, Nova Post and more 1.23.4\n"
+"Project-Id-Version: SmartyParcel - Shipping Automation & Order Tracking for GLS, InPost, Nova Post and more 1.23.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-13T01:35:57+03:00\n"
+"POT-Creation-Date: 2026-10-16T13:49:20+03:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-ukr-shipping\n"
@@ -176,6 +176,14 @@ msgstr ""
 msgid "Global params as default"
 msgstr ""
 
+#: src/Component/Carriers/CarrierCatalog.php:85
+msgid "Use legacy shipping label form"
+msgstr ""
+
+#: src/Component/Carriers/CarrierCatalog.php:86
+msgid "If enabled, the plugin will use the old Nova Poshta shipping label form instead of the new one"
+msgstr ""
+
 #: src/Component/ListTable/AutomationListTable.php:46
 msgid "Yes"
 msgstr ""
@@ -252,11 +260,18 @@ msgstr ""
 msgid "Select Ukrposhta warehouse"
 msgstr ""
 
-#: src/Foundation/GLSAddressShipping.php:19
-#: src/Foundation/GLSAddressShipping.php:54
-msgid "GLS Address Delivery"
+#: src/Foundation/DhlExpressAddressShipping.php:20
+#: src/Foundation/DhlExpressAddressShipping.php:55
+msgid "DHL Express Address Delivery"
 msgstr ""
 
+#: src/Foundation/DhlExpressAddressShipping.php:58
+#: src/Modules/Backend/ShippingItemDrawer.php:56
+#: src/Modules/Backend/ShippingItemDrawer.php:61
+msgid "Service type"
+msgstr ""
+
+#: src/Foundation/DhlExpressAddressShipping.php:65
 #: src/Foundation/GLSAddressShipping.php:57
 #: src/Foundation/GLSShipping.php:57
 #: src/Foundation/InPostAddressShipping.php:57
@@ -275,6 +290,7 @@ msgstr ""
 msgid "Type of shipping cost calculation"
 msgstr ""
 
+#: src/Foundation/DhlExpressAddressShipping.php:67
 #: src/Foundation/GLSAddressShipping.php:59
 #: src/Foundation/GLSShipping.php:59
 #: src/Foundation/InPostAddressShipping.php:59
@@ -292,6 +308,7 @@ msgstr ""
 msgid "Access to the SmartyParcel Rates API is only available on paid plans"
 msgstr ""
 
+#: src/Foundation/DhlExpressAddressShipping.php:71
 #: src/Foundation/GLSAddressShipping.php:63
 #: src/Foundation/GLSShipping.php:63
 #: src/Foundation/InPostAddressShipping.php:63
@@ -310,6 +327,7 @@ msgstr ""
 msgid "Fixed"
 msgstr ""
 
+#: src/Foundation/DhlExpressAddressShipping.php:72
 #: src/Foundation/GLSAddressShipping.php:64
 #: src/Foundation/GLSShipping.php:64
 #: src/Foundation/InPostAddressShipping.php:64
@@ -327,6 +345,7 @@ msgstr ""
 msgid "SmartyParcel Rates API"
 msgstr ""
 
+#: src/Foundation/DhlExpressAddressShipping.php:77
 #: src/Foundation/GLSAddressShipping.php:69
 #: src/Foundation/GLSShipping.php:69
 #: src/Foundation/InPostAddressShipping.php:69
@@ -343,6 +362,144 @@ msgstr ""
 #: src/Foundation/UkrPoshtaAddressShipping.php:87
 #: src/Foundation/UkrPoshtaShipping.php:87
 msgid "Fixed shipping cost"
+msgstr ""
+
+#: src/Foundation/DhlExpressAddressShipping.php:85
+#: src/Foundation/GLSAddressShipping.php:85
+#: src/Foundation/GLSShipping.php:85
+#: src/Foundation/InPostAddressShipping.php:85
+#: src/Foundation/InPostShipping.php:85
+#: src/Foundation/MeestAddressShipping.php:85
+#: src/Foundation/MeestShipping.php:85
+#: src/Foundation/NovaGlobalAddress.php:77
+#: src/Foundation/NovaPoshtaShipping.php:120
+#: src/Foundation/NovaPostAddressShipping.php:85
+#: src/Foundation/NovaPostShipping.php:77
+#: src/Foundation/PostNordAddressShipping.php:85
+#: src/Foundation/PostNordShipping.php:97
+#: src/Foundation/RozetkaDeliveryShipping.php:74
+#: src/Foundation/UkrPoshtaAddressShipping.php:111
+#: src/Foundation/UkrPoshtaShipping.php:111
+msgid "Include shipping cost to order total"
+msgstr ""
+
+#: src/Foundation/DhlExpressAddressShipping.php:87
+#: src/Foundation/GLSAddressShipping.php:87
+#: src/Foundation/GLSShipping.php:87
+#: src/Foundation/InPostAddressShipping.php:87
+#: src/Foundation/InPostShipping.php:87
+#: src/Foundation/MeestAddressShipping.php:87
+#: src/Foundation/MeestShipping.php:87
+#: src/Foundation/NovaGlobalAddress.php:79
+#: src/Foundation/NovaPoshtaShipping.php:122
+#: src/Foundation/NovaPostAddressShipping.php:87
+#: src/Foundation/NovaPostShipping.php:79
+#: src/Foundation/PostNordAddressShipping.php:87
+#: src/Foundation/PostNordShipping.php:99
+#: src/Foundation/RozetkaDeliveryShipping.php:76
+#: src/Foundation/UkrPoshtaAddressShipping.php:113
+#: src/Foundation/UkrPoshtaShipping.php:113
+msgid "If checked, the shipping cost will be added to the order total."
+msgstr ""
+
+#: src/Foundation/DhlExpressAddressShipping.php:92
+#: src/Foundation/GLSAddressShipping.php:92
+#: src/Foundation/GLSShipping.php:92
+#: src/Foundation/InPostAddressShipping.php:92
+#: src/Foundation/InPostShipping.php:92
+#: src/Foundation/MeestAddressShipping.php:92
+#: src/Foundation/MeestShipping.php:92
+#: src/Foundation/NovaGlobalAddress.php:84
+#: src/Foundation/NovaPoshtaShipping.php:127
+#: src/Foundation/NovaPostAddressShipping.php:92
+#: src/Foundation/NovaPostShipping.php:84
+#: src/Foundation/PostNordAddressShipping.php:92
+#: src/Foundation/PostNordShipping.php:104
+#: src/Foundation/RozetkaDeliveryShipping.php:81
+#: src/Foundation/UkrPoshtaAddressShipping.php:118
+#: src/Foundation/UkrPoshtaShipping.php:118
+msgid "Enable free shipping rule"
+msgstr ""
+
+#: src/Foundation/DhlExpressAddressShipping.php:94
+#: src/Foundation/GLSAddressShipping.php:94
+#: src/Foundation/GLSShipping.php:94
+#: src/Foundation/InPostAddressShipping.php:94
+#: src/Foundation/InPostShipping.php:94
+#: src/Foundation/MeestAddressShipping.php:94
+#: src/Foundation/MeestShipping.php:94
+#: src/Foundation/NovaGlobalAddress.php:86
+#: src/Foundation/NovaPoshtaShipping.php:129
+#: src/Foundation/NovaPostAddressShipping.php:94
+#: src/Foundation/NovaPostShipping.php:86
+#: src/Foundation/PostNordAddressShipping.php:94
+#: src/Foundation/PostNordShipping.php:106
+#: src/Foundation/RozetkaDeliveryShipping.php:83
+#: src/Foundation/UkrPoshtaAddressShipping.php:120
+#: src/Foundation/UkrPoshtaShipping.php:120
+msgid "If checked, free shipping would be available based on order amount."
+msgstr ""
+
+#: src/Foundation/DhlExpressAddressShipping.php:99
+#: src/Foundation/GLSAddressShipping.php:99
+#: src/Foundation/GLSShipping.php:99
+#: src/Foundation/InPostAddressShipping.php:99
+#: src/Foundation/InPostShipping.php:99
+#: src/Foundation/MeestAddressShipping.php:99
+#: src/Foundation/MeestShipping.php:99
+#: src/Foundation/NovaGlobalAddress.php:91
+#: src/Foundation/NovaPoshtaShipping.php:134
+#: src/Foundation/NovaPostAddressShipping.php:99
+#: src/Foundation/NovaPostShipping.php:91
+#: src/Foundation/PostNordAddressShipping.php:99
+#: src/Foundation/PostNordShipping.php:111
+#: src/Foundation/RozetkaDeliveryShipping.php:88
+#: src/Foundation/UkrPoshtaAddressShipping.php:125
+#: src/Foundation/UkrPoshtaShipping.php:125
+msgid "Minimum amount for free shipping"
+msgstr ""
+
+#: src/Foundation/DhlExpressAddressShipping.php:106
+#: src/Foundation/GLSAddressShipping.php:106
+#: src/Foundation/GLSShipping.php:106
+#: src/Foundation/InPostAddressShipping.php:106
+#: src/Foundation/InPostShipping.php:106
+#: src/Foundation/MeestAddressShipping.php:106
+#: src/Foundation/MeestShipping.php:106
+#: src/Foundation/NovaGlobalAddress.php:98
+#: src/Foundation/NovaPoshtaShipping.php:141
+#: src/Foundation/NovaPostAddressShipping.php:106
+#: src/Foundation/NovaPostShipping.php:98
+#: src/Foundation/PostNordAddressShipping.php:106
+#: src/Foundation/PostNordShipping.php:118
+#: src/Foundation/RozetkaDeliveryShipping.php:95
+#: src/Foundation/UkrPoshtaAddressShipping.php:132
+#: src/Foundation/UkrPoshtaShipping.php:132
+msgid "Free shipping method name"
+msgstr ""
+
+#: src/Foundation/DhlExpressAddressShipping.php:108
+#: src/Foundation/GLSAddressShipping.php:108
+#: src/Foundation/GLSShipping.php:108
+#: src/Foundation/InPostAddressShipping.php:108
+#: src/Foundation/InPostShipping.php:108
+#: src/Foundation/MeestAddressShipping.php:108
+#: src/Foundation/MeestShipping.php:108
+#: src/Foundation/NovaGlobalAddress.php:100
+#: src/Foundation/NovaPoshtaShipping.php:143
+#: src/Foundation/NovaPostAddressShipping.php:108
+#: src/Foundation/NovaPostShipping.php:100
+#: src/Foundation/PostNordAddressShipping.php:108
+#: src/Foundation/PostNordShipping.php:120
+#: src/Foundation/RozetkaDeliveryShipping.php:97
+#: src/Foundation/UkrPoshtaAddressShipping.php:134
+#: src/Foundation/UkrPoshtaShipping.php:134
+msgid "Free shipping"
+msgstr ""
+
+#: src/Foundation/GLSAddressShipping.php:19
+#: src/Foundation/GLSAddressShipping.php:54
+msgid "GLS Address Delivery"
 msgstr ""
 
 #: src/Foundation/GLSAddressShipping.php:77
@@ -373,132 +530,6 @@ msgstr ""
 #: src/Foundation/UkrPoshtaAddressShipping.php:97
 #: src/Foundation/UkrPoshtaShipping.php:97
 msgid "If checked and function supported by carrier, the COD service will be included in shipping cost."
-msgstr ""
-
-#: src/Foundation/GLSAddressShipping.php:85
-#: src/Foundation/GLSShipping.php:85
-#: src/Foundation/InPostAddressShipping.php:85
-#: src/Foundation/InPostShipping.php:85
-#: src/Foundation/MeestAddressShipping.php:85
-#: src/Foundation/MeestShipping.php:85
-#: src/Foundation/NovaGlobalAddress.php:77
-#: src/Foundation/NovaPoshtaShipping.php:120
-#: src/Foundation/NovaPostAddressShipping.php:85
-#: src/Foundation/NovaPostShipping.php:77
-#: src/Foundation/PostNordAddressShipping.php:85
-#: src/Foundation/PostNordShipping.php:97
-#: src/Foundation/RozetkaDeliveryShipping.php:74
-#: src/Foundation/UkrPoshtaAddressShipping.php:111
-#: src/Foundation/UkrPoshtaShipping.php:111
-msgid "Include shipping cost to order total"
-msgstr ""
-
-#: src/Foundation/GLSAddressShipping.php:87
-#: src/Foundation/GLSShipping.php:87
-#: src/Foundation/InPostAddressShipping.php:87
-#: src/Foundation/InPostShipping.php:87
-#: src/Foundation/MeestAddressShipping.php:87
-#: src/Foundation/MeestShipping.php:87
-#: src/Foundation/NovaGlobalAddress.php:79
-#: src/Foundation/NovaPoshtaShipping.php:122
-#: src/Foundation/NovaPostAddressShipping.php:87
-#: src/Foundation/NovaPostShipping.php:79
-#: src/Foundation/PostNordAddressShipping.php:87
-#: src/Foundation/PostNordShipping.php:99
-#: src/Foundation/RozetkaDeliveryShipping.php:76
-#: src/Foundation/UkrPoshtaAddressShipping.php:113
-#: src/Foundation/UkrPoshtaShipping.php:113
-msgid "If checked, the shipping cost will be added to the order total."
-msgstr ""
-
-#: src/Foundation/GLSAddressShipping.php:92
-#: src/Foundation/GLSShipping.php:92
-#: src/Foundation/InPostAddressShipping.php:92
-#: src/Foundation/InPostShipping.php:92
-#: src/Foundation/MeestAddressShipping.php:92
-#: src/Foundation/MeestShipping.php:92
-#: src/Foundation/NovaGlobalAddress.php:84
-#: src/Foundation/NovaPoshtaShipping.php:127
-#: src/Foundation/NovaPostAddressShipping.php:92
-#: src/Foundation/NovaPostShipping.php:84
-#: src/Foundation/PostNordAddressShipping.php:92
-#: src/Foundation/PostNordShipping.php:104
-#: src/Foundation/RozetkaDeliveryShipping.php:81
-#: src/Foundation/UkrPoshtaAddressShipping.php:118
-#: src/Foundation/UkrPoshtaShipping.php:118
-msgid "Enable free shipping rule"
-msgstr ""
-
-#: src/Foundation/GLSAddressShipping.php:94
-#: src/Foundation/GLSShipping.php:94
-#: src/Foundation/InPostAddressShipping.php:94
-#: src/Foundation/InPostShipping.php:94
-#: src/Foundation/MeestAddressShipping.php:94
-#: src/Foundation/MeestShipping.php:94
-#: src/Foundation/NovaGlobalAddress.php:86
-#: src/Foundation/NovaPoshtaShipping.php:129
-#: src/Foundation/NovaPostAddressShipping.php:94
-#: src/Foundation/NovaPostShipping.php:86
-#: src/Foundation/PostNordAddressShipping.php:94
-#: src/Foundation/PostNordShipping.php:106
-#: src/Foundation/RozetkaDeliveryShipping.php:83
-#: src/Foundation/UkrPoshtaAddressShipping.php:120
-#: src/Foundation/UkrPoshtaShipping.php:120
-msgid "If checked, free shipping would be available based on order amount."
-msgstr ""
-
-#: src/Foundation/GLSAddressShipping.php:99
-#: src/Foundation/GLSShipping.php:99
-#: src/Foundation/InPostAddressShipping.php:99
-#: src/Foundation/InPostShipping.php:99
-#: src/Foundation/MeestAddressShipping.php:99
-#: src/Foundation/MeestShipping.php:99
-#: src/Foundation/NovaGlobalAddress.php:91
-#: src/Foundation/NovaPoshtaShipping.php:134
-#: src/Foundation/NovaPostAddressShipping.php:99
-#: src/Foundation/NovaPostShipping.php:91
-#: src/Foundation/PostNordAddressShipping.php:99
-#: src/Foundation/PostNordShipping.php:111
-#: src/Foundation/RozetkaDeliveryShipping.php:88
-#: src/Foundation/UkrPoshtaAddressShipping.php:125
-#: src/Foundation/UkrPoshtaShipping.php:125
-msgid "Minimum amount for free shipping"
-msgstr ""
-
-#: src/Foundation/GLSAddressShipping.php:106
-#: src/Foundation/GLSShipping.php:106
-#: src/Foundation/InPostAddressShipping.php:106
-#: src/Foundation/InPostShipping.php:106
-#: src/Foundation/MeestAddressShipping.php:106
-#: src/Foundation/MeestShipping.php:106
-#: src/Foundation/NovaGlobalAddress.php:98
-#: src/Foundation/NovaPoshtaShipping.php:141
-#: src/Foundation/NovaPostAddressShipping.php:106
-#: src/Foundation/NovaPostShipping.php:98
-#: src/Foundation/PostNordAddressShipping.php:106
-#: src/Foundation/PostNordShipping.php:118
-#: src/Foundation/RozetkaDeliveryShipping.php:95
-#: src/Foundation/UkrPoshtaAddressShipping.php:132
-#: src/Foundation/UkrPoshtaShipping.php:132
-msgid "Free shipping method name"
-msgstr ""
-
-#: src/Foundation/GLSAddressShipping.php:108
-#: src/Foundation/GLSShipping.php:108
-#: src/Foundation/InPostAddressShipping.php:108
-#: src/Foundation/InPostShipping.php:108
-#: src/Foundation/MeestAddressShipping.php:108
-#: src/Foundation/MeestShipping.php:108
-#: src/Foundation/NovaGlobalAddress.php:100
-#: src/Foundation/NovaPoshtaShipping.php:143
-#: src/Foundation/NovaPostAddressShipping.php:108
-#: src/Foundation/NovaPostShipping.php:100
-#: src/Foundation/PostNordAddressShipping.php:108
-#: src/Foundation/PostNordShipping.php:120
-#: src/Foundation/RozetkaDeliveryShipping.php:97
-#: src/Foundation/UkrPoshtaAddressShipping.php:134
-#: src/Foundation/UkrPoshtaShipping.php:134
-msgid "Free shipping"
 msgstr ""
 
 #: src/Foundation/GLSShipping.php:19
@@ -645,6 +676,11 @@ msgstr ""
 msgid "Settings saved successfully!"
 msgstr ""
 
+#: src/Http/Controllers/JWTController.php:39
+#: views/user/access_key.php:27
+msgid "Learn more"
+msgstr ""
+
 #: src/Http/Controllers/MigrationController.php:28
 msgid "Migrations were successfully applied"
 msgstr ""
@@ -696,19 +732,20 @@ msgstr ""
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:275
+#: src/Modules/Backend/OptionsPage.php:285
 msgid "Add rule"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:293
+#: src/Modules/Backend/OptionsPage.php:303
 msgid "Rule not found"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:303
+#: src/Modules/Backend/OptionsPage.php:313
 msgid "Rule saved successfully"
 msgstr ""
 
 #: src/Modules/Backend/Orders.php:160
+#: views/user/access_key.php:11
 msgid "SmartyParcel"
 msgstr ""
 
@@ -720,47 +757,48 @@ msgstr ""
 msgid "Edit shipping address"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:47
-#: src/Modules/Backend/ShippingItemDrawer.php:53
-#: src/Modules/Backend/ShippingItemDrawer.php:56
+#: src/Modules/Backend/ShippingItemDrawer.php:48
+#: src/Modules/Backend/ShippingItemDrawer.php:54
+#: src/Modules/Backend/ShippingItemDrawer.php:57
 msgid "City"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:48
+#: src/Modules/Backend/ShippingItemDrawer.php:49
 msgid "Warehouse / Poshtomat"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:49
+#: src/Modules/Backend/ShippingItemDrawer.php:50
 msgid "Settlement"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:50
+#: src/Modules/Backend/ShippingItemDrawer.php:51
 msgid "Street"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:51
+#: src/Modules/Backend/ShippingItemDrawer.php:52
 msgid "House number"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:52
+#: src/Modules/Backend/ShippingItemDrawer.php:53
 msgid "Flat"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:54
-#: src/Modules/Backend/ShippingItemDrawer.php:57
+#: src/Modules/Backend/ShippingItemDrawer.php:55
+#: src/Modules/Backend/ShippingItemDrawer.php:58
 msgid "Warehouse"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:55
-msgid "Service type"
-msgstr ""
-
-#: src/Modules/Backend/ShippingItemDrawer.php:58
+#: src/Modules/Backend/ShippingItemDrawer.php:59
 msgid "Service Point (PUDO)"
 msgstr ""
 
-#: src/Modules/Backend/ShippingItemDrawer.php:59
+#: src/Modules/Backend/ShippingItemDrawer.php:60
 msgid "Calculated shipping cost in checkout"
+msgstr ""
+
+#. translators: %d: maximum length of the access key
+#: src/Modules/Backend/UserProfile.php:78
+msgid "SmartyParcel access key must not be longer than %d characters."
 msgstr ""
 
 #: src/Modules/Frontend/AssetsLoader.php:101
@@ -869,7 +907,7 @@ msgstr ""
 msgid "Middle Name"
 msgstr ""
 
-#: src/Modules/Frontend/OrderCreator.php:82
+#: src/Modules/Frontend/OrderCreator.php:83
 msgid "Selected service point"
 msgstr ""
 
@@ -892,6 +930,15 @@ msgstr ""
 #: src/Services/CarrierService.php:151
 #: views/partial/settings_general/carriers.php:73
 msgid "Tracking"
+msgstr ""
+
+#. translators: %d: maximum length of the access key
+#: src/Services/SmartyParcel/AccessService.php:37
+msgid "Access key must not be longer than %d characters."
+msgstr ""
+
+#: src/Services/SmartyParcel/AccessService.php:65
+msgid "An access key is now required to work with SmartyParcel. If you are the store owner, simply reconnect the store to SmartyParcel. Otherwise, ask the store owner for an access key and enter it in your user profile (Users → Profile → SmartyParcel)."
 msgstr ""
 
 #: views/automation.php:18
@@ -1040,4 +1087,12 @@ msgstr ""
 
 #: views/ttn/ttn_forbidden.php:20
 msgid "Read more"
+msgstr ""
+
+#: views/user/access_key.php:15
+msgid "Access key"
+msgstr ""
+
+#: views/user/access_key.php:26
+msgid "Required to work with SmartyParcel in the admin panel (labels, tracking, etc.). The key defines what this user is allowed to do, e.g. labels only or full access, and is stored for this WordPress user only. The store owner receives it automatically when connecting the store; other users get it from the owner."
 msgstr ""

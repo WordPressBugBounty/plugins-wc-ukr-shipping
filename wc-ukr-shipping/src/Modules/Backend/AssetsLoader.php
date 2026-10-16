@@ -196,6 +196,7 @@ class AssetsLoader implements ModuleInterface
             'account' => null,
             'dashboardUrl' =>  admin_url('admin.php?page=wcus_smarty_parcel'),
             'upgradePlanUrl' => admin_url('admin.php?page=wcus_smarty_parcel#/upgrade'),
+            'manageSendersUrl' => admin_url('admin.php?page=wcus_smarty_parcel#/addresses'),
         ];
 
         $needAccountScreens = [

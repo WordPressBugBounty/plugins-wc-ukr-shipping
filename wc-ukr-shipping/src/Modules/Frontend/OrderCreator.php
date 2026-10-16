@@ -18,6 +18,7 @@ use kirillbdev\WCUkrShipping\Component\Carriers\Meest\Order\CheckoutOrderHandler
 use kirillbdev\WCUkrShipping\Component\Carriers\PostNord\Order\CheckoutOrderHandler as PostNordCheckoutOrderHandler;
 use kirillbdev\WCUkrShipping\Component\Carriers\InPost\Order\CheckoutOrderHandler as InPostCheckoutOrderHandler;
 use kirillbdev\WCUkrShipping\Component\Carriers\GLS\Order\CheckoutOrderHandler as GLSCheckoutOrderHandler;
+use kirillbdev\WCUkrShipping\Component\Carriers\DhlExpress\Order\CheckoutOrderShippingHandler as DhlExpressCheckoutOrderShippingHandler;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -119,6 +120,8 @@ class OrderCreator implements ModuleInterface
                 return new RozetkaCheckoutOrderShippingHandler($fieldGroup);
             case WCUS_SHIPPING_METHOD_NOVA_POST:
                 return new NovaPostCheckoutOrderShippingHandler($fieldGroup);
+            case WCUS_SHIPPING_METHOD_DHL_EXPRESS_ADDRESS:
+                return new DhlExpressCheckoutOrderShippingHandler();
         }
 
         return null;

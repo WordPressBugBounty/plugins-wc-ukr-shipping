@@ -16,4 +16,5 @@ final class CarrierSlug
     public const POST_NORD = 'post_nord';
     public const INPOST = 'inpost';
     public const GLS = 'gls';
+    public const DHL_EXPRESS = 'dhl_express';
 }

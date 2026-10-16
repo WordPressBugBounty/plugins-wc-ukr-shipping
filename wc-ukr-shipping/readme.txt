@@ -1,11 +1,11 @@
-=== SmartyParcel – Shipping Automation & Order Tracking for GLS, InPost, Nova Post and more ===
+=== SmartyParcel – DHL Express, GLS, InPost & Nova Post for WooCommerce ===
 Contributors: kirillbdev
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Tags: gls, inpost, meest, nova post, order tracking
+Tags: dhl express, gls, inpost, nova post, order tracking
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.23.5
+Stable tag: 1.23.6
 
 The easiest way to automate shipping in WooCommerce: pickup points at checkout (list or map), one-click shipping labels and order tracking.
 
@@ -35,6 +35,10 @@ https://www.youtube.com/watch?v=UIfRYDeO9Lo
 * Provide carrier live-rates at checkout for your customers (paid plans).
 * Advanced order tracking with real-time status sync and customer notifications (Email and SMS).
 
+= Supported carriers =
+
+Nova Post, Нова Пошта, DHL Express, GLS, InPost, Meest, PostNord, Nova Global, Rozetka Delivery, Ukrposhta and many more. We’re continuously integrating new carriers and features!
+
 = Pickup point selector at checkout (ParcelShops, Parcel Lockers, Service Points) =
 
 * GLS (Europe)
@@ -46,11 +50,19 @@ https://www.youtube.com/watch?v=UIfRYDeO9Lo
 * Meest
 * Rozetka Delivery
 
-No API keys or contracts required.
+Showing pickup points at checkout requires no API keys or carrier contracts.
 
-= Supported carriers =
+= DHL Express shipping =
 
-GLS, InPost, Meest, Nova Post, Нова Пошта, PostNord, Nova Global, Rozetka Delivery, Ukrposhta and many more. We’re continuously integrating new carriers and features!
+Ship worldwide with DHL Express straight from WooCommerce. Add the DHL Express shipping method to any shipping zone, pick the service type and show the shipping price at checkout — a fixed price or live DHL Express rates (paid plans), with an optional free shipping threshold. DHL Express labels and tracking are handled in SmartyParcel like for any other carrier; creating labels requires your own DHL Express account.
+
+Supported DHL Express service types:
+
+* DHL Express Worldwide
+* DHL Express 9:00
+* DHL Express 12:00
+* DHL Economy Select
+* DHL Express Domestic
 
 = Compatibility =
 
@@ -87,7 +99,7 @@ This plugin uses SmartyParcel API to provide advanced logistic functions (like c
 
 = Which carriers does SmartyParcel support? =
 
-SmartyParcel natively integrates GLS, InPost, PostNord, Nova Post, Нова Пошта, Ukrposhta, Rozetka Delivery, Meest and Nova Global.
+SmartyParcel natively integrates DHL Express, GLS, InPost, PostNord, Nova Post, Нова Пошта, Ukrposhta, Rozetka Delivery, Meest and Nova Global.
 
 = How do customers choose a pickup point or parcel locker at checkout? =
 
@@ -122,6 +134,12 @@ Yes. The plugin is compatible with WPML and Polylang, and works in multi-currenc
 Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.23.6 / (16.10.2026) =
+* Added DHL Express Address delivery shipping method.
+* NovaPoshta label creation switched to the SmartyParcel elements sdk (with temporally fallback option).
+* Added support of the SmartyParcel access keys. This feature allows you to configure access to the platform features inside plugin for different wp users.
+* Added support of the SmartyParcel shipping rules inside the plugin. Feature allows you to set up different scenarios for the shipment preparation.
 
 = Version 1.23.5 / (13.10.2026) =
 * Improved usability for plugin dashboard page.
@@ -176,74 +194,3 @@ Unfortunately, the plugin doesn't support checkout blocks yet, but we are workin
 * Legacy plugin settings are now migrated to platform shipping rules.
 * Improved bulk label creation.
 * Fixed checkout js issue.
-
-= Version 1.21.13 / (14.08.2026) =
-* Increased php version requirement to 8.0.
-* Restored text-domain localization.
-* Improved Add Tracking widget (added more carriers).
-* Fixed cost-view-only option issue for rates calculation.
-* Fixed patchstack vulnerability issue.
-* Checked compatibility with the latest WordPress and WooCommerce versions.
-
-= Version 1.21.12 / (16.07.2026) =
-* Added DPD tracking.
-* Added PostNord tracking.
-* Replaced sending full state name instead of code on label creation.
-* Improve Dashboard and billing UI.
-
-= Version 1.21.11 / (03.07.2026) =
-* Added sync orders endpoint (pull model).
-* Added additional data to label requests.
-* Checked compatibility with latest WordPress and WooCommerce versions.
-
-= Version 1.21.10 / (16.06.2026) =
-* [Labels] Fixed loading default carrier account.
-* Removed extra meta keys and translated shipping meta keys at order edit page.
-* Checked compatibility with latest WordPress and WooCommerce versions.
-
-= Version 1.21.9 / (02.06.2026) =
-* [Nova Poshta] Added new option "Use dimensions for rates calculation"
-* [UkrPoshta] Added new option "Use dimensions for rates calculation"
-
-= Version 1.21.8 / (27.05.2026) =
-* Plugin is now using only SmartyParcel addresses to create shipments.
-* Improved SmartyParcel admin elements.
-* [Rates] Fixed bug with incorrect calculation when combine poshtomats option is active.
-* Checked compatibility with latest WordPress and WooCommerce versions.
-
-= Version 1.21.7 / (06.04.2026) =
-* Added max weight columns to Nova Poshta warehouses table.
-* Added new filter - wcus_pudo_points_request. Allows overriding search warehouses request.
-* Added basic order sync with SmartyParcel.
-
-= Version 1.21.6 / (26.02.2026) =
-* [Rozetka Delivery] New option - Default shipping payer.
-* [Nova Poshta] Fix payment control hook call.
-* [Automation] Improve order status change action.
-
-= Version 1.21.5 / (22.02.2026) =
-* International shipping improvements.
-
-= Version 1.21.4 / (21.02.2026) =
-* [UkrPoshta] Added ability to create international shipping labels.
-* [Automation] Added auto-creating label feature for UkrPoshta and Rozetka Delivery.
-* Label auto creation now work asynchronously (wp cron).
-
-= Version 1.21.3 / (16.02.2026) =
-* Improved automation logic.
-
-= Version 1.21.2 / (15.02.2026) =
-* [Nova Poshta] Added multiple sender addresses support.
-* [Automation] Added new event - Order status changed.
-* [Automation] Added new action - Automatic label creation. Now supports only for Nova Poshta.
-* Checked compatibility with latest WordPress and WooCommerce versions.
-
-= Version 1.21.1 / (29.01.2026) =
-* UI / UX upgrade.
-
-= Version 1.21.0 / (23.01.2026) =
-* [Meest] Added full flow integration (creating labels, tracking).
-* [Rozetka Delivery] Old label form was replaced with SmartyParcel Elements.
-* [Ukrposhta] Added UkrPoshta Address shipping method.
-* Added request caching for SmartyParcel Rates API.
-* [Nova Poshta] Added address notes field when creating shipment to address.

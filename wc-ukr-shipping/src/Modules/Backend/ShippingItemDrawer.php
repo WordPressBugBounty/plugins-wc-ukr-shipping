@@ -2,6 +2,7 @@
 
 namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
+use kirillbdev\WCUkrShipping\Component\Carriers\DhlExpress\DhlExpressServiceType;
 use kirillbdev\WCUSCore\Contracts\ModuleInterface;
 
 if ( ! defined('ABSPATH')) {
@@ -57,6 +58,7 @@ class ShippingItemDrawer implements ModuleInterface
             'wcus_rozetka_warehouse_name' => __('Warehouse', 'wc-ukr-shipping'),
             'wcus_pudo_point_name' => __('Service Point (PUDO)', 'wc-ukr-shipping'),
             WCUS_SHIPPING_META_VIEW_COST => __('Calculated shipping cost in checkout', 'wc-ukr-shipping'),
+            WCUS_SHIPPING_META_SERVICE_TYPE => __('Service type', 'wc-ukr-shipping'),
         ];
 
         return $keyMap[$key] ?? $key;
@@ -64,8 +66,17 @@ class ShippingItemDrawer implements ModuleInterface
 
     public function getOrderItemMetaValue($value, $meta): string
     {
-        return isset($meta->key) && $meta->key === WCUS_SHIPPING_META_VIEW_COST
-            ? wp_strip_all_tags(wc_price((float)$value))
-            : $value;
+        if (!isset($meta->key)) {
+            return $value;
+        }
+
+        switch ($meta->key) {
+            case WCUS_SHIPPING_META_VIEW_COST:
+                return wp_strip_all_tags(wc_price((float)$value));
+            case WCUS_SHIPPING_META_SERVICE_TYPE:
+                return DhlExpressServiceType::all()[$value] ?? $value;
+            default:
+                return $value;
+        }
     }
 }

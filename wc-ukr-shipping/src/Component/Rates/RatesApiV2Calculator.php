@@ -73,6 +73,12 @@ class RatesApiV2Calculator implements RatesCalculatorInterface
             if ((int)wc_ukr_shipping_get_option('wcus_rates_convert_currency') === 1) {
                 $payload['convert_to_currency'] = get_woocommerce_currency();
             }
+
+            /**
+             * Enable third-party code to modify the SmartyParcel Rates API request payload
+             * @since 1.23.6
+             */
+            $payload = apply_filters('wcus_rates_api_request', $payload, $rateShipmentDTO);
             $response = $this->api->sendRequest('/v1/rates/estimate', $payload);
 
             $cost = 0;
