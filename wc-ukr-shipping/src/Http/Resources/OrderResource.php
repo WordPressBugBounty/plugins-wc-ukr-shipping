@@ -71,7 +71,7 @@ class OrderResource
         /** @var \WC_Order_Item_Product $item */
         foreach ($order->get_items() as $item) {
             $product = $item->get_product();
-            $orderPayload['line_items'][] = [
+            $lineItem = [
                 'description' => $item->get_name(),
                 'quantity' => $item->get_quantity(),
                 'price' => (float)$item->get_total() / $item->get_quantity(),
@@ -80,6 +80,13 @@ class OrderResource
                 'weight_unit' => get_option('woocommerce_weight_unit', 'kg'),
                 'sku' => $product ? $product->get_sku() : '',
             ];
+
+            $dimensions = $product ? $this->getProductDimensions($product) : null;
+            if ($dimensions !== null) {
+                $lineItem = array_merge($lineItem, $dimensions);
+            }
+
+            $orderPayload['line_items'][] = $lineItem;
         }
 
         return $orderPayload;
@@ -88,6 +95,24 @@ class OrderResource
     public function toElementsData(): array
     {
         return $this->camelizeKeys($this->toArray());
+    }
+
+    private function getProductDimensions(\WC_Product $product): ?array
+    {
+        $length = (float)$product->get_length();
+        $width = (float)$product->get_width();
+        $height = (float)$product->get_height();
+
+        if ($length <= 0 || $width <= 0 || $height <= 0) {
+            return null;
+        }
+
+        return [
+            'length' => $length,
+            'width' => $width,
+            'height' => $height,
+            'dimension_unit' => get_option('woocommerce_dimension_unit', 'cm'),
+        ];
     }
 
     private function camelizeKeys(array $data): array
