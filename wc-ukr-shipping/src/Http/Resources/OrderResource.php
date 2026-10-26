@@ -67,6 +67,13 @@ class OrderResource
             'line_items' => []
         ];
 
+        if ($orderShipping && $this->isNovaPoshtaApiAddress($orderShipping)) {
+            $orderPayload['to_address'] = array_merge(
+                $orderPayload['to_address'],
+                $this->getNovaPoshtaAddress($orderShipping)
+            );
+        }
+
         // Collect line items
         /** @var \WC_Order_Item_Product $item */
         foreach ($order->get_items() as $item) {
@@ -127,6 +134,26 @@ class OrderResource
         }
 
         return $result;
+    }
+
+    private function isNovaPoshtaApiAddress(\WC_Order_Item_Shipping $orderShipping): bool
+    {
+        return $orderShipping->get_method_id() === WCUS_SHIPPING_METHOD_NOVA_POSHTA
+            && !$orderShipping->get_meta('wcus_warehouse_ref')
+            && (int)$orderShipping->get_meta('wcus_api_address') === 1;
+    }
+
+    private function getNovaPoshtaAddress(\WC_Order_Item_Shipping $orderShipping): array
+    {
+        return [
+            'country_code' => 'UA',
+            'city' => WCUSHelper::prepareApiString((string)$orderShipping->get_meta('wcus_settlement_name')),
+            'state' => WCUSHelper::prepareApiString((string)$orderShipping->get_meta('wcus_settlement_area')),
+            'district' => WCUSHelper::prepareApiString((string)$orderShipping->get_meta('wcus_settlement_region')),
+            'address_1' => WCUSHelper::prepareApiString((string)$orderShipping->get_meta('wcus_street_name')),
+            'address_2' => (string)$orderShipping->get_meta('wcus_house'),
+            'address_3' => (string)$orderShipping->get_meta('wcus_flat'),
+        ];
     }
 
     private function getPudoPointId(\WC_Order_Item_Shipping $orderShipping): ?string
