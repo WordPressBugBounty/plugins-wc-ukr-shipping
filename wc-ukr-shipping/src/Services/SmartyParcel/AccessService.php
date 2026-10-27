@@ -6,6 +6,7 @@ namespace kirillbdev\WCUkrShipping\Services\SmartyParcel;
 
 use kirillbdev\WCUkrShipping\Api\SmartyParcelWPApi;
 use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\AccessKeyRequiredException;
+use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
 
 if ( ! defined('ABSPATH')) {
     exit;
@@ -14,6 +15,8 @@ if ( ! defined('ABSPATH')) {
 class AccessService
 {
     public const ACCESS_KEY_MAX_LENGTH = 100;
+
+    private const ERROR_ACCESS_KEY_INVALID = 1509;
 
     private SmartyParcelWPApi $api;
 
@@ -60,11 +63,6 @@ class AccessService
     public function issueToken(int $userId): array
     {
         $accessKey = $this->getAccessKey($userId);
-        if ($accessKey === '') {
-            throw new AccessKeyRequiredException(
-                __('An access key is now required to work with SmartyParcel. If you are the store owner, simply reconnect the store to SmartyParcel. Otherwise, ask the store owner for an access key and enter it in your user profile (Users → Profile → SmartyParcel).', 'wc-ukr-shipping')
-            );
-        }
 
         // Cache is dropped by saveAccessKey() on every key change, so it always belongs to the current key
         $cached = get_user_meta($userId, WCUS_USER_META_SMARTY_PARCEL_JWT, true);
@@ -72,9 +70,21 @@ class AccessService
             return $cached;
         }
 
-        $token = $this->api->sendRequest('/v1/embedded/authx', [
-            'access_key' => $accessKey,
-        ]);
+        try {
+            $token = $this->api->sendRequest('/v1/embedded/authx', [
+                'access_key' => $accessKey !== '' ? $accessKey : null,
+            ]);
+        } catch (SmartyParcelErrorException $e) {
+            if ($e->getCode() !== self::ERROR_ACCESS_KEY_INVALID) {
+                throw $e;
+            }
+
+            throw new AccessKeyRequiredException(
+                $accessKey === ''
+                    ? __('Access keys are enabled for this SmartyParcel account, so an access key is required. If you are the store owner, simply reconnect the store to SmartyParcel. Otherwise, ask the store owner for an access key and enter it in your user profile (Users → Profile → SmartyParcel).', 'wc-ukr-shipping')
+                    : __('Your SmartyParcel access key is invalid or has been revoked. If you are the store owner, simply reconnect the store to SmartyParcel. Otherwise, ask the store owner for a new access key and enter it in your user profile (Users → Profile → SmartyParcel).', 'wc-ukr-shipping')
+            );
+        }
         update_user_meta($userId, WCUS_USER_META_SMARTY_PARCEL_JWT, $token);
 
         return $token;

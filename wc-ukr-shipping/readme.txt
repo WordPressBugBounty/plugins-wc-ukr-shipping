@@ -5,7 +5,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: dhl express, gls, inpost, nova post, order tracking
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.23.8
+Stable tag: 1.23.9
 
 The easiest way to automate shipping in WooCommerce: pickup points at checkout (list or map), one-click shipping labels and order tracking.
 
@@ -134,6 +134,10 @@ Yes. The plugin is compatible with WPML and Polylang, and works in multi-currenc
 Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.23.9 / (27.10.2026) =
+* Improved label storing mechanism.
+* SmartyParcel access keys are now optional: if access keys are disabled in your SmartyParcel account, the plugin works without a key.
 
 = Version 1.23.8 / (26.10.2026) =
 * Fixed address format in shipping labels for Nova Poshta address delivery.
