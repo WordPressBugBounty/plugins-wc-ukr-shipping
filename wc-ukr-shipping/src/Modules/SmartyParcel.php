@@ -49,9 +49,19 @@ class SmartyParcel implements ModuleInterface
                 if (!empty($response['access_key'])) {
                     $this->accessService->saveAccessKey(get_current_user_id(), $response['access_key']);
                 }
+
+                // The guest key is already overwritten by the store key above and revoked by the platform
+                delete_option(WCUS_OPTION_SMARTY_PARCEL_GUEST_ID);
             }
 
-            wp_safe_redirect(admin_url('admin.php?page=wcus_smarty_parcel'));
+            $dashboardUrl = admin_url('admin.php?page=wcus_smarty_parcel');
+            $returnTo = isset($_GET['return_to']) ? esc_url_raw(wp_unslash($_GET['return_to'])) : '';
+            // Only back into this admin: an external return_to falls back to the dashboard
+            if ($returnTo === '' || strpos($returnTo, admin_url()) !== 0) {
+                $returnTo = $dashboardUrl;
+            }
+
+            wp_safe_redirect($returnTo);
             exit;
         } catch (\Exception $e) {
             echo 'Oauth failed. Please try again or contact the support team.';

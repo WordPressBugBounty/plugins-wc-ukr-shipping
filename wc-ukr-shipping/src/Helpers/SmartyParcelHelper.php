@@ -13,6 +13,74 @@ final class SmartyParcelHelper
         return get_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS) === 'connected';
     }
 
+    /**
+     * Connected without an account: the key gives access to the locator only.
+     */
+    public static function isGuest(): bool
+    {
+        return get_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS) === 'guest';
+    }
+
+    public static function hasLocatorAccess(): bool
+    {
+        return self::isConnected() || self::isGuest();
+    }
+
+    /**
+     * OAuth URL that connects the store to a full SmartyParcel account (also upgrades a guest).
+     * After the connection the admin is sent back to $returnTo (an admin URL), or to the dashboard.
+     */
+    public static function getConnectUrl(string $returnTo = ''): string
+    {
+        $callbackUrl = admin_url('admin.php?page=wcus_oauth_callback');
+        if ($returnTo !== '') {
+            $callbackUrl = add_query_arg('return_to', rawurlencode($returnTo), $callbackUrl);
+        }
+
+        $session = [
+            'storeUrl' => self::getStoreUrl(),
+            'callbackUrl' => $callbackUrl,
+            'platform' => 'woocommerce',
+            'appName' => 'wc-ukr-shipping',
+            'nonce' => wp_create_nonce('smartyparcel_oauth'),
+        ];
+        // Only the guest id: session data goes through the browser, the guest key never does
+        if (self::isGuest()) {
+            $session['guestId'] = (string)get_option(WCUS_OPTION_SMARTY_PARCEL_GUEST_ID);
+        }
+
+        return 'https://app.smartyparcel.com/oauth-session?session_data=' . urlencode(base64_encode(json_encode($session)));
+    }
+
+    /**
+     * Explains why a feature that needs a full account is unavailable, for both guest and disconnected stores.
+     */
+    public static function getAccountRequiredMessage(): string
+    {
+        if (self::isGuest()) {
+            return __('Your store is connected to SmartyParcel in limited mode, which only covers pickup point search. This feature requires a full SmartyParcel account.', 'wc-ukr-shipping');
+        }
+
+        return __('This feature requires a SmartyParcel account. Connect your store to an account to continue.', 'wc-ukr-shipping');
+    }
+
+    /**
+     * Only an administrator can finish the OAuth callback, see SmartyParcel::handleOauthCallback().
+     */
+    public static function currentUserCanConnect(): bool
+    {
+        return current_user_can('manage_options');
+    }
+
+    /**
+     * The one store URL the plugin sends to the platform. A guest key is bound to it,
+     * so every request must use exactly the same value.
+     */
+    public static function getStoreUrl(): string
+    {
+        return rtrim(get_site_url(), '/');
+    }
+
     public static function canPurchaseLabelForOrder(\WC_Order $order): bool
     {
         $forbiddenMethods = apply_filters('wcus_labels_forbidden_methods', [

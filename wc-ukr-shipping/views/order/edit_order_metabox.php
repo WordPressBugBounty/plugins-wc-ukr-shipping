@@ -6,7 +6,11 @@
 
 <div class="wcus-icon-block">
     <?php if ($shipping_label !== null) { ?>
-        <?php if (empty($shipping_label['label_id'] ) || $shipping_label['carrier_slug'] === 'wcus_pro') { ?>
+        <?php
+            // SmartyParcel labels are rendered by the Elements SDK, which is loaded only for connected stores
+            $is_local_label = empty($shipping_label['label_id']) || $shipping_label['carrier_slug'] === 'wcus_pro';
+        ?>
+        <?php if ($is_local_label || ! \kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper::isConnected()) { ?>
             <div style="text-align: center;">
                 <div class="wcus-label-widget wcus-label-widget--lg wcus-mb-1 <?php echo esc_attr($carrier !== null ? 'wcus-label-widget__label--' . $carrier : ''); ?>">
                     <?php echo esc_html($shipping_label['tracking_number']); ?>
@@ -24,6 +28,7 @@
                         Tracking API: <?php echo esc_html($shipping_label['tracking_status']); ?>
                     </div>
                 <?php } ?>
+                <?php if ($is_local_label) { ?>
                 <div class="wcus-mb-1">
                     <a href="#" class="wcus-svg-btn wcus-svg-btn--error j-wcus-label-delete"
                        style="font-size: 13px; color: #f00;"
@@ -31,6 +36,7 @@
                         <?php esc_html_e('Delete', 'wc-ukr-shipping'); ?>
                     </a>
                 </div>
+                <?php } ?>
             </div>
         <?php } else { ?>
             <div id="smartyparcel-shipment-summary"

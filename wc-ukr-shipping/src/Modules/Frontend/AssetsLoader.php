@@ -89,7 +89,7 @@ class AssetsLoader implements ModuleInterface
                 'address_shipping_enable' => (int)wc_ukr_shipping_get_option('wc_ukr_shipping_address_shipping'),
                 'useOnlineDirectory' => (int)wc_ukr_shipping_get_option('wcus_np_use_online_directory') === 1,
                 'combinePoshtomats' => (int)wc_ukr_shipping_get_option('wcus_combine_poshtomats') === 1,
-                'locatorEnabled' => SmartyParcelHelper::isConnected(),
+                'locatorEnabled' => SmartyParcelHelper::hasLocatorAccess(),
                 'googleMapsApiKey' => (string)wc_ukr_shipping_get_option('wcus_google_maps_api_key'),
             ]
         ];

@@ -2,20 +2,20 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: SmartyParcel - Shipping Automation & Order Tracking for GLS, InPost, Nova Post and more 1.23.5\n"
+"Project-Id-Version: SmartyParcel Shipping - DHL Express, GLS, InPost & Nova Post for WooCommerce 1.24.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-ukr-shipping\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-16T13:49:20+03:00\n"
+"POT-Creation-Date: 2026-11-10T00:39:25+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: wc-ukr-shipping\n"
 
 #. Plugin Name of the plugin
-msgid "SmartyParcel - Shipping Automation & Order Tracking for GLS, InPost, Nova Post and more"
+msgid "SmartyParcel Shipping - DHL Express, GLS, InPost & Nova Post for WooCommerce"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -31,7 +31,7 @@ msgid "kirillbdev"
 msgstr ""
 
 #: lang/frontend.php:1
-#: views/order/edit_order_metabox.php:52
+#: views/order/edit_order_metabox.php:58
 msgid "Add tracking number"
 msgstr ""
 
@@ -215,8 +215,8 @@ msgid "Created At"
 msgstr ""
 
 #: src/Component/ListTable/AutomationListTable.php:92
-#: src/Modules/Backend/OptionsPage.php:154
 #: src/Modules/Backend/OptionsPage.php:155
+#: src/Modules/Backend/OptionsPage.php:156
 msgid "Edit"
 msgstr ""
 
@@ -225,7 +225,7 @@ msgid "Confirm action"
 msgstr ""
 
 #: src/Component/ListTable/AutomationListTable.php:98
-#: views/order/edit_order_metabox.php:31
+#: views/order/edit_order_metabox.php:36
 #: views/order/ttn_widget.php:21
 msgid "Delete"
 msgstr ""
@@ -663,6 +663,14 @@ msgstr ""
 msgid "EXPRESS"
 msgstr ""
 
+#: src/Helpers/SmartyParcelHelper.php:61
+msgid "Your store is connected to SmartyParcel in limited mode, which only covers pickup point search. This feature requires a full SmartyParcel account."
+msgstr ""
+
+#: src/Helpers/SmartyParcelHelper.php:64
+msgid "This feature requires a SmartyParcel account. Connect your store to an account to continue."
+msgstr ""
+
 #: src/Http/Controllers/CarriersController.php:55
 msgid "Carrier enabled"
 msgstr ""
@@ -689,58 +697,73 @@ msgstr ""
 msgid "Unable to apply migrations"
 msgstr ""
 
+#: src/Http/Controllers/SmartyParcelController.php:448
+#: views/partial/settings_general/carriers.php:36
+#: views/ttn/ttn_forbidden.php:25
+msgid "Connect SmartyParcel account"
+msgstr ""
+
+#: src/Http/Controllers/SmartyParcelController.php:450
+#: views/ttn/ttn_forbidden.php:29
+msgid "Ask the site administrator to connect the store to a SmartyParcel account."
+msgstr ""
+
 #: src/Http/Middleware/CheckManageWooPermission.php:22
 msgid "You do not have permission to access this action."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:86
-#: src/Modules/Backend/OptionsPage.php:97
+#: src/Modules/Backend/OptionsPage.php:87
 #: src/Modules/Backend/OptionsPage.php:98
+#: src/Modules/Backend/OptionsPage.php:99
 msgid "Dashboard"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:106
 #: src/Modules/Backend/OptionsPage.php:107
+#: src/Modules/Backend/OptionsPage.php:108
 #: src/Modules/Core/PluginInfo.php:42
-#: views/partial/settings_general/carriers.php:49
+#: views/partial/settings_general/carriers.php:78
 msgid "Settings"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:115
 #: src/Modules/Backend/OptionsPage.php:116
+#: src/Modules/Backend/OptionsPage.php:117
 msgid "Create TTN"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:124
 #: src/Modules/Backend/OptionsPage.php:125
+#: src/Modules/Backend/OptionsPage.php:126
 #: views/orders.php:10
 msgid "Orders"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:133
 #: src/Modules/Backend/OptionsPage.php:134
+#: src/Modules/Backend/OptionsPage.php:135
 msgid "Automation"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:145
 #: src/Modules/Backend/OptionsPage.php:146
+#: src/Modules/Backend/OptionsPage.php:147
 #: views/order/ttn_widget.php:29
 msgid "Create"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:166
+#: src/Modules/Backend/OptionsPage.php:167
 msgid "Are you sure to restart migrations? This action cannot be canceled."
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:285
+#: src/Modules/Backend/OptionsPage.php:281
+msgid "Back to order"
+msgstr ""
+
+#: src/Modules/Backend/OptionsPage.php:308
 msgid "Add rule"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:303
+#: src/Modules/Backend/OptionsPage.php:326
 msgid "Rule not found"
 msgstr ""
 
-#: src/Modules/Backend/OptionsPage.php:313
+#: src/Modules/Backend/OptionsPage.php:336
 msgid "Rule saved successfully"
 msgstr ""
 
@@ -928,24 +951,27 @@ msgid "Shipping labels"
 msgstr ""
 
 #: src/Services/CarrierService.php:151
-#: views/partial/settings_general/carriers.php:73
 msgid "Tracking"
 msgstr ""
 
 #. translators: %d: maximum length of the access key
-#: src/Services/SmartyParcel/AccessService.php:37
+#: src/Services/SmartyParcel/AccessService.php:40
 msgid "Access key must not be longer than %d characters."
 msgstr ""
 
-#: src/Services/SmartyParcel/AccessService.php:65
-msgid "An access key is now required to work with SmartyParcel. If you are the store owner, simply reconnect the store to SmartyParcel. Otherwise, ask the store owner for an access key and enter it in your user profile (Users → Profile → SmartyParcel)."
+#: src/Services/SmartyParcel/AccessService.php:84
+msgid "Access keys are enabled for this SmartyParcel account, so an access key is required. If you are the store owner, simply reconnect the store to SmartyParcel. Otherwise, ask the store owner for an access key and enter it in your user profile (Users → Profile → SmartyParcel)."
+msgstr ""
+
+#: src/Services/SmartyParcel/AccessService.php:85
+msgid "Your SmartyParcel access key is invalid or has been revoked. If you are the store owner, simply reconnect the store to SmartyParcel. Otherwise, ask the store owner for a new access key and enter it in your user profile (Users → Profile → SmartyParcel)."
 msgstr ""
 
 #: views/automation.php:18
 msgid "Rule constructor"
 msgstr ""
 
-#: views/order/edit_order_metabox.php:48
+#: views/order/edit_order_metabox.php:54
 msgid "Create shipping label"
 msgstr ""
 
@@ -1009,28 +1035,21 @@ msgstr ""
 msgid "Switch to paid plan"
 msgstr ""
 
-#: views/partial/settings_general/carriers.php:12
+#: views/partial/settings_general/carriers.php:18
 msgid "Enable the carriers you want to integrate with your store."
 msgstr ""
 
-#: views/partial/settings_general/carriers.php:16
+#: views/partial/settings_general/carriers.php:22
 msgid "List of supported carriers and features"
 msgstr ""
 
-#: views/partial/settings_general/carriers.php:21
+#: views/partial/settings_general/carriers.php:27
 msgid "List of supported Pickup Points"
 msgstr ""
 
-#: views/partial/settings_general/carriers.php:39
-msgid "Features:"
-msgstr ""
-
-#: views/partial/settings_general/carriers.php:71
-msgid "DHL, DPD, Fedex"
-msgstr ""
-
-#: views/partial/settings_general/carriers.php:76
-msgid "Shipments sent with these carriers can be tracked by their tracking number."
+#: views/partial/settings_general/carriers.php:66
+#: views/partial/settings_general/carriers.php:72
+msgid "Carrier accounts"
 msgstr ""
 
 #: views/partial/settings_general/checkout.php:12
@@ -1077,16 +1096,8 @@ msgstr ""
 msgid "Shipping methods"
 msgstr ""
 
-#: views/ttn/ttn_forbidden.php:12
+#: views/ttn/ttn_forbidden.php:16
 msgid "New TTN"
-msgstr ""
-
-#: views/ttn/ttn_forbidden.php:15
-msgid "The plugin must be connected to the Smarty Parcel service to use the functionality of creating a TTN"
-msgstr ""
-
-#: views/ttn/ttn_forbidden.php:20
-msgid "Read more"
 msgstr ""
 
 #: views/user/access_key.php:15
@@ -1094,5 +1105,5 @@ msgid "Access key"
 msgstr ""
 
 #: views/user/access_key.php:26
-msgid "Required to work with SmartyParcel in the admin panel (labels, tracking, etc.). The key defines what this user is allowed to do, e.g. labels only or full access, and is stored for this WordPress user only. The store owner receives it automatically when connecting the store; other users get it from the owner."
+msgid "Needed only if access keys are enabled in your SmartyParcel account; otherwise it may be left empty. The key defines what this user is allowed to do, e.g. labels only or full access, and is stored for this WordPress user only. The store owner receives it automatically when connecting the store; other users get it from the owner."
 msgstr ""

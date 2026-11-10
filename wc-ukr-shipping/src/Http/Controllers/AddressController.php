@@ -266,7 +266,7 @@ class AddressController extends Controller
      */
     private function getGeoPUDOProvider(string $carrier, string $lang): ?GeoPUDOProviderInterface
     {
-        if ( ! SmartyParcelHelper::isConnected()) {
+        if ( ! SmartyParcelHelper::hasLocatorAccess()) {
             return null;
         }
 
@@ -277,7 +277,7 @@ class AddressController extends Controller
 
     private function getPUDOProvider(string $carrier, string $lang): PUDOProviderInterface
     {
-        if (SmartyParcelHelper::isConnected()) {
+        if (SmartyParcelHelper::hasLocatorAccess()) {
             return new SmartyParcelPUDOProvider(
                 $carrier,
                 $lang,
@@ -285,7 +285,7 @@ class AddressController extends Controller
             );
         }
 
-        // Legacy providers of a store that is not connected yet: they read the local
+        // Legacy providers of a store without any SmartyParcel key: they read the local
         // database or call the carrier with a previously saved API key
         switch ($carrier) {
             case CarrierSlug::NOVA_POSHTA:

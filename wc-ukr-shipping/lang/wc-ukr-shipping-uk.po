@@ -1241,3 +1241,24 @@ msgstr "Подробиці"
 
 #~ msgid "After order notes"
 #~ msgstr "После примечания к заказу"
+
+msgid "Your store is connected to SmartyParcel in limited mode, which only covers pickup point search. This feature requires a full SmartyParcel account."
+msgstr "Магазин підключено до SmartyParcel в обмеженому режимі — доступний лише пошук пунктів видачі. Для цієї функції потрібен повноцінний акаунт SmartyParcel."
+
+msgid "This feature requires a SmartyParcel account. Connect your store to an account to continue."
+msgstr "Для цієї функції потрібен акаунт SmartyParcel. Підключіть магазин до акаунта, щоб продовжити."
+
+msgid "Connect SmartyParcel account"
+msgstr "Підключити акаунт SmartyParcel"
+
+msgid "Ask the site administrator to connect the store to a SmartyParcel account."
+msgstr "Попросіть адміністратора сайту підключити магазин до акаунта SmartyParcel."
+
+msgid "Back to order"
+msgstr "Повернутися до замовлення"
+
+msgid "All orders"
+msgstr "Усі замовлення"
+
+msgid "Carrier accounts"
+msgstr "Акаунти перевізника"

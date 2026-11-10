@@ -34,10 +34,10 @@ class SmartyParcelService
 
     public function getCarrierAccounts(?string $carrierSlug = null): array
     {
-        $apiKey = get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
-        if (!$apiKey) {
+        if (!SmartyParcelHelper::isConnected()) {
             return [];
         }
+        $apiKey = get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
 
         try {
             $carriers = $this->api->getCarrierAccounts($apiKey)['carriers'] ?? [];
@@ -88,8 +88,7 @@ class SmartyParcelService
         float $weight,
         ?string $serviceType = null
     ): ?array {
-        $apiKey = get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
-        if (empty($apiKey)) {
+        if (!SmartyParcelHelper::isConnected()) {
             return null;
         }
 

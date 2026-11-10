@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Modules\Core;
 
-use kirillbdev\WCUkrShipping\Http\Controllers\InstallationController;
 use kirillbdev\WCUkrShipping\Http\Controllers\JWTController;
 use kirillbdev\WCUkrShipping\Http\Controllers\OrdersController;
 use kirillbdev\WCUkrShipping\Http\Controllers\SmartyParcelController;
@@ -34,14 +33,6 @@ class Router implements ModuleInterface
                 'wcus_smartyparcel_remove_label',
                 SmartyParcelController::class,
                 'removeLabel',
-                [
-                    'middleware' => [CheckManageWooPermission::class]
-                ]
-            ),
-            new Route(
-                'wcus_smartyparcel_register_installation',
-                InstallationController::class,
-                'register',
                 [
                     'middleware' => [CheckManageWooPermission::class]
                 ]

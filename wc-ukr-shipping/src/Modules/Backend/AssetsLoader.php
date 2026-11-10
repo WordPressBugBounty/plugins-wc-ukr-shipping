@@ -4,7 +4,6 @@ namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
-use kirillbdev\WCUkrShipping\Services\SmartyParcel\ManifestService;
 use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 use kirillbdev\WCUkrShipping\Traits\StateInitiatorTrait;
@@ -20,16 +19,12 @@ class AssetsLoader implements ModuleInterface
 
     private TranslateService $translateService;
     private SmartyParcelService $smartyParcelService;
-    private ManifestService $manifestService;
 
     public function __construct(
         TranslateService $translateService,
-        SmartyParcelService $smartyParcelService,
-        ManifestService $manifestService
-    ) {
+        SmartyParcelService $smartyParcelService) {
         $this->translateService = $translateService;
         $this->smartyParcelService = $smartyParcelService;
-        $this->manifestService = $manifestService;
     }
 
     public function init()
@@ -57,14 +52,6 @@ class AssetsLoader implements ModuleInterface
             filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/tabs.js')
         );
 
-        wp_enqueue_script(
-            'wcus_installation_js',
-            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/installation.js',
-            ['jquery'],
-            filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/installation.js'),
-            true
-        );
-
         if (get_current_screen() !== null && get_current_screen()->id === 'smartyparcel_page_wcus_settings') {
             wp_enqueue_script(
                 'wcus_settings_js',
@@ -75,13 +62,19 @@ class AssetsLoader implements ModuleInterface
             );
         }
 
-        $manifest = $this->manifestService->getManifest();
-        if (isset($manifest['static']['elements-sdk'])) {
+        /**
+         * Allows replacing the SmartyParcel Elements SDK URL without a plugin release.
+         *
+         * @param string $url
+         */
+        $elementsSdkUrl = (string)apply_filters('wcus_smartyparcel_elements_sdk_url', WCUS_SMARTY_PARCEL_ELEMENTS_SDK_URL);
+        // Elements UI exists only for connected stores (guests get the locator only)
+        if ($elementsSdkUrl !== '' && SmartyParcelHelper::isConnected()) {
             wp_enqueue_script(
                 'smartyparcel_elements_sdk_js',
-                $manifest['static']['elements-sdk']['href'],
+                esc_url_raw($elementsSdkUrl),
                 [],
-                $manifest['static']['elements-sdk']['version'],
+                null,
                 true
             );
         }
@@ -178,25 +171,15 @@ class AssetsLoader implements ModuleInterface
 
     private function initSmartyParcelGlobals(array $globals): array
     {
-        $connectUrl = null;
-        if (!SmartyParcelHelper::isConnected()) {
-            $sessionData = urlencode(base64_encode(json_encode([
-                'storeUrl' => rtrim(site_url(), '/'),
-                'callbackUrl' => admin_url('admin.php?page=wcus_oauth_callback'),
-                'platform' => 'woocommerce',
-                'nonce' => wp_create_nonce('smartyparcel_oauth'),
-            ])));
-            $connectUrl = 'https://app.smartyparcel.com/oauth-session?session_data=' . $sessionData;
-        }
+        $connectUrl = SmartyParcelHelper::isConnected() ? null : SmartyParcelHelper::getConnectUrl();
 
         $globals['smarty_parcel'] = [
-            'installationId' => get_option(WCUS_OPTION_INSTALLATION_ID) ?: null,
             'isConnected' => SmartyParcelHelper::isConnected(),
+            'isGuest' => SmartyParcelHelper::isGuest(),
             'connectUrl' => $connectUrl,
             'account' => null,
             'dashboardUrl' =>  admin_url('admin.php?page=wcus_smarty_parcel'),
             'upgradePlanUrl' => admin_url('admin.php?page=wcus_smarty_parcel#/upgrade'),
-            'manageSendersUrl' => admin_url('admin.php?page=wcus_smarty_parcel#/addresses'),
         ];
 
         $needAccountScreens = [

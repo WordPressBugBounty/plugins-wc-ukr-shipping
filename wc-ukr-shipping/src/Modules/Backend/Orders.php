@@ -86,7 +86,7 @@ class Orders implements ModuleInterface
             return;
         }
 
-        if (!get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY)) {
+        if (!SmartyParcelHelper::isConnected()) {
             return;
         }
 
@@ -130,7 +130,7 @@ class Orders implements ModuleInterface
             return;
         }
 
-        if (!get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY)) {
+        if (!SmartyParcelHelper::isConnected()) {
             return;
         }
 

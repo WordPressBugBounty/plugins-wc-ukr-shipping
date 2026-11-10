@@ -6,6 +6,7 @@ namespace kirillbdev\WCUkrShipping\Api;
 
 use kirillbdev\WCUkrShipping\Component\SmartyParcel\LabelRequestBuilderInterface;
 use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 
 final class SmartyParcelApi
 {
@@ -18,7 +19,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' => $apiKey,
-                'SP-Site-Url' => get_site_url(),
+                'SP-Site-Url' => SmartyParcelHelper::getStoreUrl(),
             ],
             'timeout' => 10,
         ]);
@@ -33,7 +34,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' => $apiKey,
-                'SP-Site-Url' => get_site_url(),
+                'SP-Site-Url' => SmartyParcelHelper::getStoreUrl(),
             ],
             'timeout' => 10,
         ]);
@@ -48,7 +49,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' => $apiKey,
-                'SP-Site-Url' => get_site_url(),
+                'SP-Site-Url' => SmartyParcelHelper::getStoreUrl(),
             ],
             'timeout' => 10,
         ]);
@@ -63,7 +64,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' => $apiKey,
-                'SP-Site-Url' => get_site_url(),
+                'SP-Site-Url' => SmartyParcelHelper::getStoreUrl(),
             ],
             'timeout' => 10,
         ]);
@@ -78,7 +79,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
-                'SP-Site-Url' => get_site_url(),
+                'SP-Site-Url' => SmartyParcelHelper::getStoreUrl(),
             ],
             'timeout' => 15,
             'body' => json_encode($builder->build())
@@ -95,7 +96,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
-                'SP-Site-Url' => get_site_url(),
+                'SP-Site-Url' => SmartyParcelHelper::getStoreUrl(),
             ],
             'timeout' => 10,
         ]);
@@ -145,7 +146,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' => get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
-                'SP-Site-Url' => get_site_url(),
+                'SP-Site-Url' => SmartyParcelHelper::getStoreUrl(),
             ],
             'timeout' => 10,
             'body' => json_encode($payload),
@@ -161,7 +162,7 @@ final class SmartyParcelApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' =>  get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
-                'SP-Site-Url' => get_site_url(),
+                'SP-Site-Url' => SmartyParcelHelper::getStoreUrl(),
             ],
             'timeout' => 10,
             'body' => json_encode([

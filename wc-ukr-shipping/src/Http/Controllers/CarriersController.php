@@ -34,9 +34,9 @@ class CarriersController extends Controller
 
         $enabled = (int)$request->get('enabled') === 1;
 
-        // Any carrier can be enabled only by a store connected to SmartyParcel,
+        // Any carrier can be enabled only with a SmartyParcel key (a guest one is enough),
         // disabling stays available for the carriers enabled before that
-        if ($enabled && !SmartyParcelHelper::isConnected()) {
+        if ($enabled && !SmartyParcelHelper::hasLocatorAccess()) {
             return $this->jsonResponse([
                 'success' => true,
                 'data' => [

@@ -3,6 +3,7 @@
 namespace kirillbdev\WCUkrShipping\DB\Mappers;
 
 use kirillbdev\WCUkrShipping\DB\Repositories\ShippingLabelsRepository;
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 
 if ( ! defined('ABSPATH')) {
@@ -66,7 +67,8 @@ class OrderListMapper
             }
 
             $order['label_downloads'] = [];
-            if (!empty($order['label_id'])) {
+            // Printing goes through the Elements SDK, which is loaded only for connected stores
+            if (!empty($order['label_id']) && SmartyParcelHelper::isConnected()) {
                 foreach (WCUSHelper::getLabelDownloadFormats($order['label_carrier_slug'] ?? '') as $format => $name) {
                     $order['label_downloads'][] = [
                         'name' => $name,

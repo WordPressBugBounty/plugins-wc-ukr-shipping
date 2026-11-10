@@ -44,7 +44,12 @@ define('WCUS_OPTION_SHOW_POSHTOMATS', 'wcus_show_poshtomats');
 define('WCUS_OPTION_SMARTY_PARCEL_API_KEY', 'wcus_smartyparcel_api_key');
 define('WCUS_OPTION_SMARTY_PARCEL_USER_STATUS', 'wcus_smartyparcel_user_status');
 define('WCUS_OPTION_SMARTY_PARCEL_CARRIERS', 'wcus_smartyparcel_carriers');
-define('WCUS_OPTION_INSTALLATION_ID', 'wcus_app_installation_id');
+
+define('WCUS_OPTION_SMARTY_PARCEL_GUEST_ID', 'wcus_smartyparcel_guest_id');
+define('WCUS_SMARTY_PARCEL_GUEST_CONSENT_VERSION', '2026-11-09');
+
+// SmartyParcel Elements SDK (overridable via the wcus_smartyparcel_elements_sdk_url filter)
+define('WCUS_SMARTY_PARCEL_ELEMENTS_SDK_URL', 'https://app.smartyparcel.com/static/embedded/elements-sdk.min.js');
 
 // User meta
 define('WCUS_USER_META_SMARTY_PARCEL_ACCESS_KEY', 'wcus_smartyparcel_access_key');

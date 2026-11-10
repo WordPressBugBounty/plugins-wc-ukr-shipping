@@ -59,6 +59,7 @@ class OptionsPage implements ModuleInterface
             'wcus_save_carrier_options' => [CarriersController::class, 'saveOptions'],
 
             'wcus_smartyparcel_api' => [SmartyParcelController::class, 'sendApiRequest'],
+            'wcus_smartyparcel_guest_connect' => [SmartyParcelController::class, 'guestConnect'],
             'wcus_smartyparcel_disconnect' => [SmartyParcelController::class, 'disconnect'],
             'wcus_smarty_parcel_create_label' => [SmartyParcelController::class, 'createShippingLabel'],
             'wcus_smarty_parcel_create_label_batch' => [SmartyParcelController::class, 'createLabelBatch'],
@@ -259,9 +260,31 @@ class OptionsPage implements ModuleInterface
                     ),
                 ],
             ],
+            'customization' => [
+                'manageSendersUrl' => admin_url('admin.php?page=wcus_smarty_parcel#/addresses'),
+                'labelCreatedLinks' => $this->getLabelCreatedLinks($order),
+            ],
         ]);
 
         echo View::render('ttn/ttn_v2'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- template escapes its own output
+    }
+
+    /**
+     * Buttons of the "label created" screen of the purchase label element.
+     *
+     * @return array<int, array<string, string>>
+     */
+    private function getLabelCreatedLinks(\WC_Order $order): array
+    {
+        $links = [
+            [
+                'label' => __('Back to order', 'wc-ukr-shipping'),
+                'url' => esc_url_raw($order->get_edit_order_url()),
+                'theme' => 'primary',
+            ],
+        ];
+
+        return (array)apply_filters('wcus_label_created_links', $links, $order);
     }
 
     public function orderListHtml(): void

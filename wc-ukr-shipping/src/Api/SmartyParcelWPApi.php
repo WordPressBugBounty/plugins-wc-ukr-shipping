@@ -6,10 +6,12 @@ namespace kirillbdev\WCUkrShipping\Api;
 
 use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\SmartyParcelErrorException;
 use kirillbdev\WCUkrShipping\Exceptions\SmartyParcel\StoreNotConnectedException;
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 
 final class SmartyParcelWPApi
 {
     private const API_URL = 'https://wp-api.smartyparcel.com';
+    private const APP_NAME = 'wc-ukr-shipping';
 
     private const ROUTE_METHOD_MAP = [
         '/v1/account' => 'GET',
@@ -39,27 +41,61 @@ final class SmartyParcelWPApi
         '/v1/legacy/settings/migrate' => 'POST',
 
         // Public routes
-        '/v1/manifest' => 'GET',
-        '/v1/app/register' => 'POST',
     ];
 
     private const PUBLIC_ROUTES = [
-        '/v1/manifest',
-        '/v1/app/register',
     ];
 
     public function connectApplication(string $accessToken): array
     {
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer ' . $accessToken,
+        ];
+
+        // The platform binds the guest key to the store and revokes it
+        if (SmartyParcelHelper::isGuest()) {
+            $headers['SP-API-Key'] = get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
+        }
+
         $response = wp_remote_post(self::API_URL . '/v1/app/connect', [
+            'headers' => $headers,
+            'timeout' => 5,
+            'body' => json_encode([
+                'store_url' => SmartyParcelHelper::getStoreUrl(),
+                'app_name' => self::APP_NAME,
+            ])
+        ]);
+
+        return $this->processResponse($response);
+    }
+
+    /**
+     * Issues a locator-only key without an account. Must be called only after
+     * the store owner accepted the consent text.
+     *
+     * @return array{guest_id: string, key: string}
+     */
+    public function guestConnect(string $consentVersion): array
+    {
+        $payload = [
+            'store_url' => SmartyParcelHelper::getStoreUrl(),
+            'app_name' => self::APP_NAME,
+            'consent_version' => $consentVersion,
+        ];
+        if (wcus_is_woocommerce_active()) {
+            $payload['country'] = WC()->countries->get_base_country();
+            $payload['currency'] = get_woocommerce_currency();
+        }
+
+        $response = wp_remote_post(self::API_URL . '/v1/app/guest-connect', [
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $accessToken,
             ],
-            'timeout' => 5,
-            'body' => json_encode([
-                'store_url' => get_site_url(),
-            ])
+            'timeout' => 10,
+            'body' => json_encode($payload),
         ]);
 
         return $this->processResponse($response);
@@ -84,7 +120,7 @@ final class SmartyParcelWPApi
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
                 'SP-API-Key' => get_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY),
-                'SP-Site-Url' => get_site_url(),
+                'SP-Site-Url' => SmartyParcelHelper::getStoreUrl(),
             ],
             'timeout' => 10,
         ];

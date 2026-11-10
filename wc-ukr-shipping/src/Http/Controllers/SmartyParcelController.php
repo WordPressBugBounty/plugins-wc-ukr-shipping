@@ -80,10 +80,55 @@ class SmartyParcelController extends Controller
         }
     }
 
+    public function guestConnect(Request $request): ResponseInterface
+    {
+        if (SmartyParcelHelper::hasLocatorAccess()) {
+            return $this->jsonResponse([
+                'success' => true,
+            ]);
+        }
+
+        try {
+            $response = $this->spApi->guestConnect(WCUS_SMARTY_PARCEL_GUEST_CONSENT_VERSION);
+            if (empty($response['guest_id']) || empty($response['key'])) {
+                throw new \Exception('Malformed guest connect response');
+            }
+
+            update_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY, $response['key']);
+            update_option(WCUS_OPTION_SMARTY_PARCEL_GUEST_ID, $response['guest_id']);
+            update_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS, 'guest');
+
+            return $this->jsonResponse([
+                'success' => true,
+            ]);
+        } catch (SmartyParcelErrorException $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error' => [
+                    'source' => 'smarty_parcel',
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage(),
+                ],
+            ]);
+        } catch (\Throwable $e) {
+            return $this->jsonResponse([
+                'success' => false,
+                'error' => [
+                    'source' => 'internal',
+                    'code' => 0,
+                    'message' => $e->getMessage(),
+                ],
+            ]);
+        }
+    }
+
     public function disconnect(Request $request): ResponseInterface
     {
         try {
-            $this->smartyParcelService->tryDisconnectApplication();
+            // A guest key has no app on the platform to disconnect, local cleanup is enough
+            if ( ! SmartyParcelHelper::isGuest()) {
+                $this->smartyParcelService->tryDisconnectApplication();
+            }
         } catch (\Throwable $e) {
             $strategy = $request->get('payload', [])['strategy'] ?? null;
             if ($strategy !== 'force') {
@@ -96,6 +141,7 @@ class SmartyParcelController extends Controller
 
         delete_option(WCUS_OPTION_SMARTY_PARCEL_API_KEY);
         delete_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS);
+        delete_option(WCUS_OPTION_SMARTY_PARCEL_GUEST_ID);
         delete_option('wcus_nova_poshta_default_carrier');
         delete_option('wcus_ukrposhta_default_carrier');
         delete_transient('smarty_parcel_acc');
@@ -180,6 +226,7 @@ class SmartyParcelController extends Controller
                     'connected' => false,
                     'carriers' => [],
                     'suggested_carrier' => null,
+                    'connect' => $this->buildConnectData((int)$request->get('orderId')),
                 ],
             ]);
         }
@@ -386,6 +433,22 @@ class SmartyParcelController extends Controller
                 ],
             ]);
         }
+    }
+
+    /**
+     * Connect call to action for the tracking form: after OAuth the admin lands back on the order.
+     */
+    private function buildConnectData(int $orderId): array
+    {
+        $canConnect = SmartyParcelHelper::currentUserCanConnect();
+        $order = $orderId > 0 ? wc_get_order($orderId) : null;
+
+        return [
+            'message' => SmartyParcelHelper::getAccountRequiredMessage(),
+            'button' => __('Connect SmartyParcel account', 'wc-ukr-shipping'),
+            'url' => $canConnect ? SmartyParcelHelper::getConnectUrl($order ? $order->get_edit_order_url() : '') : null,
+            'hint' => $canConnect ? '' : __('Ask the site administrator to connect the store to a SmartyParcel account.', 'wc-ukr-shipping'),
+        ];
     }
 
     private function detectOrderCarrier(int $orderId): ?string

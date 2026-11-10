@@ -11,6 +11,7 @@ use kirillbdev\WCUkrShipping\Component\Rates\RatesApiV2Calculator;
 use kirillbdev\WCUkrShipping\Contracts\Rates\RatesCalculatorInterface;
 use kirillbdev\WCUkrShipping\Dto\Rates\RateShipmentDTO;
 use kirillbdev\WCUkrShipping\Foundation\AbstractShippingMethod;
+use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
 
 class RatesCalculatorFactory implements RatesCalculatorFactoryInterface
@@ -44,6 +45,13 @@ class RatesCalculatorFactory implements RatesCalculatorFactoryInterface
                     (float)$shippingMethod->get_option('fixed_cost')
                 );
             case 'rates_api':
+                // Rates need a connected store, a guest key gives the locator only
+                if ( ! SmartyParcelHelper::isConnected()) {
+                    return new FixedRatesCalculator(
+                        (float)$shippingMethod->get_option('fixed_cost')
+                    );
+                }
+
                 return new RatesApiV2Calculator(
                     $shippingMethod->get_option('include_cod') === 'yes'
                         && WCUSHelper::isCodPaymentMethod((string)$dto->paymentMethod),

@@ -1,17 +1,17 @@
-=== SmartyParcel – DHL Express, GLS, InPost & Nova Post for WooCommerce ===
+=== SmartyParcel Shipping – DHL Express, GLS, InPost & Nova Post for WooCommerce ===
 Contributors: kirillbdev
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Tags: dhl express, gls, inpost, nova post, order tracking
+Tags: dhl express, gls, inpost, nova post, postnord
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.23.9
+Stable tag: 1.24.0
 
-The easiest way to automate shipping in WooCommerce: pickup points at checkout (list or map), one-click shipping labels and order tracking.
+The easiest way to automate WooCommerce shipping for Europe and the Nordics: pickup points at checkout, live rates and one-click shipping labels.
 
 == Description ==
 
-SmartyParcel helps your WooCommerce store grow by taking shipping routine off your hands. Connect your carriers and automate shipping from checkout to delivery: pickup points at checkout, one-click shipping labels, order tracking and customer notifications — all from one platform. Trusted by 7,000+ WooCommerce stores.
+SmartyParcel connects your WooCommerce store to the carriers your customers use across Europe and the Nordics: GLS, InPost, PostNord, DHL Express, Nova Post, Nova Poshta, Ukrposhta, Meest and more. Let customers choose a parcel shop or locker at checkout, show shipping rates and create labels in a few clicks. Automate shipping from checkout to delivery with order tracking and customer notifications, all from one platform. Trusted by 7,000+ WooCommerce stores.
 
 [Product Overview](https://smartyparcel.com/woocommerce-integration/?utm_source=wporg)
 [Supported carriers](https://smartyparcel.com/supported-carriers/?utm_source=wporg)
@@ -93,7 +93,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 == External services ==
 
-This plugin uses SmartyParcel API to provide advanced logistic functions (like create labels, tracking etc.) and also external API to collect user feedbacks and installation telemetry, which includes the store URL and the WordPress administrator email address ([Privacy Policy](https://smartyparcel.com/privacy/)).
+This plugin uses SmartyParcel API to provide advanced logistic functions (like create labels, tracking etc.) and also external API to collect user feedbacks ([Terms of Use](https://smartyparcel.com/terms-of-use/), [Privacy Policy](https://smartyparcel.com/privacy/)).
 
 == FAQ ==
 
@@ -134,6 +134,11 @@ Yes. The plugin is compatible with WPML and Polylang, and works in multi-currenc
 Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.24.0 / (10.11.2026) =
+* Added new connection flow (without account).
+* Improved carriers UI.
+* Added back to order button in the purchase label form.
 
 = Version 1.23.9 / (27.10.2026) =
 * Improved label storing mechanism.
