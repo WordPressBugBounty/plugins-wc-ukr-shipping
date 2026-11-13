@@ -4,6 +4,7 @@ namespace kirillbdev\WCUkrShipping\Modules\Backend;
 
 use kirillbdev\WCUkrShipping\Helpers\SmartyParcelHelper;
 use kirillbdev\WCUkrShipping\Helpers\WCUSHelper;
+use kirillbdev\WCUkrShipping\Services\SmartyParcel\AssistantService;
 use kirillbdev\WCUkrShipping\Services\SmartyParcelService;
 use kirillbdev\WCUkrShipping\Services\TranslateService;
 use kirillbdev\WCUkrShipping\Traits\StateInitiatorTrait;
@@ -17,14 +18,28 @@ class AssetsLoader implements ModuleInterface
 {
     use StateInitiatorTrait;
 
+    private const ASSISTANT_SCREENS = [
+        'toplevel_page_wcus_smarty_parcel',
+        'smartyparcel_page_wcus_settings',
+        'smartyparcel_page_wc_ukr_shipping_ttn_list',
+        'smartyparcel_page_wcus_automation',
+        'admin_page_wcus_automation_rule_create',
+        'admin_page_wcus_automation_rule_edit',
+        'admin_page_wc_ukr_shipping_ttn',
+    ];
+
     private TranslateService $translateService;
     private SmartyParcelService $smartyParcelService;
+    private AssistantService $assistantService;
 
     public function __construct(
         TranslateService $translateService,
-        SmartyParcelService $smartyParcelService) {
+        SmartyParcelService $smartyParcelService,
+        AssistantService $assistantService
+    ) {
         $this->translateService = $translateService;
         $this->smartyParcelService = $smartyParcelService;
+        $this->assistantService = $assistantService;
     }
 
     public function init()
@@ -62,12 +77,7 @@ class AssetsLoader implements ModuleInterface
             );
         }
 
-        /**
-         * Allows replacing the SmartyParcel Elements SDK URL without a plugin release.
-         *
-         * @param string $url
-         */
-        $elementsSdkUrl = (string)apply_filters('wcus_smartyparcel_elements_sdk_url', WCUS_SMARTY_PARCEL_ELEMENTS_SDK_URL);
+        $elementsSdkUrl = SmartyParcelHelper::getSdkUrl('elements');
         // Elements UI exists only for connected stores (guests get the locator only)
         if ($elementsSdkUrl !== '' && SmartyParcelHelper::isConnected()) {
             wp_enqueue_script(
@@ -133,8 +143,69 @@ class AssetsLoader implements ModuleInterface
             );
         }
 
+        $this->loadAssistant();
+
         $this->injectGlobals('jquery');
         $this->injectTranslates('jquery');
+    }
+
+    /**
+     * The SmartyParcel help assistant: only on the pages of the plugin, does not need a platform connection.
+     */
+    private function loadAssistant(): void
+    {
+        $screen = get_current_screen();
+        if ($screen === null || ! in_array($screen->id, self::ASSISTANT_SCREENS, true)) {
+            return;
+        }
+
+        if ( ! WCUSHelper::currentUserCanManageStore()) {
+            return;
+        }
+
+        $sdkUrl = SmartyParcelHelper::getSdkUrl('assistant');
+        if ($sdkUrl === '') {
+            return;
+        }
+
+        wp_enqueue_script('smartyparcel_assistant_sdk_js', esc_url_raw($sdkUrl), [], null, true);
+        wp_enqueue_script(
+            'wcus_assistant_js',
+            WC_UKR_SHIPPING_PLUGIN_URL . 'assets/js/assistant.js',
+            ['smartyparcel_assistant_sdk_js'],
+            filemtime(WC_UKR_SHIPPING_PLUGIN_DIR . 'assets/js/assistant.js'),
+            true
+        );
+
+        wp_localize_script('wcus_assistant_js', 'wcus_assistant', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('wc-ukr-shipping'),
+            'apiUrl' => WCUS_SMARTY_PARCEL_ASSISTANT_API_URL,
+            'hasConsent' => $this->assistantService->hasConsent(),
+            'context' => $this->assistantService->getContext(),
+            'locale' => $this->translateService->getCurrentLanguage(),
+            'title' => __('SmartyParcel Help', 'wc-ukr-shipping'),
+            'consent' => [
+                'version' => WCUS_SMARTY_PARCEL_CONSENT_VERSION,
+                'button' => __('Agree and start', 'wc-ukr-shipping'),
+                'blocks' => [
+                    ['type' => 'title', 'text' => __('Before you start', 'wc-ukr-shipping')],
+                    ['type' => 'text', 'text' => __('The assistant runs on an AI model. The following is sent to SmartyParcel and processed by the AI model:', 'wc-ukr-shipping')],
+                    [
+                        'type' => 'list',
+                        'items' => [
+                            __('the site address, the plugin name and version', 'wc-ukr-shipping'),
+                            __('the store country and currency', 'wc-ukr-shipping'),
+                            __('PHP, WordPress and WooCommerce versions, active carriers', 'wc-ukr-shipping'),
+                            __('your messages in this chat', 'wc-ukr-shipping'),
+                        ],
+                    ],
+                    ['type' => 'note', 'text' => __('The assistant does not change anything in your store. Do not send passwords or keys in the chat.', 'wc-ukr-shipping')],
+                    ['type' => 'link', 'text' => __('Terms of use', 'wc-ukr-shipping'), 'url' => 'https://smartyparcel.com/terms-of-use/'],
+                    ['type' => 'link', 'text' => __('Privacy policy', 'wc-ukr-shipping'), 'url' => 'https://smartyparcel.com/privacy/'],
+                ],
+            ],
+        ]);
     }
 
     private function injectGlobals($scriptId): void

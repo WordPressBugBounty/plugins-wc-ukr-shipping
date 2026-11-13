@@ -8,6 +8,24 @@ use kirillbdev\WCUkrShipping\Enums\CarrierSlug;
 
 final class SmartyParcelHelper
 {
+    /**
+     * URL of a SmartyParcel SDK by its key (elements, assistant). An empty string means the SDK is turned off.
+     */
+    public static function getSdkUrl(string $key): string
+    {
+        /**
+         * Allows replacing the SmartyParcel SDK URLs without a plugin release, an empty URL turns the SDK off.
+         *
+         * @param array<string, string> $urls
+         */
+        $urls = (array)apply_filters('wcus_smartyparcel_sdk_urls', [
+            'elements' => WCUS_SMARTY_PARCEL_ELEMENTS_SDK_URL,
+            'assistant' => WCUS_SMARTY_PARCEL_ASSISTANT_SDK_URL,
+        ]);
+
+        return (string)($urls[$key] ?? '');
+    }
+
     public static function isConnected(): bool
     {
         return get_option(WCUS_OPTION_SMARTY_PARCEL_USER_STATUS) === 'connected';

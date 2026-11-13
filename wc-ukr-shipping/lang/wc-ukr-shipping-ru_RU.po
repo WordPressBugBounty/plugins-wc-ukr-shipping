@@ -1269,3 +1269,36 @@ msgstr "Все заказы"
 
 msgid "Carrier accounts"
 msgstr "Аккаунты перевозчика"
+
+msgid "SmartyParcel Help"
+msgstr "Помощь SmartyParcel"
+
+msgid "Agree and start"
+msgstr "Согласен, начать"
+
+msgid "Before you start"
+msgstr "Перед началом"
+
+msgid "The assistant runs on an AI model. The following is sent to SmartyParcel and processed by the AI model:"
+msgstr "Помощник работает на AI-модели. В SmartyParcel передаётся и обрабатывается AI-моделью:"
+
+msgid "the site address, the plugin name and version"
+msgstr "адрес сайта, название и версия плагина"
+
+msgid "the store country and currency"
+msgstr "страна и валюта магазина"
+
+msgid "PHP, WordPress and WooCommerce versions, active carriers"
+msgstr "версии PHP, WordPress, WooCommerce и активные перевозчики"
+
+msgid "your messages in this chat"
+msgstr "ваши сообщения в этом чате"
+
+msgid "The assistant does not change anything in your store. Do not send passwords or keys in the chat."
+msgstr "Помощник ничего не меняет в вашем магазине. Не отправляйте в чат пароли и ключи."
+
+msgid "Terms of use"
+msgstr "Условия использования"
+
+msgid "Privacy policy"
+msgstr "Политика конфиденциальности"

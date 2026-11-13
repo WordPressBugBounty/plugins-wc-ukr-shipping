@@ -46,10 +46,18 @@ define('WCUS_OPTION_SMARTY_PARCEL_USER_STATUS', 'wcus_smartyparcel_user_status')
 define('WCUS_OPTION_SMARTY_PARCEL_CARRIERS', 'wcus_smartyparcel_carriers');
 
 define('WCUS_OPTION_SMARTY_PARCEL_GUEST_ID', 'wcus_smartyparcel_guest_id');
-define('WCUS_SMARTY_PARCEL_GUEST_CONSENT_VERSION', '2026-11-09');
+// Version of the consent text the owner accepts (guest connect, help assistant)
+define('WCUS_SMARTY_PARCEL_CONSENT_VERSION', '2026-11-09');
 
-// SmartyParcel Elements SDK (overridable via the wcus_smartyparcel_elements_sdk_url filter)
+// SmartyParcel SDK URLs, overridable via the wcus_smartyparcel_sdk_urls filter (SmartyParcelHelper::getSdkUrl())
 define('WCUS_SMARTY_PARCEL_ELEMENTS_SDK_URL', 'https://app.smartyparcel.com/static/embedded/elements-sdk.min.js');
+define('WCUS_SMARTY_PARCEL_ASSISTANT_SDK_URL', 'https://app.smartyparcel.com/static/embedded/assistant.min.js');
+
+define('WCUS_SMARTY_PARCEL_ASSISTANT_API_URL', 'https://wp-api.smartyparcel.com/assistant/v1');
+
+// SmartyParcel help assistant (works without a platform connection, has its own key)
+define('WCUS_OPTION_SMARTY_PARCEL_ASSISTANT_KEY', 'wcus_smartyparcel_assistant_key');
+define('WCUS_OPTION_SMARTY_PARCEL_ASSISTANT_TOKEN', 'wcus_smartyparcel_assistant_token');
 
 // User meta
 define('WCUS_USER_META_SMARTY_PARCEL_ACCESS_KEY', 'wcus_smartyparcel_access_key');

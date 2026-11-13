@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace kirillbdev\WCUkrShipping\Modules\Core;
 
+use kirillbdev\WCUkrShipping\Http\Controllers\AssistantController;
 use kirillbdev\WCUkrShipping\Http\Controllers\JWTController;
 use kirillbdev\WCUkrShipping\Http\Controllers\OrdersController;
 use kirillbdev\WCUkrShipping\Http\Controllers\SmartyParcelController;
@@ -33,6 +34,24 @@ class Router implements ModuleInterface
                 'wcus_smartyparcel_remove_label',
                 SmartyParcelController::class,
                 'removeLabel',
+                [
+                    'middleware' => [CheckManageWooPermission::class]
+                ]
+            ),
+
+            // Help assistant
+            new Route(
+                'wcus_assistant_connect',
+                AssistantController::class,
+                'connect',
+                [
+                    'middleware' => [CheckManageWooPermission::class]
+                ]
+            ),
+            new Route(
+                'wcus_assistant_token',
+                AssistantController::class,
+                'token',
                 [
                     'middleware' => [CheckManageWooPermission::class]
                 ]

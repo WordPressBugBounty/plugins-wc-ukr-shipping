@@ -89,7 +89,7 @@ class SmartyParcelController extends Controller
         }
 
         try {
-            $response = $this->spApi->guestConnect(WCUS_SMARTY_PARCEL_GUEST_CONSENT_VERSION);
+            $response = $this->spApi->guestConnect(WCUS_SMARTY_PARCEL_CONSENT_VERSION);
             if (empty($response['guest_id']) || empty($response['key'])) {
                 throw new \Exception('Malformed guest connect response');
             }

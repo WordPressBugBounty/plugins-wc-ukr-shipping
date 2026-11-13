@@ -9,24 +9,28 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-10T00:39:25+02:00\n"
+"POT-Creation-Date: 2026-11-13T18:23:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wc-ukr-shipping\n"
 
 #. Plugin Name of the plugin
+#: wc-ukr-shipping.php
 msgid "SmartyParcel Shipping - DHL Express, GLS, InPost & Nova Post for WooCommerce"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: wc-ukr-shipping.php
 msgid "https://smartyparcel.com"
 msgstr ""
 
 #. Description of the plugin
+#: wc-ukr-shipping.php
 msgid "The easiest way to automate shipping in WooCommerce: pickup points at checkout (list or map), one-click shipping labels and order tracking."
 msgstr ""
 
 #. Author of the plugin
+#: wc-ukr-shipping.php
 msgid "kirillbdev"
 msgstr ""
 
@@ -712,6 +716,50 @@ msgstr ""
 msgid "You do not have permission to access this action."
 msgstr ""
 
+#: src/Modules/Backend/AssetsLoader.php:197
+msgid "SmartyParcel Help"
+msgstr ""
+
+#: src/Modules/Backend/AssetsLoader.php:200
+msgid "Agree and start"
+msgstr ""
+
+#: src/Modules/Backend/AssetsLoader.php:202
+msgid "Before you start"
+msgstr ""
+
+#: src/Modules/Backend/AssetsLoader.php:203
+msgid "The assistant runs on an AI model. The following is sent to SmartyParcel and processed by the AI model:"
+msgstr ""
+
+#: src/Modules/Backend/AssetsLoader.php:207
+msgid "the site address, the plugin name and version"
+msgstr ""
+
+#: src/Modules/Backend/AssetsLoader.php:208
+msgid "the store country and currency"
+msgstr ""
+
+#: src/Modules/Backend/AssetsLoader.php:209
+msgid "PHP, WordPress and WooCommerce versions, active carriers"
+msgstr ""
+
+#: src/Modules/Backend/AssetsLoader.php:210
+msgid "your messages in this chat"
+msgstr ""
+
+#: src/Modules/Backend/AssetsLoader.php:213
+msgid "The assistant does not change anything in your store. Do not send passwords or keys in the chat."
+msgstr ""
+
+#: src/Modules/Backend/AssetsLoader.php:214
+msgid "Terms of use"
+msgstr ""
+
+#: src/Modules/Backend/AssetsLoader.php:215
+msgid "Privacy policy"
+msgstr ""
+
 #: src/Modules/Backend/OptionsPage.php:87
 #: src/Modules/Backend/OptionsPage.php:98
 #: src/Modules/Backend/OptionsPage.php:99
@@ -821,6 +869,7 @@ msgstr ""
 
 #. translators: %d: maximum length of the access key
 #: src/Modules/Backend/UserProfile.php:78
+#, php-format
 msgid "SmartyParcel access key must not be longer than %d characters."
 msgstr ""
 
@@ -956,6 +1005,7 @@ msgstr ""
 
 #. translators: %d: maximum length of the access key
 #: src/Services/SmartyParcel/AccessService.php:40
+#, php-format
 msgid "Access key must not be longer than %d characters."
 msgstr ""
 

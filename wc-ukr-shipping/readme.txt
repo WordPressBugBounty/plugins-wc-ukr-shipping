@@ -5,7 +5,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: dhl express, gls, inpost, nova post, postnord
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 1.24.0
+Stable tag: 1.24.1
 
 The easiest way to automate WooCommerce shipping for Europe and the Nordics: pickup points at checkout, live rates and one-click shipping labels.
 
@@ -46,7 +46,7 @@ Nova Post, Нова Пошта, DHL Express, GLS, InPost, Meest, PostNord, Nova 
 * PostNord
 * Nova Post
 * Nova Poshta (Ukraine)
-* Ukrposhta
+* Ukrposhta (Укрпошта)
 * Meest
 * Rozetka Delivery
 
@@ -95,6 +95,8 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 This plugin uses SmartyParcel API to provide advanced logistic functions (like create labels, tracking etc.) and also external API to collect user feedbacks ([Terms of Use](https://smartyparcel.com/terms-of-use/), [Privacy Policy](https://smartyparcel.com/privacy/)).
 
+SmartyParcel also provides an AI help assistant on the plugin admin pages, which works through the SmartyParcel API as well.
+
 == FAQ ==
 
 = Which carriers does SmartyParcel support? =
@@ -134,6 +136,10 @@ Yes. The plugin is compatible with WPML and Polylang, and works in multi-currenc
 Unfortunately, the plugin doesn't support checkout blocks yet, but we are working on it.
 
 == Changelog ==
+
+= Version 1.24.1 / (13.11.2026) =
+* Added SmartyParcel AI help assistant on the plugin admin pages.
+* Added wcus_smartyparcel_elements_sdk_url filter.
 
 = Version 1.24.0 / (10.11.2026) =
 * Added new connection flow (without account).

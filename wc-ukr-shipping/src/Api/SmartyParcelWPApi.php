@@ -101,6 +101,38 @@ final class SmartyParcelWPApi
         return $this->processResponse($response);
     }
 
+    public function assistantConnect(string $consentVersion): array
+    {
+        $response = wp_remote_post(WCUS_SMARTY_PARCEL_ASSISTANT_API_URL . '/connect', [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ],
+            'timeout' => 10,
+            'body' => json_encode([
+                'platform' => 'woocommerce',
+                'site_url' => SmartyParcelHelper::getStoreUrl(),
+                'app_name' => self::APP_NAME,
+                'consent_version' => $consentVersion,
+            ]),
+        ]);
+
+        return $this->processResponse($response)['data'] ?? [];
+    }
+
+    public function assistantToken(string $key): array
+    {
+        $response = wp_remote_post(WCUS_SMARTY_PARCEL_ASSISTANT_API_URL . '/token', [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $key,
+            ],
+            'timeout' => 10,
+        ]);
+
+        return $this->processResponse($response)['data'] ?? [];
+    }
+
     public function sendRequest(
         string $route,
         ?array $payload = null,

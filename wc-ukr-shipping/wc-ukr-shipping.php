@@ -3,7 +3,7 @@
  * Plugin Name: SmartyParcel Shipping - DHL Express, GLS, InPost & Nova Post for WooCommerce
  * Plugin URI: https://smartyparcel.com
  * Description: The easiest way to automate shipping in WooCommerce: pickup points at checkout (list or map), one-click shipping labels and order tracking.
- * Version: 1.24.0
+ * Version: 1.24.1
  * Author: kirillbdev
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
